@@ -1,5 +1,5 @@
 import { IKImage } from "imagekitio-react";
-import { cn, getDevImageUrl } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
