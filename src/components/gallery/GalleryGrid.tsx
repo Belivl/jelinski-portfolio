@@ -1,0 +1,200 @@
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { AnimatePresence, motion } from "motion/react";
+import Masonry from "react-masonry-css";
+import { getPhotos } from "@/data/photos.ts";
+import { AdvancedFilterBar } from "./AdvancedFilterBar";
+import { PhotoLightbox } from "./PhotoLightboxNew";
+import { SmartImage } from "../ui/SmartImage";
+
+export function GalleryGrid() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [filters, setFilters] = useState({
+    category: "all",
+    camera: null as string | null,
+    tags: [] as string[],
+  });
+  const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(
+    null,
+  );
+  const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
+
+  const photos = useMemo(() => getPhotos(), []);
+
+  // Extract available options
+  const categories = useMemo(
+    () => Array.from(new Set(photos.map((p) => p.category))),
+    [photos],
+  );
+  const cameras = useMemo(
+    () => Array.from(new Set(photos.map((p) => p.camera))).sort(),
+    [photos],
+  );
+  const allTags = useMemo(() => {
+    const tags = new Set<string>();
+    photos.forEach((p) => p.tags.forEach((t) => tags.add(t)));
+    return Array.from(tags).sort();
+  }, [photos]);
+
+  // Filter and sort logic
+  const filteredPhotos = useMemo(() => {
+    return photos
+      .filter((photo) => {
+        // Category filter
+        if (filters.category !== "all" && photo.category !== filters.category)
+          return false;
+
+        // Camera filter
+        if (filters.camera && photo.camera !== filters.camera) return false;
+
+        // Tags filter (match ALL selected tags)
+        if (filters.tags.length > 0) {
+          const hasAllTags = filters.tags.every((tag) =>
+            photo.tags.includes(tag),
+          );
+          if (!hasAllTags) return false;
+        }
+
+        return true;
+      })
+      .sort((a, b) => {
+        // Parse dates for comparison (handling both YY-MM-DD and YYYY-MM-DD)
+        const parseDate = (dateStr: string | undefined) => {
+          if (!dateStr) return new Date(0); // Default to epoch if no date
+          const parts = dateStr.split("-");
+          const year = parts[0].length === 2 ? `20${parts[0]}` : parts[0];
+          return new Date(`${year}-${parts[1]}-${parts[2]}`);
+        };
+
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+
+        return sortOrder === "desc"
+          ? dateB.getTime() - dateA.getTime()
+          : dateA.getTime() - dateB.getTime();
+      });
+  }, [filters, photos, sortOrder]);
+
+  // Handle deep linking
+  useEffect(() => {
+    const photoId = searchParams.get("photoId");
+    if (photoId) {
+      const index = filteredPhotos.findIndex((p) => p.id === photoId);
+      if (index !== -1) {
+        setSelectedPhotoIndex(index);
+      }
+    }
+  }, [searchParams, filteredPhotos]);
+
+  const handleCloseLightbox = () => {
+    setSelectedPhotoIndex(null);
+    setSearchParams((params) => {
+      params.delete("photoId");
+      return params;
+    });
+  };
+
+  return (
+    <div className="pb-12">
+      <AdvancedFilterBar
+        categories={categories}
+        availableCameras={cameras}
+        availableTags={allTags}
+        filters={filters}
+        onFilterChange={setFilters}
+        photos={photos}
+        sortOrder={sortOrder}
+        onSortChange={setSortOrder}
+      />
+
+      <Masonry
+        breakpointCols={{
+          default: 3,
+          1100: 2,
+          700: 2,
+        }}
+        className="flex w-auto md:-ml-8 -ml-2"
+        columnClassName="pl-2 md:pl-8 bg-clip-padding"
+      >
+        {filteredPhotos.length > 0 ? (
+          filteredPhotos.map((photo, index) => (
+            <motion.div
+              layout
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3 }}
+              key={photo.id}
+              className="group relative cursor-pointer overflow-hidden rounded-lg bg-muted md:mb-8 mb-2 dark:border-neutral-800 border "
+              onClick={() => setSelectedPhotoIndex(index)}
+            >
+              <SmartImage
+                src={photo.url}
+                alt={photo.title || "Photo"}
+                width={800}
+                objectTop={photo.objectTop}
+                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 shadow-lg shadow-black/10 border border-black/10 overflow-hidden"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center">
+                {/* {photo.title && (
+                  <h3 className="text-white font-bold text-xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    {photo.title}
+                  </h3>
+                )} */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <span className="text-primary text-sm font-medium mb-1 uppercase tracking-wider">
+                    {photo.category}
+                  </span>
+                  <h3 className="text-white text-xl font-bold">
+                    {photo.title}
+                  </h3>
+                </div>
+                {/* 
+                <Button
+                  variant="outline"
+                  className="text-white rounded-sm font-medium tracking-widest border border-white px-4 py-2 uppercase text-xs group-hover:bg-white group-hover:text-black transition-colors translate-y-4 group-hover:translate-y-0 duration-300 delay-100"
+                >
+                  {t.gallery.view}
+                </Button> */}
+              </div>
+            </motion.div>
+          ))
+        ) : (
+          <div className="col-span-full text-center py-20 text-muted-foreground w-full">
+            <p className="text-xl">No photos found matching your filters.</p>
+            <button
+              onClick={() =>
+                setFilters({ category: "all", camera: null, tags: [] })
+              }
+              className="mt-4 text-amber-500 hover:underline"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
+      </Masonry>
+
+      <AnimatePresence
+        mode="wait"
+        initial={false}
+        onExitComplete={() => setSelectedPhotoIndex(null)}
+      >
+        {selectedPhotoIndex !== null && (
+          <PhotoLightbox
+            key="lightbox-modal"
+            photos={filteredPhotos}
+            currentIndex={selectedPhotoIndex}
+            onClose={handleCloseLightbox}
+            onIndexChange={(index) => {
+              setSelectedPhotoIndex(index);
+              // Optional: update URL as user navigates?
+              // Ideally yes, but maybe too much noise. Let's keep it simple for now or adding it.
+              // If we want persistent URL on navigation:
+              // setSearchParams({ photoId: filteredPhotos[index].id });
+            }}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
