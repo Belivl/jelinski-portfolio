@@ -27,24 +27,43 @@ export const SEO = ({
     <Helmet title={finalTitle} htmlAttributes={{ lang }}>
       <meta name="description" content={metaDescription} />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <link rel="canonical" href={url} />
 
-      <link rel="icon" type="image/x-icon" href="logo.png" />
+      <link rel="icon" type="image/x-icon" href="/logo.png" />
 
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={type} />
       <meta property="og:url" content={url} />
       <meta property="og:title" content={finalTitle} />
       <meta property="og:description" content={metaDescription} />
-      {image && <meta property="og:image" content={image} />}
+      {image && (
+        <meta
+          property="og:image"
+          content={
+            image.startsWith("http")
+              ? image
+              : `${window.location.origin}/${image}`
+          }
+        />
+      )}
 
       {/* Twitter */}
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content={url} />
       <meta property="twitter:title" content={finalTitle} />
       <meta property="twitter:description" content={metaDescription} />
-      {image && <meta property="twitter:image" content={image} />}
+      {image && (
+        <meta
+          property="twitter:image"
+          content={
+            image.startsWith("http")
+              ? image
+              : `${window.location.origin}/${image}`
+          }
+        />
+      )}
 
-      {/* Google Tag Manager  isntall after publishing to production*/}
+      {/* Google Tag Manager  install after publishing to production*/}
       {/* <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

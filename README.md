@@ -1,73 +1,30 @@
-# React + TypeScript + Vite
+## Production Deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 1. Environment Variables
 
-Currently, two official plugins are available:
+Create a `.env` file in your production environment (e.g., Vercel, Netlify) with the following variables:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Variable              | Description                          |
+| :-------------------- | :----------------------------------- |
+| `VITE_CONVEX_URL`     | Your Convex deployment URL           |
+| `VITE_ADMIN_PASSWORD` | Secure password for dashboard access |
 
-## React Compiler
+### 2. Deployment Steps
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#### Frontend (Vercel/Netlify)
 
-## Expanding the ESLint configuration
+1. Link your repository.
+2. Set the build command to `npm run build`.
+3. Set the output directory to `dist`.
+4. Configure the environment variables mentioned above.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+#### Backend (Convex)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Run `npx convex deploy` to deploy your schema and functions to production.
+2. Update the environment variables in the Convex dashboard if necessary.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Optimization Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- **Code Splitting**: Routes are lazy-loaded to minimize initial bundle size.
+- **SEO Ready**: Dynamic meta tags and canonical URLs for better search engine visibility.
+- **Optimized Images**: Integrated with ImageKit for production-ready image delivery.

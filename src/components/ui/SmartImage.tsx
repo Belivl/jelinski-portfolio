@@ -1,5 +1,5 @@
 import { IKImage } from "imagekitio-react";
-import { cn } from "@/lib/utils";
+import { cn, getDevImageUrl } from "@/lib/utils";
 
 interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -54,17 +54,17 @@ export function SmartImage({
 
   // Fallback / Dev mode / Local images
   // We apply the dev transformation here to allow local testing of remote images
-  // const displaySrc = getDevImageUrl(src);
+  const displaySrc = getDevImageUrl(src);
 
-  // return (
-  //   <img
-  //     src={displaySrc}
-  //     alt={alt}
-  //     className={finalClass}
-  //     width={width}
-  //     height={height}
-  //     loading={priority ? "eager" : "lazy"}
-  //     {...props}
-  //   />
-  // );
+  return (
+    <img
+      src={displaySrc}
+      alt={alt}
+      className={finalClass}
+      width={width}
+      height={height}
+      loading={priority ? "eager" : "lazy"}
+      {...props}
+    />
+  );
 }
