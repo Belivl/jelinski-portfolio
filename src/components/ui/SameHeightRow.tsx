@@ -15,7 +15,14 @@ interface SameHeightRowProps {
 
 export const SameHeightRow: React.FC<
   SameHeightRowProps & { onImageClick?: (index: number) => void }
-> = ({ images, gap = 0, roundEvery = false, className = "", onImageClick }) => {
+> = ({
+  images: rawImages,
+  gap = 0,
+  roundEvery = false,
+  className = "",
+  onImageClick,
+}) => {
+  const images = rawImages.filter((img) => !!img.src);
   const [ratios, setRatios] = useState<number[]>(
     new Array(images.length).fill(0),
   );
@@ -54,7 +61,7 @@ export const SameHeightRow: React.FC<
         return (
           <div
             key={index}
-            className={`w-full md:w-[var(--width)] ${onImageClick ? "cursor-pointer" : ""}`}
+            className={`w-full md:w-(--width) ${onImageClick ? "cursor-pointer" : ""}`}
             style={
               {
                 "--width": widthPercentage,

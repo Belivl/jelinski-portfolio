@@ -45,7 +45,6 @@ export function Home() {
       </AnimatePresence>
 
       <main>
-        {/* <PreferenceModal onComplete={() => {}} /> */}
         <Hero />
         <FeaturedGallery />
         <Testimonials />

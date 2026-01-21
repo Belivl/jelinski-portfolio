@@ -196,7 +196,7 @@ export const translations = {
                     period: '2019.10 - 2020.06',
                     description: 'I designed a logo in many variants and a short animation for the school\'s 100th anniversary celebration.',
                     place: 'Gdynia, Poland',
-                    logo: '/-gmu-gold.png',
+                    logo: 'https://ik.imagekit.io/j3l1n5k1/gfx/logo_umg_nxynFlH9U.png',
                     website: 'https://umg.edu.pl/en',
                 }
             ]
@@ -661,7 +661,7 @@ export const translations = {
                     period: '2019.10 - 2020.06',
                     description: 'Zaprojektowałem logo w wielu wariantach i krótką animację na uroczystość 100-lecia szkoły.',
                     place: 'Gdynia, Polska',
-                    logo: '/-gmu-gold.png',
+                    logo: 'https://ik.imagekit.io/j3l1n5k1/gfx/logo_umg_nxynFlH9U.png',
                     website: 'https://umg.edu.pl/pl',
                     projectLink: '/projects/2'
                 }

@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Music, Play } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { SmartImage } from "@/components/ui/SmartImage";
 import { siteConfig } from "@/config/site";
 
 export function PlaylistGrid() {
@@ -67,11 +68,10 @@ export function PlaylistGrid() {
                 {/* Prioritize manual thumbnail (e.g. for Spotify), then dynamic embeds */}
                 {(track as any).thumbnail ? (
                   <div className="relative w-32 aspect-video rounded-lg overflow-hidden bg-black shrink-0 shadow-sm">
-                    <img
+                    <SmartImage
                       src={(track as any).thumbnail}
                       alt={track.title}
                       className="w-full h-full object-cover"
-                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-transparent" />
                   </div>
@@ -79,7 +79,7 @@ export function PlaylistGrid() {
                   <div className="relative w-32 aspect-video rounded-lg overflow-hidden bg-black shrink-0 shadow-sm">
                     {embedConfig.type === "youtube" && (
                       <iframe
-                        src={`https://www.youtube.com/embed/videoseries?list=${embedConfig.id}&controls=0&showinfo=0&rel=0&modestbranding=1`}
+                        src={`https://www.youtube-nocookie.com/embed/videoseries?list=${embedConfig.id}&controls=0&showinfo=0&rel=0&modestbranding=1`}
                         className="w-full h-full object-cover pointer-events-none"
                         style={{ border: 0 }}
                         loading="lazy"

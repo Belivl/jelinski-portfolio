@@ -1,14 +1,18 @@
+import { useState } from "react";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { motion } from "motion/react";
-import { SameHeightRow } from "../../components/mdx/SameHeightRow";
+import { SameHeightRow } from "@/components/ui/SameHeightRow";
 import { useMemo, useRef } from "react";
+import { SimpleLightbox } from "@/components/gallery/SimpleLightbox";
 
 const TiltBox = ({
   children,
   className,
+  onClick,
 }: {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }) => {
   const boundingRef = useRef<DOMRect | null>(null);
 
@@ -59,7 +63,8 @@ const TiltBox = ({
             ev.currentTarget.style.setProperty("--x", `${xPercentage * 100}%`);
             ev.currentTarget.style.setProperty("--y", `${yPercentage * 100}%`);
           }}
-          className="group relative w-full h-full transition-all ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)] duration-200 hover:z-50"
+          onClick={onClick}
+          className={`group relative w-full h-full transition-all ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)] duration-200 hover:z-50 ${onClick ? "cursor-pointer" : ""}`}
           style={{ transformStyle: "preserve-3d" }}
         >
           {children}
@@ -72,80 +77,116 @@ const TiltBox = ({
 };
 
 export function CoronaPost() {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [initialIndex, setInitialIndex] = useState(0);
+
+  const openLightbox = (index: number) => {
+    setInitialIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const imagePath = [
+    {
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_plik3_vrxLzDbIx.avif?updatedAt=1769087748316",
+      alt: "Michal_Jelinski_MGLS3_IG1_grupa2_plik3",
+    },
+    {
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_Package_y4qrLs2u_.avif?updatedAt=1769087736291",
+      alt: "Michal_Jelinski_MGLS3_IG1_grupa2_Package",
+    },
+    {
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/TestRenderV2-2_kregW60ch.avif?updatedAt=1769087736039",
+      alt: "TestRenderV2-2",
+    },
+    {
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_Package1_O8huhvcFUf.avif?updatedAt=1769087736104",
+      alt: "Michal_Jelinski_MGLS3_IG1_grupa2_Package1",
+    },
+    {
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_plik4_9VYl9tZHf.avif?updatedAt=1769087737063",
+      alt: "Michal_Jelinski_MGLS3_IG1_grupa2_plik4",
+    },
+    {
+      src: "https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864539/gfx/2021/corona%20fighters/CardF-Bottle_jywret.png",
+      alt: "CardF-Bottle",
+    },
+    {
+      src: "https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864530/gfx/2021/corona%20fighters/CardF-Drugstore_ut34zo.png",
+      alt: "CardF-Drugstore",
+    },
+    {
+      src: "https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864482/gfx/2021/corona%20fighters/CardF-Gloves_vv0cie.png",
+      alt: "CardF-Gloves",
+    },
+  ];
+
   return (
-    <div className="flex flex-col gap-9 rounded-md w-full">
-      <div className="grid place-items-center py-24">
-        <SmartImage
-          className="w-[60%]"
-          src="https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864600/gfx/2021/corona%20fighters/Michal_Jelinski_MGLS3_IG1_grupa2_plik3_mcyncm.png"
-          alt=""
-        />
+    <>
+      <SimpleLightbox
+        images={imagePath}
+        initialIndex={initialIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+      />
+      <div className="flex flex-col gap-9 rounded-md w-full">
+        <div className="grid place-items-center py-24">
+          <div
+            onClick={() => openLightbox(0)}
+            className="cursor-pointer contents"
+          >
+            <SmartImage
+              className="w-[60%]"
+              src={imagePath[0].src}
+              alt={imagePath[0].alt}
+            />
+          </div>
+        </div>
+        <SameHeightRow
+          gap={16}
+          roundEvery={true}
+          images={[imagePath[1], imagePath[2], imagePath[3]]}
+          onImageClick={(idx) => openLightbox(1 + idx)}
+        ></SameHeightRow>
+        <div className="grid place-items-center">
+          <div
+            onClick={() => openLightbox(4)}
+            className="cursor-pointer contents"
+          >
+            <SmartImage
+              className="w-full"
+              src={imagePath[4].src}
+              alt={imagePath[4].alt}
+            />
+          </div>
+        </div>
+        <div className="w-full grid grid-cols-3 rounded-sm  border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
+          <TiltBox className="scale-75" onClick={() => openLightbox(5)}>
+            <SmartImage
+              src={imagePath[5].src}
+              alt={imagePath[5].alt}
+              className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+            />
+          </TiltBox>
+          <TiltBox className="scale-75" onClick={() => openLightbox(6)}>
+            <SmartImage
+              src={imagePath[6].src}
+              alt={imagePath[6].alt}
+              className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+            />
+          </TiltBox>
+          <TiltBox className="scale-75" onClick={() => openLightbox(7)}>
+            <SmartImage
+              src={imagePath[7].src}
+              alt={imagePath[7].alt}
+              className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+            />
+          </TiltBox>
+        </div>
+        <div>
+          <h3>Video</h3>
+        </div>
+        <div className="grid grid-flo-row gap-8"></div>
       </div>
-      <SameHeightRow
-        gap={16}
-        roundEvery={true}
-        images={[
-          {
-            src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_Package(1)_SjKm3pELY.avif?updatedAt=1768492291815&ik-s=4a5a62f14866c4c9efd3b44aaad2e2353229393e",
-            alt: "",
-          },
-          {
-            src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/TestRenderV2-2_z_RP77_h7.avif?updatedAt=1768492292043&ik-s=0a1cdf10005a905bd9823163d2ce4a69dd0c73ab",
-            alt: "",
-          },
-          {
-            src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_Package1_Hb3AykBJL.avif?updatedAt=1768492375798&ik-s=ea278f6c3145a1145e4b33055920509aa0a37b7d",
-            alt: "",
-          },
-        ]}
-      ></SameHeightRow>
-      <div className="grid place-items-center">
-        <SmartImage
-          className="w-full"
-          src="https://ik.imagekit.io/j3l1n5k1/gfx/project/corona/Michal_Jelinski_MGLS3_IG1_grupa2_plik4_ShIxg8D_k.avif?updatedAt=1768492292878&ik-s=7b0d6c454e0f495dad8f43e9511caff4cc3f25de"
-          alt=""
-        />
-      </div>
-      <div className="w-full grid grid-cols-3 rounded-sm  border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
-        <TiltBox className="scale-75">
-          <SmartImage
-            src="https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864539/gfx/2021/corona%20fighters/CardF-Bottle_jywret.png"
-            alt="VIII"
-            className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
-          />
-        </TiltBox>
-        <TiltBox className="scale-75">
-          <SmartImage
-            src="https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864530/gfx/2021/corona%20fighters/CardF-Drugstore_ut34zo.png"
-            alt="VIII"
-            className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
-          />
-        </TiltBox>
-        <TiltBox className="scale-75">
-          <SmartImage
-            src="https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764864482/gfx/2021/corona%20fighters/CardF-Gloves_vv0cie.png"
-            alt="VIII"
-            className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
-          />
-        </TiltBox>
-      </div>
-      <div>
-        <h3>Video</h3>
-      </div>
-      <div className="grid grid-flo-row gap-8">
-        <iframe
-          className="w-full h-auto rounded-xl overflow-clip hover:bg-primary/90 hover:border-grey-100 border border-grey-200 aspect-video"
-          src="https://res.cloudinary.com/dcmfq9hg5/video/upload/v1766523472/gfx/2021/corona%20fighters/MJ-CoronaFightersV1_tyxrc8.mp4"
-          title="MJ-CoronaFightersV1"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
-        <iframe
-          className="w-full h-auto rounded-xl overflow-clip hover:bg-primary/90 hover:border-grey-100 border border-grey-200 aspect-video"
-          src="https://res.cloudinary.com/dcmfq9hg5/video/upload/v1766523492/gfx/2021/corona%20fighters/animtestFighters1_xkbjr3.mp4"
-          title="MJ-CoronaFightersV1"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        ></iframe>
-      </div>
-    </div>
+    </>
   );
 }

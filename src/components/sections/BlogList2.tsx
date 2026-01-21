@@ -15,7 +15,6 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SmartImage } from "../ui/SmartImage";
 import { CategoryCard } from "@/components/gallery/CategoryCard";
 import { CATEGORY_COVERS } from "@/data/categoryCovers";
 import {
@@ -27,6 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useLanguage } from "@/lib/LanguageContext";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 export function BlogList() {
   const { t } = useLanguage();

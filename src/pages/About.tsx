@@ -4,7 +4,7 @@ import { PlaylistGrid } from "@/components/sections/PlaylistGrid";
 import { motion } from "motion/react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SEO } from "@/components/SEO";
-import { SameHeightRow } from "@/components/mdx/SameHeightRow";
+import { SameHeightRow } from "@/components/ui/SameHeightRow";
 
 export function About() {
   const { t } = useLanguage();
@@ -27,15 +27,15 @@ export function About() {
             roundEvery={true}
             images={[
               {
-                src: "https://ik.imagekit.io/j3l1n5k1/photography/profile1_W3dULH601O.avif?updatedAt=null&ik-s=f8651901cb1707d8fca96d6314104d46a12772b8",
+                src: "https://ik.imagekit.io/j3l1n5k1/photography/profilev1.avif",
                 alt: "Photographer profile picture1",
               },
               {
-                src: "https://ik.imagekit.io/j3l1n5k1/photography/profile2__13hj4lD1.avif?updatedAt=null&ik-s=4b2fe3200929c99179621921eee47c7e83bdabd0",
+                src: "https://ik.imagekit.io/j3l1n5k1/photography/profilev2.avif",
                 alt: "Photographer profile picture2",
               },
               {
-                src: "https://ik.imagekit.io/j3l1n5k1/photography/profile3_cJajwNGQw.avif?updatedAt=null&ik-s=db7bce6b1b7839a782118b4f133d68ce58477ad0",
+                src: "https://ik.imagekit.io/j3l1n5k1/photography/profilev3.avif?updatedAt=1769002627937",
                 alt: "Photographer profile picture3",
               },
             ]}

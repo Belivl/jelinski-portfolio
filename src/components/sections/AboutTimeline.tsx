@@ -3,6 +3,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { useState } from "react";
 import { ArrowRight, ExternalLink, FolderKanban } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SmartImage } from "../ui/SmartImage";
 
 export function AboutTimeline() {
   const { t } = useLanguage();
@@ -46,7 +47,7 @@ export function AboutTimeline() {
                 <div className="flex items-center gap-4">
                   {exp.logo && (
                     <div className="w-24 h-24 rounded-xl dark:bg-neutral-900 bg-neutral-200 p-2 flex items-center justify-center shrink-0 overflow-hidden backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
-                      <img
+                      <SmartImage
                         src={exp.logo}
                         alt={exp.company}
                         className="max-w-full max-h-full object-contain filter rounded-sm"

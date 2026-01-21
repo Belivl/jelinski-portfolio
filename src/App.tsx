@@ -59,11 +59,6 @@ const DatabaseTools = lazy(() =>
     default: module.DatabaseTools,
   })),
 );
-const GoldButtonDemo = lazy(() =>
-  import("@/pages/GoldButtonDemo").then((module) => ({
-    default: module.GoldButtonDemo,
-  })),
-);
 const NotFound = lazy(() =>
   import("@/pages/NotFound").then((module) => ({ default: module.NotFound })),
 );
@@ -134,7 +129,6 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
-                <Route path="/gold-demo" element={<GoldButtonDemo />} />
                 {/* 404 */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

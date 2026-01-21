@@ -1,328 +1,221 @@
 import { motion } from "motion/react";
-import { SameHeightRow } from "../mdx/SameHeightRow";
-import { GalleryAccordion } from "./GalleryAccordion";
-import { SmartImage } from "../ui/SmartImage";
+import { SameHeightRow } from "@/components/ui/SameHeightRow";
+import { GalleryAccordion } from "@/components/galleries/GalleryAccordion";
+import { SmartImage } from "@/components/ui/SmartImage";
 import { useState } from "react";
 import { SimpleLightbox } from "@/components/gallery/SimpleLightbox";
+import { YouTubeEmbed } from "@/components/ui/YouTubeEmbed";
 
 const THREED_IMAGES = [
   // 2025
   {
-    id: "tinkerbell1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2025/Tinkerbell1GrainStarsPS_7LN5fvFoM.avif?updatedAt=1768494985847&ik-s=a8c619d36b8fdf6b661a22c57706ee965301b063",
-    alt: "Tinkerbell1",
-    year: "2025",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2025/Tinkerbell1GrainStarsPS_A4vmq-qA3.avif?updatedAt=1769089602552",
+    alt: "tinkerbell1",
   },
   {
-    id: "love_angel",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2025/JEL-LoveAg4_y1ZuG2vqOt.avif?updatedAt=1768494985970&ik-s=6caf5650fb77c04d06d46489b353134d338d4909",
-    alt: "LoveAngel",
-    year: "2025",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2025/JEL-LoveAg4_bNSYPBWi1z.avif?updatedAt=1769089602828",
+    alt: "loveangel",
   },
   // 2024
   {
-    id: "emeraldcut1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/emeraldcut1_WFksWt29N.avif?updatedAt=1768494946254&ik-s=1cff146805402fdbdeed7c9a6cce8364848875e0",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/emeraldcut1_XUoU9AsqZ.avif?updatedAt=1769089535903",
     alt: "emeraldcut1",
-    year: "2024",
   },
   {
-    id: "cube_growth",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/cubeGrowth1TestGrained2_R7ZdaE4_F.avif?updatedAt=1768494945973&ik-s=fc939c7da4e105be53b9ea109b8885fb4571d420",
-    alt: "cubeGrowth",
-    year: "2024",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/cubeGrowth1TestGrained2_ZagUb6b-7.avif?updatedAt=1769089535484",
+    alt: "cubegrowth",
   },
   {
-    id: "gem1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/gem1_0x4Bx1KIa.avif?updatedAt=1768494946318&ik-s=1ab83b478f94f3f93d06ff0d340ea95d81362424",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/gem1_u-2mWdron.avif?updatedAt=1769089535867",
     alt: "gem1",
-    year: "2024",
   },
   {
-    id: "tie",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/Tie-2_i9XlD5E0S.avif?updatedAt=1768494946513&ik-s=567defcb5ac5406beabc75e5d01e35267db2b0a9",
-    alt: "Tie",
-    year: "2024",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2024/Tie-2_0vR00WK-cD.avif?updatedAt=1769089536075",
+    alt: "tie",
   },
   {
-    id: "chris",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2023/Chris25blender-2_FZjr1lpEd.avif?updatedAt=1768494873351&ik-s=12ab608e122d2e115724a35f450cdae2d9b389fb",
-    alt: "Chris",
-    year: "2023",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2023/Chris25blender-2_6L7KnLgHnD.avif?updatedAt=1769089517612",
+    alt: "chris",
   },
   // 2022
   {
-    id: "bf1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/BWflyEv0236_zAHGp8_0c.avif?updatedAt=1768494727084&ik-s=6f23db398facf77fba735320516a834171699a3e",
-    alt: "Butterflies",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/BWflyEv0236_m2XI5JW-_.avif?updatedAt=1769089467781",
+    alt: "butterflies1",
   },
   {
-    id: "bf2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/flyEv0116_zDNyOhm2F.avif?updatedAt=1768494727160&ik-s=94802b52377b9cacc3a77bcbb2d2517e80bd06f4",
-    alt: "Butterflies",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/flyEv0116_W4slF2PrBt.avif?updatedAt=1769089467802",
+    alt: "butterflies2",
   },
   {
-    id: "bf3",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/f95TestV2_tGwv5XZPr.avif?updatedAt=1768494806874&ik-s=901e4a7090005bba729d31a56e2202f1b3129774",
-    alt: "Butterflies",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/f95TestV2_OmMRj9kcpg.avif?updatedAt=1769089456285",
+    alt: "butterflies3",
   },
   {
-    id: "diffgr",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/DiffGr1_qae9H6IO3.avif?updatedAt=1768494726964&ik-s=e939cdf1d0b8b453c13f430f196e5e4698f8dca7",
-    alt: "DiffGr",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/DiffGr1_PHRgGjvC0.avif?updatedAt=1769089467804",
+    alt: "diffgr",
   },
   {
-    id: "sugar_donut",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/SugarDonutCrystalsV1_ItW-e5gN5.avif?updatedAt=1768494727501&ik-s=03a9ef37e0251eae2f55173397375f87dc6f3ebd",
-    alt: "SugarDonut",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/SugarDonutCrystalsV1_za22iY334.avif?updatedAt=1769089467728",
+    alt: "sugardonut",
   },
   {
-    id: "jack_daniels",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/JackDaniels1v2connected-2_kqvkv8FGs.avif?updatedAt=1768494807151&ik-s=dd69201464cceaba6403d33ece4cc24c84a209f1",
-    alt: "JackDaniels",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/JackDaniels1v2connected-2_WBYo4UPvj.avif?updatedAt=1769089456355",
+    alt: "jackdaniels",
   },
   {
-    id: "test3",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/test3_SoSq74aOn.avif?updatedAt=1768494727091&ik-s=446c47a28f1bbe5eca1dd53f5bc31d04ecd14902",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/test3_CwzPjp12Sl.avif?updatedAt=1769089467694",
     alt: "test3",
-    year: "2022",
   },
   {
-    id: "test_f220",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF220v2_MSL_6vM78.avif?updatedAt=1768494727019&ik-s=c9b80711dcf3b974925ecaf6b50bc7f0fbfae55f",
-    alt: "TestRenderF220",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF220v2_HXtHuemvcC.avif?updatedAt=1769089467842",
+    alt: "testrenderf220",
   },
   {
-    id: "test_f180",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF180_Pc_u7--LS.avif?updatedAt=1768494727098&ik-s=6b4bec850bfcd197e83a4abb83c9728d411e5990",
-    alt: "TestRenderF180",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF180_r7Btb1_uB.avif?updatedAt=1769089467410",
+    alt: "testrenderf180",
   },
   {
-    id: "test_f139",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF139_L6hesqe0MN.avif?updatedAt=1768494727193&ik-s=cbe5a98cb91b1c1a9061bad6a288ac64224b6988",
-    alt: "TestRenderF139",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF139_nlOIlyV_C.avif?updatedAt=1769089467730",
+    alt: "testrenderf139",
   },
   {
-    id: "test_f0",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF0_DkQpIY4jN.avif?updatedAt=1768494726879&ik-s=a2ad25eb5e769506f21bbd224f749b345b8aa4c2",
-    alt: "TestRenderF0",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TestRenderF0_U7FT1W_yCu.avif?updatedAt=1769089467943",
+    alt: "testrenderf0",
   },
   {
-    id: "trippy",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TrippySwirling_k3VhoAn2j.avif?updatedAt=1768494727237&ik-s=430a97fc25de59f8c15a6ac6ecd1ea8edca7354a",
-    alt: "TrippySwirling",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/TrippySwirling_bIojpaARSD.avif?updatedAt=1769089467622",
+    alt: "trippyswirling",
   },
   {
-    id: "caustic",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/CausticTestPrism1_jXxBf-LK1.avif?updatedAt=1768494806870&ik-s=596a5e08ee50e424c84309ca8a6f81eaccdf6c50",
-    alt: "CausticTestPrism",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/CausticTestPrism1_5Y8DdbsWC.avif?updatedAt=1769089456143",
+    alt: "caustictestprism",
   },
   {
-    id: "pencils1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/Pencils0083_MwAAAtXR8.avif?updatedAt=1768494807076&ik-s=6220a859b19e364988a81b1dda516aee56e7cef7",
-    alt: "Pencils0083",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/Pencils0083_S-WQ81yA-.avif?updatedAt=1769089456350",
+    alt: "pencils0083",
   },
   {
-    id: "pencils2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/PencilsA0139_iu69DLBru.avif?updatedAt=1768494807041&ik-s=b1847e22ee1636554bfa868333ab0f3adcd27092",
-    alt: "PencilsA0139",
-    year: "2022",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2022/PencilsA0139_BCTHK-aal.avif?updatedAt=1769089456354",
+    alt: "pencilsa0139",
   },
   // 2021
   {
-    id: "536_1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536942_4Tzv4VROc.avif?updatedAt=1768494648975&ik-s=28c8e2178e1c45a6841a9758fbbe61c08cc083de",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536942__FjPpEUJ4.avif?updatedAt=1769089302814",
+    alt: "placeholder1",
   },
   {
-    id: "536_2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536941_fnQkE5zHFX.avif?updatedAt=1768494649017&ik-s=3079dc9b8490d908c33fdbe3c690f185e550ac33",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536941_VUywDrzOO.avif?updatedAt=1769089302656",
+    alt: "placeholder2",
   },
   {
-    id: "536_3",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536943_t9aGD-ffVM.avif?updatedAt=1768494648791&ik-s=2a11220acc6cf8c9364cb826c966fd886a26888a",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/536943_1zuLs8R65.avif?updatedAt=1769089302634",
+    alt: "placeholder3",
   },
   {
-    id: "michal_wsb",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/MichalJelinski-WSB-MartwaNatura2_zaHkC5ps7.avif?updatedAt=1768494532982&ik-s=c32136b4e8c989fd963938209459da98fed06ab2",
-    alt: "MichalJelinski-WSB-MartwaNatura2",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/MichalJelinski-WSB-MartwaNatura2_JgaCJp1PtT.avif?updatedAt=1769089169502",
+    alt: "michaljelinski-wsb-martwanatura2",
   },
   {
-    id: "536_4",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/53694_geXybX1j7B.avif?updatedAt=1768494648640&ik-s=31b09771c096ee38778b3ea87b06fb3d5115a2cc",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/desk53694_BtK8xsgzKR.avif?updatedAt=1769089272174",
+    alt: "placeholder4",
   },
   {
-    id: "wsb_2021",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/20210507-WSB1v2__GNBHKi_dQ.avif?updatedAt=1768494648674&ik-s=620e90a42c25289cac11471f4cb1a528459dffec",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/20210507-WSB1v2_ELPK8_RX-.avif?updatedAt=1769089272179",
+    alt: "placeholder5",
   },
   {
-    id: "wsb1v2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/WSB1v2_B9uiZj9r9x.avif?updatedAt=1768494648756&ik-s=4e804d303bbb06ee93bd4d471c106fff19ce644f",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/wsb10_12_MJ_v2_RRPraWLxF.avif?updatedAt=1769089272026",
+    alt: "placeholder6",
   },
   {
-    id: "wsb10_12",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/wsb10_12_MJ_v2_WNOQb99Xbk.avif?updatedAt=1768494648625&ik-s=ec5dabd537e0d09a9b009237419b7ac01045491e",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/wsb10_12_MJ_xFxVqxore.avif?updatedAt=1769089213376",
+    alt: "placeholder7",
   },
   {
-    id: "tablescene1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/MJtablescene1_GArSUmbAO5.avif?updatedAt=1768494648611&ik-s=8197acfe4b087b9f3299563d3aa553a037d175c8",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/MJtablescene1_l4wNMKtJsl.avif?updatedAt=1769089272135",
+    alt: "placeholder8",
   },
   {
-    id: "tablescene2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/MJtablescene1_GArSUmbAO5.avif?updatedAt=1768494648611&ik-s=8197acfe4b087b9f3299563d3aa553a037d175c8",
-    alt: "Placeholder",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/IMG_20210308_230541@0.75x_WaNw8z_U0.avif?updatedAt=1769089168984",
+    alt: "placeholder10",
   },
   {
-    id: "img_2021",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/IMG_20210308_230541_jwH80Dyo4.avif?updatedAt=1768494533576&ik-s=de76f12230b4a71790c8ba3a5df71de6448a551e",
-    alt: "Placeholder",
-    year: "2021",
-  },
-  {
-    id: "ring_test",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/ringTest1s_6TDu5Y439.avif?updatedAt=1768494648565&ik-s=25b12c94e7e9f2fede3b913758d401498847223e",
-    alt: "ringTest1s",
-    year: "2021",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2021/ringTest1_mS9wF_TE6.avif?updatedAt=1769089272020",
+    alt: "ringtest1s",
   },
   // 2020
   {
-    id: "laser1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/Laser0024_yOEdzYYFjE.avif?updatedAt=1768494448530&ik-s=3dd701e982a57bd6e8de142b37c6c6509a061bbd",
-    alt: "Laser0024",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0024_uSwdRj6Gzo.avif?updatedAt=1769088940317",
+    alt: "laser0024",
   },
   {
-    id: "laser2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/Laser0106_7Th-sSKEul.avif?updatedAt=1768494448535&ik-s=1d4a96928e06a6125836e38ffa804c31b0fc8058",
-    alt: "Laser0106",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0024_uSwdRj6Gzo.avif?updatedAt=1769088940317",
+    alt: "laser0106",
   },
   {
-    id: "laser3",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/Laser0044_KfZAJbj3f.avif?updatedAt=null&ik-s=e0a93a2e31ce3dc1f6edda85dd2fc3cc09164d00",
-    alt: "Laser0044",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0044_qo9mZaM0pl.avif?updatedAt=1769088940363",
+    alt: "laser0044",
   },
   {
-    id: "pyrite",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/pyrite1_dgNoj1Ry7Z.avif?updatedAt=1768494041748&ik-s=eb092ea1bc527b590c4eba5ce0a0dabbc6bb0ce7",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0044_qo9mZaM0pl.avif?updatedAt=1769088940363",
     alt: "pyrite1",
-    year: "2020",
   },
   {
-    id: "glasswave",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/exp1_jWWyfMTnbU.avif?updatedAt=1768494448542&ik-s=8b28c22c143dcb21e745ff80af5664477225a9ad",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0044_qo9mZaM0pl.avif?updatedAt=1769088940363",
     alt: "glasswave",
-    year: "2020",
   },
   {
-    id: "chairwhite",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/chairwhiteBG2_bPnEfHPCk.avif?updatedAt=1768494040933&ik-s=dca53f17898fbd366f8dc677900686cf718e3b90",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/chairwhiteBG2_w8R6G1V8_.avif?updatedAt=1769088940353",
     alt: "chairwhite",
-    year: "2020",
   },
   {
-    id: "pill",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/pill235635_zkAB881Gac.avif?updatedAt=null&ik-s=ad1720e99c774ad0e4a7b5b0f1d1f06220c9eac4",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/pill235635_CaX3jhHN3.avif?updatedAt=1769088940293",
     alt: "pill",
-    year: "2020",
   },
   {
-    id: "jelinski1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/jelinskiLogo2_v1qofftvqn.avif?updatedAt=1768494448498&ik-s=0dd0ddb48765006b1f15b02b4b0d9b72c9005ff1",
-    alt: "jelinskiLogo2",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/jelinskiLogo2_-ZejY5652.avif?updatedAt=1769088940301",
+    alt: "jelinskilogo2",
   },
   {
-    id: "jelinski2",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/jelinskiLogo1_Ev97rjF0oz.avif?updatedAt=1768494448552&ik-s=ddc7a23d92bc7df546bc00a534c33bb7589a69cd",
-    alt: "jelinskiLogo1",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/jelinskiLogo1_ESUcJGanee.avif?updatedAt=1769088940286",
+    alt: "jelinskilogo1",
   },
   {
-    id: "jelinski3",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/jelinskiLogo3_w8EbQZb86P.avif?updatedAt=1768494448559&ik-s=aa5128701cdd439bf659fdc718e47fd1c9b11950",
-    alt: "jelinskiLogo3",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/jelinskiLogo3_SEN0gYzhY.avif?updatedAt=1769088940274",
+    alt: "jelinskilogo3",
   },
   {
-    id: "jelinski4",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/jelinskiLogo4_9Zq_d6s1Uz.avif?updatedAt=1768494448486&ik-s=dcd36346339d54ece1176f101cbf3248bbc85ed0",
-    alt: "jelinskiLogo4",
-    year: "2020",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/jelinskiLogo4_-l--Zgej4.avif?updatedAt=1769088940323",
+    alt: "jelinskilogo4",
   },
   // 2018
   {
-    id: "r3dguilt",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/R3DGUILT360_Bz_ESkE-E.avif?updatedAt=1768493879881&ik-s=29d15180f673af4cb98a761358ea55302caf4b1f",
-    alt: "R3DGUILT360",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/R3DGUILT360_HtmpQFUxoC.avif?updatedAt=1769089870289",
+    alt: "r3dguilt360",
   },
   {
-    id: "sang_bleu",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Sang%20Bleu%20Scene_l0pYv6IwAd.avif?updatedAt=1768493879911&ik-s=60a57620cde5cfba28e3d906011302c3773bf7c3",
-    alt: "Sang Bleu Scene",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/SangBleuScene_XuMap7BIrK.avif?updatedAt=1769089870112",
+    alt: "sangbleuscene",
   },
   {
-    id: "img_2018_1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Image_Ht5PBSFrQ.avif?updatedAt=1768493879905&ik-s=c5ebf5723f9866f3bfd018d9c16c8513239e0bd6",
-    alt: "Placeholder",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Hublotcopy2_-uCAXqjin.avif?updatedAt=1769089870048",
+    alt: "placeholder11",
   },
   {
-    id: "sang_bleu1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Sang%20Bleu1_634_4KWsZa.avif?updatedAt=1768493879910&ik-s=32202950175ba35e69b61e0f45fb0c0eabf363c9",
-    alt: "Placeholder",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/SangBleu1_htbvQi0mL.avif?updatedAt=1769089870069",
+    alt: "placeholder12",
   },
   {
-    id: "hublot1",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Hublotcopy%201_lj0HcS4Kl.avif?updatedAt=1768493879858&ik-s=119a6d9149422f0c5c62a8fc9e3e1fdb351a259c",
-    alt: "Placeholder",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Hublotcopy1d_SMNgurCms.avif?updatedAt=1769089870186",
+    alt: "placeholder13",
   },
   {
-    id: "hublot1d",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Hublotcopy%201d_opH5UjeXU9.avif?updatedAt=1768493879919&ik-s=9d8cbcc5f93e2710290f6c5dc5b447933988b933",
-    alt: "Placeholder",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/Hublotcopy1_ZyK2Isekl.avif?updatedAt=1769089870054",
+    alt: "placeholder14",
   },
   {
-    id: "img_10_6666",
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/10_6666_j8bmGCo57.avif?updatedAt=1768493879877&ik-s=e562bdce0ce3ae6376d31c725b2dce7b1acc2013",
-    alt: "Placeholder",
-    year: "2018",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2018/HublotcopyBack_D0ti5iN-6F.avif?updatedAt=1769089870100",
+    alt: "placeholder15",
   },
 ];
 
@@ -330,15 +223,15 @@ export function ThreeDGallery() {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [initialIndex, setInitialIndex] = useState(0);
 
-  const openLightbox = (id: string) => {
-    const index = THREED_IMAGES.findIndex((img) => img.id === id);
+  const openLightbox = (alt: string) => {
+    const index = THREED_IMAGES.findIndex((img) => img.alt === alt);
     if (index !== -1) {
       setInitialIndex(index);
       setLightboxOpen(true);
     }
   };
 
-  const getImg = (id: string) => THREED_IMAGES.find((img) => img.id === id)!;
+  const getImg = (alt: string) => THREED_IMAGES.find((img) => img.alt === alt)!;
 
   return (
     <>
@@ -361,10 +254,10 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["tinkerbell1", "love_angel"];
+              const ids = ["tinkerbell1", "loveangel"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("tinkerbell1"), getImg("love_angel")]}
+            images={[getImg("tinkerbell1"), getImg("loveangel")]}
           ></SameHeightRow>
         </GalleryAccordion>
 
@@ -374,12 +267,12 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["emeraldcut1", "cube_growth", "gem1"];
+              const ids = ["emeraldcut1", "cubegrowth", "gem1"];
               openLightbox(ids[idx]);
             }}
             images={[
               getImg("emeraldcut1"),
-              getImg("cube_growth"),
+              getImg("cubegrowth"),
               getImg("gem1"),
             ]}
           ></SameHeightRow>
@@ -401,38 +294,39 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["bf1", "bf2", "bf3"];
+              const ids = ["butterflies1", "butterflies2", "butterflies3"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("bf1"), getImg("bf2"), getImg("bf3")]}
+            images={[
+              getImg("butterflies1"),
+              getImg("butterflies2"),
+              getImg("butterflies3"),
+            ]}
           ></SameHeightRow>
-          <iframe
-            width="1400"
-            height="787"
-            className="w-full rounded-xl overflow-clip hover:bg-primary/90 hover:border-grey-100 border border-grey-200"
-            src="https://www.youtube.com/embed/KQo5-6ObNtM?si=fax2yoG5JNZrkxfK"
+          <YouTubeEmbed
+            videoId="KQo5-6ObNtM"
             title="Venom Esport Team Intro"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          ></iframe>
+            className="w-full"
+          />
 
           <SameHeightRow
             className="rounded-xl overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["diffgr", "sugar_donut"];
+              const ids = ["diffgr", "sugardonut"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("diffgr"), getImg("sugar_donut")]}
+            images={[getImg("diffgr"), getImg("sugardonut")]}
           ></SameHeightRow>
           <div className="grid grid-cols-2 md:grid-flow-col gap-4 w-full">
             {[
-              "jack_daniels",
+              "jackdaniels",
               "test3",
-              "test_f220",
-              "test_f180",
-              "test_f139",
-              "test_f0",
+              "testrenderf220",
+              "testrenderf180",
+              "testrenderf139",
+              "testrenderf0",
             ].map((id) => (
               <div
                 key={id}
@@ -447,55 +341,54 @@ export function ThreeDGallery() {
               </div>
             ))}
           </div>
+          <YouTubeEmbed
+            videoId="bGi3_TnjfeY"
+            title="ExonNation Esport Team - Official Intro"
+            className="w-full"
+          />
           <SameHeightRow
             className="rounded-xl overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["trippy", "caustic"];
+              const ids = ["trippyswirling", "caustictestprism"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("trippy"), getImg("caustic")]}
+            images={[getImg("trippyswirling"), getImg("caustictestprism")]}
           ></SameHeightRow>
 
           <div className="grid grid-cols-1 md:grid-flow-col gap-4 w-full">
             <div
-              onClick={() => openLightbox("pencils1")}
+              onClick={() => openLightbox("pencils0083")}
               className="cursor-pointer"
             >
               <SmartImage
-                src={getImg("pencils1").src}
-                alt={getImg("pencils1").alt}
+                src={getImg("pencils0083").src}
+                alt={getImg("pencils0083").alt}
                 className="transition-all duration-500 ease-in-out object-contain border border-white/10 rounded-xl w-full h-auto"
               />
             </div>
             <div
-              onClick={() => openLightbox("pencils2")}
+              onClick={() => openLightbox("pencilsa0139")}
               className="cursor-pointer"
             >
               <SmartImage
-                src={getImg("pencils2").src}
-                alt={getImg("pencils2").alt}
+                src={getImg("pencilsa0139").src}
+                alt={getImg("pencilsa0139").alt}
                 className="transition-all duration-500 ease-in-out object-contain border border-white/10 rounded-xl w-full h-auto"
               />
             </div>
-            <iframe
-              width="560"
-              height="315"
-              src="https://www.youtube.com/embed/lFidgqvkpbA?si=1Gb0mY-CaYBMESty"
-              title="YouTube video player"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allowFullScreen
-              className="rounded-xl border border-white/10 w-full"
-            ></iframe>
+            <YouTubeEmbed
+              videoId="lFidgqvkpbA"
+              title="3D Art Showcase"
+              className="w-full"
+            />
           </div>
         </GalleryAccordion>
 
         <GalleryAccordion year="2021">
           <div className="grid grid-cols-3 gap-4 w-full">
-            {["536_1", "536_2", "536_3"].map((id) => (
+            {["placeholder1", "placeholder2", "placeholder3"].map((id) => (
               <div
                 key={id}
                 onClick={() => openLightbox(id)}
@@ -509,15 +402,18 @@ export function ThreeDGallery() {
               </div>
             ))}
           </div>
-          <div className="w-full" onClick={() => openLightbox("michal_wsb")}>
+          <div
+            className="w-full"
+            onClick={() => openLightbox("michaljelinski-wsb-martwanatura2")}
+          >
             <SmartImage
-              src={getImg("michal_wsb").src}
-              alt={getImg("michal_wsb").alt}
+              src={getImg("michaljelinski-wsb-martwanatura2").src}
+              alt={getImg("michaljelinski-wsb-martwanatura2").alt}
               className="transition-all duration-500 ease-in-out object-contain border border-white/10 rounded-xl cursor-pointer w-full h-auto"
             />
           </div>
           <div className="grid grid-cols-3 gap-4 w-full">
-            {["536_4", "wsb_2021", "wsb1v2"].map((id) => (
+            {["placeholder4", "placeholder5", "placeholder6"].map((id) => (
               <div
                 key={id}
                 onClick={() => openLightbox(id)}
@@ -536,14 +432,10 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["wsb10_12", "tablescene1", "tablescene2"];
+              const ids = ["placeholder7", "placeholder8"];
               openLightbox(ids[idx]);
             }}
-            images={[
-              getImg("wsb10_12"),
-              getImg("tablescene1"),
-              getImg("tablescene2"),
-            ]}
+            images={[getImg("placeholder7"), getImg("placeholder8")]}
           ></SameHeightRow>
 
           <SameHeightRow
@@ -551,10 +443,10 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["img_2021", "ring_test"];
+              const ids = ["placeholder10", "ringtest1s"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("img_2021"), getImg("ring_test")]}
+            images={[getImg("placeholder10"), getImg("ringtest1s")]}
           ></SameHeightRow>
         </GalleryAccordion>
 
@@ -564,20 +456,24 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["laser1", "laser2", "laser3"];
+              const ids = ["laser0024", "laser0106", "laser0044"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("laser1"), getImg("laser2"), getImg("laser3")]}
+            images={[
+              getImg("laser0024"),
+              getImg("laser0106"),
+              getImg("laser0044"),
+            ]}
           ></SameHeightRow>
           <SameHeightRow
             className="rounded-xl overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["pyrite", "glasswave"];
+              const ids = ["pyrite1", "glasswave"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("pyrite"), getImg("glasswave")]}
+            images={[getImg("pyrite1"), getImg("glasswave")]}
           ></SameHeightRow>
           <SameHeightRow
             className="rounded-xl overflow-hidden "
@@ -594,30 +490,35 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["jelinski1", "jelinski2", "jelinski3", "jelinski4"];
+              const ids = [
+                "jelinskilogo2",
+                "jelinskilogo1",
+                "jelinskilogo3",
+                "jelinskilogo4",
+              ];
               openLightbox(ids[idx]);
             }}
             images={[
-              getImg("jelinski1"),
-              getImg("jelinski2"),
-              getImg("jelinski3"),
-              getImg("jelinski4"),
+              getImg("jelinskilogo2"),
+              getImg("jelinskilogo1"),
+              getImg("jelinskilogo3"),
+              getImg("jelinskilogo4"),
             ]}
           ></SameHeightRow>
         </GalleryAccordion>
 
         <GalleryAccordion year="2018">
-          <div className="w-full" onClick={() => openLightbox("r3dguilt")}>
-            <img
-              src={getImg("r3dguilt").src}
-              alt={getImg("r3dguilt").alt}
+          <div className="w-full" onClick={() => openLightbox("r3dguilt360")}>
+            <SmartImage
+              src={getImg("r3dguilt360").src}
+              alt={getImg("r3dguilt360").alt}
               className="transition-all duration-500 ease-in-out w-full border border-white/10 rounded-xl cursor-pointer"
             />
           </div>
-          <div className="w-full" onClick={() => openLightbox("sang_bleu")}>
-            <img
-              src={getImg("sang_bleu").src}
-              alt={getImg("sang_bleu").alt}
+          <div className="w-full" onClick={() => openLightbox("sangbleuscene")}>
+            <SmartImage
+              src={getImg("sangbleuscene").src}
+              alt={getImg("sangbleuscene").alt}
               className="transition-all duration-500 ease-in-out w-full border border-white/10 rounded-xl cursor-pointer"
             />
           </div>
@@ -626,23 +527,23 @@ export function ThreeDGallery() {
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["img_2018_1", "sang_bleu1"];
+              const ids = ["placeholder11", "placeholder12"];
               openLightbox(ids[idx]);
             }}
-            images={[getImg("img_2018_1"), getImg("sang_bleu1")]}
+            images={[getImg("placeholder11"), getImg("placeholder12")]}
           ></SameHeightRow>
           <SameHeightRow
             className="rounded-xl overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
-              const ids = ["hublot1", "hublot1d", "img_10_6666"];
+              const ids = ["placeholder13", "placeholder14", "placeholder15"];
               openLightbox(ids[idx]);
             }}
             images={[
-              getImg("hublot1"),
-              getImg("hublot1d"),
-              getImg("img_10_6666"),
+              getImg("placeholder13"),
+              getImg("placeholder14"),
+              getImg("placeholder15"),
             ]}
           ></SameHeightRow>
         </GalleryAccordion>

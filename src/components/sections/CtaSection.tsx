@@ -2,9 +2,9 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { motion } from "motion/react";
-import { SmartImage } from "@/components/ui/SmartImage";
 import { HOME_FEATURED_PHOTOS } from "@/data/home";
 import { ArrowRight } from "lucide-react";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 const featuredUrls = HOME_FEATURED_PHOTOS.map((photo) => photo.url);
 

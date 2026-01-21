@@ -82,7 +82,7 @@ export function AdminDashboard() {
             >
               <Link
                 to={tool.path}
-                className="group block relative p-8 bg-white/5 border border-white/10 rounded-[2rem] hover:bg-white/[0.08] hover:border-white/20 transition-all duration-500 overflow-hidden"
+                className="group block relative p-8 bg-white/5 border border-white/10 rounded-4xl hover:bg-white/8 hover:border-white/20 transition-all duration-500 overflow-hidden"
               >
                 {/* Tool specific background accent */}
                 <div
@@ -124,7 +124,7 @@ export function AdminDashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="mt-12 p-8 border border-white/5 bg-black/40 rounded-[2rem] flex flex-col md:flex-row items-center justify-between gap-6"
+          className="mt-12 p-8 border border-white/5 bg-black/40 rounded-4xl flex flex-col md:flex-row items-center justify-between gap-6"
         >
           <div className="flex items-center gap-8">
             <div className="flex flex-col">

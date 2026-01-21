@@ -139,12 +139,12 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
         )}
       >
         <img
-          src="/Paper-Texture-6.jpg"
+          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
           alt=""
           className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-90"
         />
         <img
-          src="/Paper-Texture-6.jpg"
+          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
           alt=""
           className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
         />
@@ -347,12 +347,12 @@ export function Testimonials() {
                   }}
                 >
                   <img
-                    src="/Paper-Texture-6.jpg"
+                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
                     alt=""
                     className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-70"
                   />
                   <img
-                    src="/Paper-Texture-6.jpg"
+                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
                     alt=""
                     className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
                   />
@@ -386,12 +386,12 @@ export function Testimonials() {
                 }}
               >
                 <img
-                  src="/Paper-Texture-6.jpg"
+                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
                   alt=""
                   className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-70"
                 />
                 <img
-                  src="/Paper-Texture-6.jpg"
+                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
                   alt=""
                   className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
                 />

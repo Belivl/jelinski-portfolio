@@ -5,6 +5,7 @@ import {
   ComparisonItem,
 } from "@/components/ui/shadcn-io/comparison.tsx";
 import { cn } from "@/lib/utils";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 interface ComparisonProps {
   images: {
@@ -35,7 +36,7 @@ function Comparison2({
         position="left"
         onClick={() => onImageClick?.(0)}
       >
-        <img
+        <SmartImage
           alt={images[0].alt}
           className=" w-full h-auto object-cover"
           src={images[0].src}
@@ -46,7 +47,7 @@ function Comparison2({
         position="right"
         onClick={() => onImageClick?.(1)}
       >
-        <img
+        <SmartImage
           alt={images[1].alt}
           className=" w-full h-auto object-cover"
           src={images[1].src}
