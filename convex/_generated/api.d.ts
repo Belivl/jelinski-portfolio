@@ -11,7 +11,6 @@
 import type * as admin from "../admin.js";
 import type * as comments from "../comments.js";
 import type * as helpers from "../helpers.js";
-import type * as imagekit from "../imagekit.js";
 import type * as stats from "../stats.js";
 
 import type {
@@ -24,7 +23,6 @@ declare const fullApi: ApiFromModules<{
   admin: typeof admin;
   comments: typeof comments;
   helpers: typeof helpers;
-  imagekit: typeof imagekit;
   stats: typeof stats;
 }>;
 
