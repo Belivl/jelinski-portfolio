@@ -29,6 +29,12 @@ export function SmartImage({
     "https://ik.imagekit.io/j3l1n5k1";
   const publicKey = import.meta.env.VITE_IMAGEKIT_PUBLIC_KEY;
 
+  if (isProd && !publicKey) {
+    console.warn(
+      "VITE_IMAGEKIT_PUBLIC_KEY is missing in production environment variables.",
+    );
+  }
+
   const getAuthParams = useAction(api.imagekit.getAuthParams);
   const [authParams, setAuthParams] = useState<{
     token: string;
@@ -64,6 +70,9 @@ export function SmartImage({
       } catch (e) {
         console.error("Authenticator fetch error:", e);
       }
+      console.error(
+        "ImageKit Authenticator failed: No auth params available. This will cause 401 errors.",
+      );
       return {
         token: "",
         expire: 0,

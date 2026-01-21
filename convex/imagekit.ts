@@ -9,6 +9,7 @@ export const getAuthParams = action({
     // Check if we are in production or if private key is provided
     const privateKey = process.env.IMAGEKIT_PRIVATE_KEY;
     if (!privateKey) {
+      console.warn("IMAGEKIT_PRIVATE_KEY is missing in Convex environment variables. Private ImageKit feature will not work.");
       return null;
     }
 
@@ -20,6 +21,8 @@ export const getAuthParams = action({
       .createHmac("sha1", privateKey)
       .update(token + expire)
       .digest("hex");
+    
+    console.log("Generated ImageKit auth params successfully.");
 
     return {
       token,

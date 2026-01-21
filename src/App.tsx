@@ -70,8 +70,8 @@ const NotFound = lazy(() =>
 
 // Loading component for Suspense
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-[60vh]">
-    <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin"></div>
+  <div className="flex items-center justify-center min-h-screen bg-background w-full transition-opacity duration-300">
+    <div className="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin shadow-lg"></div>
   </div>
 );
 
