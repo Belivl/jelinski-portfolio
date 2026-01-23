@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/tooltip";
 import { MiniCRTDisplay } from "./MiniCRTDisplay";
 import { GlowContent } from "./GlowContent";
+import { CONVEX_ENABLED } from "@/lib/convex-status";
 
 interface MechanicalSocialBarProps {
   photoId: string;
@@ -33,24 +34,34 @@ export function MechanicalSocialBar({
     getVisitorId().then(setVisitorId);
   }, []);
 
-  const stats = useQuery(api.stats.getStats, {
-    photoId,
-    visitorId: visitorId || "loading",
-  });
+  const stats = useQuery(
+    api.stats.getStats,
+    CONVEX_ENABLED
+      ? {
+          photoId,
+          visitorId: visitorId || "loading",
+        }
+      : "skip",
+  );
 
-  const commentsCount = useQuery(api.comments.countApproved, { photoId }) ?? 0;
+  const commentsCount =
+    useQuery(
+      api.comments.countApproved,
+      CONVEX_ENABLED ? { photoId } : "skip",
+    ) ?? 0;
+
   const toggleLike = useMutation(api.stats.toggleLike);
   const registerView = useMutation(api.stats.registerView);
 
   const likes = stats?.likesCount ?? 0;
   const hasLiked = stats?.hasLiked ?? false;
-  const isLoading = stats === undefined;
+  const isLoading = stats === undefined && CONVEX_ENABLED; // Only loading if we ACTUALLY expect data
 
   const hasLoggedView = useRef(false);
 
   useEffect(() => {
-    if (photoId && visitorId && !hasLoggedView.current) {
-      registerView({ photoId, visitorId });
+    if (CONVEX_ENABLED && photoId && visitorId && !hasLoggedView.current) {
+      registerView({ photoId, visitorId }).catch(() => {});
       hasLoggedView.current = true;
     }
   }, [photoId, visitorId, registerView]);
@@ -76,7 +87,7 @@ export function MechanicalSocialBar({
   };
 
   const handleToggleLike = async () => {
-    if (isLiking || !visitorId) return;
+    if (!CONVEX_ENABLED || isLiking || !visitorId) return;
     setIsLiking(true);
 
     try {

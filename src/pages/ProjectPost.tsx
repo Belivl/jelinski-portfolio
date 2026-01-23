@@ -63,7 +63,7 @@ export function ProjectPost() {
     <article className="min-h-screen pt-24 pb-20">
       <SEO
         title={title}
-        description={project.content.substring(0, 150)} // Simple fallback for description
+        description={translated.content || project.content?.substring(0, 150)} // Simple fallback for description
         image={project.coverImage}
         type="article"
       />

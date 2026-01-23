@@ -162,15 +162,6 @@ const ProjectCard = ({ project }: { project: any }) => {
               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-lg border dark:border-t-neutral-900 dark:border-b-neutral-600 dark:border-x-neutral-700  "
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-            {/* Category Badge */}
-            <div className="absolute top-4 left-4 z-20">
-              <span className="bg-neutral-800 backdrop-blur-md px-2 py-1 rounded-sm border border-white/10 text-xs font-bold text-neutral-300 uppercase tracking-widest">
-                {t.gallery.tagCategories[
-                  project.category.toLowerCase() as keyof typeof t.gallery.tagCategories
-                ] || project.category}
-              </span>
-            </div>
           </div>
 
           {/* Project Details */}
@@ -179,8 +170,8 @@ const ProjectCard = ({ project }: { project: any }) => {
               <h3 className="text-2xl md:text-3xl font-bold font-script1 dark:text-neutral-100 group-hover:text-amber-600 transition-colors leading-tight">
                 {title}
               </h3>
-              <div className="flex items-center gap-1.5 text-neutral-400 text-[10px] sm:text-xs font-mono pt-2">
-                <Calendar className="w-3 h-3 text-amber-500" />
+              <div className="flex items-center gap-1.5 text-neutral-400 text-[10px] sm:text-xs pt-2">
+                <Calendar className="w-3 h-3 text-neutral-500" />
                 <span>{project.date}</span>
               </div>
             </div>
@@ -203,7 +194,7 @@ const ProjectCard = ({ project }: { project: any }) => {
 
               <Button
                 variant="link"
-                className="p-0 h-auto text-amber-600 hover:text-amber-500 font-bold text-xs uppercase tracking-widest gap-2 no-underline hover:no-underline"
+                className="p-0 h-auto text-neutral-600 group-hover:text-amber-500 font-bold text-xs uppercase tracking-widest gap-2 no-underline hover:no-underline"
               >
                 {t.gallery.view || "View Project"}
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

@@ -105,10 +105,6 @@ export function BlogPost() {
                 <ArrowLeft className="mr-2 w-4 h-4" /> {t.blog.back}
               </Button>
             </Link>
-            <div className="flex items-center gap-3">
-              <Calendar className="w-4 h-4" />
-              <span>{post.date}</span>
-            </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-4 my-16">
             <span className="bg-amber-500/10 text-amber-500 px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
@@ -121,6 +117,10 @@ export function BlogPost() {
             <h1 className="text-4xl md:text-6xl font-bold  leading-tight text-foreground text-center font-script1">
               {title}
             </h1>
+            <div className="flex items-center gap-3 mt-4">
+              <Calendar className="w-4 h-4" />
+              <span>{post.date}</span>
+            </div>
           </div>
         </div>
 

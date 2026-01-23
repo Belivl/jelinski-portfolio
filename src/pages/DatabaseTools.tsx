@@ -13,7 +13,22 @@ import {
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 
+import { CONVEX_ENABLED } from "@/lib/convex-status";
+
 export function DatabaseTools() {
+  if (!CONVEX_ENABLED) {
+    return (
+      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 max-w-4xl text-white text-center">
+        <h1 className="text-4xl font-bold mb-4 text-red-500">Offline Mode</h1>
+        <p>
+          Database tools are disabled because no Convex connection is available.
+        </p>
+        <Link to="/admin" className="text-amber-500 hover:underline mt-4 block">
+          Back to Dashboard
+        </Link>
+      </div>
+    );
+  }
   const [contentFilter, setContentFilter] = useState("");
   const [authorFilter, setAuthorFilter] = useState("");
   const [visitorId, setVisitorId] = useState("");
@@ -80,11 +95,11 @@ export function DatabaseTools() {
   };
 
   const handleWipeTableAction = async (
-    table: "views" | "likes" | "comments"
+    table: "views" | "likes" | "comments",
   ) => {
     if (
       !confirm(
-        `DANGER: Are you SURE you want to DELETE ALL ROWS in '${table}'? This cannot be undone.`
+        `DANGER: Are you SURE you want to DELETE ALL ROWS in '${table}'? This cannot be undone.`,
       )
     )
       return;

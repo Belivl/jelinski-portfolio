@@ -1,15 +1,15 @@
 import { useEffect, useCallback, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { FilmCanister } from "./FilmCanister";
+import { FilmCanister } from "@/components/gallery/FilmCanister";
 import type { Photo } from "@/data/photos.ts";
 import { cn } from "@/lib/utils";
-import { ScannerControls } from "./ScannerControls";
-import { CommentsSection } from "./CommentsSection";
-import { FilmstripHolder } from "./FilmstripHolder";
+import { ScannerControls } from "@/components/gallery/ScannerControls";
+import { CommentsSection } from "@/components/gallery/CommentsSection";
+import { FilmstripHolder } from "@/components/gallery/FilmstripHolder";
 import { useLanguage } from "@/lib/LanguageContext";
-import { MechanicalSocialBar } from "./MechanicalSocialBar";
-import { RetroDisplay } from "./RetroDisplay";
-import { SmartImage } from "../ui/SmartImage";
+import { MechanicalSocialBar } from "@/components/gallery/MechanicalSocialBar";
+import { RetroDisplay } from "@/components/gallery/RetroDisplay";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 interface PhotoLightboxProps {
   photos: Photo[];
@@ -89,10 +89,10 @@ export function PhotoLightbox({
     Record<string, number>
   >({});
 
-  const handleImageLoad = (id: string, width: number, height: number) => {
+  const handleImageLoad = (key: string, width: number, height: number) => {
     setImageAspectRatios((prev) => ({
       ...prev,
-      [id]: width / height,
+      [key]: width / height,
     }));
   };
 
@@ -100,28 +100,48 @@ export function PhotoLightbox({
   const BUFFER = 3;
 
   const [isMobile, setIsMobile] = useState(false);
+
+  // Track window dimensions for stable calculations on resize
+  const [dimensions, setDimensions] = useState({
+    width: typeof window !== "undefined" ? window.innerWidth : 1200,
+    height: typeof window !== "undefined" ? window.innerHeight : 800,
+  });
+
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    const handleResize = () => {
+      setDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+      setIsMobile(window.innerWidth < 768);
+    };
+    handleResize(); // Initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const STRIP_HEIGHT_VH = 82;
-  const STRIP_HEIGHT_PX =
-    (typeof window !== "undefined" ? window.innerHeight : 800) *
-    (STRIP_HEIGHT_VH / 100);
+  const STRIP_HEIGHT_VH = isMobile ? 70 : 82;
+  const STRIP_HEIGHT_PX = dimensions.height * (STRIP_HEIGHT_VH / 100);
 
   // Helpers to get width of a photo
   const getPhotoWidth = (photo: Photo) => {
-    if (isMobile) {
-      if (typeof window === "undefined") return 360;
-      return window.innerWidth - 8;
-    }
-    if (!photo.id) return (STRIP_HEIGHT_PX - 74) * 1.5;
-    const ratio = imageAspectRatios[photo.id] || 1.5; // default 3:2
-    // Subtract sprockets (36px * 2) and border (2px) height from the strip height
-    return (STRIP_HEIGHT_PX - 74) * ratio;
+    // Subtract sprockets (36px * 2) from the strip height to get available image height
+    const availableHeight = STRIP_HEIGHT_PX - 72;
+
+    // Default ratios based on category if actual is not yet loaded
+    const isPortraitCat = photo.category === "portrait";
+    const isLandscapeCat = [
+      "landscape",
+      "cars",
+      "travel",
+      "street",
+      "architecture",
+    ].includes(photo.category);
+
+    const defaultRatio = isPortraitCat ? 0.66 : isLandscapeCat ? 1.5 : 1.0;
+    const ratio = imageAspectRatios[photo.url] || defaultRatio;
+
+    return availableHeight * ratio;
   };
 
   const GAP_PX = 36; // Gap between frames
@@ -182,7 +202,7 @@ export function PhotoLightbox({
         transition: { duration: 0.3, delay: 0.4 }, // Wait 0.4s (almost full track exit) then fade
       }}
       className={cn(
-        "fixed inset-0 z-50 bg-black/95  flex items-center justify-center overflow-hidden",
+        "fixed inset-0 z-1000 bg-black/95 flex items-center justify-center overflow-hidden touch-none",
         isMobile ? "flex-col p-1" : "flex-col",
       )}
       onClick={!isMobile ? onClose : undefined}
@@ -294,7 +314,9 @@ export function PhotoLightbox({
             ease: "easeOut",
             delay: 0.2,
           }}
-          onAnimationComplete={() => setIsIntroDone(true)}
+          onAnimationComplete={() => {
+            if (!isIntroDone) setIsIntroDone(true);
+          }}
           className="relative w-full h-full cursor-grab active:cursor-grabbing"
           onClick={(e) => e.stopPropagation()}
           drag="x"
@@ -348,8 +370,7 @@ export function PhotoLightbox({
                   className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col"
                   style={{
                     width: getPhotoWidth(photo),
-                    height: isMobile ? "auto" : STRIP_HEIGHT_PX,
-                    minHeight: isMobile ? "60vh" : "unset",
+                    height: STRIP_HEIGHT_PX,
                     position: "absolute",
                   }}
                 >
@@ -367,7 +388,7 @@ export function PhotoLightbox({
 
                   {/* Photo Frame */}
                   <div
-                    className="relative flex-1 overflow-visible border-b-2 border-white/20 inset-shadow-sm/50 flex items-center justify-center"
+                    className="relative flex-1 overflow-hidden border-b-2 border-white/20 inset-shadow-sm/50 flex items-center justify-center"
                     onClick={() => {
                       if (!isCenter) {
                         if (relativeIndex > 0)
@@ -392,8 +413,7 @@ export function PhotoLightbox({
                         if (!isMobile || !isCenter)
                           return { width: "100%", height: "100%" };
 
-                        const ratio =
-                          imageAspectRatios[currentPhoto.id || ""] || 1.5;
+                        const ratio = imageAspectRatios[photo.url] || 1.5;
                         const isLandscape = ratio > 1;
                         const vmin = 8; // px margin
 
@@ -430,13 +450,11 @@ export function PhotoLightbox({
                         )}
                         draggable={false}
                         onLoad={(e) => {
-                          if (photo.id) {
-                            handleImageLoad(
-                              photo.id,
-                              e.currentTarget.naturalWidth,
-                              e.currentTarget.naturalHeight,
-                            );
-                          }
+                          handleImageLoad(
+                            photo.url,
+                            e.currentTarget.naturalWidth,
+                            e.currentTarget.naturalHeight,
+                          );
                         }}
                       />
                     </div>
@@ -448,7 +466,7 @@ export function PhotoLightbox({
                   </div>
 
                   {/* Bottom Sprockets */}
-                  <div className="h-9 w-full bg-black  flex justify-between items-end px-1 overflow-hidden">
+                  <div className="h-9 w-full bg-black  flex justify-between items-end px-1 overflow-hidden shrink-0">
                     {Array.from({
                       length: Math.floor(getPhotoWidth(photo) / 40),
                     }).map((_, i) => (

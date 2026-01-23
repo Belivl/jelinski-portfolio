@@ -35,8 +35,10 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-border bg-background py-4",
-        isScrolled ? "bg-background py-3" : "bg-transparent py-3",
+        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-border bg-black/80 md:bg-background py-4",
+        isScrolled
+          ? "bg-background md:bg-background py-3 border-neutral-200 dark:border-neutral-800"
+          : "bg-background md:bg-transparent py-3 border-neutral-600 dark:border-neutral-800",
       )}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -45,7 +47,14 @@ export function Navbar() {
           className="text-2xl font-bold tracking-tighter flex items-center gap-2"
         >
           {/* <Camera className="w-6 h-6 text-primary" /> */}
-          <span className="text-foreground uppercase">
+          <span
+            className={cn(
+              " uppercase",
+              isScrolled
+                ? "text-black dark:text-white"
+                : "text-black dark:text-white",
+            )}
+          >
             <TextScramble className="font-bold tracking-normal font-script1 capitalize">
               {location.pathname.startsWith("/projects")
                 ? "Belial"
@@ -81,7 +90,7 @@ export function Navbar() {
                   <Button
                     variant="link"
                     className={cn(
-                      "text-sm rounded-full font-medium transition-colors hover:text-primary group relative no-underline hover:no-underline",
+                      "text-sm rounded-full font-medium transition-colors text-neutral-200 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 group relative no-underline hover:no-underline",
                       isActive
                         ? "text-primary hover:text-amber-400"
                         : "text-muted-foreground",
@@ -132,7 +141,7 @@ export function Navbar() {
         </div>
 
         {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
+        <div className="md:hidden flex items-center gap-4 ">
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-foreground"

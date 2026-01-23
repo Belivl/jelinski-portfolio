@@ -36,7 +36,7 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20">
-      <div className="absolute inset-0 z-0 w-full h-full bg-black">
+      <div className="absolute inset-0 z-0 w-full h-full dark:bg-black bg-neutral-100/10">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={photoUrl}
@@ -54,7 +54,7 @@ export function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute z-10 inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-gray-100 via-background to-background dark:from-gray-900 dark:via-black dark:to-black opacity-20" />
+        <div className="absolute z-10 inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-neutral-200 dark:from-neutral-900 dark:via-black dark:to-black opacity-20" />
       </div>
       <SakuraRain2 />
 
@@ -63,7 +63,7 @@ export function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
+          className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
         >
           <div className="whitespace-nowrap">
             {t.hero.title}{" "}

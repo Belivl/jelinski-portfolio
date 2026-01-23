@@ -18,7 +18,7 @@ export const photoData: Photo[] = [
 //2021
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9171_o-WVm0btCp.avif?updatedAt=1769027173624",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -33,7 +33,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9178_99U7d54gJ_.avif?updatedAt=1769027173613",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -45,7 +45,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -59,7 +59,7 @@ export const photoData: Photo[] = [
 
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -72,7 +72,7 @@ export const photoData: Photo[] = [
     },   
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197_STNi1A5yY.avif?updatedAt=1769027173548",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -83,11 +83,11 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-05-01",
         "place": "Leba",
-        "blogPostId": "1"
+        "blogPostId": ""
     },
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197-2_YyMIgEJ8H.avif?updatedAt=1769027173542",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -98,11 +98,11 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-05-01",
         "place": "Leba",
-        "blogPostId": "1"
+        "blogPostId": ""
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9281_TwGbG9H4LT.avif?updatedAt=1769027173605",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -116,7 +116,7 @@ export const photoData: Photo[] = [
     },
         {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9291-3_R8bd-0M2Z.avif?updatedAt=1769027173604",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -131,7 +131,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9301-2_1YCXEASN20.avif?updatedAt=1769027173629",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -144,7 +144,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9303-Edit_tOlInckDf1.avif?updatedAt=1769027173516",
-        "title": "Leba - Travel",
+        "title": "Wydmy",
         "category": "travel",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -158,7 +158,7 @@ export const photoData: Photo[] = [
 
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-14_uuUCaTzdQ2.avif?updatedAt=1769030239346",
-        "title": "",
+        "title": "Urbex2",
         "category": "portrait",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -167,7 +167,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-07-04",
         "place": "Olowianka",
-        "blogPostId": "2"
+        "blogPostId": ""
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-29_QCYdlNC4g.avif?updatedAt=1769030239196",
@@ -309,7 +309,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-169_-AH0NFV52m.avif?updatedAt=1769030239427",
-        "title": "",
+        "title": "Urbex2",
         "category": "various",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -356,7 +356,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-214_UtjRQdOcF9.avif?updatedAt=1769030239422",
-        "title": "",
+        "title": "Witch",
         "category": "portrait",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -369,7 +369,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-215_mbp9YYIhpl.avif?updatedAt=1769030239314",
-        "title": "",
+        "title": "Witch",
         "category": "portrait",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -382,7 +382,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-217_70Ga3iKSA.avif?updatedAt=1769030239274",
-        "title": "",
+        "title": "Witch",
         "category": "portrait",
         "camera": "Canon EOS 350D",
         "tags": [
@@ -696,7 +696,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04394-3_ceBRyv-CBa.avif?updatedAt=1769026403730",
-        "title": "",
+        "title": "Politechnika Gdanska",
         "category": "black-and-white",
         "camera": "Sony A6600",
         "tags": [
@@ -2613,7 +2613,7 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012",
-        "title": "",
+        "title": "Urodziny Tymona",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2795,7 +2795,7 @@ export const photoData: Photo[] = [
     //2024 
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05880-soft_6fyzr7paU.avif?updatedAt=1769020020036",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2809,7 +2809,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05888-2ed-soft_0HaTuw7f0.avif?updatedAt=1769020020073",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2823,7 +2823,7 @@ export const photoData: Photo[] = [
     },
      {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05898-edit_J8VnnzZSL.avif?updatedAt=1769020020329",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2837,7 +2837,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05940-edit-soft_9ofCojKNRr.avif?updatedAt=1769020020355",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2851,7 +2851,7 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06210-soft_V0HoT9K_Oo.avif?updatedAt=1769020020252",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2865,7 +2865,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06247-soft_QPxa69bhx.avif?updatedAt=1769020020297",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2879,7 +2879,7 @@ export const photoData: Photo[] = [
     },
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06262-soft_gjhxwmSf-.avif?updatedAt=1769020020303",
-        "title": "Karola - Session",
+        "title": "Karola",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2893,7 +2893,7 @@ export const photoData: Photo[] = [
     },
         {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06614__-UrTshP5.avif?updatedAt=1769019726007",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2908,7 +2908,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06622_eN6Xojx7y.avif?updatedAt=1769019726133",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2923,7 +2923,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06657_lv-MZGtmX0.avif?updatedAt=1769019725801",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2938,7 +2938,7 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06702_dcbZhcDAxg.avif?updatedAt=1769019725809",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2954,7 +2954,7 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06762_RO16WPmNN.avif?updatedAt=1769019726085",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2968,7 +2968,7 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06784_6lkwaOwiX.avif?updatedAt=1769019726177",
-        "title": "Adam - Session",
+        "title": "Hi I'/m YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2984,7 +2984,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07723_sow0MYuyI.avif?updatedAt=1769019622125",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -2995,7 +2995,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07740_m6yGBNLRQg.avif?updatedAt=1769019622726",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3006,7 +3006,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07741_Cva4f9SCX.avif?updatedAt=1769019622700",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3017,7 +3017,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07743_B6m5HejBLE.avif?updatedAt=1769019622702",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3028,7 +3028,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07747_cWaSWTlY2.avif?updatedAt=1769019622719",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3040,7 +3040,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07770_2EHobBBql.avif?updatedAt=1769019622773",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3053,7 +3053,7 @@ export const photoData: Photo[] = [
     },
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07773_xj4wb47SUE.avif?updatedAt=1769019622796",
-        "title": "Rewia - Travel",
+        "title": "Rewia",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3063,20 +3063,9 @@ export const photoData: Photo[] = [
         "date": "2024-04-09",
         "place": "Rewia"
     },
-  {
-        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07773_xj4wb47SUE.avif?updatedAt=1769019622796",
-        "title": "Rewia - Travel",
-        "category": "travel",
-        "camera": "Sony A6600",
-        "tags": [
-            "water"
-        ],
-        "date": "2024-04-09",
-        "place": "Rewia"
-    },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08448_9D2Eqxu7n.avif?updatedAt=1769019321494",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3090,7 +3079,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08482_oa1XUQIQ7.avif?updatedAt=1769019321699",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3104,7 +3093,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08515-3_zLGu1pwKK.avif?updatedAt=1769019321404",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3116,7 +3105,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08521-2_qr_avQ6Ju.avif?updatedAt=1769019321647",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3128,7 +3117,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3142,7 +3131,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554-2_VoKbus7J0i.avif?updatedAt=1769019321918",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3156,7 +3145,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08622_U8RQ_hjpB.avif?updatedAt=1769019321853",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3169,7 +3158,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08867_APRsUCgx-.avif?updatedAt=1769019321858",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3183,7 +3172,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08895_jH70l1ABz.avif?updatedAt=1769019321872",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3197,7 +3186,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08942-2_aAiH3wSrrd.avif?updatedAt=1769019321813",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3211,7 +3200,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09062_oH2K2xsga1.avif?updatedAt=1769019321882",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3224,7 +3213,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09071_unbdSFM3_.avif?updatedAt=1769019321809",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3237,7 +3226,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09111-2_HNnMyz_tLG.avif?updatedAt=1769019322155",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3251,7 +3240,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09189-2_xUC_h-CUCI.avif?updatedAt=1769019321855",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3264,7 +3253,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09208-2_ztZZK2dglA.avif?updatedAt=1769019321895",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3276,7 +3265,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09208-2_ztZZK2dglA.avif?updatedAt=1769019321895",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3289,7 +3278,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09217-2_x4A47Qzip.avif?updatedAt=1769019321839",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3302,7 +3291,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3315,7 +3304,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09287-3_wBB5jmY6hL.avif?updatedAt=1769019321898",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3327,7 +3316,7 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
-        "title": "Zakopane - Travel",
+        "title": "Zakopane",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3340,8 +3329,8 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01737-3__e-fYCcAt.avif?updatedAt=1769019064138",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "city",
@@ -3352,8 +3341,8 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01737_kg7O-4OKPs.avif?updatedAt=1769019064308",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "city"
@@ -3363,8 +3352,8 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01743_xR4vrvlnY2.avif?updatedAt=1769019064250",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3377,8 +3366,8 @@ export const photoData: Photo[] = [
     },
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01749_dFUW4L43Bh.avif?updatedAt=1769019064360",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3390,8 +3379,8 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01927_vFKNisuXGB.avif?updatedAt=1769019064306",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3404,8 +3393,8 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02041-2_cqwYEy3oZ.avif?updatedAt=1769019064302",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3418,8 +3407,8 @@ export const photoData: Photo[] = [
     },
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02041_WI0URKxTA.avif?updatedAt=1769019064370",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3432,8 +3421,8 @@ export const photoData: Photo[] = [
     },
  {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02046_35vzBSvgN.avif?updatedAt=1769019064350",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "black-and-white",
@@ -3446,8 +3435,8 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02151_NAYJ3uQpM.avif?updatedAt=1769019064258",
-        "title": "",
-        "category": "portrait",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3459,8 +3448,8 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326",
-        "title": "",
-        "category": "various",
+        "title": "Gdynia Street",
+        "category": "street",
         "camera": "Sony A6600",
         "tags": [
             "street",
@@ -3732,7 +3721,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-06882_EyWQrdBu-.avif?updatedAt=1769018379225",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3746,7 +3735,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-07303_spVLnfWzR.avif?updatedAt=1769018379579",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3759,7 +3748,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-07360_MlYxLx9dq.avif?updatedAt=1769018379502",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3772,7 +3761,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3788,7 +3777,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09174_Cx1Sy_APN.avif?updatedAt=1769018379493",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3803,7 +3792,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09227_73E_H_CPaT.avif?updatedAt=1769018379539",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3818,7 +3807,7 @@ export const photoData: Photo[] = [
     },
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-Oia_oSTd2Ga5u.avif?updatedAt=1769018379511",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Oneplus 11",
         "tags": [
@@ -3827,12 +3816,12 @@ export const photoData: Photo[] = [
             "water"
         ],
         "date": "2024-09-21",
-        "place": "Santorini"
+        "place": "Santorini, Oia"
     },
     
    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL07893_B7lP2cDzi.avif?updatedAt=1769018379509",
-        "title": "Santorini - Travel",
+        "title": "Santorini",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -4016,11 +4005,11 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-01-23",
         "place": "Matarnia",
-        "blogPostId": "24"
+        "blogPostId": "1"
     },
 {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01417_r_nh87Ew3.avif?updatedAt=1769014577941",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4035,7 +4024,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01427-2_wqE-3pDCs9.avif?updatedAt=1769014578352",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4050,7 +4039,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01446-3_e-LddVxXHG.avif?updatedAt=1769014578372",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4065,7 +4054,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01458_HSidrJYUm.avif?updatedAt=1769014578188",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4080,7 +4069,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01489_PLJjJ3AX_t.avif?updatedAt=1769014578302",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4095,7 +4084,7 @@ export const photoData: Photo[] = [
 
   {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01496_L6DQfH3PUW.avif?updatedAt=1769014578399",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4109,7 +4098,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01537_y-xOGHY3V.avif?updatedAt=1769014578195",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4123,7 +4112,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01578_ndLAxe9MI.avif?updatedAt=1769014578291",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4151,11 +4140,11 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-04-24",
         "place": "Sopot",
-        "blogPostId": "25"
+        "blogPostId": "2"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01631_T0quA2-vg.avif?updatedAt=1769014578199",
-        "title": "Marta - Session",
+        "title": "fizjo.tusia",
         "category": "client",
         "camera": "Sony A6600",
         "tags": [
@@ -4669,7 +4658,7 @@ export const getPhotos = (): Photo[] => {
     return photoData.map((photo) => {
         return {
             ...photo,
-            id: photo.id
+            id: photo.id || photo.url
         };
     });
 };

@@ -15,31 +15,31 @@ const testimonialsData = [
     id: 2,
     rotation: 1.8,
     color: "#e1f5fe", // Blue
-    pinColor: "#42a5f5", // Blue pin
+    pinColor: "#BB669C", // Pink pin
   },
   {
     id: 3,
     rotation: -1.2,
     color: "#f1f8e9", // Green
-    pinColor: "#66bb6a", // Green pin
+    pinColor: "#6942F5", // Purple pin
   },
   {
     id: 4,
     rotation: -1.2,
-    color: "#f1f8e9", // Green
+    color: "#FFD6C4", // Green
     pinColor: "#66bb6a", // Green pin
   },
   {
     id: 5,
     rotation: -1.2,
-    color: "#f1f8e9", // Green
-    pinColor: "#66bb6a", // Green pin
+    color: "#E1FEF0", // Yellow
+    pinColor: "#EF9A50", // Orange pin
   },
   {
     id: 6,
     rotation: -1.2,
-    color: "#f1f8e9", // Green
-    pinColor: "#66bb6a", // Green pin
+    color: "#E9EAF8", // Green
+    pinColor: "#42A5F5", // Blue pin
   },
 ];
 

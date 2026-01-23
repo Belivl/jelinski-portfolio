@@ -12,7 +12,22 @@ import {
 import { getPhotos } from "@/data/photos";
 import { Link } from "react-router-dom";
 
+import { CONVEX_ENABLED } from "@/lib/convex-status";
+
 export function SecurityTests() {
+  if (!CONVEX_ENABLED) {
+    return (
+      <div className="min-h-screen pt-24 px-4 pb-20 max-w-4xl mx-auto text-white text-center">
+        <h1 className="text-3xl font-bold mb-4">Security Verification</h1>
+        <p className="text-red-400">
+          Offline Mode: Security tests are disabled.
+        </p>
+        <Link to="/admin" className="text-amber-500 hover:underline mt-4 block">
+          Back to Dashboard
+        </Link>
+      </div>
+    );
+  }
   const [logs, setLogs] = useState<string[]>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [testStats, setTestStats] = useState({
@@ -53,7 +68,7 @@ export function SecurityTests() {
     addLog(
       `🚀 Starting Comment Spam Test (${
         sequential ? "Sequential" : "Rapid Fire"
-      })...`
+      })...`,
     );
 
     if (!targetPhoto) {

@@ -413,17 +413,14 @@ export const translations = {
                 '2': {
                    title: 'AudienceForge',
                    description: 'A clean, modern interface for a next-generation banking application.',
-                   content: 'Focused on simplifying complex financial data into an intuitive user experience. The design system prioritizes accessibility and clear data visualization.'
                 },
                  '3': {
                     title: 'Bukszpryt - Posters',
                     description: 'Hyper-realistic charcoal studies of human expressions.',
-                    content: 'A study of light and shadow on the human face. These drawings focus on micro-expressions and the texture of skin.'
                 },
                 '4': {
                     title: 'RikoHD',
                     description: 'Complete brand identity for a sustainable fashion startup.',
-                    content: 'From logo design to packaging and social media guidelines. The brand identity reflects the company\'s commitment to sustainability through earthy tones and organic typography.'
                 },
                  '6': {
                      title: 'Amandel Milch Packaging',
@@ -444,23 +441,34 @@ export const translations = {
                 '1': {
                     name: "Fizjo.tusia",
                     role: "Masseuse",
-                    text: "."
+                    text: "...to be added"
                 },
                 '2': {
-                    name: "Susan",
+                    name: "Susan J.",
                     role: "18",
                     text: "I highly recommend it! The photos from the 18th birthday party turned out great – natural, full of emotion, and perfectly capturing the atmosphere of the event. The photographer met all my requests, was completely professional, and had excellent communication skills. A keepsake for years to come! 📸🔥"
                 },  
                 '3': {
-                    name: "Madzia",
+                    name: "Madzia D.",
                     role: "Modelka",
-                    text: "."
+                    text: "Michał is an excellent photographer who knows how to create a relaxed and very comfortable atmosphere during a shoot. He gives clear guidance, so even someone with no modeling experience knows exactly what to do and feels at ease in front of the camera. He has a great eye for detail and knows how to bring out the best in people, which results in truly successful photos. I highly recommend him!"
                 },
                 '4': {
                     name: "Marius Ch.",
                     role: "Event Organizer",
                     text: "All events have gained incredible depth and magic since they were recorded through your lens."
                 },
+                '5': {
+                    name: "KAROLA",
+                    role: "Singer",
+                    text: "...to be added."
+                },
+                '6': {
+                    name: "Tomek W.",
+                    role: "Model",
+                    text: "You create a great vibe during the session and guide posing in a way that even challenging shots turn out really well"
+                },
+                
              }
         }
     },
@@ -878,22 +886,47 @@ export const translations = {
                 },
                 '2': {
                    title: 'AudienceForge',
-                   description: 'Czysty, nowoczesny interfejs dla aplikacji bankowej nowej generacji.',
-                   content: 'Skupiony na uproszczeniu złożonych danych finansowych w intuicyjne doświadczenie użytkownika. System projektowania priorytetowo traktuje dostępność i czytelną wizualizację danych.'
+                   description: 'Czysty, nowoczesny interfejs dla aplikacji do zarzadzania reklamami nowej generacji.'
                 },
                  '3': {
                     title: 'Bukszpryt - Plakaty',
-                    description: 'Hiperrealistyczne studia węglem ludzkich ekspresji.',
-                    content: 'Studium światła i cienia na ludzkiej twarzy. Te rysunki skupiają się na mikroekspresjach i fakturze skóry.'
+                    description: 'Seria plakatow dla lokalnego pubu.',
                 },
                 '4': {
                     title: 'RikoHD',
-                    description: 'Pełna identyfikacja wizualna dla startupu mody zrównoważonej.',
-                    content: 'Od projektu logo po opakowania i wytyczne dla mediów społecznościowych. Tożsamość marki odzwierciedla zaangażowanie firmy w zrównoważony rozwój poprzez kolory ziemi i organiczną typografię.'
+                    description: 'Identyfikacja wizualna dla streamera',
                 },
                  '6': {
-                     title: 'Opakowanie Mleka Migdałowego',
-                     description: 'Zastanawiałeś się kiedyś, jakie są najważniejsze rzeczy w życiu? Cóż, nie zastanawiaj się dłużej!',
+                     title: 'Amandel Milch- Opakowanie',
+                     description: 'Wizualizacja opakowania mleka migdałowego dla Amandel Milch - grupy studentow z UG',
+                 },
+                 '7': {
+                     title: 'Venom Esport - Animacja',
+                     description: 'Animacja dla druzyny Venom Esport',
+                 },
+                 '8': {
+                     title: 'Exon Esport - Animacja',
+                     description: 'Animacja dla druzyny Exon Esport',
+                 },
+                 '9': {
+                     title: 'SnE Esport - Animacja',
+                     description: 'Animacja dla druzyny SnE Esport',
+                 },
+                  '10': {
+                     title: 'Ksiega - Animacja',
+                     description: 'Animacja uzytkowania ksiazki firmy alkoholowej dla zespolu HR',
+                 },
+                 '11': {
+                     title: 'Sleepless Thoughts - Okladka albumu',
+                     description: 'Projekt okładki albumu Sleepless Thoughts',
+                 },
+                 '12': {
+                     title: 'Corona Fighters - Planszowka',
+                     description: 'Projekt planszowki na studia',
+                 },
+                 '13': {
+                     title: 'Belial Identyfikacja personalna',
+                     description: 'Personalna identyfikacja dla wlasnej marki Belial',
                  },
              },
              blog: {
@@ -909,23 +942,33 @@ export const translations = {
                 '1': {
                     name: "Fizjo.tusia",
                     role: "Masazystka",
-                    text: "."
+                    text: "...wkrotce tu napisze"
                 },
                 '2': {
-                    name: "Zuzia",
+                    name: "Zuzia J.",
                     role: "18stka",
                     text: "Mega polecam! Zdjęcia z osiemnastki wyszły świetnie – naturalne, pełne emocji i idealnie oddające klimat imprezy. Fotograf spełnił wszystkie moje prośby, pełen profesjonalizm i super kontakt. Pamiątka na lata! 📸🔥"
                 },
                 '3': {
-                    name: "Madzia",
+                    name: "Madzia D.",
                     role: "Modelka",
-                    text: "."
+                    text: "Michał to świetny fotograf, który potrafi stworzyć bezstresową i bardzo komfortową atmosferę podczas sesji. Daje jasne wskazówki, dzięki którym nawet osoba bez doświadczenia w modelingu dokładnie wie, co robi i czuje się swobodnie przed obiektywem. Ma doskonałe oko do detali i potrafi wydobyć z człowieka to, co najlepsze — efektem są bardzo udane zdjęcia. Zdecydowanie polecam!"
                 },
                 '4': {
-                    name: "Mariusz",
+                    name: "Mariusz C.",
                     role: "Solenizant",
                     text: "Wszystkie wydarzenia nabrały niesamowitej głębi i magii od kiedy są rejestrowane Twoim obiektywem."
-                }
+                },          
+                '5': {
+                    name: "KAROLA",
+                    role: "Piosenkarka",
+                    text: "...wkrotce tu napisze"
+                },
+                '6': {
+                    name: "Tomek W.",
+                    role: "Model",
+                    text: "Tworzysz świetną atmosferę podczas sesji i prowadzisz pozowanie w taki sposób, że nawet najbardziej wymagające ujęcia wychodzą znakomicie."
+                },
              }
         }
     }

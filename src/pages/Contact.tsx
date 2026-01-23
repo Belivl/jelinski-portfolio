@@ -11,10 +11,11 @@ export function Contact() {
 
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="min-h-screen pt-32 pb-20 bg-background"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen pt-32 pb-20"
     >
       <SEO title={t.contact.title} description={t.contact.description} />
       <div className="container mx-auto px-6 max-w-4xl">

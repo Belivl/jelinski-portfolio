@@ -6,8 +6,11 @@ import { PreferenceModal } from "@/components/layout/PreferenceModal";
 import { LoadingScreen } from "@/components/layout/LoadingScreen";
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "motion/react";
+import { SEO } from "@/components/SEO";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export function Home() {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(() => {
     // Check if loading screen has been shown in this session
     const hasSeenLoading = sessionStorage.getItem("hasSeenLoadingScreen");
@@ -43,7 +46,7 @@ export function Home() {
           />
         )}
       </AnimatePresence>
-
+      <SEO title={t.nav.home} description={t.hero.description} />
       <main>
         <Hero />
         <FeaturedGallery />

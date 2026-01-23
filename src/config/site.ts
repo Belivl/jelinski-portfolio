@@ -21,7 +21,7 @@ export const siteConfig = {
 
     // Social Media Links
     social: {
-        instagram: 'https://www.instagram.com/jelinski_official/',
+        instagram: 'https://www.instagram.com/jelinski_photo/',
         instagram2: 'https://www.instagram.com/belialdesign/',
         linkedin: 'https://www.linkedin.com/in/michal-jelinski1/',
         youtube: 'https://www.youtube.com/@BelialDesign/videos',
@@ -29,7 +29,7 @@ export const siteConfig = {
         email: 'mailto:mich.jelin1@gmail.com',
     },
     socialName: {
-        instagram: '@jelinski_official',
+        instagram: '@jelinski_photo',
         instagram2: '@belialdesign',
         linkedin: 'Michal Jelinski',
         youtube: '@BelialDesign',

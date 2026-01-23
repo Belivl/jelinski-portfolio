@@ -6,6 +6,8 @@ import { api } from "../../../convex/_generated/api";
 import { getVisitorId } from "@/lib/visitor";
 import { useLanguage } from "@/lib/LanguageContext";
 
+import { CONVEX_ENABLED } from "@/lib/convex-status";
+
 interface Comment {
   _id: string;
   content: string;
@@ -18,7 +20,9 @@ interface CommentsSectionProps {
 }
 
 export function CommentsSection({ photoId }: CommentsSectionProps) {
-  const comments = useQuery(api.comments.getApproved, { photoId }) || [];
+  const comments =
+    useQuery(api.comments.getApproved, CONVEX_ENABLED ? { photoId } : "skip") ||
+    [];
   const addComment = useMutation(api.comments.add);
 
   const [newComment, setNewComment] = useState("");
@@ -33,6 +37,12 @@ export function CommentsSection({ photoId }: CommentsSectionProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newComment.trim()) return;
+
+    if (!CONVEX_ENABLED) {
+      setPostStatus("error");
+      console.warn("Commenting disabled in offline mode");
+      return;
+    }
 
     setIsPosting(true);
     setPostStatus("idle");

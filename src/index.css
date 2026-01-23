@@ -187,13 +187,13 @@
 @theme {
   --font-script1: "Pirata One", cursive;
   /*woody palette*/
-  --wood-red: #ff3c3c;
-  --wood-green: #23be1c;
-  --wood-white: #fdf7f2;
-  --wood-light: #f3d8bf;
-  --wood-cream: #e9be95;
-  --wood-brown: #bb8e65;
-  --wood-dark: #602626;
+  --color-wood-red: #ff3c3c;
+  --color-wood-green: #23be1c;
+  --color-wood-white: #fdf7f2;
+  --color-wood-light: #f3d8bf;
+  --color-wood-cream: #e9be95;
+  --color-wood-brown: #bb8e65;
+  --color-wood-dark: #602626;
 }
 
 .workBadge {

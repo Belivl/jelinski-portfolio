@@ -1,8 +1,20 @@
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 
-export function Coin2({ children }: { children: any }) {
+export function Coin2({
+  children,
+  className,
+}: {
+  children: any;
+  className?: string;
+}) {
   return (
-    <div className="relative w-64 h-64 rounded-full shadow-xl shadow-black/80 inset-shadow-sm inset-shadow-neutral-100 -translate-y-[2px]">
+    <div
+      className={cn(
+        "relative w-64 h-64 rounded-full shadow-xl shadow-black/80 inset-shadow-sm inset-shadow-neutral-100 -translate-y-[2px]",
+        className,
+      )}
+    >
       {/* Rotating Container for the Coin Texture */}
       <motion.div
         className="absolute inset-0 rounded-full overflow-hidden"

@@ -24,7 +24,7 @@ export function SmartImage({
 
   // common classes
   const finalClass = cn(
-    "block max-w-full h-auto",
+    "block max-w-full h-full",
     objectTop && "object-top",
     className,
   );

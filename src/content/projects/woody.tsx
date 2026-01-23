@@ -34,7 +34,7 @@ export function WoodyPost() {
       alt: "mushrooms",
     },
     {
-      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/leafs_6bENHk0cL5.avif?updatedAt=1768489389358&ik-s=92529811631c242dafc24da0177d05d9807b52d2",
+      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/leafs_Xf4vJSMj5U.avif?updatedAt=1769088296297",
       alt: "leafs",
     },
     {
@@ -58,10 +58,6 @@ export function WoodyPost() {
       alt: "brick-oven",
     },
     {
-      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/leafs_Xf4vJSMj5U.avif?updatedAt=1769088296297",
-      alt: "leafs",
-    },
-    {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/mushrooms_57p3I99QZ.avif?updatedAt=1769088296241",
       alt: "mushrooms",
     },
@@ -83,7 +79,7 @@ export function WoodyPost() {
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/fire/lisc%20otsu_XTz-C7u3AO.avif?updatedAt=1769088321737",
-      alt: "lisc otsu",
+      alt: "liscotsu",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/fire/tulipan3_juYRYNPdA.avif?updatedAt=1769088321707",
@@ -279,49 +275,55 @@ export function WoodyPost() {
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/IMG_20190821_194912-1_gKskOcEhq.avif?updatedAt=1769088436853",
-      alt: "IMG_20190821_194912-1",
+      alt: "truck1",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/20190725-truck2_XZiTeGZsZ.avif?updatedAt=1769088436474",
-      alt: "20190725-truck2",
+      alt: "truck2",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/20190730-truck4v2.jpg_MzzzggzjaE.avif?updatedAt=1769088436722",
-      alt: "20190730-truck4v2",
+      alt: "truck4",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/20190730-truck3v2.jpg_8hZaDZQwn.avif?updatedAt=1769088436321",
-      alt: "20190730-truck3v2",
+      alt: "truck3",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/IMG_20200706_191111_2sM_9j9YC.avif?updatedAt=1769088437502",
-      alt: "IMG_20200706_191111",
+      alt: "pizza1",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/IMG_20200706_191125_a28YxDjKO.avif?updatedAt=1769088437474",
-      alt: "IMG_20200706_191125",
+      alt: "pizza2",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/IMG_20200706_192015__01_5N1qMbVVx.avif?updatedAt=1769088437156",
-      alt: "IMG_20200706_192015",
+      alt: "pizza3",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/photo/IMG_20200706_192246_P9fLKNIXc.avif?updatedAt=1769088439125",
-      alt: "IMG_20200706_192246",
+      alt: "pizza4",
     },
     {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/truck-white_D-qLZi6jvB.avif?updatedAt=1769088288338",
       alt: "truck-white",
     },
     {
-      src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/slice-white_KIMhyB1UI.avif?updatedAt=1769088288294",
-      alt: "slice-white",
-    },
-    {
       src: "https://ik.imagekit.io/j3l1n5k1/gfx/project/woody/elements/drink_KrujEq-9K.avif?updatedAt=1769088288024",
       alt: "drink",
     },
   ];
+
+  const getImage = (alt: string) => {
+    const index = images.findIndex((img) => img.alt === alt);
+    const img = images[index];
+    if (!img) {
+      console.warn(`Image with alt '${alt}' not found`);
+      return { src: "", alt, index: -1 };
+    }
+    return { ...img, index };
+  };
 
   return (
     <>
@@ -332,16 +334,16 @@ export function WoodyPost() {
         onClose={() => setLightboxOpen(false)}
       />
       <div>
-        <div className="BannerWTF bg-(--wood-dark) flex items-center p-16 rounded-3xl w-full gap-9">
+        <div className="BannerWTF bg-wood-dark flex items-center p-16 rounded-3xl w-full gap-9 text-white">
           <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
             <h3>FIRE</h3>
             <SmartImage
               className="w-auto h-[80px] cursor-pointer"
               width={200}
               height={200}
-              src={images[0].src}
-              alt={images[0].alt}
-              onClick={() => openLightbox(0)}
+              src={getImage("fire-white").src}
+              alt={getImage("fire-white").alt}
+              onClick={() => openLightbox(getImage("fire-white").index)}
             />
           </div>
           <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
@@ -350,9 +352,9 @@ export function WoodyPost() {
               className="w-auto h-[80px] cursor-pointer"
               width={200}
               height={200}
-              src={images[1].src}
-              alt={images[1].alt}
-              onClick={() => openLightbox(1)}
+              src={getImage("slice-white").src}
+              alt={getImage("slice-white").alt}
+              onClick={() => openLightbox(getImage("slice-white").index)}
             />
           </div>
           <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
@@ -361,9 +363,9 @@ export function WoodyPost() {
               className="w-auto h-[80px] cursor-pointer"
               width={200}
               height={200}
-              src={images[2].src}
-              alt={images[2].alt}
-              onClick={() => openLightbox(2)}
+              src={getImage("plank-white").src}
+              alt={getImage("plank-white").alt}
+              onClick={() => openLightbox(getImage("plank-white").index)}
             />
           </div>
         </div>
@@ -377,25 +379,25 @@ export function WoodyPost() {
                 className="w-auto h-[80px] hover:scale-110 transition-all ease-in-out hover:rotate-[-15deg] cursor-pointer"
                 width={200}
                 height={200}
-                src={images[3].src}
-                alt={images[3].alt}
-                onClick={() => openLightbox(3)}
+                src={getImage("salami").src}
+                alt={getImage("salami").alt}
+                onClick={() => openLightbox(getImage("salami").index)}
               />
               <SmartImage
                 className="w-auto h-[120px] hover:scale-110 transition-all ease-in-out cursor-pointer"
                 width={200}
                 height={200}
-                src={images[4].src}
-                alt={images[4].alt}
-                onClick={() => openLightbox(4)}
+                src={getImage("mushrooms").src}
+                alt={getImage("mushrooms").alt}
+                onClick={() => openLightbox(getImage("mushrooms").index)}
               />
               <SmartImage
                 className="w-auto h-[80px] hover:scale-110 transition-all ease-in-out hover:rotate-15 cursor-pointer"
                 width={200}
                 height={200}
-                src={images[5].src}
-                alt={images[5].alt}
-                onClick={() => openLightbox(5)}
+                src={getImage("leafs").src}
+                alt={getImage("leafs").alt}
+                onClick={() => openLightbox(getImage("leafs").index)}
               />
             </div>
             <h4 className="text-center">
@@ -407,9 +409,9 @@ export function WoodyPost() {
               className="imgWFT-elements w-[360px] h-auto hover:animate-spin transition-all ease-in-out duration-500 cursor-pointer"
               width={200}
               height={200}
-              src={images[6].src}
-              alt={images[6].alt}
-              onClick={() => openLightbox(6)}
+              src={getImage("crust").src}
+              alt={getImage("crust").alt}
+              onClick={() => openLightbox(getImage("crust").index)}
             />
             <h4 className="text-center">
               the pizza is a resemblance of a natural, organic tree trunk, with
@@ -422,9 +424,9 @@ export function WoodyPost() {
               className="imgWFT-elements w-[360px] h-auto hover:scale-110 hover:rotate-12 transition-all ease-in-out cursor-pointer"
               width={200}
               height={200}
-              src={images[7].src}
-              alt={images[7].alt}
-              onClick={() => openLightbox(7)}
+              src={getImage("plank").src}
+              alt={getImage("plank").alt}
+              onClick={() => openLightbox(getImage("plank").index)}
             />
             <h4 className="text-center">
               wooden plank is what make this pizza special, core value of the
@@ -436,9 +438,9 @@ export function WoodyPost() {
               className="imgWFT-elements w-[360px] h-auto hover:animate-bounce transition-all ease-in-out cursor-pointer"
               width={200}
               height={200}
-              src={images[8].src}
-              alt={images[8].alt}
-              onClick={() => openLightbox(8)}
+              src={getImage("woody-brown").src}
+              alt={getImage("woody-brown").alt}
+              onClick={() => openLightbox(getImage("woody-brown").index)}
             />
             <h4 className="text-center">
               food truck named after the technique of pizza making process
@@ -449,9 +451,9 @@ export function WoodyPost() {
               className="imgWFT-elements w-[360px] h-auto hover:animate-pulse transition-all ease-in-out cursor-pointer"
               width={200}
               height={200}
-              src={images[9].src}
-              alt={images[9].alt}
-              onClick={() => openLightbox(9)}
+              src={getImage("fire-color").src}
+              alt={getImage("fire-color").alt}
+              onClick={() => openLightbox(getImage("fire-color").index)}
             />
             <h4 className="text-center">
               fire flames inspired by kashubian patterns
@@ -462,9 +464,9 @@ export function WoodyPost() {
               className="imgWFT-elements w-[360px] h-auto hover:scale-110 hover:-translate-y-4 transition-all ease-in-out cursor-pointer"
               width={200}
               height={200}
-              src={images[10].src}
-              alt={images[10].alt}
-              onClick={() => openLightbox(10)}
+              src={getImage("brick-oven").src}
+              alt={getImage("brick-oven").alt}
+              onClick={() => openLightbox(getImage("brick-oven").index)}
             />
             <h4 className="text-center">
               brick fundaments of an oven, refers to trucks visuals,
@@ -481,9 +483,9 @@ export function WoodyPost() {
               className="w-auto h-[80px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
-              src={images[11].src}
-              alt={images[11].alt}
-              onClick={() => openLightbox(11)}
+              src={getImage("leafs").src}
+              alt={getImage("leafs").alt}
+              onClick={() => openLightbox(getImage("leafs").index)}
             />
             <div className="max-w-[260px] H5 font-medium text-center uppercase text-wood-cream">
               olive, spinach, arugula, basil
@@ -494,9 +496,9 @@ export function WoodyPost() {
               className="w-auto h-[80px] scale-[200%] transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
-              src={images[12].src}
-              alt={images[12].alt}
-              onClick={() => openLightbox(12)}
+              src={getImage("mushrooms").src}
+              alt={getImage("mushrooms").alt}
+              onClick={() => openLightbox(getImage("mushrooms").index)}
             />
             <div className="H5 font-medium text-center uppercase text-wood-cream">
               champignons, mozzarella
@@ -507,9 +509,9 @@ export function WoodyPost() {
               className="w-auto h-[80px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
-              src={images[13].src}
-              alt={images[13].alt}
-              onClick={() => openLightbox(13)}
+              src={getImage("salami").src}
+              alt={getImage("salami").alt}
+              onClick={() => openLightbox(getImage("salami").index)}
             />
             <div className="H5 font-medium text-center uppercase text-wood-cream">
               sauce, tomatoes, salami
@@ -518,38 +520,38 @@ export function WoodyPost() {
         </div>
         <div className="grid grid-cols-3 w-full justify-center overflow-clip rounded-2xl">
           <div className="w-full flex flex-col justify-start">
-            <div className="box w-[260px] h-[600px] bg-[--wood-green] rounded-t-2xl"></div>
-            <svg height="600" width="600" className="fill-[--wood-green]">
+            <div className="box w-[260px] h-[600px] bg-wood-green rounded-t-2xl"></div>
+            <svg height="600" width="600" className="fill-wood-green">
               <polygon
                 points="0,0 0,600 410,600 260,0  "
                 style={{ fillRule: "nonzero" }}
               ></polygon>
             </svg>
-            <div className="box w-full h-[600px] bg-[--wood-green]"></div>
+            <div className="box w-full h-[600px] bg-wood-green"></div>
           </div>
           <div className="w-full flex flex-col justify-start items-center">
-            <div className="box w-[260px] h-[600px] bg-[--wood-white] rounded-t-2xl"></div>
-            <svg height="600" width="600" className="fill-[--wood-white]">
+            <div className="box w-[260px] h-[600px] bg-wood-white rounded-t-2xl"></div>
+            <svg height="600" width="600" className="fill-wood-white">
               <polygon
                 points="170,0 95,600 505,600 430,0  "
                 style={{ fillRule: "nonzero" }}
               ></polygon>
             </svg>
-            <div className="box w-full h-[600px] bg-[--wood-white]"></div>
+            <div className="box w-full h-[600px] bg-wood-white"></div>
           </div>
           <div className="w-full flex flex-col justify-end items-end">
-            <div className="box w-[260px] h-[600px] bg-[--wood-red] rounded-t-2xl"></div>
+            <div className="box w-[260px] h-[600px] bg-wood-red rounded-t-2xl"></div>
             <svg
               height="600"
               width="600"
-              className="fill-[--wood-red] -scale-x-100"
+              className="fill-wood-red -scale-x-100"
             >
               <polygon
                 points="0,0 0,600 410,600 260,0  "
                 style={{ fillRule: "nonzero" }}
               ></polygon>
             </svg>
-            <div className="box w-full h-[600px] bg-[--wood-red]"></div>
+            <div className="box w-full h-[600px] bg-wood-red"></div>
           </div>
         </div>
         <div className="H3 uppercase flex justify-center mt-16 text-wood-cream">
@@ -558,15 +560,15 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">FIRE</span>
         </div>
-        <div className="BannerWTF bg-[--wood-cream] grid grid-rows-2 grid-cols-4 gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-rows-2 grid-cols-4 gap-9 rounded-3xl p-16">
           <div className="flex flex-col gap-1 items-center justify-center">
             <SmartImage
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[14].src}
-              alt={images[14].alt}
-              onClick={() => openLightbox(14)}
+              src={getImage("wisienka").src}
+              alt={getImage("wisienka").alt}
+              onClick={() => openLightbox(getImage("wisienka").index)}
             />
             <span className="text-wood-dark text-[20px] italic">cherry</span>
           </div>
@@ -575,9 +577,9 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[15].src}
-              alt={images[15].alt}
-              onClick={() => openLightbox(15)}
+              src={getImage("pak").src}
+              alt={getImage("pak").alt}
+              onClick={() => openLightbox(getImage("pak").index)}
             />
             <span className="text-wood-dark text-[20px] italic">bud</span>
           </div>
@@ -586,9 +588,9 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[16].src}
-              alt={images[16].alt}
-              onClick={() => openLightbox(16)}
+              src={getImage("gwiazda").src}
+              alt={getImage("gwiazda").alt}
+              onClick={() => openLightbox(getImage("gwiazda").index)}
             />
             <span className="text-wood-dark text-[20px] italic">star</span>
           </div>
@@ -597,9 +599,9 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[17].src}
-              alt={images[17].alt}
-              onClick={() => openLightbox(17)}
+              src={getImage("liscotsu").src}
+              alt={getImage("liscotsu").alt}
+              onClick={() => openLightbox(getImage("liscotsu").index)}
             />
             <span className="text-wood-dark text-[20px] italic">
               thistle leaf
@@ -610,9 +612,9 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[18].src}
-              alt={images[18].alt}
-              onClick={() => openLightbox(18)}
+              src={getImage("tulipan3").src}
+              alt={getImage("tulipan3").alt}
+              onClick={() => openLightbox(getImage("tulipan3").index)}
             />
             <span className="text-wood-dark text-[20px] italic">tulip</span>
           </div>
@@ -621,9 +623,9 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[19].src}
-              alt={images[19].alt}
-              onClick={() => openLightbox(19)}
+              src={getImage("palmeta").src}
+              alt={getImage("palmeta").alt}
+              onClick={() => openLightbox(getImage("palmeta").index)}
             />
             <span className="text-wood-dark text-[20px] italic">palmetto</span>
           </div>
@@ -632,80 +634,72 @@ export function WoodyPost() {
               className="w-full h-auto cursor-pointer"
               width={200}
               height={200}
-              src={images[20].src}
-              alt={images[20].alt}
-              onClick={() => openLightbox(20)}
+              src={getImage("tulipan1").src}
+              alt={getImage("tulipan1").alt}
+              onClick={() => openLightbox(getImage("tulipan1").index)}
             />
             <span className="text-wood-dark text-[20px] italic">tulip</span>
           </div>
         </div>
-        <div className="BannerWTF bg-[--wood-cream] grid grid-flow-col items-center gap-12 rounded-3xl p-16 my-16">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-col items-center gap-12 rounded-3xl p-16 my-16">
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[21].src}
-            alt={images[21].alt}
-            onClick={() => openLightbox(21)}
+            src={getImage("fire0").src}
+            alt={getImage("fire0").alt}
+            onClick={() => openLightbox(getImage("fire0").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[22].src}
-            alt={images[22].alt}
-            onClick={() => openLightbox(22)}
+            src={getImage("firev2").src}
+            alt={getImage("firev2").alt}
+            onClick={() => openLightbox(getImage("firev2").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[23].src}
-            alt={images[23].alt}
-            onClick={() => openLightbox(23)}
+            src={getImage("firev3").src}
+            alt={getImage("firev3").alt}
+            onClick={() => openLightbox(getImage("firev3").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[24].src}
-            alt={images[24].alt}
-            onClick={() => openLightbox(24)}
+            src={getImage("firev4").src}
+            alt={getImage("firev4").alt}
+            onClick={() => openLightbox(getImage("firev4").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[25].src}
-            alt={images[25].alt}
-            onClick={() => openLightbox(25)}
+            src={getImage("firev5").src}
+            alt={getImage("firev5").alt}
+            onClick={() => openLightbox(getImage("firev5").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[26].src}
-            alt={images[26].alt}
-            onClick={() => openLightbox(26)}
+            src={getImage("firev6").src}
+            alt={getImage("firev6").alt}
+            onClick={() => openLightbox(getImage("firev6").index)}
           />
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={200}
             height={200}
-            src={images[27].src}
-            alt={images[27].alt}
-            onClick={() => openLightbox(27)}
-          />
-          <SmartImage
-            className="w-full h-auto cursor-pointer"
-            width={200}
-            height={200}
-            src={images[28].src}
-            alt={images[28].alt}
-            onClick={() => openLightbox(28)}
+            src={getImage("fire-color").src}
+            alt={getImage("fire-color").alt}
+            onClick={() => openLightbox(getImage("fire-color").index)}
           />
         </div>
-        <div className="BannerWTF bg-[--wood-dark] rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-dark rounded-3xl p-16">
           <div className="flex flex-col justify-center items-center p-0 gap-5 grow">
             <div className="headingWoody" style={{ padding: "0px" }}>
               <span className="spanTitle">CUSTOM MADE FONT</span>
@@ -713,9 +707,9 @@ export function WoodyPost() {
             <SmartImage
               width={800}
               height={200}
-              src={images[29].src}
-              alt={images[29].alt}
-              onClick={() => openLightbox(29)}
+              src={getImage("customfont").src}
+              alt={getImage("customfont").alt}
+              onClick={() => openLightbox(getImage("customfont").index)}
               className="cursor-pointer"
             />
           </div>
@@ -769,25 +763,25 @@ export function WoodyPost() {
           <span className="spanTitle">COLOR PALETTE</span>
         </div>
         <div className="colorPalette font-semibold flex p-0 self-stretch rounded-3xl overflow-hidden h-[820px]">
-          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-dark]">
+          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-wood-dark">
             #602626
           </div>
-          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-brown]">
+          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-wood-brown">
             #BB8E65
           </div>
-          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-cream]">
+          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-wood-cream">
             #E9BE95
           </div>
-          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-light]">
+          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-wood-light">
             #F3D8BF
           </div>
-          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-white]">
+          <div className="colorStripe text-wood-dark flex flex-col justify-end items-center px-9 py-24 grow bg-wood-white">
             #FDF7F2
           </div>
-          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-red]">
+          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-wood-red">
             #FF3C3C
           </div>
-          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-[--wood-green]">
+          <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-wood-green">
             #23BE1C
           </div>
         </div>
@@ -795,46 +789,46 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">SKETCHES</span>
         </div>
-        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-[--wood-cream]">
+        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-wood-cream">
           <SmartImage
             className="w-full h-auto cursor-pointer"
             width={800}
             height={200}
-            src={images[30].src}
-            alt={images[30].alt}
-            onClick={() => openLightbox(30)}
+            src={getImage("Sketchs").src}
+            alt={getImage("Sketchs").alt}
+            onClick={() => openLightbox(getImage("Sketchs").index)}
           />
           <div className="grid md:grid-cols-2 lg:grid-cols-4 justify-center items-center gap-9">
             <SmartImage
               className="w-full h-auto cursor-pointer"
               width={800}
               height={200}
-              src={images[31].src}
-              alt={images[31].alt}
-              onClick={() => openLightbox(31)}
+              src={getImage("logoSketch4").src}
+              alt={getImage("logoSketch4").alt}
+              onClick={() => openLightbox(getImage("logoSketch4").index)}
             />
             <SmartImage
               width={800}
               height={200}
-              src={images[32].src}
-              alt={images[32].alt}
-              onClick={() => openLightbox(32)}
+              src={getImage("logoSketch3").src}
+              alt={getImage("logoSketch3").alt}
+              onClick={() => openLightbox(getImage("logoSketch3").index)}
               className="cursor-pointer"
             />
             <SmartImage
               width={800}
               height={200}
-              src={images[33].src}
-              alt={images[33].alt}
-              onClick={() => openLightbox(33)}
+              src={getImage("logoSketch2").src}
+              alt={getImage("logoSketch2").alt}
+              onClick={() => openLightbox(getImage("logoSketch2").index)}
               className="cursor-pointer"
             />
             <SmartImage
               width={800}
               height={200}
-              src={images[34].src}
-              alt={images[34].alt}
-              onClick={() => openLightbox(34)}
+              src={getImage("logoSketch1").src}
+              alt={getImage("logoSketch1").alt}
+              onClick={() => openLightbox(getImage("logoSketch1").index)}
               className="cursor-pointer"
             />
           </div>
@@ -843,207 +837,216 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">LOGOTYPE</span>
         </div>
-        <div className="BannerWTF bg-[--wood-cream] grid grid-flow-col gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-col gap-9 rounded-3xl p-16">
           <SmartImage
             className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[35].src}
-            alt={images[35].alt}
-            onClick={() => openLightbox(35)}
+            src={getImage("woodyv0").src}
+            alt={getImage("woodyv0").alt}
+            onClick={() => openLightbox(getImage("woodyv0").index)}
           />
 
           <SmartImage
             className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[36].src}
-            alt={images[36].alt}
-            onClick={() => openLightbox(36)}
+            src={getImage("woodyv1").src}
+            alt={getImage("woodyv1").alt}
+            onClick={() => openLightbox(getImage("woodyv1").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("woodyv2").src}
+            alt={getImage("woodyv2").alt}
+            onClick={() => openLightbox(getImage("woodyv2").index)}
           />
 
           <SmartImage
             className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[37].src}
-            alt={images[37].alt}
-            onClick={() => openLightbox(37)}
-          />
-          <SmartImage
-            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[38].src}
-            alt={images[38].alt}
-            onClick={() => openLightbox(38)}
-          />
-          <SmartImage
-            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[39].src}
-            alt={images[39].alt}
-            onClick={() => openLightbox(39)}
-          />
-          <SmartImage
-            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[40].src}
-            alt={images[40].alt}
-            onClick={() => openLightbox(40)}
+            src={getImage("woodyv3").src}
+            alt={getImage("woodyv3").alt}
+            onClick={() => openLightbox(getImage("woodyv3").index)}
           />
 
           <SmartImage
             className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[41].src}
-            alt={images[41].alt}
-            onClick={() => openLightbox(41)}
+            src={getImage("woodyv4").src}
+            alt={getImage("woodyv4").alt}
+            onClick={() => openLightbox(getImage("woodyv4").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("woodyv5").src}
+            alt={getImage("woodyv5").alt}
+            onClick={() => openLightbox(getImage("woodyv5").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("woodyv6").src}
+            alt={getImage("woodyv6").alt}
+            onClick={() => openLightbox(getImage("woodyv6").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("woody-brown").src}
+            alt={getImage("plank0").alt}
+            onClick={() => openLightbox(getImage("plank0").index)}
           />
         </div>
 
         <div className="headingWoody">
           <span className="spanTitle">PLANK</span>
         </div>
-        <div className="BannerWTF bg-[--wood-cream] grid grid-flow-col gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-col gap-9 rounded-3xl p-16">
           <SmartImage
-            className="w-auto h-[80px] hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
+            className="w-full h-auto hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[42].src}
-            alt={images[42].alt}
-            onClick={() => openLightbox(42)}
+            src={getImage("plank0").src}
+            alt={getImage("plank0").alt}
+            onClick={() => openLightbox(getImage("plank0").index)}
+          />
+
+          <SmartImage
+            className="w-full h-auto hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("plankv1").src}
+            alt={getImage("plankv1").alt}
+            onClick={() => openLightbox(getImage("plankv1").index)}
           />
           <SmartImage
             className="w-auto h-[80px] hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[43].src}
-            alt={images[43].alt}
-            onClick={() => openLightbox(43)}
+            src={getImage("plankv2").src}
+            alt={getImage("plankv2").alt}
+            onClick={() => openLightbox(getImage("plankv2").index)}
           />
           <SmartImage
             className="w-auto h-[80px] hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[44].src}
-            alt={images[44].alt}
-            onClick={() => openLightbox(44)}
-          />
-          <SmartImage
-            className="w-auto h-[80px] hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[45].src}
-            alt={images[45].alt}
-            onClick={() => openLightbox(45)}
+            src={getImage("plankv3").src}
+            alt={getImage("plankv3").alt}
+            onClick={() => openLightbox(getImage("plankv3").index)}
           />
         </div>
 
         <div className="headingWoody">
           <span className="spanTitle">LOGO VARIANTS</span>
         </div>
-        <div className="BannerWTF bg-[--wood-cream] grid grid-cols-3 gap-24 p-12 rounded-3xl">
+        <div className="BannerWTF bg-wood-cream grid grid-cols-3 gap-24 p-12 rounded-3xl">
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[46].src}
-            alt={images[46].alt}
-            onClick={() => openLightbox(46)}
+            src={getImage("logov0").src}
+            alt={getImage("logov0").alt}
+            onClick={() => openLightbox(getImage("logov0").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[47].src}
-            alt={images[47].alt}
-            onClick={() => openLightbox(47)}
+            src={getImage("logov1").src}
+            alt={getImage("logov1").alt}
+            onClick={() => openLightbox(getImage("logov1").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[48].src}
-            alt={images[48].alt}
-            onClick={() => openLightbox(48)}
-          />
-
-          <SmartImage
-            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[49].src}
-            alt={images[49].alt}
-            onClick={() => openLightbox(49)}
+            src={getImage("logov2").src}
+            alt={getImage("logov2").alt}
+            onClick={() => openLightbox(getImage("logov2").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[50].src}
-            alt={images[50].alt}
-            onClick={() => openLightbox(50)}
+            src={getImage("logov4").src}
+            alt={getImage("logov4").alt}
+            onClick={() => openLightbox(getImage("logov4").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[51].src}
-            alt={images[51].alt}
-            onClick={() => openLightbox(51)}
-          />
-          <SmartImage
-            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[52].src}
-            alt={images[52].alt}
-            onClick={() => openLightbox(52)}
-          />
-          <SmartImage
-            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
-            src={images[53].src}
-            alt={images[53].alt}
-            onClick={() => openLightbox(53)}
+            src={getImage("logov5").src}
+            alt={getImage("logov5").alt}
+            onClick={() => openLightbox(getImage("logov5").index)}
           />
 
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[54].src}
-            alt={images[54].alt}
-            onClick={() => openLightbox(54)}
+            src={getImage("logov6").src}
+            alt={getImage("logov6").alt}
+            onClick={() => openLightbox(getImage("logov6").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[55].src}
-            alt={images[55].alt}
-            onClick={() => openLightbox(55)}
+            src={getImage("logov7").src}
+            alt={getImage("logov7").alt}
+            onClick={() => openLightbox(getImage("logov7").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[56].src}
-            alt={images[56].alt}
-            onClick={() => openLightbox(56)}
+            src={getImage("logov8").src}
+            alt={getImage("logov8").alt}
+            onClick={() => openLightbox(getImage("logov8").index)}
           />
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
             height={200}
-            src={images[57].src}
-            alt={images[57].alt}
-            onClick={() => openLightbox(57)}
+            src={getImage("logov9").src}
+            alt={getImage("logov9").alt}
+            onClick={() => openLightbox(getImage("logov9").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("logov10").src}
+            alt={getImage("logov10").alt}
+            onClick={() => openLightbox(getImage("logov10").index)}
+          />
+
+          <SmartImage
+            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("logov11").src}
+            alt={getImage("logov11").alt}
+            onClick={() => openLightbox(getImage("logov11").index)}
+          />
+          <SmartImage
+            className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
+            width={800}
+            height={200}
+            src={getImage("logov12").src}
+            alt={getImage("logov12").alt}
+            onClick={() => openLightbox(getImage("logov12").index)}
           />
         </div>
 
@@ -1051,52 +1054,52 @@ export function WoodyPost() {
           <span className="spanTitle">BUSINESS CARD</span>
         </div>
 
-        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-[--wood-cream]">
+        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-wood-cream">
           <div className="rowIMGWTF flex w-full">
             <SmartImage
               className="w-1/2 h-auto cursor-pointer"
-              src={images[58].src}
-              alt={images[58].alt}
-              onClick={() => openLightbox(58)}
+              width={800}
+              height={200}
+              src={getImage("Visa2v7").src}
+              alt={getImage("Visa2v7").alt}
+              onClick={() => openLightbox(getImage("Visa2v7").index)}
+            />
+            <SmartImage
+              className="w-1/2 h-auto cursor-pointer"
+              width={800}
+              height={200}
+              src={getImage("Visa2v6").src}
+              alt={getImage("Visa2v6").alt}
+              onClick={() => openLightbox(getImage("Visa2v6").index)}
+            />
+          </div>
+          <div className="rowIMGWTF flex w-full">
+            <SmartImage
+              className="w-1/2 h-auto cursor-pointer"
+              src={getImage("visa-front").src}
+              alt={getImage("visa-front").alt}
+              onClick={() => openLightbox(getImage("visa-front").index)}
             />
 
             <SmartImage
               className="w-1/2 h-auto cursor-pointer"
-              src={images[59].src}
-              alt={images[59].alt}
-              onClick={() => openLightbox(59)}
+              src={getImage("visa2").src}
+              alt={getImage("visa2").alt}
+              onClick={() => openLightbox(getImage("visa2").index)}
             />
           </div>
           <div className="rowIMGWTF flex w-full">
             <SmartImage
               className="w-1/2 h-auto bg-contain cursor-pointer"
-              src={images[60].src}
-              alt={images[60].alt}
-              onClick={() => openLightbox(60)}
+              src={getImage("Visa2v5").src}
+              alt={getImage("Visa2v5").alt}
+              onClick={() => openLightbox(getImage("Visa2v5").index)}
             />
             <SmartImage
               className="w-1/2 h-auto bg-contain cursor-pointer"
-              src={images[61].src}
-              alt={images[61].alt}
-              onClick={() => openLightbox(61)}
-            />
-          </div>
-          <div className="rowIMGWTF flex w-full">
-            <SmartImage
-              className="w-1/2 h-auto bg-contain cursor-pointer"
-              width={800}
-              height={200}
-              src={images[62].src}
-              alt={images[62].alt}
-              onClick={() => openLightbox(62)}
-            />
-            <SmartImage
-              className="w-1/2 h-auto bg-contain cursor-pointer"
-              width={800}
-              height={200}
-              src={images[63].src}
-              alt={images[63].alt}
-              onClick={() => openLightbox(63)}
+              src={getImage("Visa2v4").src}
+              alt={getImage("Visa2v4").alt}
+              onClick={() => openLightbox(getImage("Visa2v4").index)}
             />
           </div>
         </div>
@@ -1104,31 +1107,31 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">FLYER DESIGN</span>
         </div>
-        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-[--wood-cream]">
+        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-wood-cream">
           <SmartImage
             className="w-full h-auto bg-cover cursor-pointer"
             width={800}
             height={200}
-            src={images[64].src}
-            alt={images[64].alt}
-            onClick={() => openLightbox(64)}
+            src={getImage("Leafletv2").src}
+            alt={getImage("Leafletv2").alt}
+            onClick={() => openLightbox(getImage("Leafletv2").index)}
           />
           <div className="rowIMGWTF flex">
             <SmartImage
               className="w-1/2 h-auto bg-cover cursor-pointer"
               width={800}
               height={200}
-              src={images[65].src}
-              alt={images[65].alt}
-              onClick={() => openLightbox(65)}
+              src={getImage("A6spec1").src}
+              alt={getImage("A6spec1").alt}
+              onClick={() => openLightbox(getImage("A6spec1").index)}
             />
             <SmartImage
               className="w-1/2 h-auto bg-cover cursor-pointer"
               width={800}
               height={200}
-              src={images[66].src}
-              alt={images[66].alt}
-              onClick={() => openLightbox(66)}
+              src={getImage("A6spec").src}
+              alt={getImage("A6spec").alt}
+              onClick={() => openLightbox(getImage("A6spec").index)}
             />
           </div>
         </div>
@@ -1136,32 +1139,32 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">FOOD TRUCK</span>
         </div>
-        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-[--wood-cream]">
+        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-wood-cream">
           <SameHeightRow
-            images={[images[67], images[68]]}
-            onImageClick={(idx) => openLightbox(67 + idx)}
+            images={[getImage("truck4"), getImage("truck3")]}
+            onImageClick={(idx) => openLightbox(getImage("truck4").index + idx)}
           ></SameHeightRow>
           <SameHeightRow
-            images={[images[69], images[70]]}
-            onImageClick={(idx) => openLightbox(69 + idx)}
+            images={[getImage("truck3"), getImage("truck2")]}
+            onImageClick={(idx) => openLightbox(getImage("truck3").index + idx)}
           ></SameHeightRow>
         </div>
 
         <div className="headingWoody">
           <span className="spanTitle">PIZZA QUATTRO FORMAGGI</span>
         </div>
-        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-[--wood-cream]">
+        <div className="sketchContain flex flex-col items-center justify-center p-0 overflow-hidden rounded-3xl w-full bg-wood-cream">
           <SameHeightRow
-            images={[images[71], images[72]]}
-            onImageClick={(idx) => openLightbox(71 + idx)}
+            images={[getImage("pizza2"), getImage("pizza1")]}
+            onImageClick={(idx) => openLightbox(getImage("pizza1").index + idx)}
           ></SameHeightRow>
           <SameHeightRow
-            images={[images[73], images[74]]}
-            onImageClick={(idx) => openLightbox(73 + idx)}
+            images={[getImage("pizza3"), getImage("pizza4")]}
+            onImageClick={(idx) => openLightbox(getImage("pizza3").index + idx)}
           ></SameHeightRow>
         </div>
 
-        <div className="BannerWTF bg-(--wood-dark) rounded-3xl p-16 py-36 my-16 relative">
+        <div className="BannerWTF bg-wood-dark rounded-3xl p-16 py-36 my-16 relative">
           <div className="flex flex-col justify-center items-center p-0 gap-12 grow">
             <div className="headingWoody" style={{ padding: "0px" }}>
               <span className="spanTitle">HAVE A PIZZASTIC DAY</span>
@@ -1170,43 +1173,43 @@ export function WoodyPost() {
               className="max-w-[320px] hover:animate-bounce cursor-pointer"
               width={800}
               height={200}
-              src={images[75].src}
-              alt={images[75].alt}
-              onClick={() => openLightbox(75)}
+              src={getImage("truck-white").src}
+              alt={getImage("truck-white").alt}
+              onClick={() => openLightbox(getImage("truck-white").index)}
             />
           </div>
           <div className="absolute left-0 right-0 top-0 bottom-0 m-16">
             <SmartImage
-              className="max-w-[100px] opacity-10 rotate-45 absolute right-0 animate-pulse cursor-pointer"
-              width={800}
+              className="max-w-[100px] h-auto opacity-10 rotate-45 absolute right-0 animate-pulse cursor-pointer"
+              width={200}
               height={200}
-              src={images[76].src}
-              alt={images[76].alt}
-              onClick={() => openLightbox(76)}
+              src={getImage("drink").src}
+              alt={getImage("drink").alt}
+              onClick={() => openLightbox(getImage("drink").index)}
             />
             <SmartImage
-              className="max-w-[100px] opacity-10 -rotate-45 absolute left-0 animate-pulse cursor-pointer"
-              width={800}
+              className="max-w-[100px] h-auto opacity-10 -rotate-45 absolute left-0 animate-pulse cursor-pointer"
+              width={200}
               height={200}
-              src={images[77].src}
-              alt={images[77].alt}
-              onClick={() => openLightbox(77)}
+              src={getImage("slice-white").src}
+              alt={getImage("slice-white").alt}
+              onClick={() => openLightbox(getImage("slice-white").index)}
             />
             <SmartImage
-              className="max-w-[100px] opacity-10 rotate-135 absolute bottom-0 right-0 animate-pulse cursor-pointer"
-              width={800}
+              className="max-w-[100px] h-auto opacity-10 rotate-135 absolute bottom-0 right-0 animate-pulse cursor-pointer"
+              width={200}
               height={200}
-              src={images[78].src}
-              alt={images[78].alt}
-              onClick={() => openLightbox(78)}
+              src={getImage("slice-white").src}
+              alt={getImage("slice-white").alt}
+              onClick={() => openLightbox(getImage("slice-white").index)}
             />
             <SmartImage
-              className="max-w-[100px] opacity-10 -rotate-135 absolute bottom-0 animate-pulse cursor-pointer"
-              width={800}
-              height={200}
-              src={images[79].src}
-              alt={images[79].alt}
-              onClick={() => openLightbox(79)}
+              className="max-w-[100px] h-auto opacity-10 -rotate-135 absolute bottom-0 animate-pulse cursor-pointer"
+              width={100}
+              height={100}
+              src={getImage("drink").src}
+              alt={getImage("drink").alt}
+              onClick={() => openLightbox(getImage("drink").index)}
             />
           </div>
         </div>

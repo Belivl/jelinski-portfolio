@@ -18,7 +18,13 @@ export function Projects() {
   const [activeTab, setActiveTab] = useState<ProjectTabId>("projects");
 
   return (
-    <div className="min-h-screen pt-36 pb-20 px-6">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="min-h-screen pt-36 pb-20 px-6"
+    >
       <SEO title={t.projects.title} description={t.projects.description} />
       <div className="container mx-auto justify-start flex flex-col items-stretch overflow-hidden md:overflow-visible">
         <motion.div
@@ -104,6 +110,6 @@ export function Projects() {
           )}
         </AnimatePresence>
       </div>
-    </div>
+    </motion.div>
   );
 }
