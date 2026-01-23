@@ -3,18 +3,18 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { useState } from "react";
 import { ArrowRight, ExternalLink, FolderKanban } from "lucide-react";
 import { Link } from "react-router-dom";
-import { SmartImage } from "../ui/SmartImage";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 export function AboutTimeline() {
   const { t } = useLanguage();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-0">
+    <div className="max-w-3xl mx-auto px-0 sm:px-0">
       <h2 className="text-5xl font-bold font-script1 mb-12 dark:text-neutral-200 flex items-center justify-center gap-3 text-center w-full">
         {t.about.experience}
       </h2>
-      <div className="space-y-6 border-l-2 dark:border-white/10 ml-3 pl-8 relative">
+      <div className="space-y-6 md:border-l-2 dark:border-white/10 ml-3 md:pl-8 relative">
         {t.about.experiences.map((exp: any, index: number) => (
           <motion.div
             key={index}
@@ -26,7 +26,7 @@ export function AboutTimeline() {
           >
             {/* Timeline Dot */}
             <div
-              className={`absolute -left-[43px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-background border-4 transition-colors duration-300 ${
+              className={`absolute hidden md:visible -left-[43px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-background border-4 transition-colors duration-300 ${
                 expandedIndex === index
                   ? "border-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)] "
                   : "dark:border-white/20"
@@ -43,23 +43,23 @@ export function AboutTimeline() {
                 setExpandedIndex(expandedIndex === index ? null : index)
               }
             >
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between gap-4 ">
+                <div className="flex items-center gap-4 ">
                   {exp.logo && (
-                    <div className="w-24 h-24 rounded-xl dark:bg-neutral-900 bg-neutral-200 p-2 flex items-center justify-center shrink-0 overflow-hidden backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 md:w-24 md:h-24 rounded-xl dark:bg-neutral-900 bg-neutral-200 p-2 flex items-center justify-center shrink-0 backdrop-blur-sm group-hover:scale-110 transition-transform duration-300">
                       <SmartImage
                         src={exp.logo}
                         alt={exp.company}
-                        className="max-w-full max-h-full object-contain filter rounded-sm"
+                        className="md:max-w-full md:max-h-full object-contain filter rounded-sm"
                       />
                     </div>
                   )}
-                  <div className="flex flex-col gap-1">
-                    <span className="text-xs dark:text-neutral-400 font-medium tracking-wide mb-1 block opacity-80">
+                  <div className="flex flex-col gap-1 ">
+                    <span className="text-xs dark:text-neutral-500 font-medium tracking-wide mb-1">
                       {exp.period}
                     </span>
                     <h3
-                      className={`text-xl font-bold transition-colors duration-300 ${
+                      className={`text-lg md:text-xl w-full font-bold transition-colors duration-300  ${
                         expandedIndex === index
                           ? "text-amber-500"
                           : "text-foreground"
@@ -67,7 +67,7 @@ export function AboutTimeline() {
                     >
                       {exp.role}
                     </h3>
-                    <h4 className="text-lg text-gray-400 font-medium">
+                    <h4 className="text-md md:text-xl text-gray-400 font-medium">
                       {exp.company}
                     </h4>
                   </div>
@@ -75,7 +75,7 @@ export function AboutTimeline() {
 
                 <motion.div
                   animate={{ rotate: expandedIndex === index ? 180 : 0 }}
-                  className="mt-1 text-gray-400 dark:text-gray-600 group-hover:text-amber-500 transition-colors scale-150 mr-4"
+                  className="mt-1 text-gray-400 dark:text-gray-600 group-hover:text-amber-500 transition-colors scale-150 md:mr-4"
                 >
                   <svg
                     width="24"

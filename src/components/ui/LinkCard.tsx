@@ -14,7 +14,7 @@ export function LinkCard({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group p-8 rounded-2xl bg-foreground/5 border border-t-neutral-700 border-b-neutral-900 border-l-neutral-700/70 border-r-neutral-800 hover:bg-foreground/10 hover:border-primary/50 transition-all duration-300 flex flex-col items-center gap-4"
+      className="group p-4 md:p-8 rounded-2xl bg-foreground/5 border border-t-neutral-700 border-b-neutral-900 border-l-neutral-700/70 border-r-neutral-800 hover:bg-foreground/10 hover:border-primary/50 transition-all duration-300 flex flex-col items-center gap-4"
     >
       {children}
 

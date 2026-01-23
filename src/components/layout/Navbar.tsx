@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import { TextScramble } from "@/components/ui/TextScramble";
-import { GoldButton } from "../ui/GoldButton";
+import { GoldButton } from "@/components/ui/GoldButton";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,23 +22,20 @@ export function Navbar() {
   }, []);
 
   const navLinks = [
-    // { name: t.nav.home, path: '/' },
     { name: t.nav.gallery, path: "/gallery" },
     { name: t.nav.blog, path: "/blog" },
     { name: t.nav.projects, path: "/projects" },
-
     { name: t.nav.about, path: "/about" },
     { name: t.nav.contact, path: "/contact" },
-    // { name: "photoManager", path: "/dev/photo-manager" },
   ];
 
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-border bg-black/80 md:bg-background py-4",
+        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-border bg-black/80 md:bg-background py-4 ",
         isScrolled
           ? "bg-background md:bg-background py-3 border-neutral-200 dark:border-neutral-800"
-          : "bg-background md:bg-transparent py-3 border-neutral-600 dark:border-neutral-800",
+          : "bg-background md:bg-transparent py-3 border-none dark:border-none ",
       )}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -46,15 +43,7 @@ export function Navbar() {
           to="/"
           className="text-2xl font-bold tracking-tighter flex items-center gap-2"
         >
-          {/* <Camera className="w-6 h-6 text-primary" /> */}
-          <span
-            className={cn(
-              " uppercase",
-              isScrolled
-                ? "text-black dark:text-white"
-                : "text-black dark:text-white",
-            )}
-          >
+          <span className="uppercase text-black dark:text-white">
             <TextScramble className="font-bold tracking-normal font-script1 capitalize">
               {location.pathname.startsWith("/projects")
                 ? "Belial"
@@ -90,44 +79,47 @@ export function Navbar() {
                   <Button
                     variant="link"
                     className={cn(
-                      "text-sm rounded-full font-medium transition-colors text-neutral-200 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200 group relative no-underline hover:no-underline",
+                      "text-sm rounded-full font-medium hover:text-neutral-900 dark:hover:text-neutral-200 group relative transition-all duration-300 ease-out",
+                      isScrolled
+                        ? "text-neutral-900 dark:text-white"
+                        : "text-neutral-800 dark:text-neutral-300",
                       isActive
-                        ? "text-primary hover:text-amber-400"
-                        : "text-muted-foreground",
+                        ? "text-primary hover:text-amber-400 no-underline hover:no-underline"
+                        : "",
                     )}
                   >
                     <span
                       className={cn(
-                        `absolute top-0 left-0 w-2 h-2 border-t border-l border-amber-500 ${
+                        `absolute top-0 left-0 w-2 h-2 border-t border-l dark:border-amber-500 border-amber-400 ${
                           isActive
-                            ? "opacity-30"
+                            ? "opacity-100"
                             : "opacity-0 -translate-x-1 -translate-y-1"
                         } group-hover:opacity-100 transition-all duration-300 ease-out  group-hover:translate-x-0 group-hover:translate-y-0`,
                       )}
                     />
                     <span
                       className={cn(
-                        `absolute top-0 right-0 w-2 h-2 border-t border-r border-amber-500 ${
+                        `absolute top-0 right-0 w-2 h-2 border-t border-r dark:border-amber-500 border-amber-400 ${
                           isActive
-                            ? "opacity-30"
+                            ? "opacity-100"
                             : "opacity-0 translate-x-1 -translate-y-1"
                         } group-hover:opacity-100 transition-all duration-300 ease-out  group-hover:translate-x-0 group-hover:translate-y-0`,
                       )}
                     />
                     <span
                       className={cn(
-                        `absolute bottom-0 right-0 w-2 h-2 border-b border-r border-amber-500 ${
+                        `absolute bottom-0 right-0 w-2 h-2 border-b border-r dark:border-amber-500 border-amber-400 ${
                           isActive
-                            ? "opacity-30"
+                            ? "opacity-100"
                             : "opacity-0 translate-x-1 translate-y-1"
                         }  group-hover:opacity-100 transition-all duration-300 ease-out  group-hover:translate-x-0 group-hover:translate-y-0`,
                       )}
                     />
                     <span
                       className={cn(
-                        `absolute bottom-0 left-0 w-2 h-2 border-b border-l border-amber-500 ${
+                        `absolute bottom-0 left-0 w-2 h-2 border-b border-l dark:border-amber-500 border-amber-400 ${
                           isActive
-                            ? "opacity-30"
+                            ? "opacity-100"
                             : "opacity-0 -translate-x-1 translate-y-1"
                         } group-hover:opacity-100 transition-all duration-300 ease-out  group-hover:translate-x-0 group-hover:translate-y-0`,
                       )}

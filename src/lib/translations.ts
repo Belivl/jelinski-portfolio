@@ -450,7 +450,7 @@ export const translations = {
                 },  
                 '3': {
                     name: "Madzia D.",
-                    role: "Modelka",
+                    role: "Model",
                     text: "Michał is an excellent photographer who knows how to create a relaxed and very comfortable atmosphere during a shoot. He gives clear guidance, so even someone with no modeling experience knows exactly what to do and feels at ease in front of the camera. He has a great eye for detail and knows how to bring out the best in people, which results in truly successful photos. I highly recommend him!"
                 },
                 '4': {

@@ -75,8 +75,8 @@ export function BelialPost() {
         isOpen={lightboxOpen}
         onClose={() => setLightboxOpen(false)}
       />
-      <div className="flex flex-col gap-0 rounded-3xl w-full overflow-clip">
-        <div className="grid grid-cols-3 w-full">
+      <div className="flex flex-col gap-6  w-full overflow-clip">
+        <div className="grid grid-cols-3 w-full rounded-xl overflow-clip">
           <SmartImage
             src={images[0].src}
             alt={images[0].alt}
@@ -103,14 +103,18 @@ export function BelialPost() {
           />
         </div>
         <SameHeightRow
+          gap={16}
+          roundEvery
           images={[images[3], images[4]]}
           onImageClick={(idx) => openLightbox(3 + idx)}
         />
         <SameHeightRow
+          gap={16}
+          roundEvery
           images={[images[5], images[6]]}
           onImageClick={(idx) => openLightbox(5 + idx)}
         />
-        <div className="grid grid-cols-1 w-full">
+        <div className="grid grid-cols-2 gap-6 w-full">
           {images.slice(7).map((item, index) => (
             <SmartImage
               key={index}
@@ -118,7 +122,7 @@ export function BelialPost() {
               alt={item.alt}
               width={1400}
               height={700}
-              className=" w-full bg-grey-400 grid place-items-center cursor-pointer"
+              className=" w-full bg-grey-400 grid place-items-center cursor-pointer rounded-xl"
               onClick={() => openLightbox(7 + index)}
             />
           ))}

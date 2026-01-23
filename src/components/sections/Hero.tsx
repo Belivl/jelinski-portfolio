@@ -23,7 +23,7 @@ export function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentPhotoIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, 14000);
+    }, 7000);
 
     return () => clearInterval(interval);
   }, []);
@@ -35,13 +35,13 @@ export function Hero() {
     typeof currentPhoto !== "string" && currentPhoto.objectTop;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20">
-      <div className="absolute inset-0 z-0 w-full h-full dark:bg-black bg-neutral-100/10">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20 border-b border-neutral-400 dark:border-neutral-800">
+      <div className="absolute inset-0 z-0 w-full h-full dark:bg-neutral-900 bg-neutral-100">
         <AnimatePresence mode="popLayout">
           <motion.div
             key={photoUrl}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.25 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
@@ -54,7 +54,7 @@ export function Hero() {
             />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute z-10 inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-neutral-200 via-neutral-200 to-neutral-200 dark:from-neutral-900 dark:via-black dark:to-black opacity-20" />
+        <div className="absolute z-10 w-full h-full inset-0 bg-white opacity-60 dark:bg-black dark:opacity-70"></div>
       </div>
       <SakuraRain2 />
 
@@ -65,17 +65,19 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
         >
-          <div className="whitespace-nowrap">
+          <div className="text-truncate">
             {t.hero.title}{" "}
-            <span className=" tracking-normal">{t.hero.name}</span>
+            <span className=" tracking-normal text-truncate">
+              {t.hero.name}
+            </span>
           </div>
-          <div className="flex items-center gap-6 w-fit my-4 whitespace-nowrap">
+          <div className="flex items-center gap-2 md:gap-6 w-fit my-4 text-truncate ">
             <span
-              className="relative font-script1 tracking-normal z-50 lowercase cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_0_15px_#000]"
+              className="relative font-script1 tracking-normal z-50 lowercase cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
             >
-              <div className="relative z-200">{t.hero.photographer}</div>
+              <div className="relative z-200 ">{t.hero.photographer}</div>
               <AnimatePresence>
                 {hovered === "photographer" && (
                   <>
@@ -84,14 +86,14 @@ export function Hero() {
                         opacity: 0,
                         rotate: -10,
                         scale: 0.8,
-                        x: -50,
-                        y: -50,
+                        x: 20,
+                        y: -40,
                       }}
                       animate={{
                         opacity: 1,
                         rotate: -15,
                         scale: 1,
-                        x: -120,
+                        x: -40,
                         y: -100,
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
@@ -109,44 +111,20 @@ export function Hero() {
                     <motion.div
                       initial={{
                         opacity: 0,
-                        rotate: 10,
+                        rotate: -5,
                         scale: 0.8,
+                        x: 90,
+                        y: 30,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        rotate: -5,
+                        scale: 1.2,
                         x: 50,
-                        y: -80,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        rotate: 15,
-                        scale: 1,
-                        x: 100,
-                        y: -150,
-                      }}
-                      exit={{ opacity: 0, scale: 0.8 }}
-                      className="absolute z-100 pointer-events-none"
-                      style={{ left: "50%", top: "0%" }}
-                    >
-                      <div className="bg-white p-3 pb-8 shadow-xl rotate-[5deg] w-40">
-                        <SmartImage
-                          src={HOME_PHOTOGRAPHER_IMAGES[1]}
-                          alt="Photo 2"
-                          className="w-full h-auto aspect-3/4 object-cover bg-gray-100"
-                        />
-                      </div>
-                    </motion.div>
-                    <motion.div
-                      initial={{
-                        opacity: 0,
-                        rotate: -5,
-                        scale: 0.8,
-                        x: 0,
-                        y: 50,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        rotate: -5,
-                        scale: 1,
-                        x: 0,
-                        y: 80,
+                        y: -40,
+                        transition: {
+                          delay: 0.1,
+                        },
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute z-100 pointer-events-none"
@@ -160,13 +138,43 @@ export function Hero() {
                         />
                       </div>
                     </motion.div>
+                    <motion.div
+                      initial={{
+                        opacity: 0,
+                        rotate: 10,
+                        scale: 0.8,
+                        x: 30,
+                        y: -60,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        rotate: 10,
+                        scale: 1,
+                        x: 70,
+                        y: -110,
+                        transition: {
+                          delay: 0.2,
+                        },
+                      }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      className="absolute z-100 pointer-events-none"
+                      style={{ left: "50%", top: "0%" }}
+                    >
+                      <div className="bg-white p-3 pb-8 shadow-xl rotate-[5deg] w-40">
+                        <SmartImage
+                          src={HOME_PHOTOGRAPHER_IMAGES[1]}
+                          alt="Photo 2"
+                          className="w-full h-auto aspect-3/4 object-cover bg-gray-100"
+                        />
+                      </div>
+                    </motion.div>
                   </>
                 )}
               </AnimatePresence>
             </span>{" "}
             <span className="font-black lowercase">{t.hero.and}</span>{" "}
             <span
-              className="relative font-script1 tracking-normal z-50 lowercase inline-block cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_0_15px_#000]"
+              className="relative font-script1 tracking-normal z-50 lowercase inline-block cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("designer")}
               onMouseLeave={() => setHovered(null)}
             >
@@ -180,14 +188,14 @@ export function Hero() {
                         rotate: -10,
                         scale: 0.8,
                         x: -100,
-                        y: -50,
+                        y: 0,
                       }}
                       animate={{
                         opacity: 1,
                         rotate: 5,
                         scale: 1,
-                        x: -180,
-                        y: -80,
+                        x: -100,
+                        y: -60,
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute z-100 pointer-events-none"
@@ -206,15 +214,18 @@ export function Hero() {
                         opacity: 0,
                         rotate: 0,
                         scale: 0.8,
-                        x: 100,
-                        y: -100,
+                        x: 0,
+                        y: 0,
                       }}
                       animate={{
                         opacity: 1,
                         rotate: -5,
-                        scale: 1,
-                        x: 70,
+                        scale: 1.2,
+                        x: 50,
                         y: -70,
+                        transition: {
+                          delay: 0.1,
+                        },
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute z-100 pointer-events-none"
@@ -233,15 +244,18 @@ export function Hero() {
                         opacity: 0,
                         rotate: 0,
                         scale: 0.8,
-                        x: 20,
-                        y: 20,
+                        x: -40,
+                        y: 10,
                       }}
                       animate={{
                         opacity: 1,
                         rotate: 10,
                         scale: 1,
                         x: -70,
-                        y: -20,
+                        y: -50,
+                        transition: {
+                          delay: 0.2,
+                        },
                       }}
                       exit={{ opacity: 0, scale: 0.8 }}
                       className="absolute z-100 pointer-events-none"
@@ -260,7 +274,7 @@ export function Hero() {
               </AnimatePresence>
             </span>{" "}
           </div>
-          <div className="whitespace-nowrap">{t.hero.location}</div>
+          <div className="text-truncate">{t.hero.location}</div>
         </motion.h1>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -278,7 +292,7 @@ export function Hero() {
             <Button
               variant="outline"
               size="lg"
-              className="w-full sm:w-auto group relative px-8 dark:border-white/20  dark:hover:bg-white/10 hover:bg-neutral-100 text-foreground overflow-visible"
+              className="w-full sm:w-auto group relative px-8 dark:border-neutral-700 border-neutral-400  dark:hover:bg-neutral-800 hover:bg-neutral-200 text-foreground overflow-visible"
             >
               <span className="absolute -top-2 -left-2 w-3 h-3 border-t-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
               <span className="absolute -top-2 -right-2 w-3 h-3 border-t-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />

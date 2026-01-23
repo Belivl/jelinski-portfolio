@@ -3,6 +3,8 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import React, { useRef } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
+import { Link } from "react-router-dom";
+import { ArrowRight, Folder } from "lucide-react";
 
 const testimonialsData = [
   {
@@ -10,6 +12,7 @@ const testimonialsData = [
     rotation: -2.5,
     color: "#fff9c4", // Yellow
     pinColor: "#ef5350", // Red
+    link: "",
   },
   {
     id: 2,
@@ -22,24 +25,27 @@ const testimonialsData = [
     rotation: -1.2,
     color: "#f1f8e9", // Green
     pinColor: "#6942F5", // Purple pin
+    link: "",
   },
   {
     id: 4,
-    rotation: -1.2,
+    rotation: 1.2,
     color: "#FFD6C4", // Green
     pinColor: "#66bb6a", // Green pin
   },
   {
     id: 5,
-    rotation: -1.2,
+    rotation: -2,
     color: "#E1FEF0", // Yellow
     pinColor: "#EF9A50", // Orange pin
+    link: "",
   },
   {
     id: 6,
-    rotation: -1.2,
+    rotation: 2,
     color: "#E9EAF8", // Green
     pinColor: "#42A5F5", // Blue pin
+    link: "",
   },
 ];
 
@@ -169,7 +175,22 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
               {translated.role}
             </p>
           </div>
-          <div className="text-[10px] font-mono text-black/20 rotate-[-15deg] uppercase border border-black/10 px-1 rounded mr-6">
+          {item.link && (
+            <Link
+              to={item.link}
+              target="_blank"
+              className="w-fit absolute bottom-0 right-0"
+            >
+              <div className="text-[10px] font-mono text-black/70  uppercase border border-black/30 px-1 rounded flex items-center gap-1">
+                <Folder width={10} height={10} />
+                Zdjecia
+                <ArrowRight width={10} height={10} />
+              </div>
+            </Link>
+          )}
+          <div
+            className={`-rotate-10deg text-[10px] absolute bottom-0 left-12 font-mono text-black/20  uppercase border border-black/10 px-1 rounded mr-6`}
+          >
             {t.testimonials.approved}
           </div>
         </div>

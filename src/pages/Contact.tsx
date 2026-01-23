@@ -39,13 +39,13 @@ export function Contact() {
             <p className="text-gray-400">{t.contact.socialSubtitle}</p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
             <LinkCard
               href={siteConfig.social.instagram}
               portal={t.contact.social.instagramPhoto}
-              handle={"@jelinski_official"}
+              handle={siteConfig.socialName.instagram}
             >
-              <div className="w-16 h-16 rounded-md border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-linear-to-tr from-purple-500 to-orange-500 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-xl border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-linear-to-tr from-purple-500 to-orange-500 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -67,9 +67,9 @@ export function Contact() {
             <LinkCard
               href={siteConfig.social.instagram2}
               portal={t.contact.social.instagramDesign}
-              handle={"@belialdesign"}
+              handle={siteConfig.socialName.instagram2}
             >
-              <div className="w-16 h-16 rounded-md border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-linear-to-tr from-purple-500 to-orange-500 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-xl border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-linear-to-tr from-purple-500 to-orange-500 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -91,9 +91,9 @@ export function Contact() {
             <LinkCard
               href={siteConfig.social.linkedin}
               portal={t.contact.social.linkedin}
-              handle={t.contact.social.professionalProfile}
+              handle={siteConfig.socialName.linkedin}
             >
-              <div className="w-16 h-16 rounded-md border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#0077b5] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-xl border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#0077b5] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -115,9 +115,9 @@ export function Contact() {
             <LinkCard
               href={siteConfig.social.youtube}
               portal={t.contact.social.youtube}
-              handle={t.contact.social.videoContent}
+              handle={siteConfig.socialName.youtube}
             >
-              <div className="w-16 h-16 rounded-md border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#FF0000] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-xl border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#FF0000] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -139,9 +139,9 @@ export function Contact() {
             <LinkCard
               href={siteConfig.social.behance}
               portal={t.contact.social.behance}
-              handle={t.contact.social.portfolio}
+              handle={siteConfig.socialName.behance}
             >
-              <div className="w-16 h-16 rounded-md border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#1769ff] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+              <div className="w-16 h-16 rounded-xl border border-t-neutral-200/50 border-b-neutral-400/50 border-l-neutral-300/50 border-r-neutral-400/50 bg-[#1769ff] flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
                 <Palette className="w-8 h-8" />
               </div>
             </LinkCard>

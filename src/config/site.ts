@@ -14,9 +14,6 @@ export const siteConfig = {
     // Contact Information
     contact: {
         email: 'mich.jelin1@gmail.com',
-        phone: 'undisclosed',
-        location: 'Sopot',
-        locationFull: 'Sopot, Poland',
     },
 
     // Social Media Links
@@ -33,7 +30,7 @@ export const siteConfig = {
         instagram2: '@belialdesign',
         linkedin: 'Michal Jelinski',
         youtube: '@BelialDesign',
-        behance: 'https://www.behance.net/michajeliski1',
+        behance: 'michajeliski1',
         email: 'mich.jelin1@gmail.com',
     },
 
@@ -48,7 +45,6 @@ export const siteConfig = {
     // About Section
     about: {
         bio: "I'm a photographer based in New York City, obsessed with light, shadow, and the raw emotion of the moment. With over 5 years of experience in both digital and film photography, I strive to create images that feel timeless.",
-        imageUrl: 'https://res.cloudinary.com/dcmfq9hg5/image/upload/v1764711180/photo/portrait/received_731387291518582_v9vism.jpg',
     },
 
     // Experience/Work History

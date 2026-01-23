@@ -122,7 +122,7 @@ export function AdvancedFilterBar({
 
   return (
     <div className="w-full  mx-auto mb-12 space-y-8">
-      <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900  p-3 md:p-6 rounded-2xl backdrop-blur-md border-t border-t-neutral-700 border-l border-l-neutral-800 border-r border-r-neutral-900 border-b border-b-neutral-900 shadow-2xl">
+      <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900  p-3 md:p-6 rounded-2xl backdrop-blur-md border-t dark:border-t-neutral-700 border-l dark:border-l-neutral-800 border-r dark:border-r-neutral-900 border-b dark:border-b-neutral-900 shadow-2xl">
         {/* 1. Cinematic Category Cards */}
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           {displayCategories.map((category) => {
@@ -141,7 +141,7 @@ export function AdvancedFilterBar({
           })}
         </div>
 
-        <div className="flex flex-col-reverse md:flex-row gap-3 items-start justify-center pt-8 border-t border-t-neutral-800">
+        <div className="flex flex-col-reverse md:flex-row gap-3 items-start justify-center pt-8 border-t dark:border-t-neutral-800">
           {/* 3. Tags Cloud (Categorized) */}
           <div className="flex-1 flex flex-col gap-6 w-full">
             <div className="flex flex-wrap gap-3 items-center">
@@ -377,12 +377,6 @@ export function AdvancedFilterBar({
           </div>
           {/* 2. Filters & Actions (Camera & Clear) */}
           <div className="w-full md:w-auto flex flex-col gap-4 min-w-[240px]">
-            {/* <div className="flex items-center justify-between gap-4">
-              <span className="text-sm font-mono text-neutral-400 uppercase tracking-widest">
-                {t.gallery.cameraSystem}
-              </span>
-            </div> */}
-
             <Select
               value={filters.camera || "all"}
               onValueChange={(val) =>
@@ -392,7 +386,7 @@ export function AdvancedFilterBar({
                 })
               }
             >
-              <SelectTrigger className="w-full bg-black/40 border-neutral-800 text-neutral-200">
+              <SelectTrigger className="w-full dark:bg-neutral-900  dark:border-neutral-800 dark:text-neutral-200">
                 <SelectValue placeholder={t.gallery.selectCamera} />
               </SelectTrigger>
               <SelectContent>

@@ -2542,20 +2542,7 @@ export const photoData: Photo[] = [
         "date": "2023-06-30",
         "place": "Gdansk Osowa"
     },
-   {
-        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05845-2_Qe3owf66d.avif?updatedAt=1769020788943",
-        "title": "Urodziny Tymona",
-        "category": "portrait",
-        "camera": "Sony A6600",
-        "tags": [
-            "event",
-            "portrait",
-            "black-and-white",
-            "party"
-        ],
-        "date": "2023-06-30",
-        "place": "Gdansk Osowa"
-    },
+
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05852-2_B3R43Ztwr.avif?updatedAt=1769020788927",
         "title": "Urodziny Tymona",

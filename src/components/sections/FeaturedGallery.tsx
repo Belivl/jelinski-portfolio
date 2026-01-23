@@ -23,7 +23,7 @@ export function FeaturedGallery() {
           <Link to="/gallery">
             <Button
               variant="ghost"
-              className="hidden md:flex text-primary hover:text-primary/80 hover:bg-neutral-800 hover:border-neutral-600 hover:border"
+              className="hidden md:flex text-primary hover:text-primary/80 dark:hover:bg-neutral-800 dark:hover:border-neutral-600 hover:border"
             >
               {t.featured.viewAll} <ArrowRight className="ml-2 w-4 h-4" />
             </Button>
@@ -46,7 +46,7 @@ export function FeaturedGallery() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-sm md:rounded-lg bg-muted cursor-pointer border border-border md:mb-6 mb-2"
+              className="group relative overflow-hidden rounded-sm md:rounded-lg bg-muted cursor-pointer border border-border md:mb-6 mb-2 shadow-md"
             >
               <SmartImage
                 src={photo.url}
@@ -78,7 +78,7 @@ export function FeaturedGallery() {
             <Button
               variant="ghost"
               size="lg"
-              className="w-full group hover:bg-transparent text-3xl md:text-9xl h-fit p-4 md:p-8 text-neutral-500 hover:text-neutral-400 transition-all duration-300 ease-out text-script1 font-black gap-8 uppercase"
+              className="w-full hover:underline underline-offset-12 decoration-[8px] group hover:bg-transparent text-3xl md:text-9xl h-fit p-4 md:p-8 text-neutral-500 hover:text-neutral-400 transition-all duration-300 ease-out text-script1 font-black gap-8 uppercase"
             >
               {t.featured.viewAll}{" "}
               <ArrowRight className="ml-2 w-10 h-10 md:w-30 md:h-30 group-hover:translate-x-2 group-hover:rotate-90 transition-all duration-300 ease-out" />

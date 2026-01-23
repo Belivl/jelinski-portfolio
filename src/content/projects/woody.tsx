@@ -339,8 +339,6 @@ export function WoodyPost() {
             <h3>FIRE</h3>
             <SmartImage
               className="w-auto h-[80px] cursor-pointer"
-              width={200}
-              height={200}
               src={getImage("fire-white").src}
               alt={getImage("fire-white").alt}
               onClick={() => openLightbox(getImage("fire-white").index)}

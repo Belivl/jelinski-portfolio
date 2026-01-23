@@ -85,7 +85,7 @@ export function BlogList() {
   return (
     <div className="space-y-8">
       {/* Filters and Sort Controls */}
-      <div className="flex flex-col justify-between w-full gap-6 dark:bg-[linear-gradient(to_bottom,rgba(0,0,0,0.1),rgba(0,0,0,0.4))] p-6 rounded-2xl backdrop-blur-md border-t border-t-neutral-600 border-l border-l-neutral-700 border-r border-r-neutral-800 border-b border-b-neutral-800 shadow-2xl">
+      <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-6 rounded-2xl backdrop-blur-md border-t border-t-neutral-600 border-l border-l-neutral-700 border-r border-r-neutral-800 border-b border-b-neutral-800 shadow-2xl">
         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center w-full">
           {/* Category Filter - Inline Pills */}
           <div className="flex flex-col gap-3 w-full ">
@@ -138,10 +138,10 @@ export function BlogList() {
                 onValueChange={setSelectedYear}
                 // modal={false} // Prevents body scroll lock and layout shift
               >
-                <SelectTrigger className="w-full bg-black/40 border-white/10 hover:border-amber-500/50 transition-colors h-11">
+                <SelectTrigger className="w-full dark:bg-neutral-900 dark:border-neutral-800 hover:border-amber-500/50 transition-colors h-11 ">
                   <SelectValue placeholder={t.blog.allYears} />
                 </SelectTrigger>
-                <SelectContent className="bg-neutral-900 border-white/10 text-neutral-200">
+                <SelectContent className="dark:bg-neutral-900 dark:border-white/10 dark:text-neutral-200">
                   <SelectGroup>
                     {years.map((year) => (
                       <SelectItem
@@ -164,7 +164,7 @@ export function BlogList() {
                 onClick={() =>
                   setSortOrder(sortOrder === "desc" ? "asc" : "desc")
                 }
-                className="h-11 bg-black/40 border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px]"
+                className="h-11 dark:bg-neutral-900 dark:border-neutral-800 hover:border-amber-500/50 hover:bg-amber-500/10 dark:text-neutral-200 gap-2 min-w-[140px]"
               >
                 {sortOrder === "desc" ? t.blog.newestFirst : t.blog.oldestFirst}
                 {sortOrder === "desc" ? (
@@ -183,7 +183,6 @@ export function BlogList() {
         <AnimatePresence mode="popLayout">
           {filteredAndSortedPosts.map((post) => (
             <ArcCard key={post.id} post={post} />
-            // <Postcard key={post.id} post={post} />
           ))}
         </AnimatePresence>
       </div>
@@ -319,7 +318,7 @@ const ArcCard = ({ post }: Props) => {
           </div>
           <div className=" rounded-sm overflow-hidden">
             <div className="relative group-hover:scale-105 transition-all duration-700">
-              <h2 className="text-6xl z-10 text-white text-shadow-[0_2px_10px_rgba(0,0,0,0.9)] group-hover:text-shadow-[0_2px_20px_rgba(0,0,0,1)]  absolute w-full h-full flex items-center justify-center font-script1 group-hover:text-amber-700 dark:group-hover:text-amber-500  leading-tight group-hover:scale-105 transition-all duration-200">
+              <h2 className="text-3xl md:text-6xl z-10 text-white text-shadow-[0_2px_10px_rgba(0,0,0,0.9)] group-hover:text-shadow-[0_8px_10px_#432100]  absolute w-full h-full flex items-center justify-center font-script1 group-hover:text-amber-700 dark:group-hover:text-amber-500  leading-tight group-hover:scale-105 transition-all duration-200">
                 {title}
               </h2>
 
@@ -338,12 +337,12 @@ const ArcCard = ({ post }: Props) => {
             </div>
           </div>
 
-          <div className="flex flex-row justify-between items-center w-full h-fit pl-2">
+          <div className="flex flex-row justify-between items-center w-full h-fit pl-2 ">
             <div className="flex items-center gap-4 ">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-xs md:text-base truncate">
                 <Calendar className="w-3 h-3" /> <span>{post.date}</span>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 text-xs md:text-base truncate">
                 <MapPin className="w-3 h-3" />{" "}
                 <span>{post.place || "Unknown Location"}</span>
               </div>

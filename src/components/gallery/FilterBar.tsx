@@ -19,8 +19,8 @@ export function FilterBar({
     : ["all", ...categories];
 
   return (
-    <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl ">
-      <h2 className="text-xl font-bold text-foreground font-script1 capitalize">
+    <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-3 md:p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl ">
+      <h2 className="text-xl font-bold text-foreground font-script1 capitalize ml-2 ">
         Projects
       </h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 w-full">

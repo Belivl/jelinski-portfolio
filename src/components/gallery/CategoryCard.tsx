@@ -65,15 +65,15 @@ export function CategoryCard({
   const { t } = useLanguage();
   const Icon = categoryIcons[category.toLowerCase()] || LayoutGrid;
   return (
-    <div className="w-full dark:bg-black bg-neutral-900 p-[2px] pt-0 rounded-lg border-b border-r border-b-white/40 border-r-white/30 group">
-      <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.7)] group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.7)] transition-all duration-300">
+    <div className="w-full dark:bg-neutral-900 bg-neutral-500 p-[2px] pt-0 rounded-lg border-b border-r border-b-neutral-600 border-r-neutral-700 group">
+      <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.9)] rounded-lg group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.4)] transition-all duration-300">
         <motion.button
           whileHover={{ y: -3, x: -1 }}
           whileTap={{ scale: 0.98, x: 1, y: 3 }}
           onClick={onClick}
           className={cn(
             "relative group w-full aspect-3/1 rounded-lg overflow-hidden text-left transition-all duration-300 -translate-x-[2px]",
-            "border dark:border-neutral-800 border-l border-b-3 dark:border-b-neutral-900 border-l-neutral-700 border-t-2 dark:border-t-neutral-700 hover:border-amber-500/50",
+            "border dark:border-neutral-800 border-l border-b-3  dark:border-b-black border-l-neutral-700 border-t-2 dark:border-t-neutral-700 hover:border-amber-500/50",
             isActive
               ? "ring-2 ring-amber-500 border-transparent shadow-[0_0_20px_rgba(245,158,11,0.3)]"
               : "shadow-xl",

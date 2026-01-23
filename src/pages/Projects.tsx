@@ -44,8 +44,8 @@ export function Projects() {
           </p>
 
           {/* Top-level Cinematic Cards */}
-          <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4  w-full ">
+          <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-3 md:p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 md:gap-4 gap-2 w-full ">
               {PROJECT_TABS.map((tab) => (
                 <CategoryCard
                   key={tab.id}
