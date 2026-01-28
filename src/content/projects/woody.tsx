@@ -334,33 +334,29 @@ export function WoodyPost() {
         onClose={() => setLightboxOpen(false)}
       />
       <div>
-        <div className="BannerWTF bg-wood-dark flex items-center p-16 rounded-3xl w-full gap-9 text-white">
-          <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
+        <div className="BannerWTF bg-wood-dark grid grid-cols-3 items-center md:p-16 p-6 md:rounded-3xl rounded-md w-full gap-9 text-white">
+          <div className="grid grid-flow-row place-items-center gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
             <h3>FIRE</h3>
             <SmartImage
-              className="w-auto h-[80px] cursor-pointer"
+              className="w-auto h-[80px] cursor-pointer object-contain"
               src={getImage("fire-white").src}
               alt={getImage("fire-white").alt}
               onClick={() => openLightbox(getImage("fire-white").index)}
             />
           </div>
-          <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
+          <div className="grid grid-flow-row place-items-center gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
             <h3>PIZZA</h3>
             <SmartImage
-              className="w-auto h-[80px] cursor-pointer"
-              width={200}
-              height={200}
+              className="w-auto h-[80px] cursor-pointer object-contain"
               src={getImage("slice-white").src}
               alt={getImage("slice-white").alt}
               onClick={() => openLightbox(getImage("slice-white").index)}
             />
           </div>
-          <div className="flex flex-col justify-center items-center p-0 gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
+          <div className="grid grid-flow-row place-items-center gap-5 grow hover:scale-105 transition-all ease-in-out hover:translate-y-2">
             <h3>WOOD</h3>
             <SmartImage
-              className="w-auto h-[80px] cursor-pointer"
-              width={200}
-              height={200}
+              className="w-auto h-[80px] cursor-pointer object-contain"
               src={getImage("plank-white").src}
               alt={getImage("plank-white").alt}
               onClick={() => openLightbox(getImage("plank-white").index)}
@@ -374,7 +370,7 @@ export function WoodyPost() {
           <div className="ingridientContainer flex flex-col justify-center items-center gap-12 flex-1 px-16 py-24">
             <div className="flex justify-center items-center gap-12">
               <SmartImage
-                className="w-auto h-[80px] hover:scale-110 transition-all ease-in-out hover:rotate-[-15deg] cursor-pointer"
+                className="w-auto md:h-[80px] h-[40px] hover:scale-110 transition-all ease-in-out hover:rotate-[-15deg] cursor-pointer"
                 width={200}
                 height={200}
                 src={getImage("salami").src}
@@ -382,7 +378,7 @@ export function WoodyPost() {
                 onClick={() => openLightbox(getImage("salami").index)}
               />
               <SmartImage
-                className="w-auto h-[120px] hover:scale-110 transition-all ease-in-out cursor-pointer"
+                className="w-auto md:h-[80px] h-[40px] hover:scale-110 transition-all ease-in-out cursor-pointer"
                 width={200}
                 height={200}
                 src={getImage("mushrooms").src}
@@ -390,7 +386,7 @@ export function WoodyPost() {
                 onClick={() => openLightbox(getImage("mushrooms").index)}
               />
               <SmartImage
-                className="w-auto h-[80px] hover:scale-110 transition-all ease-in-out hover:rotate-15 cursor-pointer"
+                className="w-auto md:h-[80px] h-[40px] hover:scale-110 transition-all ease-in-out hover:rotate-15 cursor-pointer"
                 width={200}
                 height={200}
                 src={getImage("leafs").src}
@@ -475,23 +471,23 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">INGRIDIENTS</span>
         </div>
-        <div className="grid grid-cols-3 gap-12 justify-between mb-16 w-full">
+        <div className="grid grid-cols-3 gap-12 justify-between mb-16 w-full text-[12px] md:text-xl">
           <div className="flex flex-col items-center max-w-[260px] place-self-start gap-12">
             <SmartImage
-              className="w-auto h-[80px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
+              className="w-auto md:h-[80px] h-[40px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
               src={getImage("leafs").src}
               alt={getImage("leafs").alt}
               onClick={() => openLightbox(getImage("leafs").index)}
             />
-            <div className="max-w-[260px] H5 font-medium text-center uppercase text-wood-cream">
+            <div className="max-w-[260px]  font-medium text-center uppercase text-wood-cream">
               olive, spinach, arugula, basil
             </div>
           </div>
           <div className="flex flex-col items-center place-self-center max-w-[260px] gap-12">
             <SmartImage
-              className="w-auto h-[80px] scale-[200%] transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
+              className="w-auto md:h-[80px] h-[40px] scale-[200%] transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
               src={getImage("mushrooms").src}
@@ -504,7 +500,7 @@ export function WoodyPost() {
           </div>
           <div className="flex flex-col items-center max-w-[260px] place-self-end gap-12">
             <SmartImage
-              className="w-auto h-[80px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
+              className="w-auto md:h-[80px] h-[40px] scale-y-150 -scale-x-150 transition-all ease-in-out duration-500 hover:rotate-[-15deg] hover:translate-y-[320px] cursor-pointer"
               width={200}
               height={200}
               src={getImage("salami").src}
@@ -518,18 +514,18 @@ export function WoodyPost() {
         </div>
         <div className="grid grid-cols-3 w-full justify-center overflow-clip rounded-2xl">
           <div className="w-full flex flex-col justify-start">
-            <div className="box w-[260px] h-[600px] bg-wood-green rounded-t-2xl"></div>
-            <svg height="600" width="600" className="fill-wood-green">
+            <div className="box md:w-[260px] w-full h-[600px] bg-wood-green rounded-t-2xl"></div>
+            <svg height="600" className="fill-wood-green w-full md:w-[600px]">
               <polygon
                 points="0,0 0,600 410,600 260,0  "
                 style={{ fillRule: "nonzero" }}
               ></polygon>
             </svg>
-            <div className="box w-full h-[600px] bg-wood-green"></div>
+            <div className="box w-full h-[600px] bg-wood-green "></div>
           </div>
           <div className="w-full flex flex-col justify-start items-center">
             <div className="box w-[260px] h-[600px] bg-wood-white rounded-t-2xl"></div>
-            <svg height="600" width="600" className="fill-wood-white">
+            <svg height="600" className="fill-wood-white w-full md:w-[600px]">
               <polygon
                 points="170,0 95,600 505,600 430,0  "
                 style={{ fillRule: "nonzero" }}
@@ -541,8 +537,7 @@ export function WoodyPost() {
             <div className="box w-[260px] h-[600px] bg-wood-red rounded-t-2xl"></div>
             <svg
               height="600"
-              width="600"
-              className="fill-wood-red -scale-x-100"
+              className="fill-wood-red -scale-x-100 w-full md:w-[600px]"
             >
               <polygon
                 points="0,0 0,600 410,600 260,0  "
@@ -558,10 +553,10 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">FIRE</span>
         </div>
-        <div className="BannerWTF bg-wood-cream grid grid-rows-2 grid-cols-4 gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-rows-2 md:grid-cols-4 gap-9 rounded-3xl p-16">
           <div className="flex flex-col gap-1 items-center justify-center">
             <SmartImage
-              className="w-full h-auto cursor-pointer"
+              className="w-full h-auto cursor-pointer "
               width={200}
               height={200}
               src={getImage("wisienka").src}
@@ -639,11 +634,9 @@ export function WoodyPost() {
             <span className="text-wood-dark text-[20px] italic">tulip</span>
           </div>
         </div>
-        <div className="BannerWTF bg-wood-cream grid grid-flow-col items-center gap-12 rounded-3xl p-16 my-16">
+        <div className="BannerWTF bg-wood-cream grid grid-cols-1 md:grid-flow-col items-center gap-12 rounded-3xl p-16 my-16">
           <SmartImage
-            className="w-full h-auto cursor-pointer"
-            width={200}
-            height={200}
+            className="w-full h-auto cursor-pointer object-contain"
             src={getImage("fire0").src}
             alt={getImage("fire0").alt}
             onClick={() => openLightbox(getImage("fire0").index)}
@@ -697,31 +690,29 @@ export function WoodyPost() {
             onClick={() => openLightbox(getImage("fire-color").index)}
           />
         </div>
-        <div className="BannerWTF bg-wood-dark rounded-3xl p-16">
-          <div className="flex flex-col justify-center items-center p-0 gap-5 grow">
+        <div className="BannerWTF bg-wood-dark rounded-3xl md:p-16 p-6">
+          <div className="flex flex-col justify-center items-center  gap-5 grow">
             <div className="headingWoody" style={{ padding: "0px" }}>
               <span className="spanTitle">CUSTOM MADE FONT</span>
             </div>
             <SmartImage
-              width={800}
-              height={200}
               src={getImage("customfont").src}
               alt={getImage("customfont").alt}
               onClick={() => openLightbox(getImage("customfont").index)}
-              className="cursor-pointer"
+              className="cursor-pointer w-full h-auto object-contain"
             />
           </div>
         </div>
         <div className="headingWoody">
           <span className="spanTitle">USED FONTS</span>
         </div>
-        <div className="fontContainer flex flex-col gap-12">
-          <div className="fontWrapper flex flex-row gap-6 w-full justify-between">
-            <span className="corbelNormal text-4xl text-wood-cream uppercase">
+        <div className="fontContainer flex flex-col gap-12 text-wrap overflow-hidden py-2">
+          <div className="fontWrapper flex flex-row gap-6 w-full justify-between text-wrap">
+            <span className="corbelNormal text-4xl text-wood-cream uppercase text-wrap">
               CORBEL
             </span>
-            <div className="flex flex-col items-end gap-3">
-              <p className="corbelNormal text-4xl text-wood-cream uppercase">
+            <div className="flex flex-col items-end gap-3 text-wrap">
+              <p className="corbelNormal text-4xl text-wood-cream uppercase text-wrap">
                 ABCDEFGHIJKLMNOPRSTUWXYZ
               </p>
               <p className="corbelNormal text-4xl text-wood-cream lowercase">
@@ -760,7 +751,7 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">COLOR PALETTE</span>
         </div>
-        <div className="colorPalette font-semibold flex p-0 self-stretch rounded-3xl overflow-hidden h-[820px]">
+        <div className="colorPalette font-semibold flex flex-col md:flex-row p-0 self-stretch rounded-3xl overflow-hidden md:h-[820px]">
           <div className="colorStripe flex flex-col justify-end items-center px-9 py-24 grow bg-wood-dark">
             #602626
           </div>
@@ -835,11 +826,9 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">LOGOTYPE</span>
         </div>
-        <div className="BannerWTF bg-wood-cream grid grid-flow-col gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-row md:grid-flow-col gap-9 rounded-3xl p-16">
           <SmartImage
-            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer"
-            width={800}
-            height={200}
+            className="w-full h-auto hover:animate-bounce transition-all duration-200 ease-in-out cursor-pointer object-contain"
             src={getImage("woodyv0").src}
             alt={getImage("woodyv0").alt}
             onClick={() => openLightbox(getImage("woodyv0").index)}
@@ -908,7 +897,7 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">PLANK</span>
         </div>
-        <div className="BannerWTF bg-wood-cream grid grid-flow-col gap-9 rounded-3xl p-16">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-row md:grid-flow-col gap-9 rounded-3xl p-16">
           <SmartImage
             className="w-full h-auto hover:rotate-15 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}
@@ -947,7 +936,7 @@ export function WoodyPost() {
         <div className="headingWoody">
           <span className="spanTitle">LOGO VARIANTS</span>
         </div>
-        <div className="BannerWTF bg-wood-cream grid grid-cols-3 gap-24 p-12 rounded-3xl">
+        <div className="BannerWTF bg-wood-cream grid grid-flow-row md:grid-cols-3 gap-24 p-12 rounded-3xl">
           <SmartImage
             className="w-full h-auto hover:scale-110 transition-all duration-200 ease-in-out cursor-pointer"
             width={800}

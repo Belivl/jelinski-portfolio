@@ -11,11 +11,11 @@ export function FeaturedGallery() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-24 bg-background relative overflow-hidden">
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex justify-between items-end mb-12 border-b border-border pb-6">
+    <section className="md:py-24 py-8 bg-background relative overflow-hidden">
+      <motion.div className="container mx-auto px-6 relative z-10">
+        <div className="flex justify-between items-end mb-12 border-b border-border pb-6 cursor-default">
           <div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground flex items-center gap-3 font-script1 capitalize">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground flex items-center gap-3 font-script1 capitalize ">
               {t.featured.title}
             </h2>
             <p className="text-muted-foreground">{t.featured.subtitle}</p>
@@ -73,19 +73,25 @@ export function FeaturedGallery() {
           ))}
         </Masonry>
 
-        <div className="mt-4 flex justify-center">
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0, y: 30 }}
+          whileInView={{ scale: 1, opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 1 }}
+          viewport={{ once: true }}
+          className="mt-4 flex justify-center"
+        >
           <Link to="/gallery" className="w-full">
             <Button
               variant="ghost"
               size="lg"
-              className="w-full hover:underline underline-offset-12 decoration-[8px] group hover:bg-transparent text-3xl md:text-9xl h-fit p-4 md:p-8 text-neutral-500 hover:text-neutral-400 transition-all duration-300 ease-out text-script1 font-black gap-8 uppercase"
+              className="w-full hover:underline underline-offset-12 decoration-[8px] group hover:bg-transparent text-xl md:text-9xl h-fit p-4 md:p-8 text-neutral-500 hover:text-neutral-400 transition-all duration-300 ease-out text-script1 font-black md:gap-8 gap-2 uppercase"
             >
               {t.featured.viewAll}{" "}
-              <ArrowRight className="ml-2 w-10 h-10 md:w-30 md:h-30 group-hover:translate-x-2 group-hover:rotate-90 transition-all duration-300 ease-out" />
+              <ArrowRight className="ml-2 w-6 h-6 md:w-30 md:h-30 group-hover:translate-x-2 group-hover:rotate-90 transition-all duration-300 ease-out" />
             </Button>
           </Link>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

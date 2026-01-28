@@ -525,7 +525,7 @@ export function PhotoLightbox({
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed bottom-0 inset-x-0 z-70 bg-[#0a0f0a] border-t border-white/10 rounded-t-4xl shadow-2xl p-6 flex flex-col items-center"
+              className="fixed bottom-0 inset-x-0 z-70 bg-neutral-900 border-t border-white/10 rounded-t-4xl shadow-2xl p-6 flex flex-col items-center"
             >
               <div className="w-12 h-1 bg-white/10 rounded-full mb-6" />
               <RetroDisplay
@@ -569,21 +569,21 @@ export function PhotoLightbox({
               className="fixed bottom-0 inset-x-0 z-70 bg-[#111] border-t border-white/10 rounded-t-4xl shadow-2xl h-[85vh] flex flex-col max-w-2xl mx-auto w-full"
             >
               <div className="flex items-center justify-between p-6 border-b border-white/5">
-                <h3 className="text-xl font-mono text-amber-500 uppercase tracking-tighter">
-                  COMMENTS // {photos.length}
+                <h3 className="text-xl  text-amber-500 uppercase font-bold ">
+                  {t.comments.comments}
                 </h3>
                 <button
                   onClick={() => setShowComments(false)}
                   className="text-white/50 hover:text-white font-mono text-sm"
                 >
-                  CLOSE
+                  {t.comments.close}
                 </button>
               </div>
               <div className="flex-1 overflow-y-auto p-6">
                 {currentPhoto.id ? (
                   <CommentsSection photoId={currentPhoto.id as string} />
                 ) : (
-                  <div className="text-white/50">Unavailable</div>
+                  <div className="text-white/50">{t.comments.unavailable}</div>
                 )}
               </div>
             </motion.div>

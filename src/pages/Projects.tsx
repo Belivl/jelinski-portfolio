@@ -12,6 +12,7 @@ import { AboutBelial } from "@/components/sections/AboutBelial";
 
 import { PROJECT_TABS } from "@/data/projectTabs";
 import type { ProjectTabId } from "@/data/projectTabs";
+import { Card2 } from "@/components/ui/Card2";
 
 export function Projects() {
   const { t } = useLanguage();
@@ -26,13 +27,12 @@ export function Projects() {
       className="min-h-screen pt-36 pb-20 px-6"
     >
       <SEO title={t.projects.title} description={t.projects.description} />
-      <div className="container mx-auto justify-start flex flex-col items-stretch overflow-hidden md:overflow-visible">
+      <div className="container mx-auto justify-start flex flex-col items-stretch overflow-hidden md:overflow-visible cursor-default">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-left mb-8 w-full"
         >
-          <AboutBelial />
           <h1 className="text-4xl md:text-6xl font-bold text-foreground mb-6 font-script1 capitalize">
             {t.projects.title}
           </h1>
@@ -44,7 +44,7 @@ export function Projects() {
           </p>
 
           {/* Top-level Cinematic Cards */}
-          <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-3 md:p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl">
+          <Card2>
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 md:gap-4 gap-2 w-full ">
               {PROJECT_TABS.map((tab) => (
                 <CategoryCard
@@ -56,21 +56,24 @@ export function Projects() {
                 />
               ))}
             </div>
-          </div>
+          </Card2>
         </motion.div>
 
         <AnimatePresence mode="wait">
           {activeTab === "projects" && (
-            <motion.div
-              key="projects"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="w-full"
-            >
-              <ProjectList />
-            </motion.div>
+            <>
+              <AboutBelial />
+              <motion.div
+                key="projects"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="w-full"
+              >
+                <ProjectList />
+              </motion.div>
+            </>
           )}
           {activeTab === "design" && (
             <motion.div

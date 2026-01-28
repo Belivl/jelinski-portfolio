@@ -5,7 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { useState, useEffect } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowBigDown, Camera, Brush } from "lucide-react";
 import {
   HOME_PHOTOGRAPHER_IMAGES,
   HOME_DESIGNER_IMAGES,
@@ -63,21 +63,24 @@ export function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
+          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
         >
-          <div className="text-truncate">
-            {t.hero.title}{" "}
+          <div className="text-truncate cursor-default">
+            {/* {t.hero.title}{" "} */}
             <span className=" tracking-normal text-truncate">
               {t.hero.name}
             </span>
           </div>
-          <div className="flex items-center gap-2 md:gap-6 w-fit my-4 text-truncate ">
+          <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
             <span
-              className="relative font-script1 tracking-normal z-50 lowercase cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
+              className="relative font-black tracking-normal z-50  cursor-cell hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
             >
-              <div className="relative z-200 ">{t.hero.photographer}</div>
+              <div className="relative z-200 flex items-center gap-2 group">
+                <Camera className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all" />
+                {t.hero.photographer}
+              </div>
               <AnimatePresence>
                 {hovered === "photographer" && (
                   <>
@@ -100,7 +103,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "0%", top: "0%" }}
                     >
-                      <div className="bg-white p-3 pb-8 shadow-xl rotate-[-5deg] w-48">
+                      <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl rotate-[-5deg] md:w-48 w-24">
                         <SmartImage
                           src={HOME_PHOTOGRAPHER_IMAGES[0]}
                           alt="Photo 1"
@@ -130,7 +133,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "20%", top: "100%" }}
                     >
-                      <div className="bg-white p-3 pb-8 shadow-xl -rotate-2 w-44">
+                      <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl -rotate-2 w-24 md:w-44">
                         <SmartImage
                           src={HOME_PHOTOGRAPHER_IMAGES[2]}
                           alt="Photo 3"
@@ -160,7 +163,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "50%", top: "0%" }}
                     >
-                      <div className="bg-white p-3 pb-8 shadow-xl rotate-[5deg] w-40">
+                      <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl rotate-[5deg] w-24 md:w-40">
                         <SmartImage
                           src={HOME_PHOTOGRAPHER_IMAGES[1]}
                           alt="Photo 2"
@@ -172,13 +175,16 @@ export function Hero() {
                 )}
               </AnimatePresence>
             </span>{" "}
-            <span className="font-black lowercase">{t.hero.and}</span>{" "}
-            <span
-              className="relative font-script1 tracking-normal z-50 lowercase inline-block cursor-pointer hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
+            <p
+              className="relative group font-black  duration-300 tracking-normal z-50 inline-block cursor-cell hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("designer")}
               onMouseLeave={() => setHovered(null)}
             >
-              <span className="relative z-200">{t.hero.designer}</span>
+              <span className="relative z-200 flex items-center gap-4">
+                <span className="font-black lowercase">{t.hero.and}</span>{" "}
+                {t.hero.designer}{" "}
+                <Brush className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all" />
+              </span>
               <AnimatePresence>
                 {hovered === "designer" && (
                   <>
@@ -201,7 +207,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "0%", top: "0%" }}
                     >
-                      <div className="bg-white p-1 shadow-2xl w-56 border border-white/20">
+                      <div className="bg-white p-1 shadow-2xl md:w-56 w-24 border border-white/20 ">
                         <SmartImage
                           src={HOME_DESIGNER_IMAGES[0]}
                           alt="Design 1"
@@ -231,7 +237,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "50%", top: "0%" }}
                     >
-                      <div className="bg-white p-1 shadow-2xl w-48 border border-black/10">
+                      <div className="bg-white p-1 shadow-2xl w-24 md:w-48 border border-black/10">
                         <SmartImage
                           src={HOME_DESIGNER_IMAGES[1]}
                           alt="Design 2"
@@ -261,7 +267,7 @@ export function Hero() {
                       className="absolute z-100 pointer-events-none"
                       style={{ left: "30%", top: "100%" }}
                     >
-                      <div className="bg-white p-1 shadow-2xl w-52 border border-white/10">
+                      <div className="bg-white p-1 shadow-2xl w-24 md:w-52 border border-white/10">
                         <SmartImage
                           src={HOME_DESIGNER_IMAGES[2]}
                           alt="Design 3"
@@ -272,37 +278,51 @@ export function Hero() {
                   </>
                 )}
               </AnimatePresence>
-            </span>{" "}
+            </p>{" "}
           </div>
-          <div className="text-truncate">{t.hero.location}</div>
+          <div className="text-truncate  cursor-default">{t.hero.location}</div>
         </motion.h1>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col z-0 sm:flex-row gap-4 justify-start items-stretch sm:items-center mt-16 px-4"
+          className=" z-0  mt-16  lg:w-fit"
         >
-          <Link to="/contact" className="w-full sm:w-auto">
-            <GoldButton className="w-full sm:w-auto hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background transition-all duration-300 ease-out">
-              {t.hero.contact}{" "}
-              <ArrowRight className="ml-2 w-5 h-5 text-neutral-800 stroke-[3px] group-hover:-rotate-45 transition-all duration-300 ease-out" />
-            </GoldButton>
-          </Link>
-          <Link to="/gallery" className="w-full sm:w-auto">
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto group relative px-8 dark:border-neutral-700 border-neutral-400  dark:hover:bg-neutral-800 hover:bg-neutral-200 text-foreground overflow-visible"
-            >
-              <span className="absolute -top-2 -left-2 w-3 h-3 border-t-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-              <span className="absolute -top-2 -right-2 w-3 h-3 border-t-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-              <span className="absolute -bottom-2 -right-2 w-3 h-3 border-b-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-              <span className="absolute -bottom-2 -left-2 w-3 h-3 border-b-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-              {t.hero.portfolio}
-            </Button>
-          </Link>
+          <div className="flex gap-3 md:gap-6 md:flex-row ml-4">
+            <Link to="/contact" className="w-full sm:w-auto">
+              <GoldButton className="w-full sm:w-auto hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background transition-all duration-300 ease-out">
+                {t.hero.contact}{" "}
+                <ArrowRight className="ml-2 w-5 h-5 text-neutral-800 stroke-[3px] group-hover:-rotate-45 transition-all duration-300 ease-out" />
+              </GoldButton>
+            </Link>
+            <Link to="/gallery" className="w-full sm:w-auto">
+              <Button
+                variant="outline"
+                size="lg"
+                className=" w-full sm:w-auto group relative px-8 dark:border-neutral-700 border-neutral-400  dark:hover:bg-neutral-800 hover:bg-neutral-200 text-foreground overflow-visible"
+              >
+                <span className="absolute -top-2 -left-2 w-3 h-3 border-t-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                <span className="absolute -top-2 -right-2 w-3 h-3 border-t-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                <span className="absolute -bottom-2 -right-2 w-3 h-3 border-b-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                <span className="absolute -bottom-2 -left-2 w-3 h-3 border-b-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                {t.hero.portfolio}
+              </Button>
+            </Link>
+          </div>
         </motion.div>
       </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 0.8, y: 0 }}
+        transition={{ delay: 3, duration: 1 }}
+        viewport={{ once: true }}
+        className="animate-bounce absolute bottom-2 md:bottom-10 left-1/2 transform -translate-x-1/2 opacity-50"
+      >
+        <div className="flex items-center flex-col font-black uppercase text-sm md:text-xl gap-1  animate-pulse  cursor-move">
+          {t.hero.more}
+          <ArrowBigDown className="w-5 h-5 dark:text-neutral-100  stroke-[3px] group-hover:-rotate-45 transition-all duration-300 ease-out" />
+        </div>
+      </motion.div>
     </section>
   );
 }

@@ -3,9 +3,9 @@ import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import Masonry from "react-masonry-css";
 import { getPhotos } from "@/data/photos.ts";
-import { AdvancedFilterBar } from "./AdvancedFilterBar";
-import { PhotoLightbox } from "./PhotoLightboxNew";
-import { SmartImage } from "../ui/SmartImage";
+import { AdvancedFilterBar } from "@/components/gallery/AdvancedFilterBar";
+import { PhotoLightbox } from "@/components/gallery/PhotoLightboxNew";
+import { SmartImage } from "@/components/ui/SmartImage";
 
 export function GalleryGrid() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,11 +21,53 @@ export function GalleryGrid() {
 
   const photos = useMemo(() => getPhotos(), []);
 
-  // Extract available options
-  const categories = useMemo(
-    () => Array.from(new Set(photos.map((p) => p.category))),
-    [photos],
-  );
+  // Custom category order for display
+  const CATEGORY_ORDER = [
+    "client",
+    "event",
+    "portrait",
+    "session",
+    "travel",
+    "street",  
+    "black-and-white",
+    "architecture",
+    "landscape", 
+    "animal",
+    "cars",
+    "various",
+    "3d",
+    "ui/ux",
+    "branding",
+    "design",
+    "projects",
+    "art",
+    "painting",
+    "drawing",
+  ];
+
+  // Extract available options and sort by custom order
+  const categories = useMemo(() => {
+    const uniqueCategories = Array.from(new Set(photos.map((p) => p.category)));
+    
+    // Sort categories according to custom order
+    const sorted = uniqueCategories.sort((a, b) => {
+      const indexA = CATEGORY_ORDER.indexOf(a);
+      const indexB = CATEGORY_ORDER.indexOf(b);
+      
+      // If both are in the order, sort by their position
+      if (indexA !== -1 && indexB !== -1) {
+        return indexA - indexB;
+      }
+      // If only A is in the order, A comes first
+      if (indexA !== -1) return -1;
+      // If only B is in the order, B comes first
+      if (indexB !== -1) return 1;
+      // If neither is in the order, maintain alphabetical order
+      return a.localeCompare(b);
+    });
+    
+    return sorted;
+  }, [photos]);
   const cameras = useMemo(
     () => Array.from(new Set(photos.map((p) => p.camera))).sort(),
     [photos],
@@ -38,6 +80,11 @@ export function GalleryGrid() {
 
   // Filter and sort logic
   const filteredPhotos = useMemo(() => {
+    const isDefaultView =
+      filters.category === "all" &&
+      !filters.camera &&
+      filters.tags.length === 0;
+
     return photos
       .filter((photo) => {
         // Category filter
@@ -65,6 +112,47 @@ export function GalleryGrid() {
           const year = parts[0].length === 2 ? `20${parts[0]}` : parts[0];
           return new Date(`${year}-${parts[1]}-${parts[2]}`);
         };
+
+        // When on the default view (no filters) and using default sort (\"latest\" mode),
+        // prioritize client work: Daldehog, then Fizjotusia, then other client shots.
+        if (isDefaultView && sortOrder === "desc") {
+          const priority = (photo: (typeof photos)[number]) => {
+            const title = (photo.title || "").toLowerCase();
+            const blogId = photo.blogPostId || "";
+
+            // 0 - Daldehog first
+            if (
+              title.includes("daldehog") ||
+              blogId === "daldehog"
+            ) {
+              return 0;
+            }
+
+            // 1 - Fizjotusia next
+            if (
+              title.includes("fizjotusia") ||
+              title.includes("fizjo.tusia") ||
+              blogId === "fizjotusia25"
+            ) {
+              return 1;
+            }
+
+            // 2 - Other client work
+            if (photo.category === "client") {
+              return 2;
+            }
+
+            // 3 - Everything else
+            return 3;
+          };
+
+          const priorityA = priority(a);
+          const priorityB = priority(b);
+
+          if (priorityA !== priorityB) {
+            return priorityA - priorityB;
+          }
+        }
 
         const dateA = parseDate(a.date);
         const dateB = parseDate(b.date);

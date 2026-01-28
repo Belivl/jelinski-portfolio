@@ -12,7 +12,7 @@ const testimonialsData = [
     rotation: -2.5,
     color: "#fff9c4", // Yellow
     pinColor: "#ef5350", // Red
-    link: "",
+    link: "/blog/fizjotusia25",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const testimonialsData = [
     rotation: -1.2,
     color: "#f1f8e9", // Green
     pinColor: "#6942F5", // Purple pin
-    link: "",
+    link: "/blog/mad100",
   },
   {
     id: 4,
@@ -38,14 +38,14 @@ const testimonialsData = [
     rotation: -2,
     color: "#E1FEF0", // Yellow
     pinColor: "#EF9A50", // Orange pin
-    link: "",
+    link: "/blog/karola24",
   },
   {
     id: 6,
     rotation: 2,
     color: "#E9EAF8", // Green
     pinColor: "#42A5F5", // Blue pin
-    link: "",
+    link: "/blog/tom25",
   },
 ];
 
@@ -85,14 +85,26 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
 
   const translated = (t.data.testimonials as any)[item.id] || {};
 
+  const variants = {
+    hidden: { opacity: 0, y: 30, rotate: item.rotation },
+    visible: {
+      opacity: 1,
+      y: 0,
+      rotate: item.rotation,
+      transition: {
+        type: "spring" as const,
+        stiffness: 100,
+        damping: 15,
+      },
+    },
+  };
+
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, y: 30, rotate: item.rotation }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
+      variants={variants}
       whileHover={{
         scale: 1.05,
         zIndex: 50,
@@ -337,10 +349,10 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
 export function Testimonials() {
   const { t } = useLanguage();
   return (
-    <section className="py-32 relative overflow-hidden">
+    <section className="md:py-32 py-12 relative overflow-hidden">
       <div className="container mx-auto px-2 md:px-6 relative z-10 overflow-visible">
         <OrnateGoldFrame>
-          <div className="relative py-12 md:py-24 px-12 dark:bg-neutral-900 bg-neutral-100 overflow-hidden">
+          <div className="relative py-12 md:py-24 md:px-12 px-6 dark:bg-neutral-900 bg-neutral-100 overflow-hidden">
             {/* Cork Texture Layers */}
             <div className="absolute inset-0 dark:bg-[#8c6239] bg-white mix-blend-multiply opacity-50" />
             <div className="absolute inset-0 opacity-40 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] contrast-150 brightness-75" />
@@ -349,7 +361,7 @@ export function Testimonials() {
               initial={{ opacity: 0, scale: 0.9, rotate: -2 }}
               whileInView={{ opacity: 1, scale: 1, rotate: -1.5 }}
               viewport={{ once: true }}
-              className="relative flex items-center justify-center mx-auto mb-12"
+              className="relative flex items-center justify-center mx-auto md:mb-12 mb-6 md:scale-100 scale-70"
             >
               {/* Paper Scrap for Title (Clipped) */}
               <div className="relative">
@@ -392,7 +404,7 @@ export function Testimonials() {
               whileInView={{ opacity: 1, x: 0, rotate: 0.5 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="max-w-xl mx-auto mb-24 relative group "
+              className="max-w-xl mx-auto md:mb-24 mb-12 relative group md:scale-100 scale-80"
             >
               {/* Pin decoration (Outside clipped scrap) */}
               <div className="absolute group-hover:rotate-5 -top-2 left-1/2 -ms-3 w-6 h-6 rounded-full bg-blue-500 shadow-md flex items-center justify-center border-b-4 border-blue-700 z-20">
@@ -422,11 +434,23 @@ export function Testimonials() {
               </div>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3  gap-16 perspective-[1500px] py-12">
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.15,
+                  },
+                },
+              }}
+              className="grid grid-cols-1 md:grid-cols-3  gap-16 perspective-[1500px] py-12"
+            >
               {testimonialsData.map((item) => (
                 <TestimonialNote key={item.id} item={item} />
               ))}
-            </div>
+            </motion.div>
           </div>
         </OrnateGoldFrame>
       </div>

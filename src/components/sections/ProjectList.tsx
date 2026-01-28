@@ -180,12 +180,12 @@ const ProjectCard = ({ project }: { project: any }) => {
               {description}
             </p>
 
-            <div className="mt-auto pt-4 border-t dark:border-neutral-700 flex justify-between items-center">
+            <div className="mt-auto pt-4 border-t dark:border-neutral-800 flex justify-between items-center">
               <div className="flex flex-wrap gap-2">
                 {project.tags.slice(0, 2).map((tag: string) => (
                   <span
                     key={tag}
-                    className="text-[10px] dark:bg-neutral-800 dark:text-neutral-300 px-2 py-0.5 rounded-full border dark:border-neutral-700 uppercase tracking-tighter"
+                    className="text-[10px] dark:bg-neutral-900 dark:text-neutral-500 px-2 py-0.5 rounded-full border dark:border-neutral-800 uppercase tracking-tighter"
                   >
                     #{tag}
                   </span>

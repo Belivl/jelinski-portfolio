@@ -10,7 +10,7 @@ export function AboutTimeline() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
 
   return (
-    <div className="max-w-3xl mx-auto px-0 sm:px-0">
+    <div className="max-w-3xl mx-auto px-0 sm:px-0 cursor-default">
       <h2 className="text-5xl font-bold font-script1 mb-12 dark:text-neutral-200 flex items-center justify-center gap-3 text-center w-full">
         {t.about.experience}
       </h2>
@@ -26,7 +26,7 @@ export function AboutTimeline() {
           >
             {/* Timeline Dot */}
             <div
-              className={`absolute hidden md:visible -left-[43px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-background border-4 transition-colors duration-300 ${
+              className={`absolute hidden md:block -left-[43px] top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-background border-4 transition-colors duration-300 ${
                 expandedIndex === index
                   ? "border-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)] "
                   : "dark:border-white/20"

@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { Card2 } from "@/components/ui/Card2";
 
 export function BlogList() {
   const { t } = useLanguage();
@@ -34,8 +35,11 @@ export function BlogList() {
   const [selectedYear, setSelectedYear] = useState<string>("all");
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
 
-  // Fixed list of categories for the blog
-  const categories = ["all", "travel", "street", "session", "event", "client"];
+  // Custom category order for blog (matching gallery order)
+  const CATEGORY_ORDER = ["client", "event", "session", "travel", "street"];
+
+  // Fixed list of categories for the blog, ordered according to custom order
+  const categories = ["all", ...CATEGORY_ORDER];
 
   // Extract unique years
   const years = useMemo(() => {
@@ -85,7 +89,7 @@ export function BlogList() {
   return (
     <div className="space-y-8">
       {/* Filters and Sort Controls */}
-      <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-6 rounded-2xl backdrop-blur-md border-t border-t-neutral-600 border-l border-l-neutral-700 border-r border-r-neutral-800 border-b border-b-neutral-800 shadow-2xl">
+      <Card2>
         <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center w-full">
           {/* Category Filter - Inline Pills */}
           <div className="flex flex-col gap-3 w-full ">
@@ -176,13 +180,13 @@ export function BlogList() {
             </div>
           </div>
         </div>
-      </div>
+      </Card2>
 
       {/* Posts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12  mx-auto perspective-1000">
         <AnimatePresence mode="popLayout">
           {filteredAndSortedPosts.map((post) => (
-            <ArcCard key={post.id} post={post} />
+            <PostCard key={post.id} post={post} />
           ))}
         </AnimatePresence>
       </div>
@@ -209,7 +213,7 @@ type Props = {
   post: any;
 };
 
-const ArcCard = ({ post }: Props) => {
+const PostCard = ({ post }: Props) => {
   const { t } = useLanguage();
   const boundingRef = useRef<DOMRect | null>(null);
 

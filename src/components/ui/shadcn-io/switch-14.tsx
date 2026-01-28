@@ -25,7 +25,7 @@ const LanguageToggle = ({ language, onChange }: LanguageToggleProps) => {
           checked={isPl}
           onCheckedChange={(checked) => onChange(checked ? "pl" : "en")}
           className={cn(
-            "absolute inset-0 h-[inherit] w-auto rounded-md dark:border-neutral-700 border border-neutral-200 dark:data-[state=unchecked]:bg-neutral-900 data-[state=unchecked]:bg-neutral-100 dark:data-[state=checked]:bg-neutral-900 data-[state=checked]:bg-neutral-200",
+            "absolute inset-0 h-[inherit] w-auto rounded-md dark:hover:border-neutral-600 border dark:border-neutral-700 border-neutral-200 dark:data-[state=unchecked]:bg-neutral-900 data-[state=unchecked]:bg-neutral-100 dark:data-[state=checked]:bg-neutral-900 data-[state=checked]:bg-neutral-200",
             "[&_span]:z-10 [&_span]:h-full [&_span]:w-1/2 [&_span]:rounded-sm [&_span]:transition-transform [&_span]:duration-300 [&_span]:ease-[cubic-bezier(0.16,1,0.3,1)]",
             "[&_span]:data-[state=checked]:translate-x-full",
             "[&_span]:bg-neutral-600 [&_span]:border-none shadow-none",

@@ -115,7 +115,7 @@ export function CommentsSection({ photoId }: CommentsSectionProps) {
         <div className="p-3 space-y-3">
           <input
             type="text"
-            placeholder="Name (optional)"
+            placeholder={t.comments.name}
             value={alias}
             onChange={(e) => setAlias(e.target.value)}
             className="w-full bg-transparent text-sm text-white/90 placeholder:text-white/20 outline-none border-b border-white/5 pb-2 focus:border-white/20 transition-colors"
@@ -124,7 +124,7 @@ export function CommentsSection({ photoId }: CommentsSectionProps) {
           <textarea
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Share your thoughts..."
+            placeholder={t.comments.share}
             className="w-full bg-transparent text-sm text-white/90 placeholder:text-white/30 resize-none outline-none min-h-[80px]"
             maxLength={500}
             required

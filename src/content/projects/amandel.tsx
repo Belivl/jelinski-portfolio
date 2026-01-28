@@ -75,7 +75,7 @@ export function AmandelPost() {
                 alt={item.alt}
                 width={1400}
                 height={700}
-                className=" w-full rounded-md bg-grey-400 grid place-items-center"
+                className=" w-full h-auto rounded-md bg-grey-400 grid place-items-center"
               />
             </div>
           ))}

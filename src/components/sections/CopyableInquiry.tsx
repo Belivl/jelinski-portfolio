@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import emailjs from "@emailjs/browser";
 import {
   Copy,
   Check,
@@ -9,14 +10,18 @@ import {
   Calendar,
   Box,
   MessageSquare,
-  Tag,
   DollarSign,
+  Send,
+  Loader2,
+  Edit,
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or using stand-in
 import { useLanguage } from "@/lib/LanguageContext";
+import { DatePickerInput } from "@/components/ui/calendarInput";
 
 const projectTypesData = [
   { id: "portrait", icon: Camera },
@@ -27,14 +32,14 @@ const projectTypesData = [
 ];
 
 const currencies = [
-  { id: "USD", symbol: "$" },
-  { id: "EUR", symbol: "€" },
   { id: "PLN", symbol: "zł" },
+  { id: "EUR", symbol: "€" },
 ];
 
 export function CopyableInquiry() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const inquiryT = t.contact.inquiry;
+  // const form = useRef<HTMLFormElement>(null); // Unused
 
   const projectTypes = projectTypesData.map((type) => ({
     ...type,
@@ -45,6 +50,13 @@ export function CopyableInquiry() {
   const [subjectCopied, setSubjectCopied] = useState(false);
   const [emailCopied, setEmailCopied] = useState(false);
 
+  // EmailJS States
+  const [isSending, setIsSending] = useState(false);
+  const [emailStatus, setEmailStatus] = useState<"idle" | "success" | "error">(
+    "idle",
+  );
+  const [isManualEdit, setIsManualEdit] = useState(false);
+
   // Form State
   const [formData, setFormData] = useState({
     name: "",
@@ -54,9 +66,18 @@ export function CopyableInquiry() {
     projectType: "portrait",
     details: "",
     hasBudget: false,
-    budget: "1000",
+    budget: "500",
     currency: "PLN",
+    _honey: "",
   });
+
+  const [messageBody, setMessageBody] = useState("");
+
+  useEffect(() => {
+    if (!isManualEdit) {
+      setMessageBody(generateMessage());
+    }
+  }, [formData, language]); // Re-generate when form data or language changes, unless manually edited
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -86,28 +107,20 @@ export function CopyableInquiry() {
   };
 
   const generateSubject = () => {
-    const { name, date, location, projectType, hasBudget, budget, currency } =
-      formData;
+    const { name, date, location, projectType } = formData;
     const typeLabel =
       projectTypes.find((t) => t.id === projectType)?.name ||
       inquiryT.subjectFallback;
     const dateStr = date ? `[${date}]` : "";
     const locStr = location ? `[${location}]` : "";
-    const budgetStr = hasBudget
-      ? `[${inquiryT.templates.budgetRange.replace(
-          ":",
-          "",
-        )} ${budget}${getCurrencySymbol(currency)}]`
-      : "";
     const nameStr = name ? ` - ${name}` : "";
 
-    return `[${typeLabel}]${dateStr}${locStr}${budgetStr}${nameStr}`;
+    return `[${typeLabel}]${dateStr}${locStr}${nameStr}`;
   };
 
   const generateMessage = () => {
     const {
       name,
-      email,
       date,
       location,
       projectType,
@@ -117,7 +130,6 @@ export function CopyableInquiry() {
       currency,
     } = formData;
     const clientName = name || inquiryT.templates.defaultName;
-    const clientEmail = email || inquiryT.templates.defaultEmail;
     const eventDate = date || inquiryT.templates.defaultDate;
     const eventLocation = location || inquiryT.templates.defaultLocation;
     const extraDetails = details || inquiryT.templates.defaultDetails;
@@ -134,34 +146,34 @@ export function CopyableInquiry() {
       const t = temp as any;
 
       if (type === "pricing") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.projectType} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.closing}\n${t.regards}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.projectType} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.closing}\n${t.regards}\n${clientName}`;
       }
       if (type === "portrait") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.sessionType} ${extraDetails}\n${t.timeframe} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.availability}\n${t.best}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.sessionType} ${extraDetails}\n${t.timeframe} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.availability}\n${t.best}\n${clientName}`;
       }
       if (type === "wedding") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n${t.guests} ${extraDetails}\n\n${t.discuss}\n${t.warmly}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n${t.guests} ${extraDetails}\n\n${t.discuss}\n${t.warmly}\n${clientName}`;
       }
       if (type === "party") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.occasion} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.availability}\n${t.cheers}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.occasion} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.availability}\n${t.cheers}\n${clientName}`;
       }
       if (type === "event") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.name} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.closing}\n${t.regards}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.name} ${extraDetails}\n${t.date} ${eventDate}\n${t.location} ${eventLocation}\n\n${t.closing}\n${t.regards}\n${clientName}`;
       }
       if (type === "3d") {
-        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.description} ${extraDetails}\n${t.deadline} ${eventDate}\n${t.purpose} ${eventLocation}\n\n${t.closing}\n${t.best}\n${clientName}\n${clientEmail}`;
+        return `${t.hi}\n\n${t.intro}\n${budgetInfo}\n\n${t.description} ${extraDetails}\n${t.deadline} ${eventDate}\n${t.purpose} ${eventLocation}\n\n${t.closing}\n${t.best}\n${clientName}`;
       }
 
       // other
       const ot = templates.other;
-      return `${ot.hi}\n\n${ot.intro}\n${budgetInfo}\n\n${ot.subject} ${projectType}\n${ot.message} ${extraDetails}\n${ot.dateLocation} ${eventDate} / ${eventLocation}\n\n${ot.closing}\n${ot.best}\n${clientName}\n${clientEmail}`;
+      return `${ot.hi}\n\n${ot.intro}\n${budgetInfo}\n\n${ot.subject} ${projectType}\n${ot.message} ${extraDetails}\n${ot.dateLocation} ${eventDate} / ${eventLocation}\n\n${ot.closing}\n${ot.best}\n${clientName}`;
     };
 
     return getTemplate(projectType);
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(generateMessage());
+    navigator.clipboard.writeText(messageBody);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -178,8 +190,61 @@ export function CopyableInquiry() {
     setTimeout(() => setEmailCopied(false), 2000);
   };
 
+  const sendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Honeypot check
+    if (formData._honey) {
+      console.log("Bot detected!");
+      return;
+    }
+
+    if (
+      !import.meta.env.VITE_EMAILJS_SERVICE_ID ||
+      !import.meta.env.VITE_EMAILJS_PUBLIC_KEY ||
+      !import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+    ) {
+      console.error("Missing EmailJS environment variables");
+      setEmailStatus("error");
+      return;
+    }
+
+    setIsSending(true);
+    setEmailStatus("idle");
+
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      subject: generateSubject(),
+      message: messageBody,
+      to_name: "Michal",
+    };
+
+    emailjs
+      .send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        templateParams,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        },
+      )
+      .then(
+        () => {
+          setEmailStatus("success");
+          setIsSending(false);
+          setTimeout(() => setEmailStatus("idle"), 5000);
+        },
+        (error) => {
+          console.error("FAILED...", error.text);
+          setEmailStatus("error");
+          setIsSending(false);
+        },
+      );
+  };
+
   return (
-    <div className="w-full max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+    <div className="w-full max-w-xl mx-auto grid grid-cols-1  gap-8 lg:gap-12 mb-24">
       {/* Form Section */}
       <div className="space-y-8">
         <div className="space-y-2">
@@ -215,7 +280,7 @@ export function CopyableInquiry() {
         </div>
 
         <div className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <div className="space-y-2">
               <Label htmlFor="name">{inquiryT.form.fullName}</Label>
               <Input
@@ -227,13 +292,16 @@ export function CopyableInquiry() {
                 className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
               />
             </div>
+            {/* NEW Email Input */}
             <div className="space-y-2">
-              <Label htmlFor="email">{inquiryT.form.email}</Label>
+              <Label htmlFor="email">{inquiryT.form.email || "Email"}</Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
-                placeholder={inquiryT.form.placeholders.email}
+                placeholder={
+                  inquiryT.form.placeholders.email || "example@mail.com"
+                } // Fallback placeholder in case translation update failed or not reloaded
                 value={formData.email}
                 onChange={handleInputChange}
                 className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
@@ -241,31 +309,41 @@ export function CopyableInquiry() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="date">{inquiryT.form.date}</Label>
-              <Input
-                id="date"
-                name="date"
-                placeholder={inquiryT.form.placeholders.date}
-                value={formData.date}
-                onChange={handleInputChange}
-                className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="location">{inquiryT.form.location}</Label>
-              <Input
-                id="location"
-                name="location"
-                placeholder={inquiryT.form.placeholders.location}
-                value={formData.location}
-                onChange={handleInputChange}
-                className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
-              />
+          <div className="grid grid-cols-1 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="w-full">
+                <DatePickerInput
+                  value={formData.date}
+                  onChange={(value) =>
+                    setFormData((prev) => ({ ...prev, date: value }))
+                  }
+                />
+              </div>
+              <div className="w-full">
+                <Label htmlFor="location">{inquiryT.form.location}</Label>
+                <Input
+                  id="location"
+                  name="location"
+                  placeholder={inquiryT.form.placeholders.location}
+                  value={formData.location}
+                  onChange={handleInputChange}
+                  className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
+                />
+              </div>
             </div>
           </div>
-
+          <div className="space-y-2">
+            <Label htmlFor="details">{inquiryT.form.details}</Label>
+            <textarea
+              id="details"
+              name="details"
+              rows={3}
+              placeholder={inquiryT.form.placeholders.details}
+              value={formData.details}
+              onChange={handleInputChange}
+              className="flex w-full rounded-md border border-neutral-800 hover:border-amber-600 transition-all duration-200 bg-card px-3 py-2 text-sm text-white shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+            />
+          </div>
           {/* Budget Section */}
           <div className="space-y-4 p-4 rounded-md bg-card border border-neutral-800 hover:border-amber-600 transition-colors duration-200">
             <div className="flex items-center justify-between">
@@ -309,7 +387,7 @@ export function CopyableInquiry() {
                     </div>
                     <input
                       type="range"
-                      min="500"
+                      min="100"
                       max="4000"
                       step="100"
                       value={formData.budget}
@@ -350,117 +428,185 @@ export function CopyableInquiry() {
               )}
             </AnimatePresence>
           </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="details">{inquiryT.form.details}</Label>
-            <textarea
-              id="details"
-              name="details"
-              rows={3}
-              placeholder={inquiryT.form.placeholders.details}
-              value={formData.details}
-              onChange={handleInputChange}
-              className="flex w-full rounded-md border border-neutral-800 hover:border-amber-600 transition-all duration-200 bg-card px-3 py-2 text-sm text-white shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-            />
-          </div>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-3">
-          <Button
-            variant="outline"
-            onClick={handleCopyEmail}
-            className="flex-1 dark:bg-neutral-800 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:hover:border-neutral-600 hover:bg-neutral-600 bg-bg-neutral-200 hover:border-neutral-600 transition-all duration-200 dark:text-white"
-          >
-            {emailCopied ? (
-              <Check className="w-4 h-4 text-green-500 mr-2" />
-            ) : (
-              <Mail className="w-4 h-4 mr-2" />
-            )}
-            {emailCopied
-              ? inquiryT.buttons.emailCopied
-              : inquiryT.buttons.copyEmail}
-          </Button>
-          <Button
-            onClick={handleCopy}
-            className="flex-1 hover:bg-amber-600 transition-all duration-200"
-          >
-            {copied ? (
-              <Check className="w-4 h-4 mr-2" />
-            ) : (
-              <Copy className="w-4 h-4 mr-2" />
-            )}
-            {copied ? inquiryT.buttons.copied : inquiryT.buttons.copyInquiry}
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3"></div>
         </div>
       </div>
+
+      {/* Honeypot Field */}
+      <input
+        type="text"
+        name="_honey"
+        style={{ display: "none" }}
+        value={formData._honey}
+        tabIndex={-1}
+        autoComplete="off"
+        onChange={handleInputChange}
+      />
 
       {/* Preview Section */}
       <div className="relative">
         <div className="sticky top-8 bg-neutral-900 border border-white/10 rounded-2xl p-4 md:p-5">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-              <span className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                <MessageSquare className="w-4 h-4" />
+            <h3 className="text-2xl font-semibold text-white flex items-center gap-2">
+              <span className="w-12 h-12 rounded-lg  flex items-center justify-center text-primary">
+                <MessageSquare className="w-6 h-6" />
               </span>
               {inquiryT.preview.title}
             </h3>
           </div>
 
-          {/* Subject Line Preview */}
-          <div className="mb-6 space-y-2">
-            <div className="flex items-center justify-between">
-              <Label className="text-[10px] uppercase tracking-wider text-neutral-500 flex items-center gap-1">
-                <Tag className="w-3 h-3" /> {inquiryT.preview.subject}
-              </Label>
-              <button
-                onClick={handleCopySubject}
-                className="text-[10px] text-primary hover:underline flex items-center gap-1"
+          {/* Step 1: Copy Email - Optional if sending directly */}
+          <div className="mb-8 space-y-3 gap-3 flex flex-col">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-800 border border-white/10 text-neutral-400 font-bold text-sm shrink-0">
+                1
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-primary" />
+                  Direct Contact
+                </h4>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Send email directly or copy address
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                onClick={handleCopyEmail}
+                className={`w-full dark:bg-neutral-800 dark:border-neutral-700 dark:hover:bg-neutral-700 dark:hover:border-neutral-600 hover:bg-neutral-600 transition-all duration-200 dark:text-white ${
+                  emailCopied
+                    ? "border-green-500/50 bg-green-500/10 hover:bg-green-500/20"
+                    : ""
+                }`}
               >
-                {subjectCopied ? (
-                  <Check className="w-3 h-3" />
+                {emailCopied ? (
+                  <Check className="w-4 h-4 text-green-500 mr-2" />
                 ) : (
-                  <Copy className="w-3 h-3" />
+                  <Copy className="w-4 h-4 mr-2" />
                 )}
-                {subjectCopied
-                  ? inquiryT.preview.subjectCopied
-                  : inquiryT.preview.copySubject}
-              </button>
-            </div>
-            <div className="p-3 bg-black/10 border border-white/5 rounded-lg font-mono text-xs text-white truncate">
-              {generateSubject()}
+                {emailCopied
+                  ? inquiryT.buttons.emailCopied
+                  : inquiryT.buttons.copyEmail}
+              </Button>
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-[10px] uppercase tracking-wider text-neutral-500">
-              {inquiryT.preview.body}
-            </Label>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={
-                  formData.projectType +
-                  formData.name +
-                  formData.date +
-                  formData.hasBudget +
-                  formData.budget +
-                  formData.currency
-                }
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="bg-black/20 rounded-md p-5 border border-white/5 h-[340px] overflow-y-auto custom-scrollbar"
+          {/* Step 2: Review & Send Body */}
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br from-primary/20 to-primary/10 border border-primary/30 text-primary font-bold text-sm shrink-0">
+                2
+              </div>
+              <div className="flex-1">
+                <h4 className="text-sm font-semibold text-white flex items-center gap-2">
+                  <Edit className="w-4 h-4 text-primary" />
+                  {inquiryT.preview?.editMessage || "Edit Message"}
+                </h4>
+                <p className="text-xs text-neutral-400 mt-0.5">
+                  Customize your message before sending
+                </p>
+              </div>
+            </div>
+
+            {/* Subject Display */}
+            <div className="space-y-2 mb-4">
+              <div className="flex items-center justify-between">
+                <Label className="text-[10px] uppercase tracking-wider text-neutral-500 flex items-center gap-1">
+                  {inquiryT.preview.subject}
+                </Label>
+                <button
+                  onClick={handleCopySubject}
+                  className={`text-[10px] flex items-center gap-1.5 px-2 py-1 rounded-md transition-all duration-200 ${
+                    subjectCopied
+                      ? "text-green-500 bg-green-500/10"
+                      : "text-primary hover:text-primary/80 hover:bg-primary/10"
+                  }`}
+                >
+                  {subjectCopied ? (
+                    <Check className="w-3 h-3" />
+                  ) : (
+                    <Copy className="w-3 h-3" />
+                  )}
+                  {subjectCopied
+                    ? inquiryT.preview.subjectCopied
+                    : inquiryT.preview.copySubject}
+                </button>
+              </div>
+              <div className="p-3 bg-black/10 border border-white/5 rounded-lg font-mono text-xs text-white truncate">
+                {generateSubject()}
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label className="text-[10px] uppercase tracking-wider text-neutral-500">
+                {inquiryT.preview.body}
+              </Label>
+              <div className="relative">
+                <Textarea
+                  value={messageBody}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+                    setMessageBody(e.target.value);
+                    setIsManualEdit(true);
+                  }}
+                  className="bg-black/20 text-gray-300 min-h-[300px] font-mono text-xs border-white/5 resize-y focus-visible:ring-primary/50"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <Button
+                onClick={handleCopy}
+                variant="outline"
+                className={`w-full transition-all duration-200 border-neutral-700 bg-transparent hover:bg-neutral-800 text-neutral-300 ${
+                  copied
+                    ? "bg-green-600/10 text-green-500 border-green-500/50"
+                    : ""
+                }`}
               >
-                <pre className="whitespace-pre-wrap font-mono text-xs text-gray-300 leading-relaxed">
-                  {generateMessage()}
-                </pre>
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                {copied ? (
+                  <Check className="w-4 h-4 mr-2" />
+                ) : (
+                  <Copy className="w-4 h-4 mr-2" />
+                )}
+                {copied
+                  ? inquiryT.buttons.copied
+                  : inquiryT.buttons.copyInquiry}
+              </Button>
 
-          <p className="mt-4 text-[10px] text-neutral-500 text-center italic">
-            {inquiryT.preview.footer}
-          </p>
+              <Button
+                onClick={sendEmail}
+                disabled={isSending || !formData.email}
+                className={`w-full transition-all duration-200 ${
+                  emailStatus === "success"
+                    ? "bg-green-600 hover:bg-green-700 text-white"
+                    : emailStatus === "error"
+                      ? "bg-red-600 hover:bg-red-700 text-white"
+                      : "bg-primary hover:bg-amber-600 text-white"
+                }`}
+              >
+                {isSending ? (
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                ) : emailStatus === "success" ? (
+                  <Check className="w-4 h-4 mr-2" />
+                ) : emailStatus === "error" ? (
+                  <Mail className="w-4 h-4 mr-2" />
+                ) : (
+                  <Send className="w-4 h-4 mr-2" />
+                )}
+
+                {isSending
+                  ? inquiryT.preview?.sending || "Sending..."
+                  : emailStatus === "success"
+                    ? inquiryT.preview?.sent || "Sent!"
+                    : emailStatus === "error"
+                      ? inquiryT.preview?.error || "Failed"
+                      : inquiryT.preview?.sendMessage || "Send Email"}
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

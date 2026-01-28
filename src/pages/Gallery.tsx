@@ -15,7 +15,7 @@ export function Gallery() {
       className="min-h-screen pt-32 pb-20 bg-background"
     >
       <SEO title={t.gallery.title} description={t.gallery.description} />
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto px-6 cursor-default">
         <div className="text-start mb-16">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-normal capitalize  font-script1">
             {t.gallery.title}

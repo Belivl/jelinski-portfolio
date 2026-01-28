@@ -1,4 +1,5 @@
 import { CategoryCard } from "@/components/gallery/CategoryCard";
+import { Card2 } from "../ui/Card2";
 
 interface FilterBarProps {
   categories: string[];
@@ -19,7 +20,7 @@ export function FilterBar({
     : ["all", ...categories];
 
   return (
-    <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900 p-3 md:p-6 rounded-2xl backdrop-blur-md border border-white/10 shadow-2xl ">
+    <Card2>
       <h2 className="text-xl font-bold text-foreground font-script1 capitalize ml-2 ">
         Projects
       </h2>
@@ -34,6 +35,6 @@ export function FilterBar({
           />
         ))}
       </div>
-    </div>
+    </Card2>
   );
 }

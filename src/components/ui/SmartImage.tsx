@@ -1,5 +1,5 @@
 import { Image, ImageKitProvider } from "@imagekit/react";
-import { cn } from "@/lib/utils";
+import { cn, getDevImageUrl } from "@/lib/utils";
 
 interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
@@ -22,22 +22,21 @@ export function SmartImage({
 }: SmartImageProps & { objectTop?: boolean }) {
   if (!src) return null;
 
-  // common classes
+  const isProd = import.meta.env.PROD;
+
+  // Common classes
   const finalClass = cn(
     "block max-w-full h-full",
     objectTop && "object-top",
     className,
   );
 
-  // Distinguish between full URLs, local paths, and ImageKit relative paths
-  const isIKPath = src && !src.startsWith("http") && !src.startsWith("/");
-  const path = isIKPath ? src : undefined;
-
-  // If it's a local dev path (starts with /photos/ or /), use a standard img tag
-  if (src.startsWith("/") || src.startsWith("./")) {
+  // In development, use local images
+  if (!isProd) {
+    const localSrc = getDevImageUrl(src);
     return (
       <img
-        src={src}
+        src={localSrc}
         width={width}
         height={height}
         alt={alt}
@@ -47,6 +46,11 @@ export function SmartImage({
       />
     );
   }
+
+  // In production, use ImageKit
+  // Distinguish between full URLs and ImageKit relative paths
+  const isIKPath = src && !src.startsWith("http") && !src.startsWith("/");
+  const path = isIKPath ? src : undefined;
 
   return (
     <ImageKitProvider urlEndpoint="https://ik.imagekit.io/j3l1n5k1">

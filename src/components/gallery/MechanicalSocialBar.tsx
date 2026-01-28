@@ -4,16 +4,16 @@ import { Heart, MessageCircle, Share2, Check, Info } from "lucide-react";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "../../../convex/_generated/api";
 import { getVisitorId } from "@/lib/visitor";
-import { MechanicalButton } from "./MechanicalButton";
+import { MechanicalButton } from "@/components/gallery/MechanicalButton";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { MiniCRTDisplay } from "./MiniCRTDisplay";
-import { GlowContent } from "./GlowContent";
+import { MiniCRTDisplay } from "@/components/gallery/MiniCRTDisplay";
+import { GlowContent } from "@/components/gallery/GlowContent";
 import { CONVEX_ENABLED } from "@/lib/convex-status";
+import { useLanguage } from "@/lib/LanguageContext";
 
 interface MechanicalSocialBarProps {
   photoId: string;
@@ -29,6 +29,8 @@ export function MechanicalSocialBar({
   variant = "desktop",
 }: MechanicalSocialBarProps) {
   const [visitorId, setVisitorId] = useState<string>("");
+
+  const { t } = useLanguage();
 
   useEffect(() => {
     getVisitorId().then(setVisitorId);
@@ -201,31 +203,9 @@ export function MechanicalSocialBar({
               onClick={onInfoClick}
               className="w-12 h-12 p-0! -translate-y-[2px]"
             >
-              <AnimatePresence mode="wait">
-                {isCopied ? (
-                  <motion.div
-                    key="copied"
-                    initial={{ scale: 0, rotate: -45 }}
-                    animate={{ scale: 1, rotate: 0 }}
-                    exit={{ scale: 0, rotate: 45 }}
-                  >
-                    <GlowContent blurAmount="blur-sm" glowOpacity="opacity-80">
-                      <Check className="w-6 h-6 text-emerald-500" />
-                    </GlowContent>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="share"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                  >
-                    <GlowContent blurAmount="blur-sm" glowOpacity="opacity-80">
-                      <Info className="w-5 h-5 text-amber-500" />
-                    </GlowContent>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <GlowContent blurAmount="blur-sm" glowOpacity="opacity-80">
+                <Info className="w-5 h-5 text-amber-500" />
+              </GlowContent>
             </MechanicalButton>
           </div>
           <MiniCRTDisplay value="Info" />
@@ -235,107 +215,33 @@ export function MechanicalSocialBar({
   }
 
   return (
-    <TooltipProvider>
-      <div className="flex items-center gap-4">
-        {/* LIKE BUTTON + CRT */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="flex flex-col items-center gap-1.5">
-              <MiniCRTDisplay value={likes} isLoading={isLoading} />
-              <div className="grid place-items-center p-[2px] bg-black rounded-sm">
-                <MechanicalButton
-                  active={hasLiked}
-                  onClick={handleToggleLike}
-                  className="w-12 h-12 p-0! -translate-y-[2px] "
-                  variant={hasLiked ? "danger" : "default"}
-                >
-                  <div className="flex flex-col items-center ">
-                    <AnimatePresence mode="wait">
-                      {hasLiked ? (
-                        <motion.div
-                          key="liked"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                        >
-                          <Heart className="w-6 h-6 fill-current" />
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="unliked"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                        >
-                          <GlowContent
-                            blurAmount="blur-sm"
-                            glowOpacity="opacity-80"
-                          >
-                            <Heart className="w-6 h-6" />
-                          </GlowContent>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </MechanicalButton>
-              </div>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            <p>{hasLiked ? "Likes" : "Like"}</p>
-          </TooltipContent>
-        </Tooltip>
-
-        {/* COMMENT BUTTON + CRT */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="flex flex-col items-center gap-1.5">
-              <MiniCRTDisplay value={commentsCount} />
-              <div className="grid place-items-center p-[2px] bg-black rounded-sm">
-                <MechanicalButton
-                  onClick={onCommentClick}
-                  className="w-12 h-12 p-0! -translate-y-[2px]"
-                >
-                  <GlowContent blurAmount="blur-sm" glowOpacity="opacity-80">
-                    <MessageCircle className="w-6 h-6" />
-                  </GlowContent>
-                </MechanicalButton>
-              </div>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            <p>Comments</p>
-          </TooltipContent>
-        </Tooltip>
-
-        {/* SHARE BUTTON */}
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="flex flex-col items-center gap-1.5">
-              <div className="h-8 w-16" /> {/* Alignment Spacer */}
-              <div className="grid place-items-center p-[2px] bg-black rounded-sm">
-                <MechanicalButton
-                  onClick={handleShare}
-                  className="w-12 h-12 p-0! -translate-y-[2px]"
-                >
+    <div className="flex items-center gap-4">
+      {/* LIKE BUTTON + CRT */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex flex-col items-center gap-1.5">
+            <MiniCRTDisplay value={likes} isLoading={isLoading} />
+            <div className="grid place-items-center p-[2px] bg-black rounded-sm">
+              <MechanicalButton
+                active={hasLiked}
+                onClick={handleToggleLike}
+                className="w-12 h-12 p-0! -translate-y-[2px] "
+                variant={hasLiked ? "danger" : "default"}
+              >
+                <div className="flex flex-col items-center ">
                   <AnimatePresence mode="wait">
-                    {isCopied ? (
+                    {hasLiked ? (
                       <motion.div
-                        key="copied"
-                        initial={{ scale: 0, rotate: -45 }}
-                        animate={{ scale: 1, rotate: 0 }}
-                        exit={{ scale: 0, rotate: 45 }}
+                        key="liked"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        exit={{ scale: 0 }}
                       >
-                        <GlowContent
-                          blurAmount="blur-sm"
-                          glowOpacity="opacity-80"
-                        >
-                          <Check className="w-6 h-6 text-emerald-500" />
-                        </GlowContent>
+                        <Heart className="w-6 h-6 fill-current" />
                       </motion.div>
                     ) : (
                       <motion.div
-                        key="share"
+                        key="unliked"
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
@@ -344,20 +250,92 @@ export function MechanicalSocialBar({
                           blurAmount="blur-sm"
                           glowOpacity="opacity-80"
                         >
-                          <Share2 className="w-6 h-6" />
+                          <Heart className="w-6 h-6" />
                         </GlowContent>
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </MechanicalButton>
-              </div>
+                </div>
+              </MechanicalButton>
             </div>
-          </TooltipTrigger>
-          <TooltipContent side="top">
-            <p>{isCopied ? "Copied!" : "Share Link"}</p>
-          </TooltipContent>
-        </Tooltip>
-      </div>
-    </TooltipProvider>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          <p>{t.tooltips.like}</p>
+        </TooltipContent>
+      </Tooltip>
+
+      {/* COMMENT BUTTON + CRT */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex flex-col items-center gap-1.5">
+            <MiniCRTDisplay value={commentsCount} />
+            <div className="grid place-items-center p-[2px] bg-black rounded-sm">
+              <MechanicalButton
+                onClick={onCommentClick}
+                className="w-12 h-12 p-0! -translate-y-[2px]"
+              >
+                <GlowContent blurAmount="blur-sm" glowOpacity="opacity-80">
+                  <MessageCircle className="w-6 h-6" />
+                </GlowContent>
+              </MechanicalButton>
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          <p>{t.tooltips.comment}</p>
+        </TooltipContent>
+      </Tooltip>
+
+      {/* SHARE BUTTON */}
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="flex flex-col items-center gap-1.5">
+            <div className="h-8 w-16" /> {/* Alignment Spacer */}
+            <div className="grid place-items-center p-[2px] bg-black rounded-sm">
+              <MechanicalButton
+                onClick={handleShare}
+                className="w-12 h-12 p-0! -translate-y-[2px]"
+              >
+                <AnimatePresence mode="wait">
+                  {isCopied ? (
+                    <motion.div
+                      key="copied"
+                      initial={{ scale: 0, rotate: -45 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 45 }}
+                    >
+                      <GlowContent
+                        blurAmount="blur-sm"
+                        glowOpacity="opacity-80"
+                      >
+                        <Check className="w-6 h-6 text-emerald-500" />
+                      </GlowContent>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="share"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      exit={{ scale: 0 }}
+                    >
+                      <GlowContent
+                        blurAmount="blur-sm"
+                        glowOpacity="opacity-80"
+                      >
+                        <Share2 className="w-6 h-6" />
+                      </GlowContent>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </MechanicalButton>
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent side="top">
+          <p>{`isCopied ? "Copied!" : ${t.tooltips.share}`}</p>
+        </TooltipContent>
+      </Tooltip>
+    </div>
   );
 }

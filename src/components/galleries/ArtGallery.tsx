@@ -216,7 +216,7 @@ const TiltBox = ({
           ease: "easeInOut",
           delay: delay,
         }}
-        className="w-full h-full"
+        className="w-full h-full "
       >
         {/* Container for interactive tilt effect */}
         <div
@@ -291,7 +291,7 @@ export function ArtGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-xl overflow-hidden border border-white/10"
+            className="grid grid-cols-3 rounded-xl overflow-hidden border border-white/10"
           >
             {["satyrainsta1", "satyrainsta2", "satyrainsta3"].map((id) => (
               <div
@@ -313,7 +313,7 @@ export function ArtGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-xl overflow-hidden border border-white/10"
+            className="grid grid-cols-3 rounded-xl overflow-hidden border border-white/10"
           >
             {["noise-alt1", "noisesilencev3", "silencev2"].map((id) => (
               <div
@@ -335,7 +335,7 @@ export function ArtGallery() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 rounded-xl overflow-hidden border border-white/10"
+            className="grid grid-cols-3 rounded-xl overflow-hidden border border-white/10"
           >
             {["az1", "az2", "az3"].map((id) => (
               <div
@@ -365,7 +365,7 @@ export function ArtGallery() {
                 <SmartImage
                   src={getImg(id).src}
                   alt={getImg(id).alt}
-                  className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                  className="w-full overflow-hidden object-contain rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
                 />
               </TiltBox>
             ))}
@@ -378,7 +378,7 @@ export function ArtGallery() {
                 index === 0
                   ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto10_DVfLp7TF4P.avif?updatedAt=1769107036318"
                   : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto10_DVfLp7TF4P.avif?updatedAt=1769107036318"
+                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto11_yR7Cu9CkjE.avif?updatedAt=1769107036302"
                     : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto12_NL_zQGBRg9.avif?updatedAt=1769107036565";
 
               return (
@@ -420,7 +420,7 @@ export function ArtGallery() {
                 >
                   <SmartImage
                     alt={`${id}_photo`}
-                    className="w-full h-auto object-cover"
+                    className="w-full h-auto object-cover sepia"
                     src={photoSrc}
                   />
                   <SmartImage
@@ -500,7 +500,7 @@ export function ArtGallery() {
             {["marker1", "marker2", "marker3"].map((id, index) => {
               const photoSrc =
                 index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto7_P0cFgeSKAX.avif?updatedAt=1769107036069"
+                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto6_vKzrBzjlkE.avif?updatedAt=1769107035388"
                   : index === 1
                     ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto9_rNI5tQjvC.avif?updatedAt=1769107035396"
                     : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto8_XPe60fMNSY.avif?updatedAt=1769107035722";
@@ -550,7 +550,7 @@ export function ArtGallery() {
                 <SmartImage
                   src={getImg(id).src}
                   alt={getImg(id).alt}
-                  className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                  className="w-full overflow-hidden object-contain rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
                 />
               </TiltBox>
             ))}

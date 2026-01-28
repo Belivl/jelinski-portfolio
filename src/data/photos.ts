@@ -2,7 +2,7 @@ export interface Photo {
     id?: string;
     url: string;
     title?: string;
-    category: 'landscape' | 'portrait' | 'event' | 'black-and-white' | 'animal' | 'architecture' | 'client' | 'cars' | 'street' | 'various' | 'travel';
+    category: 'landscape' | 'travel' | 'portrait' | 'event' | 'black-and-white' | 'animal' | 'architecture' | 'client' | 'cars' | 'street' | 'various';
     camera: string;
     tags: string[];
     date?: string;
@@ -14,8 +14,7 @@ export interface Photo {
 }
 
 export const photoData: Photo[] = [
-
-//2021
+    //2021
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9171_o-WVm0btCp.avif?updatedAt=1769027173624",
         "title": "Wydmy",
@@ -31,7 +30,7 @@ export const photoData: Photo[] = [
         "date": "2021-05-01",
         "place": "Leba"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9178_99U7d54gJ_.avif?updatedAt=1769027173613",
         "title": "Wydmy",
         "category": "travel",
@@ -43,7 +42,7 @@ export const photoData: Photo[] = [
         "date": "2021-05-01",
         "place": "Leba"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
         "title": "Wydmy",
         "category": "travel",
@@ -69,8 +68,8 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-05-01",
         "place": "Leba"
-    },   
-{
+    },
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197_STNi1A5yY.avif?updatedAt=1769027173548",
         "title": "Wydmy",
         "category": "travel",
@@ -83,9 +82,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-05-01",
         "place": "Leba",
-        "blogPostId": ""
+        "blogPostId": "leba21"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197-2_YyMIgEJ8H.avif?updatedAt=1769027173542",
         "title": "Wydmy",
         "category": "travel",
@@ -98,7 +97,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-05-01",
         "place": "Leba",
-        "blogPostId": ""
+        "blogPostId": "leba21"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9281_TwGbG9H4LT.avif?updatedAt=1769027173605",
@@ -114,7 +113,7 @@ export const photoData: Photo[] = [
         "date": "2021-05-01",
         "place": "Leba"
     },
-        {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9291-3_R8bd-0M2Z.avif?updatedAt=1769027173604",
         "title": "Wydmy",
         "category": "travel",
@@ -142,7 +141,7 @@ export const photoData: Photo[] = [
         "date": "2021-05-01",
         "place": "Leba"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9303-Edit_tOlInckDf1.avif?updatedAt=1769027173516",
         "title": "Wydmy",
         "category": "travel",
@@ -167,7 +166,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-07-04",
         "place": "Olowianka",
-        "blogPostId": ""
+        "blogPostId": "urbex221"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-29_QCYdlNC4g.avif?updatedAt=1769030239196",
@@ -234,7 +233,7 @@ export const photoData: Photo[] = [
         "date": "2021-07-04",
         "place": "Rusocin"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-71_gno66X43r.avif?updatedAt=1769030239197",
         "title": "Urbex2",
         "category": "travel",
@@ -307,7 +306,7 @@ export const photoData: Photo[] = [
         "date": "2021-07-04",
         "place": "Rusocin"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-169_-AH0NFV52m.avif?updatedAt=1769030239427",
         "title": "Urbex2",
         "category": "various",
@@ -354,7 +353,7 @@ export const photoData: Photo[] = [
         "date": "2021-07-04",
         "place": "Rusocin"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-214_UtjRQdOcF9.avif?updatedAt=1769030239422",
         "title": "Witch",
         "category": "portrait",
@@ -393,7 +392,7 @@ export const photoData: Photo[] = [
         "date": "2021-07-04",
         "place": "Osowa"
     },
-         {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02312_rs6mnSDWd.avif?updatedAt=1769026295022",
         "title": "Jarmark",
         "category": "various",
@@ -432,7 +431,7 @@ export const photoData: Photo[] = [
         "date": "2021-08-13",
         "place": "Gdansk"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02401-5_1On1okgHiV.avif?updatedAt=1769026294971",
         "title": "Jarmark",
         "category": "street",
@@ -459,20 +458,20 @@ export const photoData: Photo[] = [
         "date": "2021-08-13",
         "place": "Gdansk"
     },
-    {
-        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02408-2_s5m-IbC3q.avif?updatedAt=1769026294910",
-        "title": "Jarmark",
-        "category": "street",
-        "camera": "Sony A6600",
-        "tags": [
-            "people",
-            "street",
-            "night",
-            "black-and-white"
-        ],
-        "date": "2021-08-13",
-        "place": "Gdansk"
-    },
+    // {
+    //     "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02408-2_s5m-IbC3q.avif?updatedAt=1769026294910",
+    //     "title": "Jarmark",
+    //     "category": "street",
+    //     "camera": "Sony A6600",
+    //     "tags": [
+    //         "people",
+    //         "street",
+    //         "night",
+    //         "black-and-white"
+    //     ],
+    //     "date": "2021-08-13",
+    //     "place": "Gdansk"
+    // },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02411_hLrokbUXih.avif?updatedAt=1769026295042",
         "title": "Jarmark",
@@ -614,9 +613,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-10-08",
         "place": "Politechnika Gdanska",
-        "blogPostId": "4"
+        "blogPostId": "allan21"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04207_9P1xUigWyR.avif?updatedAt=1769026403675",
         "title": "Allan",
         "category": "portrait",
@@ -628,7 +627,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2021-10-08",
         "place": "Gdansk",
-        "blogPostId": "4"
+        "blogPostId": "allan21"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04282-2_QuUZ1O_98.avif?updatedAt=1769026403618",
@@ -719,7 +718,7 @@ export const photoData: Photo[] = [
         "date": "2021-12-18",
         "place": "Gdansk"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04767_ylQp2qxik.avif?updatedAt=1769031147988",
         "title": "Wrzeszcz - Letnica",
         "category": "street",
@@ -763,7 +762,7 @@ export const photoData: Photo[] = [
         "date": "2021-12-18",
         "place": "Gdansk"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
         "title": "Wrzeszcz - Letnica",
         "category": "street",
@@ -790,8 +789,8 @@ export const photoData: Photo[] = [
         "date": "2021-12-18",
         "place": "Gdansk"
     },
-//2022
-  {
+    //2022
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08235-2_csaHQjgi6f.avif?updatedAt=1769025614690",
         "title": "MotoShow",
         "category": "event",
@@ -816,7 +815,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08250-2_2JxYVUDi6h.avif?updatedAt=1769025614734",
         "title": "MotoShow",
         "category": "event",
@@ -891,7 +890,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08363_k8SPr0HSkL.avif?updatedAt=1769025614703",
         "title": "MotoShow",
         "category": "event",
@@ -903,7 +902,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08413-2_cTGDA8FiTF.avif?updatedAt=1769025614784",
         "title": "MotoShow",
         "category": "event",
@@ -915,7 +914,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08416_0Be_LZzyV7.avif?updatedAt=1769025614826",
         "title": "MotoShow",
         "category": "event",
@@ -928,7 +927,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08467-2_oxdSIj-rvX.avif?updatedAt=1769025614806",
         "title": "MotoShow",
         "category": "event",
@@ -1015,7 +1014,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08914-2_QUR-4IWC0.avif?updatedAt=1769025614416",
         "title": "MotoShow",
         "category": "event",
@@ -1041,7 +1040,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
- 
+
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-09046_-Wy74Av7J.avif?updatedAt=1769025614478",
         "title": "MotoShow",
@@ -1054,7 +1053,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-09051_2nrSYZDY2g.avif?updatedAt=1769025614669",
         "title": "MotoShow",
         "category": "event",
@@ -1091,7 +1090,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-09092_TmOn2kU5fg.avif?updatedAt=1769025614731",
         "title": "MotoShow",
         "category": "event",
@@ -1103,7 +1102,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-09103_kZxnR1aHEG.avif?updatedAt=1769025614744",
         "title": "MotoShow",
         "category": "event",
@@ -1117,7 +1116,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-09111_108bC0Fhav.avif?updatedAt=1769025614676",
         "title": "MotoShow",
         "category": "event",
@@ -1129,7 +1128,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
-             {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8352-2_QblSD0PKFw.avif?updatedAt=1769025614989",
         "title": "MotoShow",
         "category": "event",
@@ -1141,7 +1140,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-07-09",
         "place": "Polsat Plus Arena",
-        "blogPostId": "6"
+        "blogPostId": "motoshow22"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8434-2_yYhV0FKKjP.avif?updatedAt=1769025614793",
@@ -1155,7 +1154,7 @@ export const photoData: Photo[] = [
         "date": "2022-07-09",
         "place": "Polsat Plus Arena"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
         "title": "Berlin",
         "category": "travel",
@@ -1220,7 +1219,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00228-2_D2QIDwxnHq.avif?updatedAt=1769024108679",
         "title": "Berlin",
         "category": "travel",
@@ -1231,7 +1230,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00245_qLbNTYBkG-.avif?updatedAt=1769024108677",
         "title": "Berlin",
         "category": "travel",
@@ -1272,7 +1271,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00408_IxGwecsXhW.avif?updatedAt=1769024108618",
         "title": "Berlin",
         "category": "travel",
@@ -1301,7 +1300,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00455-2_zzoFSHgDd.avif?updatedAt=1769024108592",
         "title": "Berlin",
         "category": "travel",
@@ -1314,7 +1313,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-     {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00504_jX7kR5ym9.avif?updatedAt=1769024108698",
         "title": "Berlin",
         "category": "travel",
@@ -1329,7 +1328,7 @@ export const photoData: Photo[] = [
         "place": "Berlin"
     },
 
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00580_FwQawYZND.avif?updatedAt=1769024108620",
         "title": "Berlin",
         "category": "travel",
@@ -1385,7 +1384,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01132-2_nMHC6Dg1d6.avif?updatedAt=1769024108612",
         "title": "Berlin",
         "category": "travel",
@@ -1426,7 +1425,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-       {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01167_3rJ4TvOJr.avif?updatedAt=1769024187529",
         "title": "Berlin",
         "category": "travel",
@@ -1452,7 +1451,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-08-08",
         "place": "Berlin",
-        "blogPostId": "7"
+        "blogPostId": "berlin22"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01310-5_Um89ELFMS2.avif?updatedAt=1769024187553",
@@ -1468,7 +1467,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01386_CZGjx-Fjtw.avif?updatedAt=1769024187479",
         "title": "Berlin",
         "category": "travel",
@@ -1482,7 +1481,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01561__xmPy3OFG.avif?updatedAt=1769024187412",
         "title": "Berlin",
         "category": "travel",
@@ -1521,7 +1520,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01705-2_Wu7M59CMc.avif?updatedAt=1769024187305",
         "title": "Berlin",
         "category": "travel",
@@ -1560,7 +1559,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01853-2_BljaAzD48N.avif?updatedAt=1769024187466",
         "title": "Berlin",
         "category": "travel",
@@ -1587,7 +1586,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1466_IblHbiOkj.avif?updatedAt=1769024187309",
         "title": "Berlin",
         "category": "travel",
@@ -1603,9 +1602,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-08-08",
         "place": "Berlin",
-        "blogPostId": "7"
+        "blogPostId": "berlin22"
     },
-      {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1657-2_8Rga2QYKh.avif?updatedAt=1769024187424",
         "title": "Berlin",
         "category": "travel",
@@ -1619,7 +1618,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-08",
         "place": "Berlin"
     },
-        {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03601_iR7SsLUUe.avif?updatedAt=1769023300627",
         "title": "Baltic Sail",
         "category": "event",
@@ -1631,7 +1630,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-08-28",
         "place": "Gdansk",
-        "blogPostId": "8"
+        "blogPostId": "balticsail"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03918_nYIkM-9dz.avif?updatedAt=1769023301071",
@@ -1645,7 +1644,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-08-28",
         "place": "Gdansk",
-        "blogPostId": "8"
+        "blogPostId": "balticsail"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03921_QpiP6g-69.avif?updatedAt=1769023301004",
@@ -1659,9 +1658,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-08-28",
         "place": "Gdansk",
-        "blogPostId": "8"
+        "blogPostId": "balticsail"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054",
         "title": "Baltic Sail",
         "category": "event",
@@ -1727,7 +1726,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-28",
         "place": "Gdansk"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-04857_vUjnwaelxr.avif?updatedAt=1769023301050",
         "title": "Baltic Sail",
         "category": "event",
@@ -1767,7 +1766,7 @@ export const photoData: Photo[] = [
         "date": "2022-08-28",
         "place": "Gdansk"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05007_FKTrSWsAk.avif?updatedAt=1769023301028",
         "title": "Baltic Sail",
         "category": "event",
@@ -1845,7 +1844,7 @@ export const photoData: Photo[] = [
         "date": "2022-09-24",
         "place": "Gdansk"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06291_zRUmn9asqS.avif?updatedAt=1769022715796",
         "title": "Magda",
         "category": "portrait",
@@ -1858,7 +1857,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-09-24",
         "place": "Gdansk",
-        "blogPostId": "9"
+        "blogPostId": "mad100"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06335_h9w9RfbuT.avif?updatedAt=1769022715658",
@@ -1873,7 +1872,7 @@ export const photoData: Photo[] = [
         "date": "2022-09-24",
         "place": "Gdansk"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06348_im_Ishk7pw.avif?updatedAt=1769022715865",
         "title": "Magda",
         "category": "portrait",
@@ -1885,7 +1884,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2022-09-24",
         "place": "Gdansk",
-        "blogPostId": "9"
+        "blogPostId": "mad100"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06428-2_v9dEkoYw0U.avif?updatedAt=1769022715809",
@@ -2016,7 +2015,7 @@ export const photoData: Photo[] = [
         "date": "2022-09-24",
         "place": "Gdansk"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6364-2_CqQ2zwbgR.avif?updatedAt=1769022715996",
         "title": "Magda",
         "category": "portrait",
@@ -2095,7 +2094,7 @@ export const photoData: Photo[] = [
         "date": "2022-09-24",
         "place": "Gdansk"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6576-2_sKUrEgh4dA.avif?updatedAt=1769022715766",
         "title": "Magda",
         "category": "portrait",
@@ -2108,7 +2107,7 @@ export const photoData: Photo[] = [
         "place": "Gdansk"
     },
     //2023
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00071_Ol3Ap6mWs.avif?updatedAt=1769022051801",
         "title": "Jeziorne nimfy",
         "category": "portrait",
@@ -2161,9 +2160,9 @@ export const photoData: Photo[] = [
             "session"
         ],
         "date": "2023-04-22",
-        "place": "Osowa"    
+        "place": "Osowa"
     },
-       {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00291-Edit_rsRvCnmLX.avif?updatedAt=1769022051876",
         "title": "Jeziorne nimfy",
         "category": "portrait",
@@ -2178,7 +2177,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2023-04-22",
         "place": "Gdansk Osowa",
-"blogPostId": "10"
+        "blogPostId": "jez23"
     },
 
     {
@@ -2209,7 +2208,7 @@ export const photoData: Photo[] = [
         "date": "2023-04-22",
         "place": "Gdansk Osowa"
     },
-     {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00475_pii6tzKj5.avif?updatedAt=1769022052013",
         "title": "Jeziorne nimfy",
         "category": "various",
@@ -2223,7 +2222,7 @@ export const photoData: Photo[] = [
         "date": "2023-04-22",
         "place": "Osowa"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00499-2_716tLy06e.avif?updatedAt=1769022051924",
         "title": "Jeziorne nimfy",
         "category": "portrait",
@@ -2254,9 +2253,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2023-04-22",
         "place": "Osowa",
-        "blogPostId": "10"
+        "blogPostId": "jez23"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01387_CnUZ2xJAiP.avif?updatedAt=1769021302206",
         "title": "Kaszubski Urbex",
         "category": "travel",
@@ -2282,7 +2281,7 @@ export const photoData: Photo[] = [
         "date": "2023-05-18",
         "place": "Kolano"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01498-2_Vj65QWoC8D.avif?updatedAt=1769021302250",
         "title": "Kaszubski Urbex",
         "category": "travel",
@@ -2307,7 +2306,7 @@ export const photoData: Photo[] = [
         "date": "2023-05-18",
         "place": "Kolano"
     },
-      {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01514_lgFBtRcSS.avif?updatedAt=1769021302172",
         "title": "Urbex",
         "category": "various",
@@ -2320,7 +2319,7 @@ export const photoData: Photo[] = [
         "date": "2023-05-18",
         "place": "Kolano"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01599_odBTeooPN.avif?updatedAt=1769021302207",
         "title": "Kaszubski Urbex",
         "category": "travel",
@@ -2344,7 +2343,7 @@ export const photoData: Photo[] = [
         "date": "2023-05-18",
         "place": "Kolano"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01691-2_XuAWKUM6mk.avif?updatedAt=1769021302171",
         "title": "Urbex",
         "category": "portrait",
@@ -2413,8 +2412,8 @@ export const photoData: Photo[] = [
         "date": "2023-05-18",
         "place": "Kolano"
     },
-  
-       {
+
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif",
         "title": "Adam",
         "category": "portrait",
@@ -2439,7 +2438,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2023-05-21",
         "place": "Gdynia Marriott",
-        "blogPostId": "12"
+        "blogPostId": "adam23"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05550-2_bf8RN8YbP.avif?updatedAt=1769020788800",
@@ -2455,7 +2454,7 @@ export const photoData: Photo[] = [
         "date": "2023-06-30",
         "place": "Gdansk Osowa"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05551-2_zrxQ-T9YG.avif?updatedAt=1769020788903",
         "title": "Urodziny Tymona",
         "category": "portrait",
@@ -2469,7 +2468,7 @@ export const photoData: Photo[] = [
         "date": "2023-06-30",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05683-2_W7IU07awlT.avif?updatedAt=1769020788694",
         "title": "Urodziny Tymona",
         "category": "portrait",
@@ -2483,7 +2482,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2023-06-30",
         "place": "Osowa",
-        "blogPostId": "13"
+        "blogPostId": "tym23"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05684-2_GEegcw1iE.avif?updatedAt=1769020788781",
@@ -2513,7 +2512,7 @@ export const photoData: Photo[] = [
         "date": "2023-06-30",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05756-2_nKMBQ20pK.avif?updatedAt=1769020788759",
         "title": "Urodziny Tymona",
         "category": "portrait",
@@ -2598,7 +2597,7 @@ export const photoData: Photo[] = [
         "date": "2023-06-30",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012",
         "title": "Urodziny Tymona",
         "category": "portrait",
@@ -2611,7 +2610,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2023-06-30",
         "place": "Osowa",
-        "blogPostId": "13"
+        "blogPostId": "tym23"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL06048_chxgEgFcF.avif?updatedAt=1769020788945",
@@ -2683,7 +2682,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09574_lhe-hLnHm.avif?updatedAt=1769020624072",
-        "title": "Wiktoria Murat",
+        "title": "Wiktoria",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2722,7 +2721,7 @@ export const photoData: Photo[] = [
         "date": "2023-08-31",
         "place": "Reda"
     },
-        {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/09-28/JEL02080_EpLL25h5L.avif?updatedAt=1769020375692",
         "title": "Turkey",
         "category": "various",
@@ -2735,7 +2734,7 @@ export const photoData: Photo[] = [
         "date": "2023-09-28",
         "place": "Turcja, Alanya"
     },
-      {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/09-28/JEL00445_bbNiufdvV.avif?updatedAt=1769020375759",
         "title": "Turkey",
         "category": "various",
@@ -2750,7 +2749,7 @@ export const photoData: Photo[] = [
         "date": "2023-09-28",
         "place": "Turcja"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/09-28/JEL00339-Edit_GSZ_eFp4B.avif?updatedAt=1769020375536",
         "title": "Turkey",
         "category": "portrait",
@@ -2764,7 +2763,7 @@ export const photoData: Photo[] = [
         "date": "2023-09-28",
         "place": "Turcja"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2023/09-28/JEL02921_DBK4cv2RF.avif?updatedAt=1769020375562",
         "title": "Turkey",
         "category": "portrait",
@@ -2780,7 +2779,7 @@ export const photoData: Photo[] = [
     },
 
     //2024 
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05880-soft_6fyzr7paU.avif?updatedAt=1769020020036",
         "title": "Karola",
         "category": "portrait",
@@ -2794,7 +2793,7 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05888-2ed-soft_0HaTuw7f0.avif?updatedAt=1769020020073",
         "title": "Karola",
         "category": "portrait",
@@ -2808,7 +2807,7 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
-     {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05898-edit_J8VnnzZSL.avif?updatedAt=1769020020329",
         "title": "Karola",
         "category": "portrait",
@@ -2822,7 +2821,7 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05940-edit-soft_9ofCojKNRr.avif?updatedAt=1769020020355",
         "title": "Karola",
         "category": "portrait",
@@ -2836,7 +2835,7 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06210-soft_V0HoT9K_Oo.avif?updatedAt=1769020020252",
         "title": "Karola",
         "category": "portrait",
@@ -2864,7 +2863,7 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06262-soft_gjhxwmSf-.avif?updatedAt=1769020020303",
         "title": "Karola",
         "category": "portrait",
@@ -2878,9 +2877,9 @@ export const photoData: Photo[] = [
         "date": "2024-02-25",
         "place": "UG"
     },
-        {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06614__-UrTshP5.avif?updatedAt=1769019726007",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2895,7 +2894,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06622_eN6Xojx7y.avif?updatedAt=1769019726133",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2910,7 +2909,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06657_lv-MZGtmX0.avif?updatedAt=1769019725801",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2923,9 +2922,9 @@ export const photoData: Photo[] = [
         "date": "2024-03-12",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06702_dcbZhcDAxg.avif?updatedAt=1769019725809",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2939,9 +2938,9 @@ export const photoData: Photo[] = [
         "date": "2024-03-12",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06762_RO16WPmNN.avif?updatedAt=1769019726085",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2953,9 +2952,9 @@ export const photoData: Photo[] = [
         "date": "2024-03-12",
         "place": "Gdansk Osowa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06784_6lkwaOwiX.avif?updatedAt=1769019726177",
-        "title": "Hi I'/m YaO",
+        "title": "Hi I'm YaO",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -2980,7 +2979,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-09",
         "place": "Rewia"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07740_m6yGBNLRQg.avif?updatedAt=1769019622726",
         "title": "Rewia",
         "category": "travel",
@@ -2991,7 +2990,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-09",
         "place": "Rewia"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07741_Cva4f9SCX.avif?updatedAt=1769019622700",
         "title": "Rewia",
         "category": "travel",
@@ -3002,7 +3001,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-09",
         "place": "Rewia"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07743_B6m5HejBLE.avif?updatedAt=1769019622702",
         "title": "Rewia",
         "category": "travel",
@@ -3038,7 +3037,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-09",
         "place": "Rewia"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07773_xj4wb47SUE.avif?updatedAt=1769019622796",
         "title": "Rewia",
         "category": "travel",
@@ -3064,7 +3063,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-15",
         "place": "Zakopane"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08482_oa1XUQIQ7.avif?updatedAt=1769019321699",
         "title": "Zakopane",
         "category": "travel",
@@ -3090,7 +3089,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-15",
         "place": "Zakopane"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08521-2_qr_avQ6Ju.avif?updatedAt=1769019321647",
         "title": "Zakopane",
         "category": "travel",
@@ -3102,7 +3101,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-15",
         "place": "Zakopane"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702",
         "title": "Zakopane",
         "category": "travel",
@@ -3114,7 +3113,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2024-04-15",
         "place": "Zakopane",
-        "blogPostId": "18"
+        "blogPostId": "zako24"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554-2_VoKbus7J0i.avif?updatedAt=1769019321918",
@@ -3211,7 +3210,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-15",
         "place": "Zakopane"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09111-2_HNnMyz_tLG.avif?updatedAt=1769019322155",
         "title": "Zakopane",
         "category": "travel",
@@ -3301,7 +3300,7 @@ export const photoData: Photo[] = [
         "date": "2024-04-15",
         "place": "Zakopane"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
         "title": "Zakopane",
         "category": "travel",
@@ -3337,7 +3336,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01743_xR4vrvlnY2.avif?updatedAt=1769019064250",
         "title": "Gdynia Street",
         "category": "street",
@@ -3351,7 +3350,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01749_dFUW4L43Bh.avif?updatedAt=1769019064360",
         "title": "Gdynia Street",
         "category": "street",
@@ -3364,7 +3363,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01927_vFKNisuXGB.avif?updatedAt=1769019064306",
         "title": "Gdynia Street",
         "category": "street",
@@ -3392,7 +3391,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02041_WI0URKxTA.avif?updatedAt=1769019064370",
         "title": "Gdynia Street",
         "category": "street",
@@ -3406,7 +3405,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-02046_35vzBSvgN.avif?updatedAt=1769019064350",
         "title": "Gdynia Street",
         "category": "street",
@@ -3447,7 +3446,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-15",
         "place": "Gdynia"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02191_EAngBVzx-h.avif?updatedAt=1769018838532",
         "title": "Wesele Julii i Macka",
         "category": "event",
@@ -3518,7 +3517,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-27",
         "place": "Kartuzy"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02556_uEJ020LMpC.avif?updatedAt=1769018838525",
         "title": "Wesele Julii i Macka",
         "category": "event",
@@ -3548,7 +3547,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-27",
         "place": "Kartuzy"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03109_YX-RyT6aL.avif?updatedAt=1769018838543",
         "title": "Wesele Julii i Macka",
         "category": "event",
@@ -3562,7 +3561,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-27",
         "place": "Kartuzy"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03209_z9oC0bnmL-.avif?updatedAt=1769018838495",
         "title": "Wesele Julii i Macka",
         "category": "event",
@@ -3591,7 +3590,7 @@ export const photoData: Photo[] = [
         "date": "2024-07-27",
         "place": "Kartuzy"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546",
         "title": "Wesele Julii i Macka",
         "category": "event",
@@ -3605,9 +3604,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2024-07-27",
         "place": "Kartuzy",
-        "blogPostId": "20"
+        "blogPostId": "wedjulmac24"
     },
-       {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05095_7XfKgM9-8.avif?updatedAt=1769018687891",
         "title": "Sloneczniki",
         "category": "portrait",
@@ -3634,7 +3633,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2024-08-11",
         "place": "Blotnik",
-        "blogPostId": "21"
+        "blogPostId": "sunflowers24"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05112_xY2hM8Fiq.avif?updatedAt=1769018687893",
@@ -3664,7 +3663,7 @@ export const photoData: Photo[] = [
         "date": "2024-08-11",
         "place": "Blotnik"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05404-3_81e2oE3Df.avif?updatedAt=1769018687982",
         "title": "Sloneczniki",
         "category": "portrait",
@@ -3678,7 +3677,7 @@ export const photoData: Photo[] = [
         "date": "2024-08-11",
         "place": "Blotnik"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05722-2_HVpjRv5AL.avif?updatedAt=1769018687935",
         "title": "Sloneczniki",
         "category": "portrait",
@@ -3760,7 +3759,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2024-09-21",
         "place": "Santorini",
-        "blogPostId": "22"
+        "blogPostId": "santo24"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09174_Cx1Sy_APN.avif?updatedAt=1769018379493",
@@ -3777,7 +3776,7 @@ export const photoData: Photo[] = [
         "date": "2024-09-21",
         "place": "Santorini"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09227_73E_H_CPaT.avif?updatedAt=1769018379539",
         "title": "Santorini",
         "category": "travel",
@@ -3792,7 +3791,7 @@ export const photoData: Photo[] = [
         "date": "2024-09-21",
         "place": "Santorini"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-Oia_oSTd2Ga5u.avif?updatedAt=1769018379511",
         "title": "Santorini",
         "category": "travel",
@@ -3805,8 +3804,8 @@ export const photoData: Photo[] = [
         "date": "2024-09-21",
         "place": "Santorini, Oia"
     },
-    
-   {
+
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL07893_B7lP2cDzi.avif?updatedAt=1769018379509",
         "title": "Santorini",
         "category": "travel",
@@ -3820,7 +3819,7 @@ export const photoData: Photo[] = [
         "date": "2024-09-21",
         "place": "Santorini"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09642_FqYk4fA5L.avif?updatedAt=1769018104456",
         "title": "Dyniowelove",
         "category": "portrait",
@@ -3852,7 +3851,7 @@ export const photoData: Photo[] = [
         "date": "2024-10-19",
         "place": "Rotmanka"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09734_Ai2QGD68W.avif?updatedAt=1769018104424",
         "title": "Dyniowelove",
         "category": "portrait",
@@ -3883,7 +3882,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2024-10-19",
         "place": "Rotmanka",
-        "blogPostId": "23"
+        "blogPostId": "dyniowelove24"
     },
     //2024 random
     //2025 
@@ -3913,7 +3912,7 @@ export const photoData: Photo[] = [
         "date": "2025-01-23",
         "place": "Gdansk Matarnia"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00268_r0emDnE39.avif?updatedAt=1769015078060",
         "title": "Daldehog - IKEA",
         "category": "client",
@@ -3965,7 +3964,7 @@ export const photoData: Photo[] = [
         "date": "2025-01-23",
         "place": "Gdansk Matarnia"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00281_xzFVfxiAc.avif?updatedAt=1769015078186",
         "title": "Daldehog - IKEA",
         "category": "client",
@@ -3992,9 +3991,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-01-23",
         "place": "Matarnia",
-        "blogPostId": "1"
+        "blogPostId": "daldehog"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01417_r_nh87Ew3.avif?updatedAt=1769014577941",
         "title": "fizjo.tusia",
         "category": "client",
@@ -4069,7 +4068,7 @@ export const photoData: Photo[] = [
         "place": "Studio Sopot"
     },
 
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01496_L6DQfH3PUW.avif?updatedAt=1769014578399",
         "title": "fizjo.tusia",
         "category": "client",
@@ -4112,7 +4111,7 @@ export const photoData: Photo[] = [
         "date": "2025-04-24",
         "place": "Studio Sopot"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263",
         "title": "fizjotusia",
         "category": "client",
@@ -4127,7 +4126,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-04-24",
         "place": "Sopot",
-        "blogPostId": "2"
+        "blogPostId": "fizjotusia25"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01631_T0quA2-vg.avif?updatedAt=1769014578199",
@@ -4144,7 +4143,7 @@ export const photoData: Photo[] = [
         "date": "2025-04-24",
         "place": "Studio Sopot"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06535-2_g4oBVYsry.avif?updatedAt=1769014191682",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4157,7 +4156,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06557_3rnW-qq9V.avif?updatedAt=1769014191493",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4170,7 +4169,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06599_18VCe_tg5.avif?updatedAt=1769014191800",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4184,7 +4183,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4197,9 +4196,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-06-28",
         "place": "Sierakowice",
-        "blogPostId": "26"
+        "blogPostId": "weddkubakas25"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06819_kF1NOWlR1.avif?updatedAt=1769014191731",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4212,9 +4211,9 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-06-28",
         "place": "Sierakowice",
-        "blogPostId": "26"
+        "blogPostId": "weddkubakas25"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06821_vUatw9-w0.avif?updatedAt=1769014192449",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4242,7 +4241,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06824_Ed1Ag7Tev.avif?updatedAt=1769014192433",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4257,7 +4256,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06825_pzQ2L5lwD.avif?updatedAt=1769014191726",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4314,7 +4313,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
- {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07105_-F1bSxyGX.avif?updatedAt=1769014192399",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4329,7 +4328,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07109_A1UdLDkb9.avif?updatedAt=1769014191811",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4343,7 +4342,7 @@ export const photoData: Photo[] = [
         "date": "2025-06-28",
         "place": "Sierakowice"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
         "title": "Wesele Jakuba i Kasi",
         "category": "event",
@@ -4358,7 +4357,7 @@ export const photoData: Photo[] = [
         "place": "Sierakowice"
     },
 
-     {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07152_TDu5uz9nVe.avif?updatedAt=1769013803855",
         "title": "Tomek",
         "category": "client",
@@ -4387,7 +4386,7 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-07-05",
         "place": "Studio Sopot",
-        "blogPostId": "27",
+        "blogPostId": "tom25",
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07170_bvYseJvlX.avif?updatedAt=1769013803850",
@@ -4404,7 +4403,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-05",
         "place": "Studio Sopot"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07202-Edit_6Gvfz4VZH.avif?updatedAt=1769013803784",
         "title": "Tomek",
         "category": "client",
@@ -4449,7 +4448,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-05",
         "place": "Studio Sopot"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07232_W9RgcPeuh.avif?updatedAt=1769013803930",
         "title": "Tomek",
         "category": "client",
@@ -4517,7 +4516,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-26",
         "place": "Oliwa"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07555_d3SW3DVuVE.avif?updatedAt=1769013368466",
         "title": "Festiwal Japonski",
         "category": "event",
@@ -4532,7 +4531,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-26",
         "place": "Oliwa"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07562_i6KUJIh0c8.avif?updatedAt=1769013368378",
         "title": "Festiwal Japonski",
         "category": "event",
@@ -4547,7 +4546,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-26",
         "place": "Oliwa"
     },
-{
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07567_YQL4I9tR1.avif?updatedAt=1769013368227",
         "title": "Festiwal Japonski",
         "category": "event",
@@ -4603,7 +4602,7 @@ export const photoData: Photo[] = [
         "date": "2025-07-26",
         "place": "Oliwa"
     },
-  {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084",
         "title": "Festiwal Japonski",
         "category": "event",
@@ -4626,7 +4625,7 @@ export const photoData: Photo[] = [
         "date": "2025-10-04",
         "place": "Sopot"
     },
-   {
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/random/JEL07955-2_3-Nh2-cWy.avif",
         "title": "KAROLA Crew",
         "category": "client",

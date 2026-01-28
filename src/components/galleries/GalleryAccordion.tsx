@@ -19,15 +19,15 @@ export function GalleryAccordion({
     <div className="w-full mb-4">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`w-full flex items-center justify-between p-4 sm:p-6 rounded-2xl border transition-all duration-500 overflow-hidden ${
+        className={`w-full flex items-center justify-between p-4 sm:p-6 rounded-2xl border transition-all duration-500 overflow-hidden dark:bg-neutral-900 ${
           isOpen
-            ? "bg-white/5 border-amber-500/30 shadow-xl shadow-amber-500/5 mb-4"
-            : "bg-transparent border-white/5 hover:border-white/10 hover:bg-white/2"
+            ? " border-amber-500 shadow-xl shadow-amber-500/5 mb-4"
+            : " dark:border-neutral-700 hover:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-700"
         }`}
       >
         <motion.h2
           className={`text-xl sm:text-2xl font-bold transition-colors duration-300 ${
-            isOpen ? "text-amber-500" : "text-neutral-200"
+            isOpen ? "text-amber-500" : "dark:text-neutral-200"
           }`}
         >
           {year}

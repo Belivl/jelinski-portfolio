@@ -94,7 +94,7 @@ export function BlogPost() {
         image={post.coverImage}
         type="article"
       />
-      <article className="container mx-auto px-6 max-w-4xl">
+      <article className="container mx-auto px-6 max-w-4xl cursor-default">
         <div className="mb-8">
           <div className="flex items-center justify-between gap-4 text-sm text-gray-400 mb-4 ">
             <Link to="/blog">
@@ -166,15 +166,6 @@ export function BlogPost() {
         </div>
 
         <div className="mt-16 pt-8  flex flex-col gap-8">
-          {/* <div className="flex justify-between items-center">
-            <div className="text-gray-400">Share this article:</div>
-            <div className="flex gap-4">
-              <Button variant="outline" size="icon" className="rounded-full">
-                <Share2 className="w-4 h-4" />
-              </Button>
-            </div>
-          </div> */}
-
           <div className="flex justify-between items-center pt-8 border-t border-white/10">
             {(() => {
               const currentIndex = blogPosts.findIndex((p) => p.id === post.id);
@@ -186,8 +177,8 @@ export function BlogPost() {
                   : null;
 
               return (
-                <div className="grid grid-cols-3 gap-6 items-center w-full ">
-                  <div className="w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3  gap-6 items-center w-full">
+                  <div className="w-full order-3 md:order-1">
                     {prevPost ? (
                       <Link
                         to={`/blog/${prevPost.id}`}
@@ -196,7 +187,7 @@ export function BlogPost() {
                         <span className="text-sm text-muted-foreground group-hover:text-amber-500 transition-colors flex items-center gap-2">
                           <ArrowLeft className="w-4 h-4" /> {t.blog.prev}
                         </span>
-                        <span className="text-foreground font-medium truncate max-w-[200px] hidden md:block">
+                        <span className="text-foreground font-medium truncate max-w-[200px]">
                           {((t.data.blog as any)[prevPost.id] || {}).title ||
                             prevPost.title}
                         </span>
@@ -206,7 +197,7 @@ export function BlogPost() {
                     )}
                   </div>
 
-                  <Link to="/blog" className="w-full h-full">
+                  <Link to="/blog" className="w-full h-full order-2">
                     <Button
                       variant="outline"
                       className="px-6 dark:border-white/20 dark:hover:bg-white/10 w-full h-full"
@@ -215,7 +206,7 @@ export function BlogPost() {
                     </Button>
                   </Link>
 
-                  <div className="w-full">
+                  <div className="w-full order-1 md:order-3">
                     {nextPost ? (
                       <Link
                         to={`/blog/${nextPost.id}`}
@@ -225,7 +216,7 @@ export function BlogPost() {
                           {t.blog.next}{" "}
                           <ArrowLeft className="w-4 h-4 rotate-180" />
                         </span>
-                        <span className="text-foreground font-medium truncate max-w-[200px] hidden md:block">
+                        <span className="text-foreground font-medium truncate max-w-[200px]">
                           {((t.data.blog as any)[nextPost.id] || {}).title ||
                             nextPost.title}
                         </span>

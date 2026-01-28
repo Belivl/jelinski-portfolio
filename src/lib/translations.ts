@@ -2,17 +2,17 @@ export const translations = {
     en: {
         nav: {
             home: 'Home',
-            gallery: 'Gallery',
-            projects: 'Projects',
-            blog: 'Blog',
-            about: 'About',
+            gallery: 'Photo Gallery',
+            projects: 'Art Projects',
+            blog: 'Photo Blog',
+            about: 'About Me',
             contact: 'Contact',
             book: 'Book Now',
         },
         hero: {
             available: 'Available for Work!',
-            title: 'I\'m,',
-            name: 'Michal Jelinski',
+            title: 'I\'m ',
+            name: ' Michal Jelinski',
             photographer: 'photographer',
             designer: 'designer',
             subtitle: 'I am a photographer and a designer',
@@ -21,6 +21,7 @@ export const translations = {
             contact: 'Contact Me',
             and: '&',
             location: 'Tricity, Poland.',
+            more: 'More',
         },
         featured: {
             title: 'Featured Work',
@@ -39,7 +40,7 @@ export const translations = {
             description: "Capturing life's most precious moments with a cinematic touch. Specializing in portraits, events, and fine art photography.",
             quickLinks: "Quick Links",
             connect: "Connect",
-            rights: "Michal Jelinski Photography. All rights reserved.",
+            rights: "Michal Jelinski Photography.",
             privacy: "Privacy Policy",
             terms: "Terms of Service",
         },
@@ -169,7 +170,7 @@ export const translations = {
             listenOn: "Listen on",
             officialWebsite: "Official Website",
             projectView: "View Project",
-            experiences:[
+            experiences: [
                 {
                     role: 'UI/UX Designer & Frontend Developer',
                     company: 'FastTony',
@@ -188,7 +189,7 @@ export const translations = {
                     place: 'Gdansk, Poland',
                     logo: 'https://balticsail.pl/wp-content/uploads/2024/01/bsg_logo.svg',
                     website: 'https://www.balticsail.pl/',
-                    projectLink: '/blog/8'
+                    projectLink: '/blog/balticsail'
                 },
                 {
                     role: 'Graphic Designer',
@@ -221,7 +222,6 @@ export const translations = {
             form: {
                 firstName: "First Name",
                 lastName: "Last Name",
-                email: "Email",
                 subject: "Subject",
                 message: "Message",
                 send: "Send Message",
@@ -242,17 +242,17 @@ export const translations = {
                 title: "Select Project Type",
                 subjectFallback: "Inquiry",
                 types: {
-                    portrait: "Portrait",
-                    party: "Party",
-                    event: "Event",
-                    "3d": "3D",
-                    other: "Other"
+                    portrait: "Portrait Session",
+                    party: "Party Coverage",
+                    event: "Event Coverage",
+                    "3d": "3D Art",
+                    other: "Other Project"
                 },
                 form: {
                     fullName: "Full Name",
                     email: "Your Email",
-                    date: "Date",
-                    location: "Location",
+                    date: "Project Date",
+                    location: "Project Location",
                     budget: {
                         toggle: "Do you have a fixed budget?",
                         range: "Range: 500 - 4000+",
@@ -261,22 +261,27 @@ export const translations = {
                     details: "Additional Details",
                     placeholders: {
                         name: "John Doe",
-                        email: "john@example.com",
+                        email: "example@mail.com",
                         date: "MM/DD/YYYY",
-                        location: "City, Country",
+                        location: "Place name",
                         details: "Tell me more about your vision..."
                     }
                 },
                 buttons: {
-                    copyEmail: "Copy Email Address",
+                    copyEmail: "Copy My Email Address",
                     emailCopied: "Email Copied",
                     copyInquiry: "Copy Inquiry Message",
                     copied: "Copied!"
                 },
                 preview: {
-                    title: "Live Preview",
+                    title: "Message Preview",
                     subject: "Email Subject",
                     copySubject: "Copy Subject",
+                    editMessage: "Edit Message",
+                    sendMessage: "Send Email",
+                    sending: "Sending...",
+                    sent: "Email Sent!",
+                    error: "Failed to send",
                     subjectCopied: "Copied",
                     body: "Email Body",
                     footer: "Visual preview of the message you will copy."
@@ -356,7 +361,7 @@ export const translations = {
         },
         projects: {
             title: "Selected Work",
-            description: "A collection of my multidisciplinary work across 3D, UI/UX, branding, and traditional art.",
+            description: "A collection of my multidisciplinary work across 3D, UI/UX, branding, and traditional art under the artistic pseudonym \"Belial\"",
             tabs: {
                 projects: "Projects",
                 design: "Design",
@@ -369,22 +374,29 @@ export const translations = {
             gallery: "Project Gallery",
             tags: "Tags",
             images: "Images",
-            belialMeaning:"without a master, symbolizes independence, self-sufficiency, and personal accomplishment",
-            source:"The Satanic Bible (The Book of Belial)"
+            belialMeaning: "without a master, symbolizes independence, self-sufficiency, and personal accomplishment",
+            source: "The Satanic Bible (The Book of Belial)"
         },
         tooltips: {
             theme: "Toggle Theme",
             en: "English",
-            pl: "Polish"
+            pl: "Polish",
+            share: "Share",
+            comment: "Comments",
+            like: "I like it",
         },
         comments: {
             comments: "Comments",
-            noComments:"No comments yet. Be the first to share your thoughts!",
-            approval:"Sent for approval",
-            tooFast:"You're commenting too fast",
-            errorPost:"Error posting comment",
-            post:"Post",
-            moderated:"Comments are moderated. Abusive content will be rejected.",
+            noComments: "No comments yet. Be the first to share your thoughts!",
+            approval: "Sent for approval",
+            tooFast: "You're commenting too fast",
+            errorPost: "Error posting comment",
+            post: "Post",
+            moderated: "Comments are moderated. Abusive content will be rejected.",
+            close:"Close",
+            unavailable:"Unavailable",
+            name:"Name (optional)",
+            share:"Share your thoughts...",
         },
         preferenceModal: {
             title: "Customize Your Experience",
@@ -405,16 +417,16 @@ export const translations = {
             save: "Save Preferences",
         },
         data: {
-             projects: {
+            projects: {
                 '1': {
                     title: 'Woody FoodTruck',
                     description: 'Woody FoodTruck is a small business started by a passionate group of friends that wanted to share their love for Italian food with others. Woody\'s built-in, wood - fired pizza oven is what makes them stand out from other businesses alike.They can handcraft the pizza in a way traditional Italians do.Thanks to the mobility of a food truck, they can serve their specialty wherever they please.You can taste their mouth - watering, fire - baked pizza at many food events and conventions.'
                 },
                 '2': {
-                   title: 'AudienceForge',
-                   description: 'A clean, modern interface for a next-generation banking application.',
+                    title: 'AudienceForge',
+                    description: 'A clean, modern interface for a next-generation banking application.',
                 },
-                 '3': {
+                '3': {
                     title: 'Bukszpryt - Posters',
                     description: 'Hyper-realistic charcoal studies of human expressions.',
                 },
@@ -422,22 +434,22 @@ export const translations = {
                     title: 'RikoHD',
                     description: 'Complete brand identity for a sustainable fashion startup.',
                 },
-                 '6': {
-                     title: 'Amandel Milch Packaging',
-                     description: 'Have you ever wondered what the most important items of life are? Well, wonder no more!',
-                 },
-                 // Add other project overrides here
-             },
-             blog: {
-                 // Add blog overrides here keyed by string ID ex "1", "2"
-             },
-             photos: {
-                 daldehog: {
-                     title: "Daldehog - IKEA",
-                     place: "Gdansk Matarnia"
-                 }
-             },
-             testimonials: {
+                '6': {
+                    title: 'Amandel Milch Packaging',
+                    description: 'Have you ever wondered what the most important items of life are? Well, wonder no more!',
+                },
+                // Add other project overrides here
+            },
+            blog: {
+                // Add blog overrides here keyed by string ID ex "1", "2"
+            },
+            photos: {
+                daldehog: {
+                    title: "Daldehog - IKEA",
+                    place: "Gdansk Matarnia"
+                }
+            },
+            testimonials: {
                 '1': {
                     name: "Fizjo.tusia",
                     role: "Masseuse",
@@ -447,7 +459,7 @@ export const translations = {
                     name: "Susan J.",
                     role: "18",
                     text: "I highly recommend it! The photos from the 18th birthday party turned out great – natural, full of emotion, and perfectly capturing the atmosphere of the event. The photographer met all my requests, was completely professional, and had excellent communication skills. A keepsake for years to come! 📸🔥"
-                },  
+                },
                 '3': {
                     name: "Madzia D.",
                     role: "Model",
@@ -468,38 +480,39 @@ export const translations = {
                     role: "Model",
                     text: "You create a great vibe during the session and guide posing in a way that even challenging shots turn out really well"
                 },
-                
-             }
+
+            }
         }
     },
     pl: {
         nav: {
             home: 'Strona Główna',
-            gallery: 'Galeria',
+            gallery: 'Foto Galeria',
             projects: 'Projekty',
-            blog: 'Blog',
+            blog: 'Foto Blog',
             about: 'O Mnie',
             contact: 'Kontakt',
             book: 'Rezerwuj',
         },
         hero: {
             available: 'Dostępny na zdjęcia!',
-            title: 'Jestem,',
+            title: 'Jestem',
             name: 'Michał Jeliński',
-            photographer: 'fotografem',
-            designer: 'projektantem',
+            photographer: 'fotograf',
+            designer: 'projektant',
+            subtitle: 'Jestem fotografem i projektantem',
+            description: 'wkładającym serce i duszę w każde ujęcie.',
             and: 'i',
             location: 'z Trójmiasta.',
-            subtitle: 'i jestem fotografem z zamiłowania',
-            description: 'wkładając serce i duszę w każdą klatkę.',
             portfolio: 'Zobacz Portfolio',
             contact: 'Skontaktuj się',
+            more: 'Więcej',
         },
         featured: {
-            title: 'Wyróżnione Prace',
+            title: 'Wyróżnione Zdjęcia',
             subtitle: 'Wybór moich ulubionych zdjęć.',
             viewAll: 'Zobacz Wszystkie',
-            viewAllWork: 'Zobacz Wszystkie Prace',
+            viewAllWork: 'Zobacz Wszystkie Zdjęcia',
         },
         cta: {
             title: "Stwórzmy",
@@ -512,7 +525,7 @@ export const translations = {
             description: "Uwiecznianie najcenniejszych chwil życia z kinowym akcentem. Specjalizacja w portretach, wydarzeniach i fotografii artystycznej.",
             quickLinks: "Szybkie Linki",
             connect: "Linki",
-            rights: "Michal Jelinski Photography. Wszelkie prawa zastrzeżone.",
+            rights: "Michal Jelinski Photography.",
             privacy: "Polityka Prywatności",
             terms: "Warunki Usługi",
         },
@@ -642,7 +655,7 @@ export const translations = {
             listenOn: "Słuchaj na",
             officialWebsite: "Oficjalna Strona",
             projectView: "Zobacz Projekt",
-            experiences:[
+            experiences: [
                 {
                     role: 'Projektant UI/UX & Programista Frontend',
                     company: 'FastTony',
@@ -661,7 +674,7 @@ export const translations = {
                     place: 'Gdansk, PoPolskaland',
                     logo: 'https://balticsail.pl/wp-content/uploads/2024/01/bsg_logo.svg',
                     website: 'https://www.balticsail.pl/',
-                    projectLink: '/blog/8'
+                    projectLink: '/blog/balticsail'
                 },
                 {
                     role: 'Projektant Graficzny',
@@ -716,10 +729,10 @@ export const translations = {
                 title: "Wybierz rodzaj projektu",
                 subjectFallback: "Zapytanie",
                 types: {
-                    portrait: "Portrety",
-                    party: "Impreza",
-                    event: "Wydarzenie",
-                    "3d": "3D",
+                    portrait: "Sesja zdjeciowa",
+                    party: "Zdjecia z Imprezy",
+                    event: "Zdjecia z Wydarzenia",
+                    "3d": "Sztuka w 3D",
                     other: "Inne"
                 },
                 form: {
@@ -735,9 +748,9 @@ export const translations = {
                     details: "Dodatkowe informacje",
                     placeholders: {
                         name: "Jan Kowalski",
-                        email: "jan@example.pl",
+                        email: "jan@mail.pl",
                         date: "DD/MM/RRRR",
-                        location: "Miasto, Kraj",
+                        location: "Miasto",
                         details: "Powiedz mi więcej o swojej wizji..."
                     }
                 },
@@ -751,6 +764,11 @@ export const translations = {
                     title: "Podgląd na żywo",
                     subject: "Temat wiadomości",
                     copySubject: "Kopiuj temat",
+                    editMessage: "Edytuj wiadomość",
+                    sendMessage: "Wyślij Email",
+                    sending: "Wysyłanie...",
+                    sent: "Wysłano!",
+                    error: "Błąd wysyłania",
                     subjectCopied: "Skopiowano",
                     body: "Treść wiadomości",
                     footer: "Wizualny podgląd wiadomości, którą skopiujesz."
@@ -830,7 +848,7 @@ export const translations = {
         },
         projects: {
             title: "Wybrane Prace",
-            description: "Kolekcja moich interdyscyplinarnych prac z zakresu 3D, UI/UX, brandingu i sztuki tradycyjnej.",
+            description: "Kolekcja moich interdyscyplinarnych prac z zakresu 3D, UI/UX, brandingu i sztuki tradycyjnej pod pseudonimem artystycznym \"Belial\"",
             tabs: {
                 projects: "Projekty",
                 design: "Design",
@@ -843,22 +861,29 @@ export const translations = {
             gallery: "Galeria Projektu",
             tags: "Tagi",
             images: "Zdjęcia",
-            belialMeaning:"bez mistrza, symbolizuje niezależność, samodzielność i osobiste osiągnięcia",
-            source:"Biblia Szatana (Księga Beliala)"
+            belialMeaning: "bez mistrza, symbolizuje niezależność, samodzielność i osobiste osiągnięcia",
+            source: "Biblia Szatana (Księga Beliala)"
         },
         tooltips: {
             theme: "Zmień motyw",
             en: "Angielski",
-            pl: "Polski"
+            pl: "Polski",
+            share: "Udostępnij",
+            comment: "Komentarze",
+            like: "Lubię to",
         },
         comments: {
             comments: "Komentarze",
-            noComments:"Nie ma jeszcze komentarzy. Bądź pierwszym, który udzieli swoich myśli!",
-            approval:"Wysłany do zatwierdzenia",
-            tooFast:"Komentujesz za szybko",
-            errorPost:"Błąd podczas wysyłania komentarza",
-            post:"Wyślij",
+            noComments: "Nie ma jeszcze komentarzy. Bądź pierwszym, który udzieli swoich myśli!",
+            approval: "Wysłany do zatwierdzenia",
+            tooFast: "Komentujesz za szybko",
+            errorPost: "Błąd podczas wysyłania komentarza",
+            post: "Wyślij",
             moderated: "Komentarze są moderowane. Zawartość nieprzyjazna będzie odrzucona.",
+            close:"Zamknij",
+            unavailable:"Niedostępne",
+            name:"Imię (opcjonalne)",
+            share:"Podziel się swoimi przemyśleniami...",
         },
         preferenceModal: {
             title: "Dostosuj Doświadczenie",
@@ -879,16 +904,16 @@ export const translations = {
             save: "Zapisz Preferencje",
         },
         data: {
-             projects: {
+            projects: {
                 '1': {
                     title: 'Woody FoodTruck',
                     description: 'Woody FoodTruck to mała firma założona przez grupę pasjonatów i przyjaciół, którzy chcieli dzielić się swoją miłością do włoskiego jedzenia. Wbudowany piec do pizzy opalany drewnnem wyróżnia ich na tle innych firm. Dzięki mobilności food trucka mogą serwować swoje specjały, gdzie tylko zechcą.'
                 },
                 '2': {
-                   title: 'AudienceForge',
-                   description: 'Czysty, nowoczesny interfejs dla aplikacji do zarzadzania reklamami nowej generacji.'
+                    title: 'AudienceForge',
+                    description: 'Czysty, nowoczesny interfejs dla aplikacji do zarzadzania reklamami nowej generacji.'
                 },
-                 '3': {
+                '3': {
                     title: 'Bukszpryt - Plakaty',
                     description: 'Seria plakatow dla lokalnego pubu.',
                 },
@@ -896,49 +921,49 @@ export const translations = {
                     title: 'RikoHD',
                     description: 'Identyfikacja wizualna dla streamera',
                 },
-                 '6': {
-                     title: 'Amandel Milch- Opakowanie',
-                     description: 'Wizualizacja opakowania mleka migdałowego dla Amandel Milch - grupy studentow z UG',
-                 },
-                 '7': {
-                     title: 'Venom Esport - Animacja',
-                     description: 'Animacja dla druzyny Venom Esport',
-                 },
-                 '8': {
-                     title: 'Exon Esport - Animacja',
-                     description: 'Animacja dla druzyny Exon Esport',
-                 },
-                 '9': {
-                     title: 'SnE Esport - Animacja',
-                     description: 'Animacja dla druzyny SnE Esport',
-                 },
-                  '10': {
-                     title: 'Ksiega - Animacja',
-                     description: 'Animacja uzytkowania ksiazki firmy alkoholowej dla zespolu HR',
-                 },
-                 '11': {
-                     title: 'Sleepless Thoughts - Okladka albumu',
-                     description: 'Projekt okładki albumu Sleepless Thoughts',
-                 },
-                 '12': {
-                     title: 'Corona Fighters - Planszowka',
-                     description: 'Projekt planszowki na studia',
-                 },
-                 '13': {
-                     title: 'Belial Identyfikacja personalna',
-                     description: 'Personalna identyfikacja dla wlasnej marki Belial',
-                 },
-             },
-             blog: {
-                  // Add blog overrides here
-             },
-             photos: {
-                 daldehog: {
-                     title: "Daldehog - IKEA",
-                     place: "Gdansk Matarnia"
-                 }
-             },
-             testimonials: {
+                '6': {
+                    title: 'Amandel Milch- Opakowanie',
+                    description: 'Wizualizacja opakowania mleka migdałowego dla Amandel Milch - grupy studentow z UG',
+                },
+                '7': {
+                    title: 'Venom Esport - Animacja',
+                    description: 'Animacja dla druzyny Venom Esport',
+                },
+                '8': {
+                    title: 'Exon Esport - Animacja',
+                    description: 'Animacja dla druzyny Exon Esport',
+                },
+                '9': {
+                    title: 'SnE Esport - Animacja',
+                    description: 'Animacja dla druzyny SnE Esport',
+                },
+                '10': {
+                    title: 'Ksiega - Animacja',
+                    description: 'Animacja uzytkowania ksiazki firmy alkoholowej dla zespolu HR',
+                },
+                '11': {
+                    title: 'Sleepless Thoughts - Okladka albumu',
+                    description: 'Projekt okładki albumu Sleepless Thoughts',
+                },
+                '12': {
+                    title: 'Corona Fighters - Planszowka',
+                    description: 'Projekt planszowki na studia',
+                },
+                '13': {
+                    title: 'Belial Identyfikacja personalna',
+                    description: 'Personalna identyfikacja dla wlasnej marki Belial',
+                },
+            },
+            blog: {
+                // Add blog overrides here
+            },
+            photos: {
+                daldehog: {
+                    title: "Daldehog - IKEA",
+                    place: "Gdansk Matarnia"
+                }
+            },
+            testimonials: {
                 '1': {
                     name: "Fizjo.tusia",
                     role: "Masazystka",
@@ -958,7 +983,7 @@ export const translations = {
                     name: "Mariusz C.",
                     role: "Solenizant",
                     text: "Wszystkie wydarzenia nabrały niesamowitej głębi i magii od kiedy są rejestrowane Twoim obiektywem."
-                },          
+                },
                 '5': {
                     name: "KAROLA",
                     role: "Piosenkarka",
@@ -969,7 +994,7 @@ export const translations = {
                     role: "Model",
                     text: "Tworzysz świetną atmosferę podczas sesji i prowadzisz pozowanie w taki sposób, że nawet najbardziej wymagające ujęcia wychodzą znakomicie."
                 },
-             }
+            }
         }
     }
 };

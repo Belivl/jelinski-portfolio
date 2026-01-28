@@ -41,10 +41,10 @@ export function Navbar() {
       <div className="container mx-auto px-6 flex justify-between items-center">
         <Link
           to="/"
-          className="text-2xl font-bold tracking-tighter flex items-center gap-2"
+          className="text-2xl font-bold tracking-tighter flex items-center gap-2 group"
         >
-          <span className="uppercase text-black dark:text-white">
-            <TextScramble className="font-bold tracking-normal font-script1 capitalize">
+          <span className="uppercase text-black dark:text-white ">
+            <TextScramble className="font-bold tracking-normal font-script1 capitalize hover:dark:text-neutral-300  underline-offset-2 group-hover:underline transition-all duration-300 ease-out">
               {location.pathname.startsWith("/projects")
                 ? "Belial"
                 : t.hero.name}

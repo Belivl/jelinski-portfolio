@@ -23,6 +23,7 @@ import type { Photo } from "@/data/photos.ts";
 import { TAG_CATEGORIES } from "@/data/tags";
 import { CATEGORY_COVERS } from "@/data/categoryCovers";
 import { useLanguage } from "@/lib/LanguageContext";
+import { Card2 } from "../ui/Card2";
 
 interface FilterState {
   category: string;
@@ -112,7 +113,6 @@ export function AdvancedFilterBar({
   // Helper to get a cover image for a category
   const getCategoryCover = (cat: string) => {
     if (CATEGORY_COVERS[cat]) return CATEGORY_COVERS[cat];
-    if (cat === "all") return photos[0]?.url; // Fallback for 'All'
     const photo = photos.find((p) => p.category === cat);
     return photo ? photo.url : undefined;
   };
@@ -122,8 +122,11 @@ export function AdvancedFilterBar({
 
   return (
     <div className="w-full  mx-auto mb-12 space-y-8">
-      <div className="flex flex-col justify-between w-full gap-6 dark:bg-neutral-900  p-3 md:p-6 rounded-2xl backdrop-blur-md border-t dark:border-t-neutral-700 border-l dark:border-l-neutral-800 border-r dark:border-r-neutral-900 border-b dark:border-b-neutral-900 shadow-2xl">
+      <Card2>
         {/* 1. Cinematic Category Cards */}
+        <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">
+          {t.blog.filterByCategory}
+        </span>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
           {displayCategories.map((category) => {
             const isActive = filters.category === category;
@@ -239,7 +242,10 @@ export function AdvancedFilterBar({
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                transition={{
+                                  duration: 0.2,
+                                  ease: "easeOut",
+                                }}
                                 className="overflow-hidden"
                               >
                                 <div className="flex flex-wrap gap-1 pb-3 pl-5">
@@ -316,7 +322,10 @@ export function AdvancedFilterBar({
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: "auto", opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
+                                transition={{
+                                  duration: 0.2,
+                                  ease: "easeOut",
+                                }}
                                 className="overflow-hidden"
                               >
                                 <div className="flex flex-wrap gap-1 pb-3 pl-5">
@@ -362,10 +371,11 @@ export function AdvancedFilterBar({
           <div className="flex">
             <Button
               variant="outline"
+              size="sm"
               onClick={() =>
                 onSortChange(sortOrder === "desc" ? "asc" : "desc")
               }
-              className="h-11 bg-black/40 border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px]"
+              className=" bg-black/40 border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px]"
             >
               {sortOrder === "desc" ? t.blog.newestFirst : t.blog.oldestFirst}
               {sortOrder === "desc" ? (
@@ -376,7 +386,7 @@ export function AdvancedFilterBar({
             </Button>
           </div>
           {/* 2. Filters & Actions (Camera & Clear) */}
-          <div className="w-full md:w-auto flex flex-col gap-4 min-w-[240px]">
+          <div className="w-full md:w-fit flex flex-col gap-4 ">
             <Select
               value={filters.camera || "all"}
               onValueChange={(val) =>
@@ -400,7 +410,7 @@ export function AdvancedFilterBar({
             </Select>
           </div>
         </div>
-      </div>
+      </Card2>
     </div>
   );
 }

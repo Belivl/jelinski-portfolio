@@ -67,7 +67,13 @@ export function CtaSection() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-32 dark:bg-neutral-900 text-white relative overflow-hidden">
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 2 }}
+      viewport={{ once: true }}
+      className="py-32 dark:bg-neutral-900 text-white relative overflow-hidden cursor-default"
+    >
       {/* Infinite Scroll Background */}
       <div className="absolute inset-0 z-0 flex flex-col gap-4 justify-center -rotate-3 scale-110 pointer-events-none">
         <ScrollingRow photos={featuredUrls.slice(0, 5)} duration={30} />
@@ -101,6 +107,6 @@ export function CtaSection() {
           </Link>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

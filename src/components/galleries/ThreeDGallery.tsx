@@ -149,7 +149,7 @@ const THREED_IMAGES = [
     alt: "laser0024",
   },
   {
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0024_uSwdRj6Gzo.avif?updatedAt=1769088940317",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0106_sPrEHSLlu.avif?updatedAt=1769088940383",
     alt: "laser0106",
   },
   {
@@ -157,11 +157,11 @@ const THREED_IMAGES = [
     alt: "laser0044",
   },
   {
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0044_qo9mZaM0pl.avif?updatedAt=1769088940363",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/pyrite1_0ae2Ahgoed.avif?updatedAt=1769088940375",
     alt: "pyrite1",
   },
   {
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/Laser0044_qo9mZaM0pl.avif?updatedAt=1769088940363",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/3d/exp1_hk0N1uUOe.avif?updatedAt=1769088940250",
     alt: "glasswave",
   },
   {
@@ -250,7 +250,7 @@ export function ThreeDGallery() {
       >
         <GalleryAccordion year="2025" defaultOpen={true}>
           <SameHeightRow
-            className="rounded-xl overflow-hidden"
+            className="md:rounded-xl rounded-md overflow-hidden"
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
@@ -263,7 +263,7 @@ export function ThreeDGallery() {
 
         <GalleryAccordion year="2024">
           <SameHeightRow
-            className="rounded-xl overflow-hidden"
+            className="md:rounded-xl rounded-md overflow-hidden"
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
@@ -277,7 +277,7 @@ export function ThreeDGallery() {
             ]}
           ></SameHeightRow>
           <SameHeightRow
-            className="rounded-xl overflow-hidden "
+            className="md:rounded-xl rounded-md overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
@@ -290,7 +290,7 @@ export function ThreeDGallery() {
 
         <GalleryAccordion year="2022">
           <SameHeightRow
-            className="rounded-xl overflow-hidden "
+            className="md:rounded-xl rounded-md overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {
@@ -310,7 +310,7 @@ export function ThreeDGallery() {
           />
 
           <SameHeightRow
-            className="rounded-xl overflow-hidden "
+            className="md:rounded-xl rounded-md overflow-hidden "
             gap={16}
             roundEvery={true}
             onImageClick={(idx) => {

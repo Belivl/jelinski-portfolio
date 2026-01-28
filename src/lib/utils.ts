@@ -9,6 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export function cleanIKUrl(url: string | undefined): string {
   if (!url) return "";
   const cleaned = url.replace("https://ik.imagekit.io/j3l1n5k1/", "");
+  //console.log(cleaned);
   return cleaned.split("?")[0];
 }
 
@@ -17,7 +18,7 @@ export function getDevImageUrl(url: string): string {
     if (!url) return url;
 
     // If it's already a local path, return as is
-    if (url.startsWith("/photos/")) return url;
+    if (url.startsWith("/photography/")) return url;
 
     let relPath = url;
 
@@ -44,7 +45,18 @@ export function getDevImageUrl(url: string): string {
         }
     }
 
-    // Ensure we don't have a double slash
-    const cleanPath = relPath.startsWith("/") ? relPath.substring(1) : relPath;
-    return `/photos/${decodeURIComponent(cleanPath)}`;
+    // Strip query parameters (e.g., ?updatedAt=...)
+    relPath = relPath.split("?")[0];
+
+    // Convert .avif extension to _avif.heif (matching downloaded file format)
+    if (relPath.endsWith(".avif")) {
+        relPath = relPath.replace(/\.avif$/, "_avif.heif");
+    }
+
+    // Ensure path starts with /
+    if (!relPath.startsWith("/")) {
+        relPath = "/" + relPath;
+    }
+    
+    return decodeURIComponent(relPath);
 }

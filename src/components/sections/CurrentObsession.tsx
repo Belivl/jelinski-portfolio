@@ -29,7 +29,7 @@ export function CurrentObsession() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full h-[152px] flex items-center justify-between px-8 bg-linear-to-r from-neutral-900 to-neutral-800 cursor-pointer"
+              className="w-full h-[152px] flex items-center justify-between px-8 bg-neutral-800 cursor-pointer"
               onClick={() => setIsPlaying(true)}
             >
               <div className="flex items-center gap-6">

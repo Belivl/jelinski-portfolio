@@ -24,6 +24,7 @@ import {
   MonitorSmartphone,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
+import { GlowContent } from "./GlowContent";
 
 interface CategoryCardProps {
   category: string;
@@ -65,7 +66,7 @@ export function CategoryCard({
   const { t } = useLanguage();
   const Icon = categoryIcons[category.toLowerCase()] || LayoutGrid;
   return (
-    <div className="w-full dark:bg-neutral-900 bg-neutral-500 p-[2px] pt-0 rounded-lg border-b border-r border-b-neutral-600 border-r-neutral-700 group">
+    <div className="w-full dark:bg-black bg-neutral-500 p-[4px] pt-0 rounded-lg border-b border-r border-b-neutral-600 border-r-neutral-700 group">
       <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.9)] rounded-lg group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.4)] transition-all duration-300">
         <motion.button
           whileHover={{ y: -3, x: -1 }}
@@ -73,9 +74,9 @@ export function CategoryCard({
           onClick={onClick}
           className={cn(
             "relative group w-full aspect-3/1 rounded-lg overflow-hidden text-left transition-all duration-300 -translate-x-[2px]",
-            "border dark:border-neutral-800 border-l border-b-3  dark:border-b-black border-l-neutral-700 border-t-2 dark:border-t-neutral-700 hover:border-amber-500/50",
+            "border dark:border-neutral-800 border-l border-b-3  dark:border-b-neutral-900 border-l-neutral-700 border-t-2 dark:border-t-neutral-700 hover:border-amber-500/50",
             isActive
-              ? "ring-2 ring-amber-500 border-transparent shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+              ? "ring-2 ring-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
               : "shadow-xl",
           )}
         >
@@ -106,17 +107,19 @@ export function CategoryCard({
           {/* Content */}
           <div className="absolute inset-0 p-4 flex flex-col justify-center items-center">
             <div className="absolute inset-0 bg-linear-to-r dark:from-black/90 dark:via-black/80 dark:to-black/30 from-neutral-200/90 via-neutral-200/80 to-neutral-100/30"></div>
-            <div className="flex items-center justify-center gap-4 w-full relative">
+            <div className="flex items-center md:justify-center justify-start gap-4 w-full relative">
               <div className="flex flex-col items-center justify-center">
                 <h3
                   className={cn(
-                    "text-xl md:text-2xl font-script1 dark:text-white transition-all duration-300 capitalize leading-none",
+                    "text-xl md:text-2xl font-script1 dark:text-white transition-all duration-300 capitalize leading-none whitespace-nowrap",
                     isActive && "text-amber-500 scale-105",
                   )}
                 >
-                  {t.gallery.tagCategories[
-                    category.toLowerCase() as keyof typeof t.gallery.tagCategories
-                  ] || category}
+                  <GlowContent variant="amber">
+                    {t.gallery.tagCategories[
+                      category.toLowerCase() as keyof typeof t.gallery.tagCategories
+                    ] || category}
+                  </GlowContent>
                 </h3>
               </div>
 
@@ -129,7 +132,9 @@ export function CategoryCard({
                     exit={{ scale: 0, opacity: 0 }}
                     className="bg-amber-500 p-1 rounded-full shadow-[0_0_15px_rgba(245,158,11,0.5)]"
                   >
-                    <Check className="w-3 h-3 text-black stroke-3" />
+                    <GlowContent variant="amber">
+                      <Check className="w-3 h-3 text-black stroke-3" />
+                    </GlowContent>
                   </motion.div>
                 ) : (
                   <motion.div
@@ -140,7 +145,9 @@ export function CategoryCard({
                     className="p-1"
                   >
                     {Icon && (
-                      <Icon className="w-5 h-5 text-white group-hover:opacity-100 transition-opacity" />
+                      <GlowContent variant="amber">
+                        <Icon className="w-5 h-5 dark:text-white group-hover:opacity-100 transition-opacity" />
+                      </GlowContent>
                     )}
                   </motion.div>
                 )}
