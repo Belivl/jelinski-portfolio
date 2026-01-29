@@ -25,7 +25,7 @@ function Comparison2({
   return (
     <Comparison
       className={cn(
-        " w-full overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800",
+        " w-full gallery-card",
         roundEvery ? "rounded-xl" : "",
         className,
       )}

@@ -226,6 +226,9 @@ export const translations = {
                 message: "Message",
                 send: "Send Message",
             },
+            step1title:"Direct Contact",
+            step1copy:"Send email directly or copy my email address",
+            step2custom:"Customize your message before sending",
             socialTitle: "Find me on Social Media",
             socialSubtitle: "Follow my latest work and behind the scenes",
             social: {
@@ -713,6 +716,9 @@ export const translations = {
                 message: "Wiadomość",
                 send: "Wyślij Wiadomość",
             },
+            step1title:"Wiadomość bezposrednia",
+            step1copy:"Wyślij email bezpośrednio lub skopiuj moj adres email",
+            step2custom:"Sprawdź i edytuj wiadomość przed wysłaniem",
             socialTitle: "Znajdź mnie w Social Mediach",
             socialSubtitle: "Śledź moje najnowsze prace i kulisy.",
             social: {
@@ -761,7 +767,7 @@ export const translations = {
                     copied: "Skopiowano!"
                 },
                 preview: {
-                    title: "Podgląd na żywo",
+                    title: "Podgląd wiadomości",
                     subject: "Temat wiadomości",
                     copySubject: "Kopiuj temat",
                     editMessage: "Edytuj wiadomość",

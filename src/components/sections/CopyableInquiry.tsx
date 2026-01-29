@@ -22,6 +22,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or using stand-in
 import { useLanguage } from "@/lib/LanguageContext";
 import { DatePickerInput } from "@/components/ui/calendarInput";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 const projectTypesData = [
   { id: "portrait", icon: Camera },
@@ -195,7 +196,7 @@ export function CopyableInquiry() {
 
     // Honeypot check
     if (formData._honey) {
-      console.log("Bot detected!");
+      console.warn("EmailJS: Honeypot triggered. Likely a bot.");
       return;
     }
 
@@ -204,7 +205,11 @@ export function CopyableInquiry() {
       !import.meta.env.VITE_EMAILJS_PUBLIC_KEY ||
       !import.meta.env.VITE_EMAILJS_TEMPLATE_ID
     ) {
-      console.error("Missing EmailJS environment variables");
+      console.error("EmailJS Error: Missing environment variables:", {
+        serviceId: !!import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        publicKey: !!import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        templateId: !!import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      });
       setEmailStatus("error");
       return;
     }
@@ -217,8 +222,9 @@ export function CopyableInquiry() {
       from_email: formData.email,
       subject: generateSubject(),
       message: messageBody,
-      to_name: "Michal",
+      to_name: "Michal Jelinski",
     };
+    console.log(templateParams);
 
     emailjs
       .send(
@@ -230,15 +236,21 @@ export function CopyableInquiry() {
         },
       )
       .then(
-        () => {
+        (response) => {
+          console.log("EmailJS SUCCESS!", response.status, response.text);
           setEmailStatus("success");
           setIsSending(false);
           setTimeout(() => setEmailStatus("idle"), 5000);
         },
         (error) => {
-          console.error("FAILED...", error.text);
-          setEmailStatus("error");
+          console.error("EmailJS FAILED...", error);
+          // If error has a text property, it's usually from EmailJS response
+          if (error.text) {
+            console.error("EmailJS Error Text:", error.text);
+          }
+          setEmailStatus("error"); // Set error state immediately
           setIsSending(false);
+          setTimeout(() => setEmailStatus("error"), 5000); // Keep it red for a bit
         },
       );
   };
@@ -248,9 +260,7 @@ export function CopyableInquiry() {
       {/* Form Section */}
       <div className="space-y-8">
         <div className="space-y-2">
-          <Label className="text-xs uppercase tracking-widest text-neutral-500 mb-4 block">
-            {inquiryT.title}
-          </Label>
+          <SectionHeader>{inquiryT.title}</SectionHeader>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             {projectTypes.map((type) => {
               const isActive = formData.projectType === type.id;
@@ -286,19 +296,21 @@ export function CopyableInquiry() {
               <Input
                 id="name"
                 name="name"
+                autoComplete="name"
                 placeholder={inquiryT.form.placeholders.name}
                 value={formData.name}
                 onChange={handleInputChange}
                 className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
               />
             </div>
-            {/* NEW Email Input */}
             <div className="space-y-2">
               <Label htmlFor="email">{inquiryT.form.email || "Email"}</Label>
               <Input
                 id="email"
                 name="email"
                 type="email"
+                required
+                autoComplete="email"
                 placeholder={
                   inquiryT.form.placeholders.email || "example@mail.com"
                 } // Fallback placeholder in case translation update failed or not reloaded
@@ -446,7 +458,7 @@ export function CopyableInquiry() {
       {/* Preview Section */}
       <div className="relative">
         <div className="sticky top-8 bg-neutral-900 border border-white/10 rounded-2xl p-4 md:p-5">
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-12">
             <h3 className="text-2xl font-semibold text-white flex items-center gap-2">
               <span className="w-12 h-12 rounded-lg  flex items-center justify-center text-primary">
                 <MessageSquare className="w-6 h-6" />
@@ -456,7 +468,7 @@ export function CopyableInquiry() {
           </div>
 
           {/* Step 1: Copy Email - Optional if sending directly */}
-          <div className="mb-8 space-y-3 gap-3 flex flex-col">
+          <div className=" space-y-3 gap-6 flex flex-col mb-12">
             <div className="flex items-center gap-3 mb-2">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-neutral-800 border border-white/10 text-neutral-400 font-bold text-sm shrink-0">
                 1
@@ -464,10 +476,10 @@ export function CopyableInquiry() {
               <div className="flex-1">
                 <h4 className="text-sm font-semibold text-white flex items-center gap-2">
                   <Mail className="w-4 h-4 text-primary" />
-                  Direct Contact
+                  {t.contact.step1title}
                 </h4>
                 <p className="text-xs text-neutral-400 mt-0.5">
-                  Send email directly or copy address
+                  {t.contact.step1copy}
                 </p>
               </div>
             </div>
@@ -495,7 +507,7 @@ export function CopyableInquiry() {
           </div>
 
           {/* Step 2: Review & Send Body */}
-          <div className="space-y-3">
+          <div className="space-y-5">
             <div className="flex items-center gap-3 mb-2">
               <div className="flex items-center justify-center w-8 h-8 rounded-full bg-linear-to-br from-primary/20 to-primary/10 border border-primary/30 text-primary font-bold text-sm shrink-0">
                 2
@@ -506,17 +518,20 @@ export function CopyableInquiry() {
                   {inquiryT.preview?.editMessage || "Edit Message"}
                 </h4>
                 <p className="text-xs text-neutral-400 mt-0.5">
-                  Customize your message before sending
+                  {t.contact.step2custom}
                 </p>
               </div>
             </div>
 
             {/* Subject Display */}
-            <div className="space-y-2 mb-4">
+            <div className="space-y-2 mb-4 mt-6">
               <div className="flex items-center justify-between">
-                <Label className="text-[10px] uppercase tracking-wider text-neutral-500 flex items-center gap-1">
+                <SectionHeader className="mb-0">
                   {inquiryT.preview.subject}
-                </Label>
+                </SectionHeader>
+              </div>
+              <div className="p-3 bg-black/10 border border-white/5 rounded-lg font-mono text-xs text-white truncate flex items-center justify-between gap-2">
+                {generateSubject()}{" "}
                 <button
                   onClick={handleCopySubject}
                   className={`text-[10px] flex items-center gap-1.5 px-2 py-1 rounded-md transition-all duration-200 ${
@@ -535,15 +550,10 @@ export function CopyableInquiry() {
                     : inquiryT.preview.copySubject}
                 </button>
               </div>
-              <div className="p-3 bg-black/10 border border-white/5 rounded-lg font-mono text-xs text-white truncate">
-                {generateSubject()}
-              </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[10px] uppercase tracking-wider text-neutral-500">
-                {inquiryT.preview.body}
-              </Label>
+              <SectionHeader>{inquiryT.preview.body}</SectionHeader>
               <div className="relative">
                 <Textarea
                   value={messageBody}

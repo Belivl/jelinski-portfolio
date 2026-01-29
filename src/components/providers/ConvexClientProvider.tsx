@@ -99,7 +99,7 @@ export function ConvexClientProvider({ children }: { children: ReactNode }) {
     originalFetchRef.current = window.fetch;
     window.fetch = async (...args) => {
       try {
-        const response = await originalFetchRef.current!(...args);
+        const response = await originalFetchRef.current!.apply(window, args);
 
         // Check if this is a Convex request with a 401 error during reconnection
         const url =

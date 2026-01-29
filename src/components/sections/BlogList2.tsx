@@ -115,7 +115,7 @@ export function BlogList() {
         <div className="h-px bg-white/10 w-full" />
 
         <div className="flex flex-row sm:flex-row w-full gap-3 justify-between items-center ">
-          <div className="flex flex-row gap-3 items-center w-full justify-end">
+          <div className="flex flex-col md:flex-row gap-3 md:items-center w-full md:justify-end">
             {/* Reset Filters */}
             {(selectedCategory !== "all" || selectedYear !== "all") && (
               <motion.div
@@ -301,7 +301,7 @@ const PostCard = ({ post }: Props) => {
             ev.currentTarget.style.setProperty("--x", `${xPercentage * 100}%`);
             ev.currentTarget.style.setProperty("--y", `${yPercentage * 100}%`);
           }}
-          className="group relative w-full flex flex-col rounded-md bg-neutral-100 dark:shadow-xl shadow-2xl  dark:bg-white p-4 pb-0 text-neutral-700 transition-transform ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)]"
+          className="group relative w-full flex flex-col rounded-md bg-neutral-100 dark:shadow-xl shadow-2xl  dark:bg-white p-1 md:p-4 pb-0 text-neutral-700 transition-transform ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)]"
         >
           {/* <figure className="rounded-md mix-blend-multiply bg-[radial-gradient(at_70%_40%,transparent_30%,currentColor_40%),url(/noise.svg)]" /> */}
           <div
@@ -342,20 +342,25 @@ const PostCard = ({ post }: Props) => {
           </div>
 
           <div className="flex flex-row justify-between items-center w-full h-fit pl-2 ">
-            <div className="flex items-center gap-4 ">
+            <div className="flex items-center gap-2 md:gap-4 ">
               <div className="flex items-center gap-2 text-xs md:text-base truncate">
                 <Calendar className="w-3 h-3" /> <span>{post.date}</span>
               </div>
-              <div className="flex items-center gap-2 text-xs md:text-base truncate">
+              <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base truncate">
                 <MapPin className="w-3 h-3" />{" "}
-                <span>{post.place || "Unknown Location"}</span>
+                <span className="truncate w-[1/3] md:w-full">
+                  {post.place || "Unknown Location"}
+                </span>
               </div>
             </div>
             <Button
               variant="link"
               className="text-neutral-700 cursor-pointer dark:text-neutral-500 font-semibold text-xs hover:no-underline group-hover:scale-105 transition-transform gap-1 items-center flex group-hover:text-amber-700 dark:group-hover:text-amber-500"
             >
-              {t.blog.viewPostcard || "View Postcard"}
+              <span className="md:block hidden">
+                {t.blog.viewPostcard || "View Postcard"}
+              </span>
+              <span className="block md:hidden">{t.gallery.view}</span>
               <ArrowRight className="w-4 h-4  group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>

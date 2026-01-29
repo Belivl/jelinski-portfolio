@@ -15,8 +15,8 @@ export function MiniCRTDisplay({
   return (
     <div
       className={cn(
-        "relative w-full h-8 rounded-md bg-black overflow-hidden border-2 border-neutral-800 shadow-[0_0_10px_rgba(0,0,0,0.5),inset_0_2px_5px_rgba(0,0,0,0.8)] flex items-center justify-center plastic-texture",
-        className
+        "relative w-full md:h-8 h-auto rounded-md bg-black text-center overflow-hidden border-2 border-neutral-800 shadow-[0_0_10px_rgba(0,0,0,0.5),inset_0_2px_5px_rgba(0,0,0,0.8)] flex items-center justify-center plastic-texture",
+        className,
       )}
     >
       {/* CRT Glass Effect */}
@@ -36,14 +36,14 @@ export function MiniCRTDisplay({
       </div>
 
       {/* Content */}
-      <div className="relative z-0">
+      <div className="relative z-0 text-center">
         <motion.span
           key={value}
           initial={{ opacity: 0.5 }}
           animate={{ opacity: 1 }}
           className={cn(
-            "font-mono text-sm font-bold tracking-tighter text-neutral-100 drop-shadow-[0_0_3px_rgba(255,255,255,0.8)]",
-            isLoading && "animate-pulse"
+            "font-mono md:text-sm text-xs font-bold tracking-tighter text-neutral-100 drop-shadow-[0_0_3px_rgba(255,255,255,0.8)] p-2 md:p-0 text-center",
+            isLoading && "animate-pulse",
           )}
         >
           {isLoading ? "..." : value}

@@ -24,7 +24,7 @@ export function About() {
             {t.about.title}
           </h1>
           <SameHeightRow
-            className="flex-row"
+            className="flex-row md:gap-8 gap-2"
             gap={24}
             roundEvery={true}
             images={[

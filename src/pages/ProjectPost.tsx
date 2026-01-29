@@ -185,14 +185,14 @@ export function ProjectPost() {
 
               return (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-6 items-center w-full ">
-                  <div className="w-full order-3 md:order-1">
+                  <div className="w-full">
                     {prevProject ? (
                       <Link
                         to={`/projects/${prevProject.id}`}
                         className="group flex flex-col gap-1 border dark:border-neutral-800 rounded-lg px-6 py-4 w-full dark:bg-neutral-900 dark:hover:bg-neutral-800"
                       >
                         <span className="text-sm text-muted-foreground group-hover:text-amber-500 transition-colors flex items-center gap-2">
-                          <ArrowLeft className="w-4 h-4" /> Previous
+                          <ArrowLeft className="w-4 h-4" /> {t.blog.prev}
                         </span>
                         <span className="text-foreground font-medium truncate max-w-[200px] ">
                           {((t.data.projects as any)[prevProject.id] || {})
@@ -200,11 +200,11 @@ export function ProjectPost() {
                         </span>
                       </Link>
                     ) : (
-                      <div className="invisible">Previous</div>
+                      <div className="invisible">{t.blog.prev}</div>
                     )}
                   </div>
 
-                  <Link to="/projects" className="w-full h-full order-2">
+                  <Link to="/projects" className="w-full h-full">
                     <Button
                       size="default"
                       variant="outline"
@@ -214,14 +214,15 @@ export function ProjectPost() {
                     </Button>
                   </Link>
 
-                  <div className="w-full order-1 md:order-3">
+                  <div className="w-full">
                     {nextProject ? (
                       <Link
                         to={`/projects/${nextProject.id}`}
                         className="group flex flex-col gap-1 items-end border dark:border-neutral-800 rounded-lg px-6 py-4 w-full dark:bg-neutral-900 dark:hover:bg-neutral-800"
                       >
                         <span className="text-sm text-muted-foreground group-hover:text-amber-500 transition-colors flex items-center gap-2">
-                          Next <ArrowLeft className="w-4 h-4 rotate-180" />
+                          {t.blog.next}{" "}
+                          <ArrowLeft className="w-4 h-4 rotate-180" />
                         </span>
                         <span className="text-foreground font-medium truncate max-w-[200px] ">
                           {((t.data.projects as any)[nextProject.id] || {})
@@ -229,7 +230,7 @@ export function ProjectPost() {
                         </span>
                       </Link>
                     ) : (
-                      <div className="invisible">Next</div>
+                      <div className="invisible">{t.blog.next}</div>
                     )}
                   </div>
                 </div>

@@ -159,7 +159,7 @@ export function CoronaPost() {
             />
           </div>
         </div>
-        <div className="w-full grid grid-cols-3 rounded-sm  border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
+        <div className="w-full grid grid-cols-3 gallery-card p-8">
           <TiltBox className="scale-75" onClick={() => openLightbox(5)}>
             <SmartImage
               src={imagePath[5].src}

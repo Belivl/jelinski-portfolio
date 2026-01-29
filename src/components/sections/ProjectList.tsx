@@ -142,7 +142,7 @@ const ProjectCard = ({ project }: { project: any }) => {
             ev.currentTarget.style.setProperty("--x", `${xPercentage * 100}%`);
             ev.currentTarget.style.setProperty("--y", `${yPercentage * 100}%`);
           }}
-          className="group relative w-full flex flex-col rounded-xl dark:bg-neutral-900 border dark:border-t-neutral-700 dark:border-b-neutral-900 dark:border-x-neutral-800 p-4 dark:text-neutral-200 transition-transform duration-500 ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)] shadow-xl"
+          className="group relative w-full flex flex-col rounded-xl dark:bg-neutral-900 border dark:border-t-neutral-700 dark:border-b-neutral-900 dark:border-x-neutral-800 p-4 dark:text-neutral-200 transition-transform duration-500 ease-out group-hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)] shadow-xl"
         >
           <div
             className={`${stampColor} z-30 wavy-border flex items-center justify-center -right-2 -top-6 absolute group-hover:rotate-5 transition-all duration-200`}

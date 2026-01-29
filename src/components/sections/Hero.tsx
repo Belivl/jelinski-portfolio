@@ -12,6 +12,7 @@ import {
   HERO_IMAGES,
 } from "@/data/home";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { CornerBorders } from "@/components/ui/CornerBorders";
 
 export function Hero() {
   const { t } = useLanguage();
@@ -35,7 +36,7 @@ export function Hero() {
     typeof currentPhoto !== "string" && currentPhoto.objectTop;
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-background pt-20 border-b border-neutral-400 dark:border-neutral-800">
+    <section className="relative min-h-dvh md:min-h-screen flex items-center overflow-hidden bg-background pt-20 border-b border-neutral-400 dark:border-neutral-800">
       <div className="absolute inset-0 z-0 w-full h-full dark:bg-neutral-900 bg-neutral-100">
         <AnimatePresence mode="popLayout">
           <motion.div
@@ -66,14 +67,13 @@ export function Hero() {
           className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
         >
           <div className="text-truncate cursor-default">
-            {/* {t.hero.title}{" "} */}
             <span className=" tracking-normal text-truncate">
               {t.hero.name}
             </span>
           </div>
           <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
             <span
-              className="relative font-black tracking-normal z-50  cursor-cell hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
+              className="relative font-black tracking-normal z-50  cursor-default hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
             >
@@ -176,7 +176,7 @@ export function Hero() {
               </AnimatePresence>
             </span>{" "}
             <p
-              className="relative group font-black  duration-300 tracking-normal z-50 inline-block cursor-cell hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
+              className="relative group font-black  duration-300 tracking-normal z-50 inline-block cursor-default hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("designer")}
               onMouseLeave={() => setHovered(null)}
             >
@@ -288,7 +288,7 @@ export function Hero() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className=" z-0  mt-16  lg:w-fit"
         >
-          <div className="flex gap-3 md:gap-6 md:flex-row ml-4">
+          <div className="flex gap-3 md:gap-6 flex-col md:flex-row ml-4">
             <Link to="/contact" className="w-full sm:w-auto">
               <GoldButton className="w-full sm:w-auto hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background transition-all duration-300 ease-out">
                 {t.hero.contact}{" "}
@@ -301,10 +301,13 @@ export function Hero() {
                 size="lg"
                 className=" w-full sm:w-auto group relative px-8 dark:border-neutral-700 border-neutral-400  dark:hover:bg-neutral-800 hover:bg-neutral-200 text-foreground overflow-visible"
               >
-                <span className="absolute -top-2 -left-2 w-3 h-3 border-t-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-                <span className="absolute -top-2 -right-2 w-3 h-3 border-t-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 -translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-                <span className="absolute -bottom-2 -right-2 w-3 h-3 border-b-2 border-r-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
-                <span className="absolute -bottom-2 -left-2 w-3 h-3 border-b-2 border-l-2 border-amber-500 opacity-0 group-hover:opacity-100 transition-all duration-300 ease-out -translate-x-1 translate-y-1 group-hover:translate-x-0 group-hover:translate-y-0" />
+                <CornerBorders
+                  isVisible={false}
+                  offset="-8px"
+                  size="w-3 h-3"
+                  className="border-amber-500"
+                  thickness="border-t-2"
+                />
                 {t.hero.portfolio}
               </Button>
             </Link>

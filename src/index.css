@@ -185,6 +185,14 @@
     @apply hidden!;
     @apply hidden!;
   }
+
+  .gallery-card {
+    @apply rounded-sm border border-neutral-500 shadow-xl dark:border-neutral-800 bg-card overflow-hidden;
+  }
+
+  .section-label {
+    @apply text-xs uppercase tracking-widest text-neutral-500 mb-4 block;
+  }
 }
 
 @theme {

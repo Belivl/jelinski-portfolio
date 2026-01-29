@@ -96,11 +96,11 @@ export function BlogPost() {
       />
       <article className="container mx-auto px-6 max-w-4xl cursor-default">
         <div className="mb-8">
-          <div className="flex items-center justify-between gap-4 text-sm text-gray-400 mb-4 ">
+          <div className="flex items-center justify-between gap-4 text-sm text-gray-400 mb-4 w-fill md:w-fit">
             <Link to="/blog">
               <Button
                 variant="outline"
-                className=" text-gray-400 hover:text-amber-500"
+                className=" text-gray-400 hover:text-amber-500 w-fill md:w-fit"
               >
                 <ArrowLeft className="mr-2 w-4 h-4" /> {t.blog.back}
               </Button>
@@ -178,7 +178,7 @@ export function BlogPost() {
 
               return (
                 <div className="grid grid-cols-1 md:grid-cols-3  gap-6 items-center w-full">
-                  <div className="w-full order-3 md:order-1">
+                  <div className="w-full ">
                     {prevPost ? (
                       <Link
                         to={`/blog/${prevPost.id}`}
@@ -197,7 +197,7 @@ export function BlogPost() {
                     )}
                   </div>
 
-                  <Link to="/blog" className="w-full h-full order-2">
+                  <Link to="/blog" className="w-full h-full">
                     <Button
                       variant="outline"
                       className="px-6 dark:border-white/20 dark:hover:bg-white/10 w-full h-full"
@@ -206,7 +206,7 @@ export function BlogPost() {
                     </Button>
                   </Link>
 
-                  <div className="w-full order-1 md:order-3">
+                  <div className="w-full ">
                     {nextPost ? (
                       <Link
                         to={`/blog/${nextPost.id}`}

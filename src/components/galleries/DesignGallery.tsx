@@ -233,7 +233,6 @@ export function DesignGallery() {
             images={[getImg("aurea"), getImg("aureabanner")]}
           />
         </GalleryAccordion>
-
         <GalleryAccordion year="2017">
           <SameHeightRow
             className="rounded-sm"
@@ -274,7 +273,7 @@ export function DesignGallery() {
               getImg("emka"),
             ]}
           ></SameHeightRow>
-          <div className="grid grid-cols-3 w-full rounded-sm overflow-hidden border hover:shadow-sm shadow-xl light:border-neutral-500 dark:border-neutral-800">
+          <div className="grid grid-cols-3 w-full gallery-card shadow-xl hover:shadow-sm transition-shadow duration-300">
             {["belialpart1", "belialpart2", "belialpart3"].map((id) => (
               <div
                 key={id}

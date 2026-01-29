@@ -368,14 +368,14 @@ export function AdvancedFilterBar({
             </AnimatePresence>
           </div>
           {/* Sort Controls */}
-          <div className="flex">
+          <div className="flex md:w-fit w-full">
             <Button
               variant="outline"
               size="sm"
               onClick={() =>
                 onSortChange(sortOrder === "desc" ? "asc" : "desc")
               }
-              className=" bg-black/40 border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px]"
+              className=" bg-background border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px] md:w-fit w-full"
             >
               {sortOrder === "desc" ? t.blog.newestFirst : t.blog.oldestFirst}
               {sortOrder === "desc" ? (

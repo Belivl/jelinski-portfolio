@@ -10,8 +10,8 @@ export default function Drag() {
 
   const handleToss = async () => {
     const targetX = 360 * (2 + Math.floor(Math.random() * 2)); // 720 or 1080
-    const targetY = 360 * Math.floor(Math.random() * 2); // 0 or 360
-    const midZ = 45 + Math.random() * 45;
+    const targetY = 1; // 0 or 360
+    const midZ = 45 + 8 * 45;
 
     await controls.start({
       rotateX: [0, targetX / 2, targetX],
@@ -32,7 +32,7 @@ export default function Drag() {
   };
 
   return (
-    <div className="relative flex items-center justify-center w-[500px] h-[500px] pointer-events-auto">
+    <div className="relative flex items-center justify-center w-[200px] h-[200px] md:w-[500px] md:h-[500px] pointer-events-auto">
       {/* The "Socket" or Constraint Area */}
       <div
         ref={constraintsRef}

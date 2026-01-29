@@ -14,11 +14,15 @@ export function GalleryAccordion({
   children,
 }: GalleryAccordionProps) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const [isFullyOpen, setIsFullyOpen] = useState(defaultOpen);
 
   return (
     <div className="w-full mb-4">
       <button
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          if (isOpen) setIsFullyOpen(false);
+          setIsOpen(!isOpen);
+        }}
         className={`w-full flex items-center justify-between p-4 sm:p-6 rounded-2xl border transition-all duration-500 overflow-hidden dark:bg-neutral-900 ${
           isOpen
             ? " border-amber-500 shadow-xl shadow-amber-500/5 mb-4"
@@ -68,7 +72,12 @@ export function GalleryAccordion({
                 opacity: { duration: 0.2 },
               },
             }}
-            className="overflow-hidden w-full"
+            onAnimationComplete={() => {
+              if (isOpen) setIsFullyOpen(true);
+            }}
+            className={`${
+              isFullyOpen ? "overflow-visible" : "overflow-hidden"
+            } w-full`}
           >
             <div className="pb-8 space-y-4 w-full">{children}</div>
           </motion.div>

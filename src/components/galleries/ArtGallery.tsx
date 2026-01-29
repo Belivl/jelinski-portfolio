@@ -1,8 +1,10 @@
-import { motion } from "motion/react";
+import { motion, useScroll, useTransform } from "motion/react";
 import { useRef, useMemo, useState } from "react";
 import { GalleryAccordion } from "@/components/galleries/GalleryAccordion";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { SimpleLightbox } from "@/components/gallery/SimpleLightbox";
+import { RevealImage } from "@/components/ui/RevealImage";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 // Consolidated Art Images Data
 const ART_IMAGES = [
@@ -110,7 +112,7 @@ const ART_IMAGES = [
   },
   // 2020 - Mlecznik Marker
   {
-    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczChar3_87xIT4_au0.avif?updatedAt=1769107035772",
+    src: "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczMark1_x_xLkHx8o.avif?updatedAt=1769107035363",
     alt: "marker1",
   },
   {
@@ -270,6 +272,38 @@ export function ArtGallery() {
 
   const getImg = (alt: string) => ART_IMAGES.find((img) => img.alt === alt)!;
 
+  const StickyWrapper = ({
+    children,
+    index,
+  }: {
+    children: React.ReactNode;
+    index: number;
+  }) => {
+    const containerRef = useRef(null);
+    const { scrollYProgress } = useScroll({
+      target: containerRef,
+      offset: ["start start", "end start"],
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
+    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.7]);
+    const filter = useTransform(
+      scrollYProgress,
+      [0, 1],
+      ["brightness(1)", "brightness(0.5)"],
+    );
+
+    return (
+      <div
+        ref={containerRef}
+        className="sticky top-[100px] w-full mb-8 origin-top"
+        style={{ zIndex: 10 + index }}
+      >
+        <motion.div style={{ scale, opacity, filter }}>{children}</motion.div>
+      </div>
+    );
+  };
+
   return (
     <>
       <SimpleLightbox
@@ -285,6 +319,7 @@ export function ArtGallery() {
         exit={{ opacity: 0 }}
         className="flex flex-col gap-4 w-full"
       >
+        <SectionHeader>2021</SectionHeader>
         <GalleryAccordion year="2021" defaultOpen={true}>
           {/* Row 1 */}
           <motion.div
@@ -355,7 +390,7 @@ export function ArtGallery() {
 
         <GalleryAccordion year="2020">
           {/* Da Vinci Sketches */}
-          <div className="w-full grid grid-cols-3 rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
+          <div className="w-full grid grid-cols-3">
             {["skullvinci", "manvinci", "watchvinci"].map((id) => (
               <TiltBox
                 key={id}
@@ -365,182 +400,98 @@ export function ArtGallery() {
                 <SmartImage
                   src={getImg(id).src}
                   alt={getImg(id).alt}
-                  className="w-full overflow-hidden object-contain rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                  className="w-full overflow-hidden object-contain gallery-card"
                 />
               </TiltBox>
             ))}
           </div>
 
-          {/* Mlecznik Digital */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["digital1", "digital2", "digital3"].map((id, index) => {
-              const photoSrc =
-                index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto10_DVfLp7TF4P.avif?updatedAt=1769107036318"
-                  : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto11_yR7Cu9CkjE.avif?updatedAt=1769107036302"
-                    : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto12_NL_zQGBRg9.avif?updatedAt=1769107036565";
+          {/* Mlecznik Sections with Sticky Overlay */}
+          <div className="relative pt-8 space-y-12">
+            {[
+              { id: "digital", items: ["digital1", "digital2", "digital3"] },
+              { id: "coffee", items: ["coffee1", "coffee2", "coffee3"] },
+              { id: "ink", items: ["ink1", "ink2", "ink3"] },
+              {
+                id: "charcoal",
+                items: ["charcoal1", "charcoal2", "charcoal3"],
+              },
+              { id: "marker", items: ["marker1", "marker2", "marker3"] },
+              { id: "pencil", items: ["pencil1", "pencil2", "pencil3"] },
+            ].map((section, sectionIdx) => (
+              <StickyWrapper key={section.id} index={sectionIdx}>
+                <div className="w-full grid grid-cols-3 gallery-card">
+                  {section.items.map((id, index) => {
+                    let photoSrc = "";
+                    if (section.id === "digital") {
+                      photoSrc =
+                        index === 0
+                          ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto10_DVfLp7TF4P.avif?updatedAt=1769107036318"
+                          : index === 1
+                            ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto11_yR7Cu9CkjE.avif?updatedAt=1769107036302"
+                            : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto12_NL_zQGBRg9.avif?updatedAt=1769107036565";
+                    } else if (section.id === "coffee") {
+                      photoSrc =
+                        index === 0
+                          ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto13_M_kbid8Lku.avif?updatedAt=1769107036269"
+                          : index === 1
+                            ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto14_EMgQcUrZmu.avif?updatedAt=1769107035438"
+                            : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto15_STp8Jjo3Eo.avif?updatedAt=1769107035597";
+                    } else if (section.id === "ink") {
+                      photoSrc =
+                        index === 0
+                          ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto1_V5mHpKske7.avif?updatedAt=1769107035389"
+                          : index === 1
+                            ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto2_oK7UxBGIWH.avif?updatedAt=1769107036044"
+                            : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto3_9l3anBcPKD.avif?updatedAt=1769107036135";
+                    } else if (section.id === "charcoal") {
+                      photoSrc =
+                        index === 0
+                          ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto4_yZ990Nt_nI.avif?updatedAt=1769107035371"
+                          : index === 1
+                            ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto5_35btWGIvqX.avif?updatedAt=1769107036177"
+                            : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto6_vKzrBzjlkE.avif?updatedAt=1769107035388";
+                    } else if (section.id === "marker") {
+                      photoSrc =
+                        index === 0
+                          ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto7_P0cFgeSKAX.avif?updatedAt=1769107036069"
+                          : index === 1
+                            ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto9_rNI5tQjvC.avif?updatedAt=1769107035396"
+                            : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto8_XPe60fMNSY.avif?updatedAt=1769107035722";
+                    }
 
-              return (
-                <div
-                  key={id}
-                  className="relative w-full cursor-pointer"
-                  onClick={() => openLightbox(id)}
-                >
-                  <SmartImage
-                    alt={`${id}_photo`}
-                    className="w-full h-auto object-cover"
-                    src={photoSrc}
-                  />
-                  <SmartImage
-                    alt={getImg(id).alt}
-                    className="w-full h-auto object-cover absolute top-0 left-0 hover:opacity-0 transition-all duration-500 ease-in-out"
-                    src={getImg(id).src}
-                  />
+                    if (section.id === "pencil") {
+                      return (
+                        <SmartImage
+                          key={id}
+                          src={getImg(id).src}
+                          alt={getImg(id).alt}
+                          className="transition-all duration-500 ease-in-out h-auto cursor-pointer gallery-card"
+                          onClick={() => openLightbox(id)}
+                        />
+                      );
+                    }
+
+                    return (
+                      <RevealImage
+                        key={id}
+                        bottomSrc={photoSrc}
+                        topSrc={getImg(id).src}
+                        alt={getImg(id).alt}
+                        onClick={() => openLightbox(id)}
+                        bottomImageClassName={
+                          section.id === "coffee" ? "sepia" : ""
+                        }
+                      />
+                    );
+                  })}
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Mlecznik Coffee */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["coffee1", "coffee2", "coffee3"].map((id, index) => {
-              const photoSrc =
-                index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto13_M_kbid8Lku.avif?updatedAt=1769107036269"
-                  : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto14_EMgQcUrZmu.avif?updatedAt=1769107035438"
-                    : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto15_STp8Jjo3Eo.avif?updatedAt=1769107035597";
-
-              return (
-                <div
-                  key={id}
-                  className="relative w-full cursor-pointer"
-                  onClick={() => openLightbox(id)}
-                >
-                  <SmartImage
-                    alt={`${id}_photo`}
-                    className="w-full h-auto object-cover sepia"
-                    src={photoSrc}
-                  />
-                  <SmartImage
-                    alt={getImg(id).alt}
-                    className="w-full h-auto object-cover absolute top-0 left-0 hover:opacity-0 transition-all duration-500 ease-in-out"
-                    src={getImg(id).src}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Mlecznik Ink */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["ink1", "ink2", "ink3"].map((id, index) => {
-              const photoSrc =
-                index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto1_V5mHpKske7.avif?updatedAt=1769107035389"
-                  : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto2_oK7UxBGIWH.avif?updatedAt=1769107036044"
-                    : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto3_9l3anBcPKD.avif?updatedAt=1769107036135";
-
-              return (
-                <div
-                  key={id}
-                  className="relative w-full cursor-pointer"
-                  onClick={() => openLightbox(id)}
-                >
-                  <SmartImage
-                    alt={`${id}_photo`}
-                    className="w-full h-auto object-cover"
-                    src={photoSrc}
-                  />
-                  <SmartImage
-                    alt={getImg(id).alt}
-                    className="w-full h-auto object-cover absolute top-0 left-0 hover:opacity-0 transition-all duration-500 ease-in-out"
-                    src={getImg(id).src}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Mlecznik Charcoal */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["charcoal1", "charcoal2", "charcoal3"].map((id, index) => {
-              const photoSrc =
-                index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto4_yZ990Nt_nI.avif?updatedAt=1769107035371"
-                  : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto5_35btWGIvqX.avif?updatedAt=1769107036177"
-                    : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto6_vKzrBzjlkE.avif?updatedAt=1769107035388";
-
-              return (
-                <div
-                  key={id}
-                  className="relative w-full cursor-pointer"
-                  onClick={() => openLightbox(id)}
-                >
-                  <SmartImage
-                    alt={`${id}_photo`}
-                    className="w-full h-auto object-cover"
-                    src={photoSrc}
-                  />
-                  <SmartImage
-                    alt={getImg(id).alt}
-                    className="w-full h-auto object-cover absolute top-0 left-0 hover:opacity-0 transition-all duration-500 ease-in-out"
-                    src={getImg(id).src}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Mlecznik Marker */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["marker1", "marker2", "marker3"].map((id, index) => {
-              const photoSrc =
-                index === 0
-                  ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto6_vKzrBzjlkE.avif?updatedAt=1769107035388"
-                  : index === 1
-                    ? "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto9_rNI5tQjvC.avif?updatedAt=1769107035396"
-                    : "https://ik.imagekit.io/j3l1n5k1/gfx/2020/mlecznik/MleczPhoto8_XPe60fMNSY.avif?updatedAt=1769107035722";
-
-              return (
-                <div
-                  key={id}
-                  className="relative w-full cursor-pointer"
-                  onClick={() => openLightbox(id)}
-                >
-                  <SmartImage
-                    alt={`${id}_photo`}
-                    className="w-full h-auto object-cover"
-                    src={photoSrc}
-                  />
-                  <SmartImage
-                    alt={getImg(id).alt}
-                    className="w-full h-auto object-cover absolute top-0 left-0 hover:opacity-0 transition-all duration-500 ease-in-out"
-                    src={getImg(id).src}
-                  />
-                </div>
-              );
-            })}
-          </div>
-
-          {/* Mlecznik Pencil */}
-          <div className="w-full grid grid-cols-3 rounded-sm overflow-hidden border shadow-xl light:border-neutral-500 dark:border-neutral-800">
-            {["pencil1", "pencil2", "pencil3"].map((id) => (
-              <SmartImage
-                key={id}
-                src={getImg(id).src}
-                alt={getImg(id).alt}
-                className="transition-all duration-500 ease-in-out h-auto cursor-pointer"
-                onClick={() => openLightbox(id)}
-              />
+              </StickyWrapper>
             ))}
           </div>
 
           {/* Other 2020 */}
-          <div className="w-full grid grid-cols-3 rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
+          <div className="w-full grid grid-cols-3 gallery-card">
             {["exlibris", "lu2", "wrists"].map((id) => (
               <TiltBox
                 key={id}
@@ -550,14 +501,14 @@ export function ArtGallery() {
                 <SmartImage
                   src={getImg(id).src}
                   alt={getImg(id).alt}
-                  className="w-full overflow-hidden object-contain rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                  className="w-full overflow-hidden object-contain gallery-card"
                 />
               </TiltBox>
             ))}
           </div>
 
           {/* Poses */}
-          <div className="w-full relative aspect-square rounded-sm  border shadow-xl light:border-neutral-500 dark:border-neutral-800 p-8">
+          <div className="w-full relative aspect-square">
             <TiltBox
               className="w-1/4 absolute top-1/18 left-1/16 z-10"
               onClick={() => openLightbox("vii")}
@@ -565,7 +516,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("vii").src}
                 alt={getImg("vii").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -576,7 +527,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("i").src}
                 alt={getImg("i").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -587,7 +538,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("iii").src}
                 alt={getImg("iii").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -598,7 +549,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("ii").src}
                 alt={getImg("ii").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -609,7 +560,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("viii").src}
                 alt={getImg("viii").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -620,7 +571,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("vi").src}
                 alt={getImg("vi").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -631,7 +582,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("v").src}
                 alt={getImg("v").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
 
@@ -642,7 +593,7 @@ export function ArtGallery() {
               <SmartImage
                 src={getImg("iv").src}
                 alt={getImg("iv").alt}
-                className="w-full overflow-hidden rounded-sm border shadow-xl light:border-neutral-500 dark:border-neutral-500"
+                className="w-full overflow-hidden gallery-card"
               />
             </TiltBox>
           </div>

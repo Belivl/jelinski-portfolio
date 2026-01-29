@@ -67,13 +67,11 @@ export function DatePickerInput({
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return (
-    <Field className="mx-auto w-full">
-      <FieldLabel htmlFor="date-required">
-        {t.contact.inquiry.form.date}
-      </FieldLabel>
+    <Field className="mx-auto w-full gap-1">
+      <FieldLabel htmlFor="date">{t.contact.inquiry.form.date}</FieldLabel>
       <InputGroup>
         <InputGroupInput
-          id="date-required"
+          id="date"
           value={value}
           placeholder={getTomorrowFormattedDate()}
           onChange={(e) => {

@@ -12,7 +12,7 @@ const testimonialsData = [
     rotation: -2.5,
     color: "#fff9c4", // Yellow
     pinColor: "#ef5350", // Red
-    link: "/blog/fizjotusia25",
+    link: "fizjotusia25",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ const testimonialsData = [
     rotation: -1.2,
     color: "#f1f8e9", // Green
     pinColor: "#6942F5", // Purple pin
-    link: "/blog/mad100",
+    link: "mad100",
   },
   {
     id: 4,
@@ -38,14 +38,14 @@ const testimonialsData = [
     rotation: -2,
     color: "#E1FEF0", // Yellow
     pinColor: "#EF9A50", // Orange pin
-    link: "/blog/karola24",
+    link: "karola24",
   },
   {
     id: 6,
     rotation: 2,
     color: "#E9EAF8", // Green
     pinColor: "#42A5F5", // Blue pin
-    link: "/blog/tom25",
+    link: "tom25",
   },
 ];
 
@@ -189,9 +189,8 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
           </div>
           {item.link && (
             <Link
-              to={item.link}
-              target="_blank"
-              className="w-fit absolute bottom-0 right-0"
+              to={`/blog/${item.link || "0"}`}
+              className="w-fit absolute bottom-0 right-0 p-4"
             >
               <div className="text-[10px] font-mono text-black/70  uppercase border border-black/30 px-1 rounded flex items-center gap-1">
                 <Folder width={10} height={10} />
