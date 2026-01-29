@@ -32,10 +32,10 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 w-full z-50 transition-all duration-300 border-b border-border bg-black/80 md:bg-background py-4 ",
+        "fixed top-0 w-full z-50 transition-all duration-500 border-b",
         isScrolled
-          ? "bg-background md:bg-background py-3 border-neutral-200 dark:border-neutral-800"
-          : "bg-background md:bg-transparent py-3 border-none dark:border-none ",
+          ? "camera-leatherNav py-2 border-neutral-900 shadow-[0_10px_30px_rgba(0,0,0,0.5)] opacity-100 after:opacity-100 before:opacity-100"
+          : "bg-background md:bg-transparent py-4 border-transparent",
       )}
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
@@ -43,8 +43,13 @@ export function Navbar() {
           to="/"
           className="text-2xl font-bold tracking-tighter flex items-center gap-2 group"
         >
-          <span className="uppercase text-black dark:text-white ">
-            <TextScramble className="font-bold tracking-normal font-script1 capitalize hover:dark:text-neutral-300  underline-offset-2 group-hover:underline transition-all duration-300 ease-out">
+          <span
+            className={cn(
+              "uppercase transition-colors duration-500",
+              isScrolled ? "text-white" : "text-black dark:text-white",
+            )}
+          >
+            <TextScramble className="font-bold tracking-normal font-script1 capitalize hover:dark:text-neutral-300 underline-offset-2 group-hover:underline transition-all duration-300 ease-out">
               {location.pathname.startsWith("/projects")
                 ? "Belial"
                 : t.hero.name}
@@ -81,7 +86,7 @@ export function Navbar() {
                     className={cn(
                       "text-sm rounded-full font-medium hover:text-neutral-900 dark:hover:text-neutral-200 group relative transition-all duration-300 ease-out",
                       isScrolled
-                        ? "text-neutral-900 dark:text-white"
+                        ? "text-white/90 hover:text-white"
                         : "text-neutral-800 dark:text-neutral-300",
                       isActive
                         ? "text-primary hover:text-amber-400 no-underline hover:no-underline"

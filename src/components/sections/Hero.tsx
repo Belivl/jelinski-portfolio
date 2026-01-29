@@ -20,6 +20,40 @@ export function Hero() {
     null,
   );
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [dynamicPhotographerImages, setDynamicPhotographerImages] = useState<
+    string[]
+  >(HOME_PHOTOGRAPHER_IMAGES);
+  const [dynamicDesignerImages, setDynamicDesignerImages] =
+    useState<string[]>(HOME_DESIGNER_IMAGES);
+
+
+  useEffect(() => {
+    const loadImages = async () => {
+      const { siteConfig } = await import("@/config/site");
+      const { getExternalDataWithFallback } =
+        await import("@/lib/googleSheets");
+
+      const pImages = await getExternalDataWithFallback<{ url: string }>(
+        siteConfig.externalData.sheetID,
+        siteConfig.externalData.photographerImagesId,
+        HOME_PHOTOGRAPHER_IMAGES.map((url) => ({ url })),
+        siteConfig.externalData.useExternal,
+      );
+      setDynamicPhotographerImages(
+        pImages.map((item) => item.url).filter(Boolean),
+      );
+
+      const dImages = await getExternalDataWithFallback<{ url: string }>(
+        siteConfig.externalData.sheetID,
+        siteConfig.externalData.designerImagesId,
+        HOME_DESIGNER_IMAGES.map((url) => ({ url })),
+        siteConfig.externalData.useExternal,
+      );
+      setDynamicDesignerImages(dImages.map((item) => item.url).filter(Boolean));
+    };
+
+    loadImages();
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -60,7 +94,9 @@ export function Hero() {
       <SakuraRain2 />
 
       <div className="container relative z-10 px-6 mx-auto">
-        <motion.h1
+        <motion.div
+          role="heading"
+          aria-level={1}
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -72,7 +108,7 @@ export function Hero() {
             </span>
           </div>
           <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
-            <span
+            <div
               className="relative font-black tracking-normal z-50  cursor-default hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
@@ -105,7 +141,7 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl rotate-[-5deg] md:w-48 w-24">
                         <SmartImage
-                          src={HOME_PHOTOGRAPHER_IMAGES[0]}
+                          src={dynamicPhotographerImages[0]}
                           alt="Photo 1"
                           className="w-full h-auto aspect-3/4 object-cover bg-gray-100"
                         />
@@ -135,7 +171,10 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl -rotate-2 w-24 md:w-44">
                         <SmartImage
-                          src={HOME_PHOTOGRAPHER_IMAGES[2]}
+                          src={
+                            dynamicPhotographerImages[2] ||
+                            dynamicPhotographerImages[0]
+                          }
                           alt="Photo 3"
                           className="w-full h-auto aspect-3/4 object-cover bg-gray-100"
                         />
@@ -165,7 +204,10 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 md:p-3 pb-3 md:pb-8 shadow-xl rotate-[5deg] w-24 md:w-40">
                         <SmartImage
-                          src={HOME_PHOTOGRAPHER_IMAGES[1]}
+                          src={
+                            dynamicPhotographerImages[1] ||
+                            dynamicPhotographerImages[0]
+                          }
                           alt="Photo 2"
                           className="w-full h-auto aspect-3/4 object-cover bg-gray-100"
                         />
@@ -174,8 +216,8 @@ export function Hero() {
                   </>
                 )}
               </AnimatePresence>
-            </span>{" "}
-            <p
+            </div>{" "}
+            <div
               className="relative group font-black  duration-300 tracking-normal z-50 inline-block cursor-default hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("designer")}
               onMouseLeave={() => setHovered(null)}
@@ -209,7 +251,7 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 shadow-2xl md:w-56 w-24 border border-white/20 ">
                         <SmartImage
-                          src={HOME_DESIGNER_IMAGES[0]}
+                          src={dynamicDesignerImages[0]}
                           alt="Design 1"
                           className="w-full h-auto object-cover"
                         />
@@ -239,7 +281,9 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 shadow-2xl w-24 md:w-48 border border-black/10">
                         <SmartImage
-                          src={HOME_DESIGNER_IMAGES[1]}
+                          src={
+                            dynamicDesignerImages[1] || dynamicDesignerImages[0]
+                          }
                           alt="Design 2"
                           className="w-full h-auto object-cover"
                         />
@@ -269,7 +313,9 @@ export function Hero() {
                     >
                       <div className="bg-white p-1 shadow-2xl w-24 md:w-52 border border-white/10">
                         <SmartImage
-                          src={HOME_DESIGNER_IMAGES[2]}
+                          src={
+                            dynamicDesignerImages[2] || dynamicDesignerImages[0]
+                          }
                           alt="Design 3"
                           className="w-full h-auto object-cover"
                         />
@@ -278,10 +324,10 @@ export function Hero() {
                   </>
                 )}
               </AnimatePresence>
-            </p>{" "}
+            </div>{" "}
           </div>
           <div className="text-truncate  cursor-default">{t.hero.location}</div>
-        </motion.h1>
+        </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

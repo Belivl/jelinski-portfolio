@@ -3994,6 +3994,90 @@ export const photoData: Photo[] = [
         "blogPostId": "daldehog"
     },
     {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00434_IeeiFHu6S.avif?updatedAt=1769637455617",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00465_5_ZTu-vD09.avif?updatedAt=1769637455726",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00490_RgLRkbWaH.avif?updatedAt=1769637455687",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+     {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00780_wpJa5TyKm.avif?updatedAt=1769637455726",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+     {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00821_iwgPeGqt8d.avif?updatedAt=1769637455745",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+     {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-0090_L6mlgTKSD.avif?updatedAt=1769637455630",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Canon EOS 350D",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-0095_8OoWjeKS4.avif?updatedAt=1769637455700",
+        "title": "Zuzia - 18",
+        "category": "event",
+        "camera": "Canon EOS 350D",
+        "tags": [
+            "client",
+        ],
+        "date": "2025-01-26",
+        "place": "Gdansk Bogatka",
+        "blogPostId": "zu25"
+    },
+    {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01417_r_nh87Ew3.avif?updatedAt=1769014577941",
         "title": "fizjo.tusia",
         "category": "client",
@@ -4142,6 +4226,292 @@ export const photoData: Photo[] = [
         ],
         "date": "2025-04-24",
         "place": "Studio Sopot"
+    },
+     {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02355_2wuG57r6DZ.avif?updatedAt=1769637849051",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03263-2_PFbCds3TZ.avif?updatedAt=1769637848997",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03304_t-2a8M73ET.avif?updatedAt=1769637848739",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03415_p6qmx3degD.avif?updatedAt=1769637848996",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03459_wbDquNd4io.avif?updatedAt=1769637848944",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03546_Qx77qHgvs.avif?updatedAt=1769637848848",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03567_CejZf80cyG.avif?updatedAt=1769637848824",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03745_63uyzEKWO.avif?updatedAt=1769637849008",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03994_VjF1i_zX7I.avif?updatedAt=1769637849044",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04030_WnYuBMjQG9.avif?updatedAt=1769637848890",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04041_LmXkhP_DG.avif?updatedAt=1769637848921",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04047_r9PdtiB_Im.avif?updatedAt=1769637848913",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04069_sDla8UTEh.avif?updatedAt=1769637848865",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04106_p1fW71PgZ.avif?updatedAt=1769637848859",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04229_yq4KM9e7fv.avif?updatedAt=1769637848905",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04377_un1mvpqEDS.avif?updatedAt=1769637849020",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04890_nj002g-6BY.avif?updatedAt=1769637849089",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04956_9YfB4DBxlk.avif?updatedAt=1769637849015",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05174_xgj3XkAP6.avif?updatedAt=1769637848859",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05191_iyQ-xNoTzZ.avif?updatedAt=1769637849008",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05240_bodcmS0Ig.avif?updatedAt=1769637848912",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
+    },
+    {
+        "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05328_L6LNjS9_x.avif?updatedAt=1769637848750",
+        "title": "Wesele Klaudii i Pawla",
+        "category": "event",
+        "camera": "Sony A6600",
+        "tags": [
+            "client",
+            "wedding",
+        ],
+        "date": "2025-05-30",
+        "place": "Rakowiec, Tczew",
+        "blogPostId": "weddklapaw25"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06535-2_g4oBVYsry.avif?updatedAt=1769014191682",

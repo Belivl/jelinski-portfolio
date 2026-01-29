@@ -2,11 +2,58 @@ import { motion } from "motion/react";
 import { Music, Play } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { cn } from "@/lib/utils";
 import { siteConfig } from "@/config/site";
+import { useState, useEffect } from "react";
+import { getExternalDataWithFallback } from "@/lib/googleSheets";
+
+interface Track {
+  id: string;
+  title: string;
+  url: string;
+  thumbnail?: string;
+  platform: string;
+  visible: boolean;
+}
 
 export function PlaylistGrid() {
   const { t } = useLanguage();
-  const playlist = siteConfig.playlist;
+  const [playlist, setPlaylist] = useState<Track[]>(
+    siteConfig.playlist.map(
+      (t, i) => ({ ...t, id: `local-${i}`, visible: true }) as Track,
+    ),
+  );
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await getExternalDataWithFallback<Partial<Track>>(
+        siteConfig.externalData.sheetID,
+        siteConfig.externalData.playlistId,
+        siteConfig.playlist.map(
+          (t, i) => ({ ...t, id: `local-${i}`, visible: true }) as Track,
+        ),
+        siteConfig.externalData.useExternal,
+      );
+
+      const processed = data
+        .map((item, index) => ({
+          ...item,
+          id: item.id || `track-${index}`,
+          visible:
+            item.visible === undefined ||
+            item.visible === true ||
+            String(item.visible).toUpperCase() === "TRUE",
+        }))
+        .filter((track) => track.visible) as Track[];
+
+      setPlaylist(processed);
+      setLoading(false);
+    };
+
+    loadData();
+  }, []);
 
   const getEmbedConfig = (url: string) => {
     try {
@@ -46,13 +93,18 @@ export function PlaylistGrid() {
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div
+        className={cn(
+          "grid grid-cols-1 sm:grid-cols-2 gap-4 transition-opacity duration-500",
+          loading ? "opacity-50" : "opacity-100",
+        )}
+      >
         {playlist.map((track, index) => {
           const embedConfig = getEmbedConfig(track.url);
 
           return (
             <a
-              key={index}
+              key={track.id}
               href={track.url}
               target="_blank"
               rel="noopener noreferrer"

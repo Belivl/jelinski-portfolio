@@ -16,6 +16,24 @@ export const siteConfig = {
         email: 'mich.jelin1@gmail.com',
     },
 
+    // External Data (Google Sheets)
+    externalData: {
+        useExternal: true,
+        sheetID: '1rMAlN6YwTkYbDk0A_j_e6CF7xyGeRDtW7QU1BUcZ9bg',
+        testimonialsId: '0',
+        testimonialsSheetName: 'Testimonials', 
+        playlistId: '1292124055',
+        playlistSheetName: 'Playlists', 
+        obsessionsId: '1794714348',
+        obsessionsSheetName: 'Obsession',
+        photographerImagesId: '458562337',
+        photographerImagesSheetName: 'photoImages',
+        designerImagesId: '65051388',
+        designerImagesSheetName: 'designerImages',
+        feautredPhotoId:'1109124500',
+        feautredPhotoSheetName: 'feautredPhotos',
+    },
+
     // Social Media Links
     social: {
         instagram: 'https://www.instagram.com/jelinski_photo/',
@@ -79,7 +97,7 @@ export const siteConfig = {
         { title: 'Indie', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5b0y3i4VHXOebhKI4boH9V4&si=PB7u3hkh-t2IOpZT' },
         { title: 'Rock', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5bBJ2HdptokOt_rhZDJt4LP&si=sh02LbCkMacgaPlT' },
         { title: 'Electro', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5bBJ2HdptokOt_rhZDJt4LP&si=sh02LbCkMacgaPlT' },
-        { title: 'Rock', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5Zab4yZIs8vjlGxxMtdj7n0&si=fOaK-pX12NSgA9JA' },
+        { title: 'Rock', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5bBJ2HdptokOt_rhZDJt4LP&si=HJ0miFbVk7VLZME1' },
         { title: 'House', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5ZdoZi5UBBNZmNKZTDu1yOH&si=Ri3BYnEaleirb176' },
         { title: 'International Rap', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5ZAmeURtf2B5onc7Kkny1P6&si=pyeHnm6NsUD2kp6T' },
         { title: 'Drumm & Bass', platform: 'Youtube', url: 'https://youtube.com/playlist?list=PLrrdqmv-Sk5Zp8R0Eobcu0Xx4HaEoQyiU&si=sqQ6BGZGbGj9jaqV' },

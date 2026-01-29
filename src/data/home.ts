@@ -1,8 +1,5 @@
 import { type Photo, photoData } from "./photos";
 
-
-
-
 const photographerImages = [
   "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif",
   "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263",
@@ -17,27 +14,27 @@ const designerImages = [
 
 
 const featuredUrls = [
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif", //  (Daldehog) 24
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", //  (fizjotusia) 25
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197_STNi1A5yY.avif", //  (Leba Typ) 1
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04207_9P1xUigWyR.avif?updatedAt=1769026403675", //  (Allan) 4
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8352-2_QblSD0PKFw.avif?updatedAt=1769025614989", //  (Bee) 6
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1466_IblHbiOkj.avif?updatedAt=1769024187309", //Berlin Orange 7
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446", //Berlin Tower 7
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03921_QpiP6g-69.avif?updatedAt=1769023301004", //Sail 8
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06348_im_Ishk7pw.avif?updatedAt=1769022715865", //Madzia Sto 9
+    "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif", //  (Daldehog)
+    "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", //  (fizjotusia)
+    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197_STNi1A5yY.avif", //  (Leba Typ)
+    "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04207_9P1xUigWyR.avif?updatedAt=1769026403675", //  (Allan)
+    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8352-2_QblSD0PKFw.avif?updatedAt=1769025614989", //  (Bee)
+    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1466_IblHbiOkj.avif?updatedAt=1769024187309", //Berlin Orange
+    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446", //Berlin Tower
+    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03921_QpiP6g-69.avif?updatedAt=1769023301004", //Sail
+    "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06348_im_Ishk7pw.avif?updatedAt=1769022715865", //Madzia Sto
     "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", //Ruda 10
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00291-Edit_rsRvCnmLX.avif?updatedAt=1769022051876", //Madzia Jez 10
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", //Adam 12
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012", //Smile 13
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05683-2_W7IU07awlT.avif?updatedAt=1769020788694", //Wiki 13
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702", //Chata Gory 18
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546", //JuliaMaciek 20
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", //Sunflowers 21
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", //Santo 22
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09787-2_t1JgNVJas.avif?updatedAt=1769018104414", //Dynie 23
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823", //Barto 26
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07157-Edit_wTB4VdC0-Z.avif?updatedAt=1769013803803", //Tomek 27
+    "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00291-Edit_rsRvCnmLX.avif?updatedAt=1769022051876", //Madzia Jez 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", //Adam 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012", //Smile 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05683-2_W7IU07awlT.avif?updatedAt=1769020788694", //Wiki 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702", //Chata Gory 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546", //JuliaMaciek 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", //Sunflowers 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", //Santo 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09787-2_t1JgNVJas.avif?updatedAt=1769018104414", //Dynie 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823", //Barto 
+    "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07157-Edit_wTB4VdC0-Z.avif?updatedAt=1769013803803", //Tomek 
   ];
 
 

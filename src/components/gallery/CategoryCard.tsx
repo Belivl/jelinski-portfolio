@@ -66,7 +66,7 @@ export function CategoryCard({
   const { t } = useLanguage();
   const Icon = categoryIcons[category.toLowerCase()] || LayoutGrid;
   return (
-    <div className="w-full dark:bg-black bg-neutral-500 p-[4px] pt-0 rounded-lg border-b border-r border-b-neutral-600 border-r-neutral-700 group">
+    <div className="w-full camera-leather p-[4px] pt-0 rounded-lg border-b border-r border-neutral-900 group">
       <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.9)] rounded-lg group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.4)] transition-all duration-300">
         <motion.button
           whileHover={{ y: -3, x: -1 }}
@@ -74,7 +74,7 @@ export function CategoryCard({
           onClick={onClick}
           className={cn(
             "relative group w-full aspect-3/1 rounded-lg overflow-hidden text-left transition-all duration-300 -translate-x-[2px]",
-            "border dark:border-neutral-800 border-l border-b-3  dark:border-b-neutral-900 border-l-neutral-700 border-t-2 dark:border-t-neutral-700 hover:border-amber-500/50",
+            "border border-white/5 border-l border-b-3 border-l-neutral-700 hover:border-amber-500/50",
             isActive
               ? "ring-2 ring-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
               : "shadow-xl",
@@ -101,7 +101,7 @@ export function CategoryCard({
               />
             </>
           ) : (
-            <div className="absolute inset-0 dark:bg-neutral-900 group-hover:bg-neutral-800 transition-colors" />
+            <div className="absolute inset-0 camera-leather group-hover:opacity-80 transition-opacity" />
           )}
 
           {/* Content */}

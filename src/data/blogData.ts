@@ -10,7 +10,6 @@ export interface BlogPost {
     place?: string;
     category?: string;
     images: string[];
-    mdxPath?: string; // Optional path to MDX file
     galleryTag?: string; // Optional tag to automatically include photos from gallery
 }
 
@@ -84,7 +83,6 @@ const rawBlogPosts: BlogPost[] = [
         excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
         content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03263-2_PFbCds3TZ.avif?updatedAt=1769637848997',
-        
         date: '25-05-30',
         place: 'Rakowiec, Tczew',
         category: 'event',

@@ -4,11 +4,63 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/lib/LanguageContext";
+import { useState, useEffect } from "react";
 import { HOME_FEATURED_PHOTOS } from "@/data/home";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { photoData, type Photo } from "@/data/photos";
+import { siteConfig } from "@/config/site";
+import { getExternalDataWithFallback } from "@/lib/googleSheets";
 
 export function FeaturedGallery() {
   const { t } = useLanguage();
+  const [featuredPhotos, setFeaturedPhotos] =
+    useState<Photo[]>(HOME_FEATURED_PHOTOS);
+
+  useEffect(() => {
+    const loadFeatured = async () => {
+      const external = await getExternalDataWithFallback<{ url: string }>(
+        siteConfig.externalData.sheetID,
+        siteConfig.externalData.feautredPhotoId,
+        [],
+        siteConfig.externalData.useExternal,
+      );
+
+      if (external.length > 0) {
+        const mapped = external
+          .map((item, index) => {
+            const searchUrl = item.url?.split("?")[0];
+            if (!searchUrl) return null;
+
+            const photo = photoData.find(
+              (p) => p.url.split("?")[0] === searchUrl,
+            );
+            if (photo) {
+              return {
+                ...photo,
+                id:
+                  photo.id ||
+                  `featured-${index}-${searchUrl.split("/").pop()?.split(".")[0] || "img"}`,
+              };
+            }
+            // If not in photoData, create a minimal object
+            return {
+              url: item.url,
+              id: `external-${index}`,
+              category: "various" as any,
+              camera: "Unknown",
+              tags: [],
+            } as Photo;
+          })
+          .filter((p): p is Photo & { id: string } => !!p);
+
+        if (mapped.length > 0) {
+          setFeaturedPhotos(mapped);
+        }
+      }
+    };
+
+    loadFeatured();
+  }, []);
 
   return (
     <section className="md:py-24 py-8 bg-background relative overflow-hidden">
@@ -39,7 +91,7 @@ export function FeaturedGallery() {
           className="flex w-auto -ml-2 md:-ml-6"
           columnClassName="pl-2 md:pl-6 bg-clip-padding"
         >
-          {HOME_FEATURED_PHOTOS.map((photo, index) => (
+          {featuredPhotos.map((photo, index) => (
             <motion.div
               key={photo.id}
               initial={{ opacity: 0, y: 20 }}

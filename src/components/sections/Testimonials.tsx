@@ -1,59 +1,90 @@
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-// import { Quote, Star } from "lucide-react";
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { ArrowRight, Folder } from "lucide-react";
+import { siteConfig } from "@/config/site";
+import { getExternalDataWithFallback } from "@/lib/googleSheets";
 
-const testimonialsData = [
+// Default/Local data used for structure and as fallback
+const LOCAL_TESTIMONIALS_META = [
   {
     id: 1,
     rotation: -2.5,
-    color: "#fff9c4", // Yellow
+    noteColor: "#fff9c4", // Yellow
     pinColor: "#ef5350", // Red
     link: "fizjotusia25",
   },
   {
     id: 2,
     rotation: 1.8,
-    color: "#e1f5fe", // Blue
+    noteColor: "#e1f5fe", // Blue
     pinColor: "#BB669C", // Pink pin
   },
   {
     id: 3,
     rotation: -1.2,
-    color: "#f1f8e9", // Green
+    noteColor: "#f1f8e9", // Green
     pinColor: "#6942F5", // Purple pin
     link: "mad100",
   },
   {
     id: 4,
     rotation: 1.2,
-    color: "#FFD6C4", // Green
+    noteColor: "#FFD6C4", // Green
     pinColor: "#66bb6a", // Green pin
   },
   {
     id: 5,
     rotation: -2,
-    color: "#E1FEF0", // Yellow
+    noteColor: "#E1FEF0", // Yellow
     pinColor: "#EF9A50", // Orange pin
     link: "karola24",
   },
   {
     id: 6,
     rotation: 2,
-    color: "#E9EAF8", // Green
+    noteColor: "#E9EAF8", // Green
     pinColor: "#42A5F5", // Blue pin
     link: "tom25",
   },
 ];
 
-function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
-  const { t } = useLanguage();
+interface TestimonialItem {
+  id: number;
+  noteColor: string;
+  pinColor: string;
+  link?: string;
+  featured?: boolean | string;
+  name?: string;
+  role?: string;
+  text?: string;
+  name_pl?: string;
+  role_pl?: string;
+  text_pl?: string;
+}
+
+const MAX_ROTATION_DEVIATION = 3.0;
+
+function TestimonialNote({ item }: { item: TestimonialItem }) {
+  const { t, language } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+
+  // Random base rotation on load (persistent for this session)
+  const baseRotation = useRef(
+    (Math.random() - 0.5) * 2 * MAX_ROTATION_DEVIATION,
+  );
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
   const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
@@ -61,7 +92,9 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
   const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
   const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
 
-  // Calculate shadow based on tilt for "height" effect
+  // Set rotation to 0 on mobile, otherwise use random or sheet value
+  const finalRotation = isMobile ? 0 : baseRotation.current;
+
   const shadowX = useTransform(mouseXSpring, [-0.5, 0.5], [20, -20]);
   const shadowY = useTransform(mouseYSpring, [-0.5, 0.5], [20, -20]);
 
@@ -83,14 +116,29 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
     y.set(0);
   };
 
-  const translated = (t.data.testimonials as any)[item.id] || {};
+  // Content priority: Google Sheet item fields > Translation file
+  const localTranslation = (t.data.testimonials as any)[item.id] || {};
+
+  const displayContent = {
+    name:
+      language === "pl"
+        ? item.name_pl || item.name || localTranslation.name || ""
+        : item.name || localTranslation.name || "",
+    role:
+      language === "pl"
+        ? item.role_pl || item.role || localTranslation.role || ""
+        : item.role || localTranslation.role || "",
+    text:
+      language === "pl"
+        ? item.text_pl || item.text || localTranslation.text || ""
+        : item.text || localTranslation.text || "",
+  };
 
   const variants = {
-    hidden: { opacity: 0, y: 30, rotate: item.rotation },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      rotate: item.rotation,
       transition: {
         type: "spring" as const,
         stiffness: 100,
@@ -111,9 +159,11 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
         transition: { duration: 0.2 },
       }}
       style={{
+        rotate: finalRotation,
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
+        perspective: "1000px",
       }}
       className="relative group cursor-pointer"
     >
@@ -146,7 +196,7 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
       {/* The Sticky Note Body */}
       <div
         style={{
-          backgroundColor: item.color,
+          backgroundColor: item.noteColor,
           boxShadow:
             "inset 0 0 100px rgba(0,0,0,0.05), 5px 5px 15px rgba(0,0,0,0.1)",
           clipPath:
@@ -171,7 +221,7 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
 
         <div style={{ transform: "translateZ(30px)" }} className="relative">
           <p className="text-gray-800/90 mb-4 leading-relaxed italic font-serif tracking-tight">
-            "{translated.text}"
+            "{displayContent.text}"
           </p>
         </div>
 
@@ -181,10 +231,10 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
         >
           <div>
             <h4 className="text-gray-900 font-bold text-lg font-serif">
-              {translated.name}
+              {displayContent.name}
             </h4>
             <p className="text-gray-600/70 text-sm font-medium tracking-wide italic">
-              {translated.role}
+              {displayContent.role}
             </p>
           </div>
           {item.link && (
@@ -199,11 +249,6 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
               </div>
             </Link>
           )}
-          <div
-            className={`-rotate-10deg text-[10px] absolute bottom-0 left-12 font-mono text-black/20  uppercase border border-black/10 px-1 rounded mr-6`}
-          >
-            {t.testimonials.approved}
-          </div>
         </div>
 
         {/* Corner Curl Effect */}
@@ -220,7 +265,7 @@ function TestimonialNote({ item }: { item: (typeof testimonialsData)[0] }) {
           <div
             className="absolute inset-0"
             style={{
-              backgroundColor: item.color,
+              backgroundColor: item.noteColor,
               filter: "brightness(0.92)",
               clipPath: "polygon(0 0, 100% 100%, 0 100%)",
             }}
@@ -338,7 +383,7 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Content Container (The Cork Board) */}
-      <div className="relative z-10 border border-black/50 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+      <div className="relative z-40 border border-black/50 shadow-[0_0_50px_rgba(0,0,0,0.5)]">
         {children}
       </div>
     </div>
@@ -347,11 +392,73 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
 
 export function Testimonials() {
   const { t } = useLanguage();
+  const [items, setItems] = useState<TestimonialItem[]>(
+    LOCAL_TESTIMONIALS_META as TestimonialItem[],
+  );
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const loadData = async () => {
+      setLoading(true);
+      const data = await getExternalDataWithFallback<Partial<TestimonialItem>>(
+        siteConfig.externalData.sheetID,
+        siteConfig.externalData.testimonialsId, // Using the ID as GID or sheet name
+        [], // Empty fallback
+        siteConfig.externalData.useExternal,
+      );
+
+      if (data.length > 0) {
+        // Map and filter sheet data
+        const processed = data
+          .map((item, index) => {
+            // Ensure id is a valid number
+            let id = index + 1;
+            if (item && item.id && !isNaN(Number(item.id))) {
+              id = Number(item.id);
+            }
+
+            // Find matching local meta for style seeds, or cycle through them
+            const seedIndex = Math.abs(id - 1) % LOCAL_TESTIMONIALS_META.length;
+            const styleSeed =
+              LOCAL_TESTIMONIALS_META[seedIndex] || LOCAL_TESTIMONIALS_META[0];
+
+            // Normalize featured column
+            const isFeatured =
+              item &&
+              (item.featured === undefined ||
+                item.featured === null ||
+                item.featured === "" ||
+                item.featured === true ||
+                item.featured === "true" ||
+                item.featured === "TRUE");
+
+            if (!isFeatured) return null;
+
+            // Map sheet 'color' to 'noteColor' if present
+            const noteColorFromSheet = (item as any).color || item.noteColor;
+
+            return {
+              ...styleSeed, // Start with local style defaults
+              ...item, // Overlay sheet data
+              id, // Ensure we have an ID
+              noteColor: noteColorFromSheet || styleSeed.noteColor,
+            } as TestimonialItem;
+          })
+          .filter((item): item is TestimonialItem => item !== null);
+
+        setItems(processed);
+      }
+      setLoading(false);
+    };
+
+    loadData();
+  }, []);
+
   return (
     <section className="md:py-32 py-12 relative overflow-hidden">
       <div className="container mx-auto px-2 md:px-6 relative z-10 overflow-visible">
         <OrnateGoldFrame>
-          <div className="relative py-12 md:py-24 md:px-12 px-6 dark:bg-neutral-900 bg-neutral-100 overflow-hidden">
+          <div className="relative py-12 md:py-24 md:px-12 px-6 dark:bg-neutral-900 bg-neutral-100">
             {/* Cork Texture Layers */}
             <div className="absolute inset-0 dark:bg-[#8c6239] bg-white mix-blend-multiply opacity-50" />
             <div className="absolute inset-0 opacity-40 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] contrast-150 brightness-75" />
@@ -444,9 +551,12 @@ export function Testimonials() {
                   },
                 },
               }}
-              className="grid grid-cols-1 md:grid-cols-3  gap-16 perspective-[1500px] py-12"
+              className={cn(
+                "grid grid-cols-1 md:grid-cols-3 gap-16 perspective-[1500px] py-12 transition-opacity duration-500",
+                loading ? "opacity-50" : "opacity-100",
+              )}
             >
-              {testimonialsData.map((item) => (
+              {items.map((item) => (
                 <TestimonialNote key={item.id} item={item} />
               ))}
             </motion.div>
