@@ -6,7 +6,6 @@ import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import { TextScramble } from "@/components/ui/TextScramble";
 import { GoldButton } from "@/components/ui/GoldButton";
-import { CornerBorders } from "@/components/ui/CornerBorders";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
