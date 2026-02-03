@@ -8,6 +8,7 @@ interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   width?: number;
   height?: number;
   priority?: boolean;
+  transformation?: any[];
 }
 
 export function SmartImage({
@@ -18,6 +19,7 @@ export function SmartImage({
   height,
   priority = false,
   objectTop = false,
+  transformation,
   ...props
 }: SmartImageProps & { objectTop?: boolean }) {
   if (!src) return null;
@@ -42,6 +44,7 @@ export function SmartImage({
         alt={alt}
         className={finalClass}
         loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         {...(props as any)}
       />
     );
@@ -61,7 +64,9 @@ export function SmartImage({
         alt={alt}
         className={finalClass}
         loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : "auto"}
         lqip={{ active: true, quality: 20 }}
+        transformation={transformation}
         {...(props as any)}
       />
     </ImageKitProvider>

@@ -2970,51 +2970,51 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07723_sow0MYuyI.avif?updatedAt=1769019622125",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
             "water"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07740_m6yGBNLRQg.avif?updatedAt=1769019622726",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
             "landscape"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07741_Cva4f9SCX.avif?updatedAt=1769019622700",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
             "water"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07743_B6m5HejBLE.avif?updatedAt=1769019622702",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
             "water"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07747_cWaSWTlY2.avif?updatedAt=1769019622719",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3022,11 +3022,11 @@ export const photoData: Photo[] = [
             "people"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07770_2EHobBBql.avif?updatedAt=1769019622773",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3035,11 +3035,11 @@ export const photoData: Photo[] = [
             "people"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07773_xj4wb47SUE.avif?updatedAt=1769019622796",
-        "title": "Rewia",
+        "title": "Rewa",
         "category": "travel",
         "camera": "Sony A6600",
         "tags": [
@@ -3047,7 +3047,7 @@ export const photoData: Photo[] = [
             "portrait"
         ],
         "date": "2024-04-09",
-        "place": "Rewia"
+        "place": "Rewa"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08448_9D2Eqxu7n.avif?updatedAt=1769019321494",
@@ -3448,7 +3448,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02191_EAngBVzx-h.avif?updatedAt=1769018838532",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3462,7 +3462,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02425_p8OlBLbIM.avif?updatedAt=1769018838507",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3477,7 +3477,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02459_P7uQIAJRN2.avif?updatedAt=1769018838515",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Nikon",
         "tags": [
@@ -3490,7 +3490,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02462_dc5RpSdwu.avif?updatedAt=1769018838547",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3504,7 +3504,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02516_7BvmnOcPv.avif?updatedAt=1769018838363",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3519,7 +3519,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02556_uEJ020LMpC.avif?updatedAt=1769018838525",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3534,7 +3534,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03089_HzhX-IC8t.avif?updatedAt=1769018838539",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3549,7 +3549,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03109_YX-RyT6aL.avif?updatedAt=1769018838543",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Nikon",
         "tags": [
@@ -3563,7 +3563,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03209_z9oC0bnmL-.avif?updatedAt=1769018838495",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3578,7 +3578,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03254_J46oj9TJ-.avif?updatedAt=1769018838556",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3592,7 +3592,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546",
-        "title": "Wesele Julii i Macka",
+        "title": "Wesele Julii i Macieja",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -3608,7 +3608,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05095_7XfKgM9-8.avif?updatedAt=1769018687891",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3618,11 +3618,11 @@ export const photoData: Photo[] = [
             "sunset"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3632,12 +3632,12 @@ export const photoData: Photo[] = [
             "flora"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik",
+        "place": "Błotnik",
         "blogPostId": "sunflowers24"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05112_xY2hM8Fiq.avif?updatedAt=1769018687893",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3647,11 +3647,11 @@ export const photoData: Photo[] = [
             "sunset"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05380-2_m0Z6vAZdq.avif?updatedAt=1769018688144",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3661,11 +3661,11 @@ export const photoData: Photo[] = [
             "sunset"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05404-3_81e2oE3Df.avif?updatedAt=1769018687982",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3675,11 +3675,11 @@ export const photoData: Photo[] = [
             "flora"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05722-2_HVpjRv5AL.avif?updatedAt=1769018687935",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3689,11 +3689,11 @@ export const photoData: Photo[] = [
             "portrait"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-5403_XN2DiqcuY.avif?updatedAt=1769018687875",
-        "title": "Sloneczniki",
+        "title": "Słoneczniki",
         "category": "portrait",
         "camera": "Sony A6600",
         "tags": [
@@ -3703,7 +3703,7 @@ export const photoData: Photo[] = [
             "nature"
         ],
         "date": "2024-08-11",
-        "place": "Blotnik"
+        "place": "Błotnik"
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-06882_EyWQrdBu-.avif?updatedAt=1769018379225",
@@ -4850,7 +4850,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07510_y65WZ1o7-.avif?updatedAt=1769013368209",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4861,7 +4861,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07513-2_mu7kXO_3m.avif?updatedAt=1769013368206",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4874,7 +4874,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07528_Iu64lv4Tz.avif?updatedAt=1769013368231",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4888,7 +4888,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07555_d3SW3DVuVE.avif?updatedAt=1769013368466",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4903,7 +4903,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07562_i6KUJIh0c8.avif?updatedAt=1769013368378",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4918,7 +4918,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07567_YQL4I9tR1.avif?updatedAt=1769013368227",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4933,7 +4933,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07571_wI56A7ED5.avif?updatedAt=1769013368411",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4947,7 +4947,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07573_i-yagmyNR.avif?updatedAt=1769013368312",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4962,7 +4962,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07692_6xv6tmbBlm.avif?updatedAt=1769013368385",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [
@@ -4974,7 +4974,7 @@ export const photoData: Photo[] = [
     },
     {
         "url": "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084",
-        "title": "Festiwal Japonski",
+        "title": "Festiwal Japoński",
         "category": "event",
         "camera": "Sony A6600",
         "tags": [

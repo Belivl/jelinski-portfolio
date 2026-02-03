@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static Pages -->
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/gallery</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/projects</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/blog</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/about</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://jelinski-portfolio.vercel.app/contact</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Projects -->
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/1</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/2</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/3</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/4</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/6</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/7</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/8</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/9</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/10</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/11</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/12</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/projects/13</loc><priority>0.6</priority></url>
+
+  <!-- Blog Posts -->
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/daldehog</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/zu25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/fizjotusia25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/weddklapaw25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/weddkubakas25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/tom25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/festjapan25</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/karola24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/yao24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/rewa24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/zako24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/gdystrt24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/wedjulmac24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/sunflowers24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/santo24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/dyniowelove24</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/jez23</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/urbex23</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/adam23</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/tym23</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/wiki23</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/motoshow22</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/berlin22</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/balticsail</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/mad100</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/leba21</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/urbex221</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/jarmark21</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/allan21</loc><priority>0.6</priority></url>
+  <url><loc>https://jelinski-portfolio.vercel.app/blog/letnicastrt21</loc><priority>0.6</priority></url>
+</urlset>

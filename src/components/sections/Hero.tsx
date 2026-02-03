@@ -5,6 +5,7 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { useState, useEffect } from "react";
+import { debounce } from "@/lib/utils";
 import { ArrowRight, ArrowBigDown, Camera, Brush } from "lucide-react";
 import {
   HOME_PHOTOGRAPHER_IMAGES,
@@ -25,7 +26,6 @@ export function Hero() {
   >(HOME_PHOTOGRAPHER_IMAGES);
   const [dynamicDesignerImages, setDynamicDesignerImages] =
     useState<string[]>(HOME_DESIGNER_IMAGES);
-
 
   useEffect(() => {
     const loadImages = async () => {
@@ -63,6 +63,22 @@ export function Hero() {
     return () => clearInterval(interval);
   }, []);
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkIsDesktop = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+
+    // Initial check
+    checkIsDesktop();
+
+    const debouncedCheck = debounce(checkIsDesktop, 200);
+    window.addEventListener("resize", debouncedCheck);
+
+    return () => window.removeEventListener("resize", debouncedCheck);
+  }, []);
+
   const currentPhoto = HERO_IMAGES[currentPhotoIndex];
   const photoUrl =
     typeof currentPhoto === "string" ? currentPhoto : currentPhoto.url;
@@ -82,7 +98,9 @@ export function Hero() {
           >
             <SmartImage
               src={photoUrl}
+              priority={true}
               alt=""
+              transformation={!isDesktop ? [{ width: 400 }] : undefined}
               className={`absolute inset-0 w-full h-full object-cover ${
                 isObjectTop ? "object-top" : "object-center"
               }`}
@@ -91,7 +109,7 @@ export function Hero() {
         </AnimatePresence>
         <div className="absolute z-10 w-full h-full inset-0 bg-white opacity-60 dark:bg-black dark:opacity-70"></div>
       </div>
-      <SakuraRain2 />
+      {isDesktop && <SakuraRain2 />}
 
       <div className="container relative z-10 px-6 mx-auto">
         <motion.div

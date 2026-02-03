@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { debounce } from "@/lib/utils";
 
 // --- Shaders ---
 const SAKURA_POINT_VSH = `
@@ -908,7 +909,9 @@ export function SakuraRain2() {
       "uBloom",
     ]);
 
-    window.addEventListener("resize", resize);
+    const debouncedResize = debounce(resize, 200);
+
+    window.addEventListener("resize", debouncedResize);
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseleave", handleMouseLeave);
 
@@ -917,7 +920,7 @@ export function SakuraRain2() {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", debouncedResize);
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseleave", handleMouseLeave);
     };

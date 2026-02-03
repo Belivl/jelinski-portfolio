@@ -1,20 +1,26 @@
 import { useState, useMemo } from "react";
-import { AnimatePresence } from "motion/react";
-import { blogPosts } from "@/data/blogData";
+import { AnimatePresence, motion } from "motion/react";
+import type { BlogPost } from "@/data/blogData";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/LanguageContext";
 import { PostCard } from "@/components/ui/PostCard";
 import { BlogFilterBar } from "@/components/gallery/BlogFilterBar";
+import { BlogMap } from "@/components/gallery/BlogMap";
 
-export function BlogList() {
+interface BlogListProps {
+  posts: BlogPost[];
+}
+
+export function BlogList({ posts }: BlogListProps) {
   const { t } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedYear, setSelectedYear] = useState<string>("all");
+  const [viewMode, setViewMode] = useState<"grid" | "map">("grid");
 
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
   // Filter and sort posts
   const filteredAndSortedPosts = useMemo(() => {
-    return blogPosts
+    return posts
       .filter((post) => {
         const dateParts = post.date.split("-");
         const year =
@@ -41,7 +47,7 @@ export function BlogList() {
           ? dateB.getTime() - dateA.getTime()
           : dateA.getTime() - dateB.getTime();
       });
-  }, [selectedCategory, selectedYear, sortOrder]);
+  }, [posts, selectedCategory, selectedYear, sortOrder]);
 
   return (
     <div className="space-y-8">
@@ -53,16 +59,36 @@ export function BlogList() {
         setSelectedYear={setSelectedYear}
         sortOrder={sortOrder}
         setSortOrder={setSortOrder}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
       />
 
-      {/* Posts Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:mt-24 mt-16  mx-auto perspective-1000">
-        <AnimatePresence mode="popLayout">
-          {filteredAndSortedPosts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </AnimatePresence>
-      </div>
+      <AnimatePresence mode="wait">
+        {viewMode === "grid" ? (
+          <motion.div
+            key="grid"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 md:mt-24 mt-16 mx-auto perspective-1000"
+          >
+            {filteredAndSortedPosts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="map"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            transition={{ duration: 0.3 }}
+          >
+            <BlogMap posts={filteredAndSortedPosts} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {filteredAndSortedPosts.length === 0 && (
         <div className="text-center py-20">

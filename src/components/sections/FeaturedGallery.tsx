@@ -112,11 +112,11 @@ export function FeaturedGallery() {
                 to={`/blog/${photo.blogPostId || "0"}`}
                 className="w-full h-full"
               >
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="text-primary text-sm font-medium mb-1 uppercase tracking-wider">
+                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-50 group-hover:opacity-0 md:group-hover:opacity-100 md:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6">
+                  <span className="text-primary text-[8px] md:text-sm font-medium mb-1 uppercase tracking-wider">
                     {photo.category}
                   </span>
-                  <h3 className="text-white text-xl font-bold">
+                  <h3 className="text-white text-[10px] md:text-xl font-bold">
                     {photo.title}
                   </h3>
                 </div>

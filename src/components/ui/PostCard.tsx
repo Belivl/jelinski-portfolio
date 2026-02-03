@@ -148,12 +148,12 @@ export function PostCard({ post }: Props) {
           <div className="flex flex-row justify-between items-center w-full h-fit pl-2 ">
             <div className="flex items-center gap-2 md:gap-4 ">
               <div className="flex items-center gap-2 text-xs md:text-base truncate">
-                <Calendar className="w-3 h-3" /> <span>{post.date}</span>
+                <Calendar className="w-4 h-4" /> <span>{post.date}</span>
               </div>
               <div className="flex items-center gap-1 md:gap-2 text-xs md:text-base truncate">
-                <MapPin className="w-3 h-3" />{" "}
+                <MapPin className="w-4 h-4 md:w-6 md:h-6" />{" "}
                 <span className="truncate w-[1/3] md:w-full">
-                  {post.place || "Unknown Location"}
+                  {post.city || "Unknown Location"}
                 </span>
               </div>
             </div>

@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import { ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, Map as MapIcon, LayoutGrid } from "lucide-react";
 import { CategoryCard } from "@/components/gallery/CategoryCard";
 import { blogPosts } from "@/data/blogData";
 import { CATEGORY_COVERS } from "@/data/categoryCovers";
@@ -23,6 +23,8 @@ interface BlogFilterBarProps {
   setSelectedYear: (year: string) => void;
   sortOrder: "desc" | "asc";
   setSortOrder: (order: "desc" | "asc") => void;
+  viewMode: "grid" | "map";
+  setViewMode: (mode: "grid" | "map") => void;
 }
 
 export function BlogFilterBar({
@@ -32,6 +34,8 @@ export function BlogFilterBar({
   setSelectedYear,
   sortOrder,
   setSortOrder,
+  viewMode,
+  setViewMode,
 }: BlogFilterBarProps) {
   const { t } = useLanguage();
 
@@ -80,6 +84,28 @@ export function BlogFilterBar({
 
       <div className="flex flex-row sm:flex-row w-full gap-3 justify-between items-center ">
         <div className="flex flex-col md:flex-row gap-3 md:items-center w-full md:justify-end">
+          {/* View Mode Toggle */}
+          <div className="flex bg-neutral-900/50 p-1 rounded-lg border border-white/5 mr-auto">
+            <Button
+              variant={viewMode === "grid" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("grid")}
+              className={`h-9 px-3 gap-2 ${viewMode === "grid" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
+            >
+              <LayoutGrid className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.blog.showGrid}</span>
+            </Button>
+            <Button
+              variant={viewMode === "map" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setViewMode("map")}
+              className={`h-9 px-3 gap-2 ${viewMode === "map" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
+            >
+              <MapIcon className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.blog.showMap}</span>
+            </Button>
+          </div>
+
           {/* Reset Filters */}
           {(selectedCategory !== "all" || selectedYear !== "all") && (
             <motion.div
@@ -101,11 +127,7 @@ export function BlogFilterBar({
           )}
           {/* Year Filter */}
           <div className="flex flex-col gap-0 min-w-[140px]">
-            <Select
-              value={selectedYear}
-              onValueChange={setSelectedYear}
-              // modal={false} // Prevents body scroll lock and layout shift
-            >
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
               <SelectTrigger className="w-full dark:bg-neutral-900 dark:border-neutral-800 hover:border-amber-500/50 transition-colors h-11 ">
                 <SelectValue placeholder={t.blog.allYears} />
               </SelectTrigger>

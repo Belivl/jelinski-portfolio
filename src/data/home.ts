@@ -106,7 +106,7 @@ const heroPhotos = [
     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", objectTop: false },
      { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", objectTop: true },
     "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", objectTop: true },
     "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05705-2_zHCdVRGXQ.avif?updatedAt=1769020788503",
     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09320_XFvnZg8Vn.avif?updatedAt=1769020623195", objectTop: true },
     "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08296_wUdcqtYCbx.avif?updatedAt=1769025614817",

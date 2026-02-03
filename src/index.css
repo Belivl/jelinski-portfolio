@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Pirata+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Roboto", system-ui, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -179,8 +180,10 @@
     @apply bg-transparent! shadow-none! p-0! rounded-none!;
     @apply bg-transparent! shadow-none! p-0! rounded-none!;
     @apply bg-transparent! shadow-none! p-0! rounded-none!;
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
   }
   .maplibregl-popup-tip {
+    @apply hidden!;
     @apply hidden!;
     @apply hidden!;
     @apply hidden!;
@@ -196,6 +199,9 @@
 }
 
 @theme {
+  --font-sans:
+    "Roboto", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-script1: "Pirata One", cursive;
   /*woody palette*/
   --color-wood-red: #ff3c3c;
@@ -464,4 +470,18 @@
 
 .animate-film-flicker {
   animation: film-flicker 0.2s infinite;
+}
+
+@keyframes bounce-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 2s ease-in-out infinite;
 }

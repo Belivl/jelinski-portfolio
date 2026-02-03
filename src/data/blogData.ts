@@ -2,15 +2,19 @@
 export interface BlogPost {
     id: string;
     title: string;
-    excerpt: string;
-    content: string;
     coverImage: string;
     coverImageCrop?: string;
     date: string;
     place?: string;
     category?: string;
     images: string[];
-    galleryTag?: string; // Optional tag to automatically include photos from gallery
+    location?: {
+        lat: number;
+        lng: number; 
+    };
+    city: string;
+    region: "tricity" | "outside";
+    country: "poland" | "outside";
 }
 
 const rawBlogPosts: BlogPost[] = [
@@ -18,13 +22,10 @@ const rawBlogPosts: BlogPost[] = [
     {
         id: "daldehog",
         title: 'Daldehog - IKEA',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif?updatedAt=1769015078109',
         date: '25-01-23',
         place: 'Gdansk Matarnia',
         category: 'client',
-        galleryTag: 'daldehog',
         images: [
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00187_1V2AsRZW3.avif?updatedAt=1769015078091',
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00204_G1hBcE1AU.avif?updatedAt=1769015078222",
@@ -34,13 +35,15 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00276_dKcUy6ute4.avif?updatedAt=1769015078235',
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00281_xzFVfxiAc.avif?updatedAt=1769015078186",
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif?updatedAt=1769015078109'
-        ]
+        ],
+        location: { lat: 54.38, lng: 18.55 },
+        city: "Gdańsk",
+        region: "tricity", 
+        country: "poland"   
     },
     {
         id: "zu25",
         title: 'Zuzia - 18',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00490_RgLRkbWaH.avif?updatedAt=1769637455687',
         date: '25-01-26',
         place: 'Gdansk Bogatka',
@@ -53,13 +56,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-00821_iwgPeGqt8d.avif?updatedAt=1769637455745",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-0090_L6mlgTKSD.avif?updatedAt=1769637455630",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-26/JEL-0095_8OoWjeKS4.avif?updatedAt=1769637455700",
-        ]
+        ],
+        location: { lat: 54.30, lng: 18.78 },
+        city: "Bogatka",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "fizjotusia25",
         title: 'fizjo.tusia',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263',
         coverImageCrop: 'top',
         date: '25-04-24',
@@ -75,47 +80,86 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01578_ndLAxe9MI.avif?updatedAt=1769014578291",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01578_ndLAxe9MI.avif?updatedAt=1769014578291",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01631_T0quA2-vg.avif?updatedAt=1769014578199",
-        ]
+        ],
+        location: { lat: 54.44, lng: 18.56 },
+        city: "Sopot",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "weddklapaw25",
-        title: 'Wesele Klaudii i Pawla',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
+        title: 'Wesele Klaudii i Pawła',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03263-2_PFbCds3TZ.avif?updatedAt=1769637848997',
+        coverImageCrop: 'top',
         date: '25-05-30',
         place: 'Rakowiec, Tczew',
         category: 'event',
         images: [
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02160_joelml574.avif?updatedAt=1769971814195",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02170_62sVwHrDRr.avif?updatedAt=1769971814755",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02179_ZLyMPNSv1.avif?updatedAt=1769971814495",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02189_5rOvz-y5c.avif?updatedAt=1769971814747",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02216_z_WkFdmt30.avif?updatedAt=1769971815165",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02227_ftxJMnBtT.avif?updatedAt=1769971815094",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02260_y4iijePOq8.avif?updatedAt=1769971814105",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02262_vBWWLaPin.avif?updatedAt=1769971814743",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02300_nxqPpQUkGt.avif?updatedAt=1769971814597",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02317_1jkmfWwz8.avif?updatedAt=1769971814637",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02355_2wuG57r6DZ.avif?updatedAt=1769637849051",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02392_-28U4t__C.avif?updatedAt=1769971848909",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02404_3RA_8_2t9.avif?updatedAt=1769971848982",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02442_UluzZb-DY.avif?updatedAt=1769971849210",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02452_T2P7N4bdt.avif?updatedAt=1769971849069",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02796_WWXlhfNLg.avif?updatedAt=1769971849265",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL02813_sRycvunDd.avif?updatedAt=1769971849017",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/DSC_0159_uIS24Bjb-.avif?updatedAt=1769971815242",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03263-2_PFbCds3TZ.avif?updatedAt=1769637848997",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03304_t-2a8M73ET.avif?updatedAt=1769637848739",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03415_p6qmx3degD.avif?updatedAt=1769637848996",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03517_ZhqwRU1Pw.avif?updatedAt=1769971865151",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03459_wbDquNd4io.avif?updatedAt=1769637848944",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03546_Qx77qHgvs.avif?updatedAt=1769637848848",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03547_9a_Jx9fph.avif?updatedAt=1769971865439",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03567_CejZf80cyG.avif?updatedAt=1769637848824",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03575_aZbi38OQe.avif?updatedAt=1769971865432",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03726_8A5lfj4ns.avif?updatedAt=1769971865482",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03745_63uyzEKWO.avif?updatedAt=1769637849008",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03992_HmTujIlzM.avif?updatedAt=1769971865484",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL03994_VjF1i_zX7I.avif?updatedAt=1769637849044",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04030_WnYuBMjQG9.avif?updatedAt=1769637848890",
-            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04030_WnYuBMjQG9.avif?updatedAt=1769637848890",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04041_LmXkhP_DG.avif?updatedAt=1769637848921",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04047_r9PdtiB_Im.avif?updatedAt=1769637848913",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04069_sDla8UTEh.avif?updatedAt=1769637848865",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04093_7JGzOZRhO.avif?updatedAt=1769971893924",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04106_p1fW71PgZ.avif?updatedAt=1769637848859",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04229_yq4KM9e7fv.avif?updatedAt=1769637848905",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04367_-RC0l5M-i.avif?updatedAt=1769971894308",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04374_1vDjNXimK.avif?updatedAt=1769971894261",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04377_un1mvpqEDS.avif?updatedAt=1769637849020",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04890_nj002g-6BY.avif?updatedAt=1769637849089",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL04956_9YfB4DBxlk.avif?updatedAt=1769637849015",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05025_Vs0MQ43rb.avif?updatedAt=1769971894146",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05240_bodcmS0Ig.avif?updatedAt=1769637848912",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05263-ExportV1-2_WqCNo906z.avif?updatedAt=1769971894135",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/DSC_0176_XwXNBcb1N.avif?updatedAt=1769971814718",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/DSC_0218_ZG_rpXLYIK.avif?updatedAt=1769971814910",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05328_L6LNjS9_x.avif?updatedAt=1769637848750",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05174_xgj3XkAP6.avif?updatedAt=1769637848859",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05191_iyQ-xNoTzZ.avif?updatedAt=1769637849008",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05240_bodcmS0Ig.avif?updatedAt=1769637848912",
-            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05328_L6LNjS9_x.avif?updatedAt=1769637848750",
-        ]
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05736_NYtuhoYTj.avif?updatedAt=1769971894145",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05764_5JBEzMkpZv.avif?updatedAt=1769971894084",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL05887_S91jcArMi.avif?updatedAt=1769971894321",
+            "https://ik.imagekit.io/j3l1n5k1/photography/2025/05-30/JEL06070_mjcuWJGZy.avif?updatedAt=1769971893990",
+        ],
+        location: { lat: 54.09, lng: 18.78 },
+        city: "Rakowiec",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "weddkubakas25",
         title: 'Wesele Jakuba i Kasi',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475',
         date: '25-06-28',
         place: 'Sierakowice',
@@ -136,13 +180,15 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07105_-F1bSxyGX.avif?updatedAt=1769014192399',
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07109_A1UdLDkb9.avif?updatedAt=1769014191811",
             "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
-        ]
+        ],
+        location: { lat: 54.34, lng: 17.89 },
+        city: "Sierakowice",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "tom25",
         title: 'Tomek',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07157-Edit_wTB4VdC0-Z.avif?updatedAt=1769013803803',
         coverImageCrop: 'center',
         date: '25-07-05',
@@ -157,14 +203,16 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07230_6w81p6CJV.avif?updatedAt=1769013803872',
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07230_6w81p6CJV.avif?updatedAt=1769013803872',
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07233_OCnkHC67R.avif?updatedAt=1769013803835'
-        ]
+        ],
+        location: { lat: 54.44, lng: 18.56 },
+        city: "Sopot",
+        region: "tricity", 
+        country: "poland"
     },
 
     {
         id: "festjapan25",
-        title: 'Festiwal Japonski',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
+        title: 'Festiwal Japoński',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084',
         date: '25-07-26',
         place: 'Oliwa',
@@ -180,7 +228,11 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07573_i-yagmyNR.avif?updatedAt=1769013368312',
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07692_6xv6tmbBlm.avif?updatedAt=1769013368385',
             'https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084',
-        ]
+        ],
+        location: { lat: 54.40, lng: 18.57 },
+        city: "Gdańsk",
+        region: "tricity", 
+        country: "poland"
     },
 
     //2024
@@ -188,8 +240,6 @@ const rawBlogPosts: BlogPost[] = [
     {
         id: "karola24",
         title: 'Karola',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06262-soft_gjhxwmSf-.avif?updatedAt=1769020020303',
         coverImageCrop: 'top',
         date: '24-02-25',
@@ -203,13 +253,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06210-soft_V0HoT9K_Oo.avif?updatedAt=1769020020252",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06247-soft_QPxa69bhx.avif?updatedAt=1769020020297",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-06262-soft_gjhxwmSf-.avif?updatedAt=1769020020303",
-        ]
+        ],
+        location: { lat: 54.396, lng: 18.574 },
+        city: "Gdańsk",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "yao24",
         title: 'Hi I\'m Ya0',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06657_lv-MZGtmX0.avif?updatedAt=1769019725801',
         coverImageCrop: 'top',
         date: '24-03-12',
@@ -222,16 +274,18 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06702_dcbZhcDAxg.avif?updatedAt=1769019725809",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06762_RO16WPmNN.avif?updatedAt=1769019726085",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/03-12/JEL-06784_6lkwaOwiX.avif?updatedAt=1769019726177",
-        ]
+        ],
+        location: { lat: 54.414, lng: 18.482 },
+        city: "Gdańsk",
+        region: "tricity", 
+        country: "poland"
     },
     {
-        id: "rewia24",
-        title: 'Rewia',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
+        id: "rewa24",
+        title: 'Rewa',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07740_m6yGBNLRQg.avif?updatedAt=1769019622726',
         date: '24-04-09',
-        place: 'Rewia',
+        place: 'Rewa',
         category: 'travel',
         images: [
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07723_sow0MYuyI.avif?updatedAt=1769019622125',
@@ -242,13 +296,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07770_2EHobBBql.avif?updatedAt=1769019622773",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07773_xj4wb47SUE.avif?updatedAt=1769019622796",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-09/JEL-07791_4xdcL09r6.avif?updatedAt=1769019622695",
-        ]
+        ],
+        location: { lat: 54.635, lng: 18.512 },
+        city: "Rewa",
+        region: "outside", 
+        country: "poland"
     },
       {
         id:"zako24",
         title: 'Zakopane',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554-2_VoKbus7J0i.avif?updatedAt=1769019321918',
         date: '24-04-15',
         place: 'Zakopane',
@@ -274,7 +330,11 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09287-3_wBB5jmY6hL.avif?updatedAt=1769019321898",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
-        ]
+        ],
+        location: { lat: 49.29, lng: 19.95 },
+        city: "Zakopane",
+        region: "outside", 
+        country: "poland"
     },
 
 
@@ -283,8 +343,6 @@ const rawBlogPosts: BlogPost[] = [
     {
         id: "gdystrt24",
         title: 'Gdynia Street',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326',
         date: '24-07-15',
         place: 'Gdansk Osowa, Gdynia',
@@ -301,13 +359,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01737_kg7O-4OKPs.avif?updatedAt=1769019064308",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL-01743_xR4vrvlnY2.avif?updatedAt=1769019064250",
 
-        ]
+        ],
+        location: { lat: 54.519, lng: 18.466 },
+        city: "Gdynia",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "wedjulmac24",
-        title: 'Wesele Julii i Macka',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
+        title: 'Wesele Julii i Macieja',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546',
         coverImageCrop: 'top',
         date: '24-07-27',
@@ -325,16 +385,18 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03209_z9oC0bnmL-.avif?updatedAt=1769018838495",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03254_J46oj9TJ-.avif?updatedAt=1769018838556",
             "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546",
-        ]
+        ],
+        location: { lat: 54.206, lng: 17.955 },
+        city: "Kartuzy",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "sunflowers24",
-        title: 'Sloneczniki',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
+        title: 'Słoneczniki',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05112_xY2hM8Fiq.avif?updatedAt=1769018687893',
         date: '24-08-11',
-        place: 'Blotnik',
+        place: 'Błotnik',
         category: 'session',
         images: [
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05095_7XfKgM9-8.avif?updatedAt=1769018687891',
@@ -344,13 +406,15 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05404-3_81e2oE3Df.avif?updatedAt=1769018687982',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05404-3_81e2oE3Df.avif?updatedAt=1769018687982',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-5403_XN2DiqcuY.avif?updatedAt=1769018687875',
-        ]
+        ],
+        location: { lat: 54.286, lng: 18.908 },
+        city: "Błotnik",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "santo24",
         title: 'Santorini',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505',
         date: '24-09-21',
         place: 'Santorini',
@@ -362,13 +426,15 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09174_Cx1Sy_APN.avif?updatedAt=1769018379493',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09227_73E_H_CPaT.avif?updatedAt=1769018379539',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL07893_B7lP2cDzi.avif?updatedAt=1769018379509',
-        ]
+        ],
+        location: { lat: 36.39, lng: 25.43 },
+        city: "Santorini",
+        region: "outside", 
+        country: "outside"
     },
     {
         id: "dyniowelove24",
         title: 'Dyniowelove',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09787-2_t1JgNVJas.avif?updatedAt=1769018104414',
         coverImageCrop: 'top',
         date: '24-10-19',
@@ -379,14 +445,16 @@ const rawBlogPosts: BlogPost[] = [
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09682_moXoX-ddm.avif?updatedAt=1769018104375',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09734_Ai2QGD68W.avif?updatedAt=1769018104424',
             'https://ik.imagekit.io/j3l1n5k1/photography/2024/10-19/JEL-09787-2_t1JgNVJas.avif?updatedAt=1769018104414',
-        ]
+        ],
+        location: { lat: 54.275, lng: 18.618 },
+        city: "Rotmanka",
+        region: "tricity", 
+        country: "poland"
     },
     //2023
      {
         id:"jez23",
         title: 'Jeziorne nimfy',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888',
         coverImageCrop: 'top',
         date: '23-04-22',
@@ -403,14 +471,16 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00475_pii6tzKj5.avif?updatedAt=1769022052013",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00499-2_716tLy06e.avif?updatedAt=1769022051924",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888",
-        ]
+        ],
+        location: { lat: 54.428, lng: 18.455 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
      {
         id:"urbex23",
         title: 'Kaszubski Urbex',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069',
         date: '23-05-18',
         place: 'Kolano',
@@ -428,13 +498,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01810-2_Zb-T2r3O2.avif?updatedAt=1769021302151",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01832-2_lthossRPV.avif?updatedAt=1769021302128",
-        ]
+        ],
+        location: { lat: 54.237, lng: 18.109 },
+        city: "Kolano",
+        region: "outside", 
+        country: "poland"
     },
      {
         id:"adam23",
         title: 'Adam',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif?updatedAt=1769021114504',
         coverImageCrop: 'top',
         date: '23-05-21',
@@ -443,14 +515,16 @@ const rawBlogPosts: BlogPost[] = [
         images: [
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL01957_nG-RCxHl-.avif?updatedAt=1769021114365",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif?updatedAt=1769021114504",
-        ]
+        ],
+        location: { lat: 54.428, lng: 18.455 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
  {
         id:"tym23",
         title: 'Urodziny Tymona',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012',
         date: '23-06-30',
         place: 'Gdansk Osowa',
@@ -469,14 +543,16 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05926-2_kvbhEhHLA.avif?updatedAt=1769020788969",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05953-2_4iAVBqmUJb.avif?updatedAt=1769020789012",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL06048_chxgEgFcF.avif?updatedAt=1769020788945",
-        ]
+        ],
+        location: { lat: 54.428, lng: 18.455 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
     {
         id:"wiki23",
         title: 'Wiktoria',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09558_EpWVIcnA7.avif?updatedAt=1769020624079',
         coverImageCrop: 'top',
         date: '23-08-31',
@@ -490,15 +566,17 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09574_lhe-hLnHm.avif?updatedAt=1769020624072",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09583_Rppu1q2Ws.avif?updatedAt=1769020624127",
             "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09634_6aG87iuUUO.avif?updatedAt=1769020624035",
-        ]
+        ],
+        location: { lat: 54.604, lng: 18.321 },
+        city: "Reda",
+        region: "outside", 
+        country: "poland"
     },
 
     //2022
     {
         id: "motoshow22",
         title: 'MotoShow',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL08950-Edit_RLRHU7k5t-.avif?updatedAt=1769025614519',
         date: '22-07-09',
         place: 'Polsat Plus Arena',
@@ -534,14 +612,16 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8352-2_QblSD0PKFw.avif?updatedAt=1769025614989",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-8434-2_yYhV0FKKjP.avif?updatedAt=1769025614793",
 
-        ]
+        ],
+        location: { lat: 54.390, lng: 18.640 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
     {
         id: "berlin22",
         title: 'Berlin',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446',
         date: '22-08-08',
         place: 'Berlin',
@@ -581,13 +661,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1466_IblHbiOkj.avif?updatedAt=1769024187309",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-1657-2_8Rga2QYKh.avif?updatedAt=1769024187424",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
-        ]
+        ],
+        location: { lat: 52.52, lng: 13.40 },
+        city: "Berlin",
+        region: "outside", 
+        country: "outside"
     },
     {
         id: "balticsail",
         title: 'Baltic Sail',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054',
         date: '22-08-28',
         place: 'Gdansk',
@@ -608,13 +690,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05127_gE3X0brs2.avif?updatedAt=1769023300999",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05182_UfR0S-WB2-.avif?updatedAt=1769023301107",
 
-        ]
+        ],
+        location: { lat: 54.35, lng: 18.66 },
+        city: "Gdańsk",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "mad100",
         title: 'Magda',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06348_im_Ishk7pw.avif?updatedAt=1769022715865',
         coverImageCrop: 'top',
         date: '22-09-24',
@@ -644,15 +728,17 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6454-2_OmdireHxX6.avif?updatedAt=1769022715788",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6483-2_xaVBY7bktl.avif?updatedAt=1769022715760",
             "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6576-2_sKUrEgh4dA.avif?updatedAt=1769022715766",
-        ]
+        ],
+        location: { lat: 54.363, lng: 18.652 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
     //2021
     {
         id: "leba21",
         title: 'Wydmy',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577',
         date: '21-05-01',
         place: 'Leba',
@@ -668,13 +754,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9291-3_R8bd-0M2Z.avif?updatedAt=1769027173604",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9301-2_1YCXEASN20.avif?updatedAt=1769027173629",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9303-Edit_tOlInckDf1.avif?updatedAt=1769027173516",
-        ]
+        ],
+        location: { lat: 54.750, lng: 17.432 },
+        city: "Leba",
+        region: "outside", 
+        country: "poland"
     },
     {
         id: "urbex221",
         title: 'Urbex2',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-73_IMyN5DL9nY.avif?updatedAt=1769030239347',
         date: '21-07-04',
         place: 'Rusocin',
@@ -699,13 +787,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-214_UtjRQdOcF9.avif?updatedAt=1769030239422",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-215_mbp9YYIhpl.avif?updatedAt=1769030239314",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-217_70Ga3iKSA.avif?updatedAt=1769030239274",
-        ]
+        ],
+        location: { lat: 54.227, lng: 18.630 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "jarmark21",
         title: 'Jarmark',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02425-2_5qpMf5ZNJ.avif?updatedAt=1769026294897',
         date: '21-08-13',
         place: 'Gdansk',
@@ -721,13 +811,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02430-3_RVzohwXLR.avif?updatedAt=1769026294916",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02434-2_0kdascQvv.avif?updatedAt=1769026294940",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02460-2_8nBLL9r64.avif?updatedAt=1769026294952",
-        ]
+        ],
+        location: { lat: 54.363, lng: 18.652 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "allan21",
         title: 'Allan',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04193-2_8E5MRQtXM.avif?updatedAt=1769026403620',
         coverImageCrop: 'top',
         date: '21-10-08',
@@ -747,13 +839,15 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04317_FJ4-1GgzA.avif?updatedAt=1769026403724",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04381-Edit_mx5u-QIom.avif?updatedAt=1769026403622",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/10-08/JEL04394-3_ceBRyv-CBa.avif?updatedAt=1769026403730",
-        ]
+        ],
+        location: { lat: 54.363, lng: 18.652 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
     {
         id: "letnicastrt21",
         title: 'Wrzeszcz - Letnica',
-        excerpt: 'Exploring the streets of Tokyo at night with a 35mm lens.',
-        content: 'Full content would go here...',
         coverImage: 'https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018',
         date: '21-12-18',
         place: 'Gdansk',
@@ -767,7 +861,11 @@ const rawBlogPosts: BlogPost[] = [
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04886_-Z3EEMufCg.avif?updatedAt=1769031148059",
             "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04889_O9LPmIKLq.avif?updatedAt=1769031148073",
-        ]
+        ],
+        location: { lat: 54.363, lng: 18.652 },
+        city: "Gdansk",
+        region: "tricity", 
+        country: "poland"
     },
 
 

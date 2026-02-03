@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, debounce } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import { TextScramble } from "@/components/ui/TextScramble";
 import { GoldButton } from "@/components/ui/GoldButton";
@@ -17,8 +17,10 @@ export function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const debouncedScroll = debounce(handleScroll, 50);
+    window.addEventListener("scroll", debouncedScroll);
+    return () => window.removeEventListener("scroll", debouncedScroll);
   }, []);
 
   const navLinks = [

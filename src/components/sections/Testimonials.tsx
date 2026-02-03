@@ -4,71 +4,11 @@ import { cn } from "@/lib/utils";
 import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { ArrowRight, Folder } from "lucide-react";
-import { siteConfig } from "@/config/site";
-import { getExternalDataWithFallback } from "@/lib/googleSheets";
-
-// Default/Local data used for structure and as fallback
-const LOCAL_TESTIMONIALS_META = [
-  {
-    id: 1,
-    rotation: -2.5,
-    noteColor: "#fff9c4", // Yellow
-    pinColor: "#ef5350", // Red
-    link: "fizjotusia25",
-  },
-  {
-    id: 2,
-    rotation: 1.8,
-    noteColor: "#e1f5fe", // Blue
-    pinColor: "#BB669C", // Pink pin
-  },
-  {
-    id: 3,
-    rotation: -1.2,
-    noteColor: "#f1f8e9", // Green
-    pinColor: "#6942F5", // Purple pin
-    link: "mad100",
-  },
-  {
-    id: 4,
-    rotation: 1.2,
-    noteColor: "#FFD6C4", // Green
-    pinColor: "#66bb6a", // Green pin
-  },
-  {
-    id: 5,
-    rotation: -2,
-    noteColor: "#E1FEF0", // Yellow
-    pinColor: "#EF9A50", // Orange pin
-    link: "karola24",
-  },
-  {
-    id: 6,
-    rotation: 2,
-    noteColor: "#E9EAF8", // Green
-    pinColor: "#42A5F5", // Blue pin
-    link: "tom25",
-  },
-];
-
-interface TestimonialItem {
-  id: number;
-  noteColor: string;
-  pinColor: string;
-  link?: string;
-  featured?: boolean | string;
-  name?: string;
-  role?: string;
-  text?: string;
-  name_pl?: string;
-  role_pl?: string;
-  text_pl?: string;
-}
+import { getTestimonials, type TestimonialItem } from "@/lib/contentful";
 
 const MAX_ROTATION_DEVIATION = 3.0;
 
 function TestimonialNote({ item }: { item: TestimonialItem }) {
-  const { t, language } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -116,22 +56,10 @@ function TestimonialNote({ item }: { item: TestimonialItem }) {
     y.set(0);
   };
 
-  // Content priority: Google Sheet item fields > Translation file
-  const localTranslation = (t.data.testimonials as any)[item.id] || {};
-
   const displayContent = {
-    name:
-      language === "pl"
-        ? item.name_pl || item.name || localTranslation.name || ""
-        : item.name || localTranslation.name || "",
-    role:
-      language === "pl"
-        ? item.role_pl || item.role || localTranslation.role || ""
-        : item.role || localTranslation.role || "",
-    text:
-      language === "pl"
-        ? item.text_pl || item.text || localTranslation.text || ""
-        : item.text || localTranslation.text || "",
+    name: item.name || "",
+    role: item.role || "",
+    text: item.text || "",
   };
 
   const variants = {
@@ -207,12 +135,12 @@ function TestimonialNote({ item }: { item: TestimonialItem }) {
         )}
       >
         <img
-          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
           alt=""
           className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-90"
         />
         <img
-          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+          src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
           alt=""
           className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
         />
@@ -296,9 +224,9 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
 
         {/* Layer 2: Main Outer Molding (The Thick Carved Rope) */}
         <div
-          className="absolute inset-[4px] border-8 md:border-14 border-transparent"
+          className="absolute inset-[4px] border-8 md:border-14 border-solid border-transparent"
           style={{
-            borderImage: `repeating-linear-gradient(45deg in hsl, hsl(35,34%,25%) 0px, hsl(39,34%,44%) 4px, hsl(46,35%,55%) 6px, hsl(39,34%,44%) 8px, hsl(35,34%,25%) 12px) 14`,
+            borderImage: `repeating-linear-gradient(45deg, hsl(35,34%,25%) 0px, hsl(39,34%,44%) 4px, hsl(46,35%,55%) 6px, hsl(39,34%,44%) 8px, hsl(35,34%,25%) 12px) 14 round`,
             boxShadow:
               "inset 0 0 10px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5)",
           }}
@@ -314,7 +242,7 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
                 "polygon(0 0, 100% 0, calc(100% - 32px) 100%, 32px 100%)",
               background: `
                 repeating-linear-gradient(0deg, transparent 0px, rgba(92, 64, 0, 0.15) 1px, transparent 3px),
-                linear-gradient(to bottom in hsl, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
+                linear-gradient(to bottom, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
               `,
             }}
           />
@@ -326,7 +254,7 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
                 "polygon(32px 0, calc(100% - 32px) 0, 100% 100%, 0 100%)",
               background: `
                 repeating-linear-gradient(0deg, transparent 0px, rgba(92, 64, 0, 0.15) 1px, transparent 3px),
-                linear-gradient(to top in hsl, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
+                linear-gradient(to top, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
               `,
             }}
           />
@@ -338,7 +266,7 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
                 "polygon(0 0, 100% 28px, 100% calc(100% - 28px), 0 100%)",
               background: `
                 repeating-linear-gradient(90deg, transparent 0px, rgba(92, 64, 0, 0.15) 1px, transparent 3px),
-                linear-gradient(to right in hsl, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
+                linear-gradient(to right, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
               `,
             }}
           />
@@ -350,7 +278,7 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
                 "polygon(0 28px, 100% 0, 100% 100%, 0 calc(100% - 28px))",
               background: `
                 repeating-linear-gradient(90deg, transparent 0px, rgba(92, 64, 0, 0.15) 1px, transparent 3px),
-                linear-gradient(to left in hsl, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
+                linear-gradient(to left, hsl(42,57%,47%) 0%, hsl(46,85%,92%) 30%, hsl(46,35%,52%) 60%, hsl(41,21%,26%))
               `,
             }}
           />
@@ -392,62 +320,17 @@ function OrnateGoldFrame({ children }: { children: React.ReactNode }) {
 
 export function Testimonials() {
   const { t } = useLanguage();
-  const [items, setItems] = useState<TestimonialItem[]>(
-    LOCAL_TESTIMONIALS_META as TestimonialItem[],
-  );
+  const [items, setItems] = useState<TestimonialItem[]>([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const loadData = async () => {
       setLoading(true);
-      const data = await getExternalDataWithFallback<Partial<TestimonialItem>>(
-        siteConfig.externalData.sheetID,
-        siteConfig.externalData.testimonialsId, // Using the ID as GID or sheet name
-        [], // Empty fallback
-        siteConfig.externalData.useExternal,
-      );
-
-      if (data.length > 0) {
-        // Map and filter sheet data
-        const processed = data
-          .map((item, index) => {
-            // Ensure id is a valid number
-            let id = index + 1;
-            if (item && item.id && !isNaN(Number(item.id))) {
-              id = Number(item.id);
-            }
-
-            // Find matching local meta for style seeds, or cycle through them
-            const seedIndex = Math.abs(id - 1) % LOCAL_TESTIMONIALS_META.length;
-            const styleSeed =
-              LOCAL_TESTIMONIALS_META[seedIndex] || LOCAL_TESTIMONIALS_META[0];
-
-            // Normalize featured column
-            const isFeatured =
-              item &&
-              (item.featured === undefined ||
-                item.featured === null ||
-                item.featured === "" ||
-                item.featured === true ||
-                item.featured === "true" ||
-                item.featured === "TRUE");
-
-            if (!isFeatured) return null;
-
-            // Map sheet 'color' to 'noteColor' if present
-            const noteColorFromSheet = (item as any).color || item.noteColor;
-
-            return {
-              ...styleSeed, // Start with local style defaults
-              ...item, // Overlay sheet data
-              id, // Ensure we have an ID
-              noteColor: noteColorFromSheet || styleSeed.noteColor,
-            } as TestimonialItem;
-          })
-          .filter((item): item is TestimonialItem => item !== null);
-
-        setItems(processed);
-      }
+      const data = await getTestimonials();
+      // Filter only featured if needed, but the getTestimonials can also be filtered if we want
+      // For now, let's filter if 'featured' is true
+      const featured = data.filter((item) => item.featured !== false);
+      setItems(featured);
       setLoading(false);
     };
 
@@ -486,12 +369,12 @@ export function Testimonials() {
                   }}
                 >
                   <img
-                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
                     alt=""
                     className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-70"
                   />
                   <img
-                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+                    src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
                     alt=""
                     className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
                   />
@@ -525,12 +408,12 @@ export function Testimonials() {
                 }}
               >
                 <img
-                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
                   alt=""
                   className="w-full h-full object-cover absolute top-0 left-0 mix-blend-soft-light opacity-70"
                 />
                 <img
-                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vT91pNbx8.jpg"
+                  src="https://ik.imagekit.io/j3l1n5k1/gfx/Paper-Texture-6_vhsJU_414.avif"
                   alt=""
                   className="w-full h-full object-cover absolute top-0 left-0 mix-blend-darken opacity-20"
                 />

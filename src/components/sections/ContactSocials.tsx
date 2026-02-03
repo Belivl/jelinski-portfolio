@@ -1,7 +1,13 @@
 import { siteConfig } from "@/config/site";
 import { LinkCard } from "@/components/ui/LinkCard";
-import { Palette } from "lucide-react";
+import { Palette, MapPin } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
+import {
+  Map,
+  MapControls,
+  MapMarker,
+  MarkerContent,
+} from "@/components/ui/map";
 
 export function ContactSocials() {
   const { t } = useLanguage();
@@ -119,6 +125,38 @@ export function ContactSocials() {
             <Palette className="w-8 h-8" />
           </div>
         </LinkCard>
+      </div>
+
+      {/* Map Section */}
+      <div className="mt-16 w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden border border-border shadow-2xl relative group/map">
+        <Map center={[18.56, 54.44]} zoom={8}>
+          <MapControls showZoom showCompass />
+          {/* Gdansk Marker */}
+          {/* <MapMarker longitude={18.6466} latitude={54.352}>
+            <MarkerContent>
+              <div className="p-2 bg-primary rounded-full shadow-lg border-2 border-white animate-bounce-subtle group/marker cursor-pointer relative">
+                <MapPin className="w-5 h-5 text-white" />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-bold px-2 py-1 rounded shadow-md opacity-0 group-hover/marker:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                  Gdańsk
+                </div>
+              </div>
+            </MarkerContent>
+          </MapMarker> */}
+          {/* Sopot Marker */}
+          <MapMarker longitude={18.56} latitude={54.44}>
+            <MarkerContent>
+              <div className="p-2 bg-amber-500 rounded-full shadow-lg border-2 border-white animate-bounce-subtle delay-150 group/marker cursor-pointer relative">
+                <MapPin className="w-5 h-5 text-white" />
+                <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-white text-black text-xs font-bold px-2 py-1 rounded shadow-md opacity-0 group-hover/marker:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                  Sopot
+                </div>
+              </div>
+            </MarkerContent>
+          </MapMarker>
+        </Map>
+        <div className="absolute top-4 left-4 z-10 bg-background/80 backdrop-blur-md px-4 py-2 rounded-lg border border-border shadow-sm pointer-events-none opacity-0 group-hover/map:opacity-100 transition-opacity duration-300">
+          <p className="text-sm font-medium">Tricity Area</p>
+        </div>
       </div>
     </div>
   );

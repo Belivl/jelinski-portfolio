@@ -52,17 +52,11 @@ export function BlogPost() {
       date: post.date,
     };
   });
-
-  // Get photos by tag if galleryTag is present
-  const taggedPhotos = post.galleryTag
-    ? allPhotos.filter((p) => p.tags.includes(post.galleryTag!))
-    : [];
-
   // Merge and deduplicate
   const uniqueUrls = new Set<string>();
   const postPhotos: Photo[] = [];
 
-  [...explicitPhotos, ...taggedPhotos].forEach((photo) => {
+  [...explicitPhotos].forEach((photo) => {
     if (!uniqueUrls.has(photo.url)) {
       uniqueUrls.add(photo.url);
       postPhotos.push(photo);
@@ -90,7 +84,6 @@ export function BlogPost() {
     >
       <SEO
         title={title}
-        description={post.excerpt} // Assuming post has an excerpt, otherwise fallback to generic
         image={post.coverImage}
         type="article"
       />

@@ -2,7 +2,7 @@ import { useEffect, useCallback, useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { FilmCanister } from "@/components/gallery/FilmCanister";
 import type { Photo } from "@/data/photos.ts";
-import { cn } from "@/lib/utils";
+import { cn, debounce } from "@/lib/utils";
 import { ScannerControls } from "@/components/gallery/ScannerControls";
 import { CommentsSection } from "@/components/gallery/CommentsSection";
 import { FilmstripHolder } from "@/components/gallery/FilmstripHolder";
@@ -97,9 +97,8 @@ export function PhotoLightbox({
   };
 
   // Buffer range: how many photos to render on each side
-  const BUFFER = 3;
-
   const [isMobile, setIsMobile] = useState(false);
+  const BUFFER = isMobile ? 1 : 3;
 
   // Track window dimensions for stable calculations on resize
   const [dimensions, setDimensions] = useState({
@@ -115,9 +114,12 @@ export function PhotoLightbox({
       });
       setIsMobile(window.innerWidth < 768);
     };
-    handleResize(); // Initial check
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    // Initial check
+    handleResize();
+
+    const debouncedHandleResize = debounce(handleResize, 150);
+    window.addEventListener("resize", debouncedHandleResize);
+    return () => window.removeEventListener("resize", debouncedHandleResize);
   }, []);
 
   const STRIP_HEIGHT_VH = isMobile ? 70 : 82;
@@ -347,7 +349,7 @@ export function PhotoLightbox({
                 <motion.div
                   key={`${photo.id || photoIndex}-${photoIndex}`}
                   initial={
-                    isIntroDone
+                    isIntroDone && !isMobile
                       ? {
                           x: xPos + (relativeIndex > 0 ? 800 : -800),
                           opacity: 0,
@@ -440,7 +442,7 @@ export function PhotoLightbox({
                       <SmartImage
                         src={photo.url}
                         alt={photo.title || ""}
-                        width={isCenter ? 1600 : 400} // High res for center, low res for strip neighbors
+                        width={isCenter ? (isMobile ? 800 : 1600) : 400} // Reduce mobile res to 800
                         priority={true}
                         className={cn(
                           "w-full h-full object-contain rounded-xs transition-shadow duration-500",
