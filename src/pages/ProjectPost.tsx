@@ -18,6 +18,7 @@ import { BookPost } from "@/content/projects/book.tsx";
 import { YaoPost } from "@/content/projects/yao.tsx";
 import { CoronaPost } from "@/content/projects/corona.tsx";
 import { BelialPost } from "@/content/projects/belial.tsx";
+import { NotFound } from "@/pages/404";
 
 // Map project IDs to their component implementations
 const PROJECT_COMPONENTS: Record<string, React.ComponentType> = {
@@ -43,14 +44,7 @@ export function ProjectPost() {
   const project = projects.find((p) => p.id === id);
 
   if (!project) {
-    return (
-      <div className="min-h-screen pt-32 px-6 text-center">
-        <h1 className="text-3xl text-white mb-4">{t.projects.notFound}</h1>
-        <Link to="/projects">
-          <Button variant="outline">{t.projects.back}</Button>
-        </Link>
-      </div>
-    );
+    return <NotFound />;
   }
 
   const translated = (t.data.projects as any)[project.id] || {};
@@ -74,11 +68,11 @@ export function ProjectPost() {
       />
       <article className="container mx-auto px-6 max-w-4xl cursor-default">
         <div className="mb-8">
-          <div className="flex items-center justify-between gap-4 text-sm text-gray-400 mb-4 ">
+          <div className="flex items-center justify-center gap-4 text-sm text-gray-400 mb-4 w-full ">
             <Link to="/projects">
               <Button
-                variant="outline"
-                className=" text-gray-400 hover:text-amber-500"
+                variant="ghost"
+                className=" text-gray-400 hover:text-amber-500 hover:bg-transparent hover:underline underline-offset-4 w-full md:fit"
               >
                 <ArrowLeft className="mr-2 w-4 h-4" /> {t.projects.back}
               </Button>
@@ -162,6 +156,7 @@ export function ProjectPost() {
                           src={img}
                           alt={`${title} detail ${index + 1}`}
                           width={1200}
+                          priority={index < 4}
                           className="w-full h-auto object-contain hover:scale-105 transition-transform duration-700"
                         />
                       </motion.div>

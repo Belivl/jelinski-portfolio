@@ -49,7 +49,7 @@ export async function fetchGoogleSheetData<T>(
 
     // Add a cache-busting timestamp and request 1 header row for better labeling
     const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json${sheetParam}&headers=1&t=${Date.now()}`;
-    console.log(`[GoogleSheets] Fetching: ${url}`);
+    //console.log(`[GoogleSheets] Fetching: ${url}`);
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -83,7 +83,7 @@ export async function fetchGoogleSheetData<T>(
       })
       .filter((obj): obj is T => obj !== null);
 
-    console.log(`[GoogleSheets] Final processed data:`, result);
+    //console.log(`[GoogleSheets] Final processed data:`, result);
     return result;
   } catch (error) {
     console.error("Error fetching Google Sheet data:", error);

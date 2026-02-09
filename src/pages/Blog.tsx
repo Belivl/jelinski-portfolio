@@ -1,10 +1,10 @@
-import { BlogList } from "@/components/sections/BlogList2";
+import { BlogList } from "@/components/sections/BlogList";
 import { motion } from "motion/react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SEO } from "@/components/SEO";
 import { useEffect, useState } from "react";
 import { getBlogPosts } from "@/lib/contentful";
-import type { BlogPost } from "@/data/blogData";
+import type { BlogPost } from "@/data/photos";
 
 export function Blog() {
   const { t } = useLanguage();

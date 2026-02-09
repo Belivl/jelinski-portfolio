@@ -17,12 +17,16 @@ import {
 } from "lucide-react";
 import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea"; // Assuming this exists or using stand-in
 import { useLanguage } from "@/lib/LanguageContext";
 import { DatePickerInput } from "@/components/ui/calendarInput";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { Field, FieldLabel, FieldTitle } from "@/components/ui/field";
+import { Label } from "@/components/ui/label";
+import {
+  InputGroup,
+  InputGroupInput,
+  InputGroupTextarea,
+} from "@/components/ui/input-group";
 
 const projectTypesData = [
   { id: "portrait", icon: Camera },
@@ -217,42 +221,50 @@ export function CopyableInquiry() {
     setIsSending(true);
     setEmailStatus("idle");
 
-    const templateParams = {
+    const commonParams = {
       from_name: formData.name,
       from_email: formData.email,
       subject: generateSubject(),
       message: messageBody,
       to_name: "Michal Jelinski",
     };
-    console.log(templateParams);
 
-    emailjs
-      .send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        {
-          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
-        },
-      )
-      .then(
-        (response) => {
-          console.log("EmailJS SUCCESS!", response.status, response.text);
-          setEmailStatus("success");
-          setIsSending(false);
-          setTimeout(() => setEmailStatus("idle"), 5000);
-        },
-        (error) => {
-          console.error("EmailJS FAILED...", error);
-          // If error has a text property, it's usually from EmailJS response
-          if (error.text) {
-            console.error("EmailJS Error Text:", error.text);
-          }
-          setEmailStatus("error"); // Set error state immediately
-          setIsSending(false);
-          setTimeout(() => setEmailStatus("error"), 5000); // Keep it red for a bit
-        },
-      );
+    // Primary email to site owner
+    const sendPrimary = emailjs.send(
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+      commonParams,
+      {
+        publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+      },
+    );
+
+    // Auto-reply to user
+    const sendAutoReply = import.meta.env.VITE_EMAILJS_USER_TEMPLATE_ID
+      ? emailjs.send(
+          import.meta.env.VITE_EMAILJS_SERVICE_ID,
+          import.meta.env.VITE_EMAILJS_USER_TEMPLATE_ID,
+          commonParams,
+          {
+            publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+          },
+        )
+      : Promise.resolve();
+
+    Promise.all([sendPrimary, sendAutoReply]).then(
+      ([primaryRes]) => {
+        console.log("EmailJS SUCCESS!", primaryRes.status, primaryRes.text);
+        setEmailStatus("success");
+        setIsSending(false);
+        setTimeout(() => setEmailStatus("idle"), 5000);
+      },
+      (error) => {
+        console.error("EmailJS FAILED...", error);
+        setEmailStatus("error");
+        setIsSending(false);
+        setTimeout(() => setEmailStatus("idle"), 5000);
+      },
+    );
   };
 
   return (
@@ -291,34 +303,39 @@ export function CopyableInquiry() {
 
         <div className="space-y-4">
           <div className="grid grid-cols-1 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="name">{inquiryT.form.fullName}</Label>
-              <Input
-                id="name"
-                name="name"
-                autoComplete="name"
-                placeholder={inquiryT.form.placeholders.name}
-                value={formData.name}
-                onChange={handleInputChange}
-                className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="email">{inquiryT.form.email || "Email"}</Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                required
-                autoComplete="email"
-                placeholder={
-                  inquiryT.form.placeholders.email || "example@mail.com"
-                } // Fallback placeholder in case translation update failed or not reloaded
-                value={formData.email}
-                onChange={handleInputChange}
-                className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
-              />
-            </div>
+            <Field className="gap-1">
+              <FieldLabel htmlFor="name">{inquiryT.form.fullName}</FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  id="name"
+                  name="name"
+                  autoComplete="name"
+                  placeholder={inquiryT.form.placeholders.name}
+                  value={formData.name}
+                  onChange={handleInputChange}
+                />
+              </InputGroup>
+            </Field>
+
+            <Field className="gap-1">
+              <FieldLabel htmlFor="email">
+                {inquiryT.form.email || "Email"}
+              </FieldLabel>
+              <InputGroup>
+                <InputGroupInput
+                  id="email"
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                  placeholder={
+                    inquiryT.form.placeholders.email || "example@mail.com"
+                  }
+                  value={formData.email}
+                  onChange={handleInputChange}
+                />
+              </InputGroup>
+            </Field>
           </div>
 
           <div className="grid grid-cols-1 gap-4">
@@ -331,33 +348,39 @@ export function CopyableInquiry() {
                   }
                 />
               </div>
-              <div className="w-full">
-                <Label htmlFor="location">{inquiryT.form.location}</Label>
-                <Input
-                  id="location"
-                  name="location"
-                  placeholder={inquiryT.form.placeholders.location}
-                  value={formData.location}
-                  onChange={handleInputChange}
-                  className="bg-card border-neutral-800 hover:border-amber-600 transition-colors duration-200 text-white"
-                />
-              </div>
+              <Field className="w-full gap-1">
+                <FieldLabel htmlFor="location">
+                  {inquiryT.form.location}
+                </FieldLabel>
+                <InputGroup>
+                  <InputGroupInput
+                    id="location"
+                    name="location"
+                    placeholder={inquiryT.form.placeholders.location}
+                    value={formData.location}
+                    onChange={handleInputChange}
+                  />
+                </InputGroup>
+              </Field>
             </div>
           </div>
-          <div className="space-y-2">
-            <Label htmlFor="details">{inquiryT.form.details}</Label>
-            <textarea
-              id="details"
-              name="details"
-              rows={3}
-              placeholder={inquiryT.form.placeholders.details}
-              value={formData.details}
-              onChange={handleInputChange}
-              className="flex w-full rounded-md border border-neutral-800 hover:border-amber-600 transition-all duration-200 bg-card px-3 py-2 text-sm text-white shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 resize-none"
-            />
-          </div>
+
+          <Field className="gap-1">
+            <FieldLabel htmlFor="details">{inquiryT.form.details}</FieldLabel>
+            <InputGroup>
+              <InputGroupTextarea
+                id="details"
+                name="details"
+                rows={3}
+                spellCheck="false"
+                placeholder={inquiryT.form.placeholders.details}
+                value={formData.details}
+                onChange={handleInputChange}
+              />
+            </InputGroup>
+          </Field>
           {/* Budget Section */}
-          <div className="space-y-4 p-4 rounded-md bg-card border border-neutral-800 hover:border-amber-600 transition-colors duration-200">
+          <div className="space-y-4 p-4 rounded-md bg-input/30 border border-input hover:border-primary/50 transition-colors duration-200">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <DollarSign className="w-4 h-4 text-gray-500" />
@@ -424,15 +447,17 @@ export function CopyableInquiry() {
                         ))}
                       </div>
                       <div className="flex items-center gap-2 flex-1">
-                        <Label className="text-[10px] text-gray-500 shrink-0">
+                        <FieldTitle className="text-[10px] text-gray-500 shrink-0">
                           {inquiryT.form.budget.manual}
-                        </Label>
-                        <Input
-                          name="budget"
-                          value={formData.budget}
-                          onChange={handleInputChange}
-                          className="h-7 text-xs bg-zinc-900/50 border-white/5 py-0 px-2 text-white"
-                        />
+                        </FieldTitle>
+                        <InputGroup className="h-7">
+                          <InputGroupInput
+                            name="budget"
+                            value={formData.budget}
+                            onChange={handleInputChange}
+                            className="text-xs py-0 px-2"
+                          />
+                        </InputGroup>
                       </div>
                     </div>
                   </div>
@@ -554,16 +579,16 @@ export function CopyableInquiry() {
 
             <div className="space-y-2">
               <SectionHeader>{inquiryT.preview.body}</SectionHeader>
-              <div className="relative">
-                <Textarea
+              <InputGroup>
+                <InputGroupTextarea
                   value={messageBody}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
                     setMessageBody(e.target.value);
                     setIsManualEdit(true);
                   }}
-                  className="bg-black/20 text-gray-300 min-h-[300px] font-mono text-xs border-white/5 resize-y focus-visible:ring-primary/50"
+                  className="bg-black/20 text-gray-300 min-h-[300px] font-mono text-xs border-0 resize-y focus-visible:ring-0"
                 />
-              </div>
+              </InputGroup>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">

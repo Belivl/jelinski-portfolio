@@ -4,19 +4,20 @@ import { SmartImage } from "@/components/ui/SmartImage";
 import {
   Check,
   LayoutGrid,
-  Map,
+  Plane,
   Camera,
   User,
-  Ticket,
-  Briefcase,
+  Tickets,
+  BriefcaseBusiness,
   Mountain,
   Contrast,
   PawPrint,
   Building,
   Car,
-  Layers,
+  Image,
+  Smartphone,
   Box,
-  Zap,
+  BookType,
   Palette,
   Folder,
   Brush,
@@ -35,21 +36,22 @@ interface CategoryCardProps {
 
 const categoryIcons: Record<string, any> = {
   all: LayoutGrid,
-  travel: Map,
+  travel: Plane,
   street: Camera,
   session: User,
-  event: Ticket,
-  client: Briefcase,
+  event: Tickets,
+  client: BriefcaseBusiness,
   landscape: Mountain,
   portrait: User,
+  mobile: Smartphone,
   "black-and-white": Contrast,
   animal: PawPrint,
   architecture: Building,
   cars: Car,
-  various: Layers,
+  various: Image,
   "3d": Box,
   "ui/ux": MonitorSmartphone,
-  branding: Zap,
+  branding: BookType,
   design: Palette,
   projects: Folder,
   art: Brush,
@@ -66,17 +68,17 @@ export function CategoryCard({
   const { t } = useLanguage();
   const Icon = categoryIcons[category.toLowerCase()] || LayoutGrid;
   return (
-    <div className="w-full camera-leather p-[4px] pt-0 rounded-lg border-b border-r border-neutral-900 group">
-      <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.9)] rounded-lg group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.4)] transition-all duration-300">
+    <div className="w-full p-1 rounded-lg border border-b-neutral-800 border-x-neutral-800/60 border-t-neutral-900/40  group bg-black/50">
+      <div className="shadow-[8px_12px_20px_0px_rgba(0,0,0,0.4)] rounded-lg group-focus:shadow-[0_0_0px_rgba(0,0,0,0.3)] group-hover:shadow-[12px_16px_12px_0px_rgba(0,0,0,0.4)] transition-all duration-300">
         <motion.button
           whileHover={{ y: -3, x: -1 }}
           whileTap={{ scale: 0.98, x: 1, y: 3 }}
           onClick={onClick}
           className={cn(
-            "relative group w-full aspect-3/1 rounded-lg overflow-hidden text-left transition-all duration-300 -translate-x-[2px]",
-            "border border-white/5 border-l border-b-3 border-l-neutral-700 hover:border-amber-500/50",
+            "relative group w-full aspect-3/1 rounded-lg overflow-hidden text-left transition-all duration-300 -translate-x-[2px] -translate-y-1",
+            "border border-white/5 border-l border-b-3  border-x-neutral-800 border-b-neutral-900/70 border-t-neutral-600/80 hover:border-amber-500/50",
             isActive
-              ? "ring-2 ring-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+              ? "ring-2 ring-amber-500 shadow-[0_0_20px_rgba(245,158,11,0.5)] translate-x-0 translate-y-1"
               : "shadow-xl",
           )}
         >
@@ -86,6 +88,7 @@ export function CategoryCard({
               <SmartImage
                 src={coverImage}
                 alt={category}
+                showAltOnHover={false}
                 className={cn(
                   "absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-110",
                   isActive ? "scale-110" : "scale-100",
@@ -93,10 +96,8 @@ export function CategoryCard({
               />
               <div
                 className={cn(
-                  "absolute inset-0 bg-linear-to-t dark:from-black/90 dark:via-black/20 to-transparent transition-opacity duration-300",
-                  isActive
-                    ? "opacity-100"
-                    : "opacity-40 group-hover:opacity-60",
+                  "absolute inset-0 bg-linear-to-t dark:from-black/90 dark:via-black/70 to-black/20 transition-opacity duration-300 z-10",
+                  isActive ? "opacity-0" : "opacity-90 group-hover:opacity-60",
                 )}
               />
             </>
@@ -105,7 +106,7 @@ export function CategoryCard({
           )}
 
           {/* Content */}
-          <div className="absolute inset-0 p-4 flex flex-col justify-center items-center">
+          <div className="absolute inset-0 p-4 flex flex-col justify-center items-center z-20">
             <div className="absolute inset-0 bg-linear-to-r dark:from-black/90 dark:via-black/80 dark:to-black/30 from-neutral-200/90 via-neutral-200/80 to-neutral-100/30"></div>
             <div className="flex items-center md:justify-center justify-start gap-4 w-full relative">
               <div className="flex flex-col items-center justify-center">

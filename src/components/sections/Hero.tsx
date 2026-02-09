@@ -118,16 +118,17 @@ export function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
+          className="text-3xl sm:text-4xl md:text-6xl text-shadow-[0_8px_10px_rgba(0,0,0,0.5)] lg:text-7xl xl:text-8xl font-black tracking-tighter mb-6 text-foreground mix-blend-difference dark:mix-blend-normal relative uppercase z-50 px-2"
         >
-          <div className="text-truncate cursor-default">
+          <div className="text-truncate cursor-default ">
             <span className=" tracking-normal text-truncate">
               {t.hero.name}
             </span>
           </div>
           <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
-            <div
-              className="relative font-black tracking-normal z-50  cursor-default hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
+            <Link
+              to="/blog"
+              className="relative font-black tracking-normal z-50 hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
             >
@@ -135,6 +136,7 @@ export function Hero() {
                 <Camera className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all" />
                 {t.hero.photographer}
               </div>
+
               <AnimatePresence>
                 {hovered === "photographer" && (
                   <>
@@ -234,9 +236,10 @@ export function Hero() {
                   </>
                 )}
               </AnimatePresence>
-            </div>{" "}
-            <div
-              className="relative group font-black  duration-300 tracking-normal z-50 inline-block cursor-default hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
+            </Link>{" "}
+            <Link
+              to="/projects"
+              className="relative group font-black  duration-300 tracking-normal z-50 inline-block hover:text-amber-500 hover:scale-110 transition-all hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("designer")}
               onMouseLeave={() => setHovered(null)}
             >
@@ -342,7 +345,7 @@ export function Hero() {
                   </>
                 )}
               </AnimatePresence>
-            </div>{" "}
+            </Link>{" "}
           </div>
           <div className="text-truncate  cursor-default">{t.hero.location}</div>
         </motion.div>
@@ -385,7 +388,7 @@ export function Hero() {
         viewport={{ once: true }}
         className="animate-bounce absolute bottom-2 md:bottom-10 left-1/2 transform -translate-x-1/2 opacity-50"
       >
-        <div className="flex items-center flex-col font-black uppercase text-sm md:text-xl gap-1  animate-pulse  cursor-move">
+        <div className="flex items-center flex-col font-black uppercase text-sm md:text-xl gap-1  animate-pulse  cursor-default">
           {t.hero.more}
           <ArrowBigDown className="w-5 h-5 dark:text-neutral-100  stroke-[3px] group-hover:-rotate-45 transition-all duration-300 ease-out" />
         </div>

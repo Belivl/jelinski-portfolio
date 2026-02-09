@@ -10,8 +10,8 @@ import { SEO } from "@/components/SEO";
 import { useLanguage } from "@/lib/LanguageContext";
 import { AboutBelial } from "@/components/sections/AboutBelial";
 
-import { PROJECT_TABS } from "@/data/projectTabs";
-import type { ProjectTabId } from "@/data/projectTabs";
+import { PROJECT_TABS } from "@/data/categoryCovers";
+import type { ProjectTabId } from "@/data/categoryCovers";
 import { Card2 } from "@/components/ui/Card2";
 
 export function Projects() {

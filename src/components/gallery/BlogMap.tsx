@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import type { BlogPost } from "@/data/blogData";
+import type { BlogPost } from "@/data/photos";
 import { useLanguage } from "@/lib/LanguageContext";
 import { Layers, Navigation } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,6 +26,7 @@ export function BlogMap({ posts }: BlogMapProps) {
   const map = useRef<maplibregl.Map | null>(null);
   const [zoom] = useState(4);
   const [center] = useState({ lng: 18.64, lat: 54.35 }); // Default to Gdansk
+  const [currentZoom, setCurrentZoom] = useState(zoom);
 
   // Filters
   const [regionFilter, setRegionFilter] = useState<
@@ -50,18 +51,40 @@ export function BlogMap({ posts }: BlogMapProps) {
     });
   }, [postsWithLocation, regionFilter, countryFilter]);
 
-  // Group posts by exactly the same coordinates
+  // Group posts by proximity based on zoom level
   const groupedPosts = useMemo(() => {
-    const groups: Record<string, BlogPost[]> = {};
+    const groups: BlogPost[][] = [];
+    const thresholdBase = 11.2; // Degrees at zoom 0 (approx 40px on 1024px map)
+    const threshold = thresholdBase / Math.pow(2, currentZoom);
+
     filteredPosts.forEach((post) => {
-      if (post.location) {
-        const key = `${post.location.lat}_${post.location.lng}`;
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(post);
+      if (!post.location) return;
+
+      let found = false;
+      for (const group of groups) {
+        const first = group[0];
+        if (!first.location) continue;
+
+        // Simple Euclidean distance on lat/lng (with basic lat compression)
+        const latDiff = post.location.lat - first.location.lat;
+        const lngDiff =
+          (post.location.lng - first.location.lng) *
+          Math.cos((post.location.lat * Math.PI) / 180);
+        const dist = Math.sqrt(latDiff * latDiff + lngDiff * lngDiff);
+
+        if (dist < threshold) {
+          group.push(post);
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        groups.push([post]);
       }
     });
-    return Object.values(groups);
-  }, [filteredPosts]);
+    return groups;
+  }, [filteredPosts, currentZoom]);
 
   const markers = useRef<maplibregl.Marker[]>([]);
 
@@ -77,6 +100,13 @@ export function BlogMap({ posts }: BlogMapProps) {
     });
 
     map.current.addControl(new maplibregl.NavigationControl(), "top-right");
+
+    // Update zoom state when map is zoomed
+    map.current.on("zoomend", () => {
+      if (map.current) {
+        setCurrentZoom(map.current.getZoom());
+      }
+    });
   }, [center, zoom]);
 
   useEffect(() => {
@@ -108,6 +138,7 @@ export function BlogMap({ posts }: BlogMapProps) {
         width: "100%",
         height: "100%",
         display: "flex",
+        gap: "2px",
         alignItems: "center",
         justifyContent: "center",
         boxShadow: `0 0 15px ${color}80`,
@@ -122,8 +153,8 @@ export function BlogMap({ posts }: BlogMapProps) {
       // Count span
       const countSpan = document.createElement("span");
       Object.assign(countSpan.style, {
-        fontWeight: "bold",
-        fontSize: "12px",
+        fontWeight: "semibold",
+        fontSize: "14px",
         marginRight: group.length > 1 ? "2px" : "0",
       });
       countSpan.textContent = group.length > 1 ? group.length.toString() : "";
@@ -168,40 +199,77 @@ export function BlogMap({ posts }: BlogMapProps) {
             : `margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px;`;
 
           return `
-                <div style="${itemStyle}">
+                <a href="/blog/${p.id}" style="${itemStyle}" class="flex flex-col items-start justify-center">
                     <img src="${p.coverImage}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 4px; margin-bottom: 4px;" />
                     <div style="font-weight: bold; font-size: ${isMultiple ? "12px" : "14px"}; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="${p.title}">${p.title}</div>
                     <div style="font-size: 10px; color: #a3a3a3;">${p.date}</div>
-                    <a href="/blog/${p.id}" style="color: ${pColor}; font-size: 11px; text-decoration: none; display: block; margin-top: auto;">View Story →</a>
-                </div>
+                    <span style="color: ${pColor}; font-size: 11px; text-decoration: none; display: block; margin-top: auto;">View Story →</span>
+                </a>
             `;
         })
         .join("");
 
       popupContent.innerHTML = imagesHtml;
 
+      if (!firstPost.location) return;
+
+      const marker = new maplibregl.Marker({ element: el })
+        .setLngLat([firstPost.location.lng, firstPost.location.lat])
+        .addTo(map.current!);
+
       const popup = new maplibregl.Popup({
         offset: 25,
         closeButton: false,
       }).setDOMContent(popupContent);
 
-      const marker = new maplibregl.Marker({ element: el })
-        .setLngLat([firstPost.location.lng, firstPost.location.lat])
-        .setPopup(popup)
-        .addTo(map.current!);
+      marker.setPopup(popup);
+
+      // If it's a cluster, handle click-to-zoom vs popup
+      if (group.length > 1) {
+        // Check if there's any point in zooming (do they have different coordinates?)
+        const hasMultipleCoordinates = group.some(
+          (p) =>
+            p.location &&
+            (p.location.lat !== firstPost.location?.lat ||
+              p.location.lng !== firstPost.location?.lng),
+        );
+
+        el.addEventListener("click", (e) => {
+          const m = map.current;
+          if (!m) return;
+
+          const currentZoomLevel = m.getZoom();
+          // If they are all at the exact same spot OR we've reached high zoom,
+          // don't stop propagation, letting the popup show.
+          if (
+            currentZoomLevel < 17 &&
+            hasMultipleCoordinates &&
+            firstPost.location
+          ) {
+            e.stopPropagation(); // Stop popup from opening, we want to zoom first
+            m.flyTo({
+              center: [firstPost.location.lng, firstPost.location.lat],
+              zoom: Math.min(currentZoomLevel + 2, 18),
+              duration: 800,
+            });
+          }
+        });
+      }
 
       markers.current.push(marker);
     });
+  }, [groupedPosts]);
 
-    // Fit bounds if markers exist
-    if (filteredPosts.length > 0) {
-      const bounds = new maplibregl.LngLatBounds();
-      filteredPosts.forEach((p) => {
-        if (p.location) bounds.extend([p.location.lng, p.location.lat]);
-      });
-      map.current.fitBounds(bounds, { padding: 50, maxZoom: 10 });
-    }
-  }, [groupedPosts, filteredPosts, t.blog.multiplePhotos]);
+  // Handle fit bounds only when filters change, not on every zoom/cluster update
+  useEffect(() => {
+    if (!map.current || filteredPosts.length === 0) return;
+
+    const bounds = new maplibregl.LngLatBounds();
+    filteredPosts.forEach((p) => {
+      if (p.location) bounds.extend([p.location.lng, p.location.lat]);
+    });
+    map.current.fitBounds(bounds, { padding: 50, maxZoom: 10 });
+  }, [filteredPosts]);
 
   return (
     <div className="relative w-full h-[600px] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-neutral-900 mt-20">

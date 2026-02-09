@@ -32,7 +32,7 @@ export default function Drag() {
   };
 
   return (
-    <div className="relative flex items-center justify-center w-[200px] h-[200px] md:w-[500px] md:h-[500px] pointer-events-auto">
+    <div className="relative flex items-center justify-center w-[200px] h-[120px] md:w-[500px] md:h-[300px] pointer-events-auto">
       {/* The "Socket" or Constraint Area */}
       <div
         ref={constraintsRef}

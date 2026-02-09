@@ -66,7 +66,7 @@ const DatabaseTools = lazy(() =>
   })),
 );
 const NotFound = lazy(() =>
-  import("@/pages/NotFound").then((module) => ({ default: module.NotFound })),
+  import("@/pages/404").then((module) => ({ default: module.NotFound })),
 );
 
 // Loading component for Suspense
@@ -131,6 +131,7 @@ function AppContent() {
                 }
               />
               {/* 404 */}
+              <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AnimatePresence>

@@ -1,69 +1,91 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
 import { getPhotos, type Photo } from "@/data/photos.ts";
-import { blogPosts } from "@/data/blogData";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { PhotoLightbox } from "@/components/gallery/PhotoLightboxNew";
-
 import { useLanguage } from "@/lib/LanguageContext";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { SEO } from "@/components/SEO";
+import { NotFound } from "@/pages/404";
+import { getBlogPost, getBlogPosts } from "@/lib/contentful";
+import type { BlogPost as BlogPostType } from "@/data/photos";
 
 export function BlogPost() {
   const { t } = useLanguage();
   const { id } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const post = blogPosts.find((p) => p.id === id);
+  const [post, setPost] = useState<BlogPostType | null>(null);
+  const [allPosts, setAllPosts] = useState<BlogPostType[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  if (!post) {
-    return (
-      <div className="min-h-screen pt-32 container mx-auto px-6 text-center">
-        <h1 className="text-4xl font-bold mb-4">{t.blog.postNotFound}</h1>
-        <Link to="/blog">
-          <Button variant="default">{t.blog.back}</Button>
-        </Link>
-      </div>
-    );
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!id) return;
+      setIsLoading(true);
+      try {
+        const [targetPost, posts] = await Promise.all([
+          getBlogPost(id),
+          getBlogPosts(),
+        ]);
+        setPost(targetPost);
+        setAllPosts(posts);
+      } catch (error) {
+        console.error("Error fetching blog post:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchData();
+  }, [id]);
 
-  const translated = (t.data.blog as any)[post.id] || {};
-  const title = translated.title || post.title;
-
+  // Handle deep linking - MOVED UP and made safe
+  // We need to calculate postPhotos before this hook, or memoize it
   const allPhotos = getPhotos();
 
-  // Map post images to Photo objects
-  const explicitPhotos: Photo[] = post.images.map((imgUrl, index) => {
-    // Try to find existing photo object
-    const existingPhoto = allPhotos.find((p) => p.url === imgUrl);
-    if (existingPhoto) return existingPhoto;
+  const postPhotos = useMemo(() => {
+    if (!post) return [];
 
-    // Fallback for images not in the main photos array
-    return {
-      id: `post-${post.id}-img-${index}`,
-      url: imgUrl,
-      title: title,
-      category: "event", // Default category
-      camera: "Unknown",
-      tags: [],
-      date: post.date,
-    };
-  });
-  // Merge and deduplicate
-  const uniqueUrls = new Set<string>();
-  const postPhotos: Photo[] = [];
+    const translated = (t.data.blog as any)[post.id] || {};
+    const title = translated.title || post.title;
 
-  [...explicitPhotos].forEach((photo) => {
-    if (!uniqueUrls.has(photo.url)) {
-      uniqueUrls.add(photo.url);
-      postPhotos.push(photo);
-    }
-  });
+    // Map post images to Photo objects
+    const explicitPhotos: Photo[] = post.images.map(
+      (imgUrl: string, index: number) => {
+        // Try to find existing photo object
+        const existingPhoto = allPhotos.find((p: Photo) => p.url === imgUrl);
+        if (existingPhoto) return existingPhoto;
 
-  // Handle deep linking
+        // Fallback for images not in the main photos array
+        return {
+          id: `post-${post.id}-img-${index}`,
+          url: imgUrl,
+          title: title,
+          category: "event", // Default category
+          camera: "Unknown",
+          tags: [],
+          date: post.date,
+        };
+      },
+    );
+
+    // Merge and deduplicate
+    const uniqueUrls = new Set<string>();
+    const result: Photo[] = [];
+
+    [...explicitPhotos].forEach((photo: Photo) => {
+      if (!uniqueUrls.has(photo.url)) {
+        uniqueUrls.add(photo.url);
+        result.push(photo);
+      }
+    });
+
+    return result;
+  }, [post, allPhotos, t.data.blog]);
+
   useEffect(() => {
     const photoId = searchParams.get("photoId");
     if (photoId && postPhotos.length > 0) {
@@ -75,6 +97,21 @@ export function BlogPost() {
     }
   }, [searchParams, postPhotos]);
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen pt-32 pb-20 bg-background flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500" />
+      </div>
+    );
+  }
+
+  if (!post) {
+    return <NotFound />;
+  }
+
+  const translated = (t.data.blog as any)[post.id] || {};
+  const title = translated.title || post.title;
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -82,18 +119,14 @@ export function BlogPost() {
       exit={{ opacity: 0 }}
       className="min-h-screen pt-32 pb-20 bg-background"
     >
-      <SEO
-        title={title}
-        image={post.coverImage}
-        type="article"
-      />
+      <SEO title={title} image={post.coverImage} type="article" />
       <article className="container mx-auto px-6 max-w-4xl cursor-default">
         <div className="mb-8">
-          <div className="flex items-center justify-between gap-4 text-sm text-gray-400 mb-4 w-fill md:w-fit">
+          <div className="flex items-center justify-center gap-4 text-sm text-gray-400 mb-4 w-fill">
             <Link to="/blog">
               <Button
-                variant="outline"
-                className=" text-gray-400 hover:text-amber-500 w-fill md:w-fit"
+                variant="ghost"
+                className=" text-gray-400 hover:text-amber-500 hover:bg-transparent hover:underline underline-offset-4 w-fill md:w-fit"
               >
                 <ArrowLeft className="mr-2 w-4 h-4" /> {t.blog.back}
               </Button>
@@ -122,11 +155,8 @@ export function BlogPost() {
             src={post.coverImage}
             alt={title}
             width={1600}
+            priority={true}
             className={`w-full h-full object-cover object-${post.coverImageCrop}`}
-            loading="lazy"
-            {...({
-              layoutId: `blog-cover-${post.id}`,
-            } as any)}
           />
         </div>
 
@@ -150,6 +180,7 @@ export function BlogPost() {
                   src={photo.url}
                   alt={photo.title || ""}
                   width={1200}
+                  priority={index < 3}
                   className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-110 border dark:border-neutral-800"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
@@ -161,12 +192,12 @@ export function BlogPost() {
         <div className="mt-16 pt-8  flex flex-col gap-8">
           <div className="flex justify-between items-center pt-8 border-t border-white/10">
             {(() => {
-              const currentIndex = blogPosts.findIndex((p) => p.id === post.id);
+              const currentIndex = allPosts.findIndex((p) => p.id === post.id);
               const prevPost =
-                currentIndex > 0 ? blogPosts[currentIndex - 1] : null;
+                currentIndex > 0 ? allPosts[currentIndex - 1] : null;
               const nextPost =
-                currentIndex < blogPosts.length - 1
-                  ? blogPosts[currentIndex + 1]
+                currentIndex < allPosts.length - 1
+                  ? allPosts[currentIndex + 1]
                   : null;
 
               return (

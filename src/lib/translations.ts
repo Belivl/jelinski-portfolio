@@ -55,6 +55,7 @@ export const translations = {
             filterByTags: "Filter by Tags",
             otherTags: "Other",
             selectCamera: "Select Camera",
+            selCat: "Selected category:",
             tagGroupNames: {
                 Genre: "Genre",
                 Subject: "Subject",
@@ -130,8 +131,9 @@ export const translations = {
                 architecture: "Architecture",
                 cars: "Cars",
                 various: "Various",
+                mobile: "Mobile",
                 "3d": "3D",
-                "ui-ux": "UI/UX",
+                "ui/ux": "UI/UX",
                 branding: "Branding",
                 design: "Design",
                 projects: "Projects",
@@ -264,8 +266,8 @@ export const translations = {
                 form: {
                     fullName: "Full Name",
                     email: "Your Email",
-                    date: "Project Date",
-                    location: "Project Location",
+                    date: "Project Date (optional)",
+                    location: "Project Location (optional)",
                     budget: {
                         toggle: "Do you have a fixed budget?",
                         range: "Range: 500 - 4000+",
@@ -429,6 +431,14 @@ export const translations = {
             },
             save: "Save Preferences",
         },
+        notFound: {
+            title: "404 - Frame Empty",
+            heading: "This frame is ",
+            empty: "empty",
+            description: "Even the best photographers miss a shot sometimes. The best moments are waiting for you in the gallery.",
+            viewGallery: "View Gallery",
+            backHome: "Back Home",
+        },
         data: {
             projects: {
                 '1': {
@@ -553,6 +563,7 @@ export const translations = {
             filterByTags: "Filtruj Po Tagach",
             otherTags: "Inne",
             selectCamera: "Wybierz Aparat",
+            selCat: "Wybrana kategoria:",
             tagGroupNames: {
                 Genre: "Gatunek",
                 Subject: "Temat",
@@ -623,13 +634,14 @@ export const translations = {
                 client: "Klient",
                 landscape: "Krajobraz",
                 portrait: "Portret",
+                mobile: "Mobilne",
                 "black-and-white": "Czarno-białe",
                 animal: "Zwierzęta",
                 architecture: "Architektura",
                 cars: "Samochody",
                 various: "Różne",
                 "3d": "3D",
-                "ui-ux": "UI/UX",
+                "ui/ux": "UI/UX",
                 branding: "Branding",
                 design: "Design",
                 projects: "Projekty",
@@ -671,7 +683,7 @@ export const translations = {
             title: "O Mnie",
             description: "Jako wszechstronny artysta, łączę wiedzę z zakresu projektowania graficznego, modelowania 3D i projektowania UI z pasją do fotografii i filmografii. Rozpoczynając pracę jako freelancer w 2015 roku, wyruszyłem w podróż pełną eksploracji i innowacji. Moje wyczucie estetyki motywuje mnie do tworzenia wizualnie urzekających doświadczeń w różnych mediach. Poza moimi głównymi dyscyplinami, zajmuję się tworzeniem stron internetowych, rozwijając swoje umiejętności i przesuwając granice sztuki cyfrowej w wolnym czasie.",
             description2: "Napędzany różnorodną paletą wpływów, wypełniam swoje kreatywne przedsięwzięcia pulsującymi rytmami i eklektycznymi melodiami dubstepu, drum & bassu, rocka i rapu. Muzyka to dla mnie nie tylko ścieżka dźwiękowa – to siła napędowa, inspirująca moje projekty i kinematografię swoją energią i emocjami. Niezależnie od tego, czy rzeźbię trójwymiarowe krajobrazy, tworzę intuicyjne interfejsy użytkownika, czy też robię idealne zdjęcie obiektywem, synergia między moją pasją do projektowania i miłością do muzyki kształtuje każdy projekt, którego się podejmuję.",
-            description3: "Uwielbiam kuchnię włoską i azjatycką. Codziennie inspiruję się tradycyjną japońską sztuką i wzornictwem, dekorując moje mieszkanie. Przepadałem za pistacjami, zanim polączono je z kadayif.",
+            description3: "Uwielbiam kuchnię włoską i azjatycką. Codziennie inspiruję się tradycyjną japońską sztuką i wzornictwem, dekorując moje mieszkanie. Przepadałem za pistacjami, zanim połączono je z kadayif.",
             experience: "Doświadczenie",
             playlist: "Muzyczne Playlisty",
             obsession: "Aktualna Obsesja",
@@ -764,8 +776,8 @@ export const translations = {
                 form: {
                     fullName: "Imię i nazwisko",
                     email: "Twój Email",
-                    date: "Data",
-                    location: "Lokalizacja",
+                    date: "Data Projektu (opcjonalnie)",
+                    location: "Lokalizacja Projektu (opcjonalnie)",
                     budget: {
                         toggle: "Czy masz ustalony budżet?",
                         range: "Zakres: 500 - 4000+",
@@ -927,7 +939,15 @@ export const translations = {
                 light: "Jasny",
                 lightLabel: "Czysty i Jasny",
             },
-            save: "Zapisz Preferencje",
+            save: "Zapisz preferencje",
+        },
+        notFound: {
+            title: "404 - Pusty Kadr",
+            heading: "Ten kadr jest ",
+            empty: "pusty",
+            description: "Nawet najlepszym fotografom zdarza się chybić. Najlepsze momenty czekają na Ciebie w galerii.",
+            viewGallery: "Zobacz Galerię",
+            backHome: "Powrót",
         },
         data: {
             projects: {

@@ -3,7 +3,6 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { ArrowUp, ArrowDown, Map as MapIcon, LayoutGrid } from "lucide-react";
 import { CategoryCard } from "@/components/gallery/CategoryCard";
-import { blogPosts } from "@/data/blogData";
 import { CATEGORY_COVERS } from "@/data/categoryCovers";
 import {
   Select,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/select";
 import { Card2 } from "@/components/ui/Card2";
 import { useLanguage } from "@/lib/LanguageContext";
+import type { BlogPost } from "@/data/photos";
 
 interface BlogFilterBarProps {
   selectedCategory: string;
@@ -25,6 +25,7 @@ interface BlogFilterBarProps {
   setSortOrder: (order: "desc" | "asc") => void;
   viewMode: "grid" | "map";
   setViewMode: (mode: "grid" | "map") => void;
+  posts: BlogPost[];
 }
 
 export function BlogFilterBar({
@@ -36,16 +37,24 @@ export function BlogFilterBar({
   setSortOrder,
   viewMode,
   setViewMode,
+  posts,
 }: BlogFilterBarProps) {
   const { t } = useLanguage();
 
-  const CATEGORY_ORDER = ["client", "event", "session", "travel", "street"];
+  const CATEGORY_ORDER = [
+    "client",
+    "event",
+    "session",
+    "travel",
+    "street",
+    "mobile",
+  ];
 
   const categories = ["all", ...CATEGORY_ORDER];
 
   const years = useMemo(() => {
     const yrs = new Set(
-      blogPosts.map((post) => {
+      posts.map((post) => {
         // Assuming date format is YY-MM-DD or YYYY-MM-DD
         const dateParts = post.date.split("-");
         const year =
@@ -54,7 +63,7 @@ export function BlogFilterBar({
       }),
     );
     return ["all", ...Array.from(yrs).sort((a, b) => b.localeCompare(a))];
-  }, []);
+  }, [posts]);
 
   return (
     <Card2>
@@ -90,7 +99,7 @@ export function BlogFilterBar({
               variant={viewMode === "grid" ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode("grid")}
-              className={`h-9 px-3 gap-2 ${viewMode === "grid" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
+              className={`h-9 hover:bg-neutral-800 px-3 gap-2 ${viewMode === "grid" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
             >
               <LayoutGrid className="w-4 h-4" />
               <span className="hidden sm:inline">{t.blog.showGrid}</span>
@@ -99,7 +108,7 @@ export function BlogFilterBar({
               variant={viewMode === "map" ? "default" : "ghost"}
               size="sm"
               onClick={() => setViewMode("map")}
-              className={`h-9 px-3 gap-2 ${viewMode === "map" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
+              className={`h-9 hover:bg-neutral-800 px-3 gap-2 ${viewMode === "map" ? "bg-amber-500 hover:bg-amber-600 text-black" : "text-neutral-400 hover:text-white"}`}
             >
               <MapIcon className="w-4 h-4" />
               <span className="hidden sm:inline">{t.blog.showMap}</span>
@@ -119,7 +128,7 @@ export function BlogFilterBar({
                   setSelectedCategory("all");
                   setSelectedYear("all");
                 }}
-                className="text-amber-500 hover:text-amber-400 hover:bg-amber-500/10 px-4 h-11 transition-all w-full"
+                className="text-red-500 hover:text-red-400 hover:bg-red-500/10 px-4 h-11 transition-all w-full"
               >
                 {t.blog.clearAllFilters}
               </Button>
@@ -128,7 +137,7 @@ export function BlogFilterBar({
           {/* Year Filter */}
           <div className="flex flex-col gap-0 min-w-[140px]">
             <Select value={selectedYear} onValueChange={setSelectedYear}>
-              <SelectTrigger className="w-full dark:bg-neutral-900 dark:border-neutral-800 hover:border-amber-500/50 transition-colors h-11 ">
+              <SelectTrigger className="w-full bg-background   hover:border-amber-500/50 border-white/10 hover:bg-amber-500/10 transition-colors h-11 ">
                 <SelectValue placeholder={t.blog.allYears} />
               </SelectTrigger>
               <SelectContent className="dark:bg-neutral-900 dark:border-white/10 dark:text-neutral-200">
@@ -151,10 +160,11 @@ export function BlogFilterBar({
           <div className="flex flex-col gap-0">
             <Button
               variant="outline"
+              size="sm"
               onClick={() =>
                 setSortOrder(sortOrder === "desc" ? "asc" : "desc")
               }
-              className="h-11 dark:bg-neutral-900 dark:border-neutral-800 hover:border-amber-500/50 hover:bg-amber-500/10 dark:text-neutral-200 gap-2 min-w-[140px]"
+              className=" bg-background border-white/10 hover:border-amber-500/50 hover:bg-amber-500/10 text-neutral-200 gap-2 min-w-[140px] md:w-fit w-full"
             >
               {sortOrder === "desc" ? t.blog.newestFirst : t.blog.oldestFirst}
               {sortOrder === "desc" ? (

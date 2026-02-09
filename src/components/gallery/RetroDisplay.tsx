@@ -22,14 +22,18 @@ export function RetroDisplay({
     <div
       className={cn(
         "relative bg-[#0a0f0a] border-4 border-[#1a1f1a] border-b-4 border-t-4 border-t-black/10 border-b-[#2c352c] rounded-lg overflow-hidden shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] p-2 flex flex-col justify-center min-h-[100px] min-w-[300px]",
-        className
+        className,
       )}
     >
       {/* Screen Effects */}
       <div className="absolute inset-0 z-10 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay" />
       <div className="absolute inset-0 z-10 pointer-events-none bg-linear-to-b from-transparent via-neutral-500/5 to-transparent bg-size-[100%_4px]" />
       <div className="absolute inset-0 z-20 pointer-events-none shadow-[inset_0_0_20px_rgba(0,0,0,0.8)]" />
-
+      <motion.div
+        animate={{ y: ["0px", "100px"] }}
+        transition={{ duration: 4, repeat: Infinity }}
+        className="border border-emerald-500/20 blur-[2px] z-20"
+      ></motion.div>
       {/* Content */}
       <div className="relative z-0 flex flex-col gap-1 font-mono text-neutral-300">
         <GlowContent blurAmount="blur-sm" glowOpacity="opacity-40">
@@ -47,15 +51,15 @@ export function RetroDisplay({
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1.5 truncate">
               <GlowContent blurAmount="blur-sm" glowOpacity="opacity-30">
-                <MapPin className="w-3 h-3" />
-              </GlowContent>
-              {place || "---"}
-            </span>
-            <span className="flex items-center gap-1.5 truncate">
-              <GlowContent blurAmount="blur-sm" glowOpacity="opacity-30">
                 <Calendar className="w-3 h-3" />
               </GlowContent>
               {date || "---"}
+            </span>
+            <span className="flex items-center gap-1.5 truncate">
+              <GlowContent blurAmount="blur-sm" glowOpacity="opacity-30">
+                <MapPin className="w-3 h-3" />
+              </GlowContent>
+              {place || "---"}
             </span>
           </div>
           <span className="flex items-center gap-1.5 truncate">

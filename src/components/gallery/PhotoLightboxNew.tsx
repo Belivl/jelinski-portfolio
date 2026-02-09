@@ -48,6 +48,13 @@ export function PhotoLightbox({
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Don't intercept if typing in an input or textarea
+      const isInput =
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement;
+
+      if (isInput) return;
+
       if (e.key === "ArrowRight") handleNext();
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "Escape") onClose();
@@ -218,7 +225,6 @@ export function PhotoLightbox({
           <FilmstripHolder
             showCloseButton={true}
             onClose={onClose}
-            rotation={currentIndex * 120}
           />
         </div>
       )}
@@ -300,7 +306,7 @@ export function PhotoLightbox({
               transform: `translate(-50%, -85%)`,
             }}
           >
-            <FilmstripHolder rotation={currentIndex * 120} />
+            <FilmstripHolder />
           </motion.div>
         )}
 
@@ -444,6 +450,7 @@ export function PhotoLightbox({
                         alt={photo.title || ""}
                         width={isCenter ? (isMobile ? 800 : 1600) : 400} // Reduce mobile res to 800
                         priority={true}
+                        showAltOnHover={false}
                         className={cn(
                           "w-full h-full object-contain rounded-xs transition-shadow duration-500",
                           isMobile &&

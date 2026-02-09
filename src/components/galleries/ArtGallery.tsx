@@ -4,7 +4,6 @@ import { GalleryAccordion } from "@/components/galleries/GalleryAccordion";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { SimpleLightbox } from "@/components/gallery/SimpleLightbox";
 import { RevealImage } from "@/components/ui/RevealImage";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 
 // Consolidated Art Images Data
 const ART_IMAGES = [
@@ -319,7 +318,6 @@ export function ArtGallery() {
         exit={{ opacity: 0 }}
         className="flex flex-col gap-4 w-full"
       >
-        <SectionHeader>2021</SectionHeader>
         <GalleryAccordion year="2021" defaultOpen={true}>
           {/* Row 1 */}
           <motion.div
@@ -353,13 +351,13 @@ export function ArtGallery() {
             {["noise-alt1", "noisesilencev3", "silencev2"].map((id) => (
               <div
                 key={id}
-                className="overflow-hidden bg-neutral-900 text-neutral-500 cursor-pointer"
+                className="overflow-hidden bg-neutral-900 text-neutral-500 cursor-pointer hover:border-amber-500 hover:border"
                 onClick={() => openLightbox(id)}
               >
                 <SmartImage
                   src={getImg(id).src}
                   alt={getImg(id).alt}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500 "
                 />
               </div>
             ))}
@@ -491,7 +489,7 @@ export function ArtGallery() {
           </div>
 
           {/* Other 2020 */}
-          <div className="w-full grid grid-cols-3 gallery-card">
+          <div className="w-full grid grid-cols-3 ">
             {["exlibris", "lu2", "wrists"].map((id) => (
               <TiltBox
                 key={id}

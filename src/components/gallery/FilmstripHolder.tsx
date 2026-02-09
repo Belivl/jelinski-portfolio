@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils";
-import { Power } from "lucide-react";
+import { OctagonAlert, Power } from "lucide-react";
+import { GlowContent } from "./GlowContent";
 
 interface FilmstripHolderProps {
   className?: string;
   width?: number | string;
   onClose?: () => void;
   showCloseButton?: boolean;
-  rotation?: number;
 }
 
-const AllenBolt = ({ rotation = 0 }: { rotation?: number }) => (
+const AllenBolt = () => (
   <div className="relative w-8 h-8 flex items-center justify-center">
     <div
       className="p-1 w-9 h-9 z-10 absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 rounded-full rotate-20 opacity-10"
@@ -37,7 +37,6 @@ const AllenBolt = ({ rotation = 0 }: { rotation?: number }) => (
       style={{
         clipPath:
           "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
-        transform: `rotate(${rotation}deg)`,
       }}
     />
 
@@ -48,7 +47,6 @@ const AllenBolt = ({ rotation = 0 }: { rotation?: number }) => (
         clipPath:
           "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
         background: "linear-gradient(15deg, white 0%, transparent 40%)",
-        transform: `rotate(${rotation}deg)`,
       }}
     />
   </div>
@@ -59,13 +57,12 @@ export const FilmstripHolder = ({
   width = "100%",
   onClose,
   showCloseButton,
-  rotation = 0,
 }: FilmstripHolderProps) => {
   return (
     <div
       className={cn(
         "relative h-12 bg-neutral-900 rounded-t-lg border-x border-t border-white/10 flex items-center justify-between p-3 shadow-[0_-4px_12px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)]",
-        className
+        className,
       )}
       style={{ width }}
     >
@@ -73,7 +70,7 @@ export const FilmstripHolder = ({
       <div className="absolute bottom-0 left-0 right-0 h-[25px] bg-linear-to-b from-black to-neutral-900 translate-y-[25px] " />
 
       {/* Left Bolt */}
-      <AllenBolt rotation={rotation} />
+      <AllenBolt />
 
       {/* Integrated Close Button (for mobile) */}
       {showCloseButton && (
@@ -94,10 +91,23 @@ export const FilmstripHolder = ({
       )}
 
       {/* Center Section - if no close button, maybe a spacer */}
-      {!showCloseButton && <div className="flex-1" />}
+      {!showCloseButton && (
+        <div className="flex-1 mx-8 flex items-center justify-center">
+          <div className="flex items-center justify-center bg-neutral-800 border-t border-t-neutral-100/20 border-b border-b-neutral-900/20 px-4 py-1 rounded-md shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
+            <div className="border-b border-white/20 bg-neutral-900 px-2 py-1  flex items-center justify-center rounded-sm">
+              <span className="text-black font-semibold text-[10px] uppercase tracking-widest bg-[#A28B39] px-1 py-1/2 rounded-xs shadow-[0px_0px_10px_1px_rgba(162,139,57,0.5)]">
+                <GlowContent variant="danger">
+                  <OctagonAlert className="w-3 h-3" />
+                  Film scanning in progress <OctagonAlert className="w-3 h-3" />
+                </GlowContent>
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Right Bolt */}
-      <AllenBolt rotation={-rotation} />
+      <AllenBolt />
 
       {/* Shadow Casting on the strip below */}
       <div className="absolute -bottom-4 left-0 right-0 h-4 bg-linear-to-b from-black/80 to-transparent pointer-events-none z-10" />

@@ -121,7 +121,7 @@ export function AdvancedFilterBar({
   const displayCategories = ["all", ...categories];
 
   return (
-    <div className="w-full  mx-auto mb-12 space-y-8">
+    <div className="w-full  mx-auto mb-12 space-y-8 z-50">
       <Card2>
         {/* 1. Cinematic Category Cards */}
         <span className="text-xs font-bold uppercase tracking-wider text-neutral-400">
@@ -151,7 +151,7 @@ export function AdvancedFilterBar({
               <Button
                 variant="outline"
                 onClick={() => setIsMasterTagsExpanded(!isMasterTagsExpanded)}
-                className="flex items-center gap-2 w-full md:w-fit group"
+                className="flex items-center gap-2 w-full md:w-fit group bg-background   hover:border-amber-500/50 border-white/10 hover:bg-amber-500/10"
               >
                 <TagIcon
                   className={cn(
@@ -192,7 +192,7 @@ export function AdvancedFilterBar({
                   {t.gallery.clearAll}
                 </Button>
               )}
-            </div>
+            </div>{" "}
             <AnimatePresence initial={false}>
               {isMasterTagsExpanded && (
                 <motion.div
@@ -202,6 +202,16 @@ export function AdvancedFilterBar({
                   transition={{ duration: 0.3, ease: "easeInOut" }}
                   className="overflow-hidden"
                 >
+                  <div className="w-full md:w-fit flex flex-row gap-4 mb-4 text-neutral-400">
+                    <span className="flex gap-2">
+                      {t.gallery.selCat}
+                      <span className="text-amber-500">
+                        {t.gallery.tagCategories[
+                          filters.category as keyof typeof t.gallery.tagCategories
+                        ] || filters.category}
+                      </span>
+                    </span>
+                  </div>
                   <div className="space-y-1 pl-2 border-l border-white/5 ml-2">
                     {Object.entries(TAG_CATEGORIES).map(([category, tags]) => {
                       // Filter tags to only show those that are available in current results
@@ -367,6 +377,7 @@ export function AdvancedFilterBar({
               )}
             </AnimatePresence>
           </div>
+
           {/* Sort Controls */}
           <div className="flex md:w-fit w-full">
             <Button
@@ -396,7 +407,7 @@ export function AdvancedFilterBar({
                 })
               }
             >
-              <SelectTrigger className="w-full dark:bg-neutral-900  dark:border-neutral-800 dark:text-neutral-200">
+              <SelectTrigger className="w-full  bg-background   hover:border-amber-500/50 border-white/10 hover:bg-amber-500/10 dark:text-neutral-200">
                 <SelectValue placeholder={t.gallery.selectCamera} />
               </SelectTrigger>
               <SelectContent>

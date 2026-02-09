@@ -1,21 +1,18 @@
 import { motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { SEO } from "@/components/SEO";
-// import cameraImage from "@/assets/404-camera.png";
-import { Camera, ArrowLeft } from "lucide-react";
+import { Camera, ArrowRight } from "lucide-react";
 import { GoldButton } from "@/components/ui/GoldButton";
-
-import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export function NotFound() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const notFoundT = t.notFound;
 
   return (
     <div className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden px-4 pt-48">
-      <SEO
-        title="404 - Frame Empty"
-        description="The page you are looking for does not exist."
-      />
+      <SEO title={notFoundT.title} description={notFoundT.description} />
 
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 z-0 pointer-events-none">
@@ -56,11 +53,11 @@ export function NotFound() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            This frame is <span className="text-primary italic">empty</span>.
+            {notFoundT.heading}{" "}
+            <span className="text-primary italic">{notFoundT.empty}</span>.
           </h1>
           <p className="text-muted-foreground text-lg mb-10 max-w-md mx-auto leading-relaxed">
-            Even the best photographers miss a shot sometimes. The best moments
-            are waiting for you in the gallery.
+            {notFoundT.description}
           </p>
         </motion.div>
 
@@ -70,17 +67,16 @@ export function NotFound() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="flex flex-col sm:flex-row gap-6 items-center"
         >
-          <GoldButton onClick={() => navigate("/gallery")}>
+          <GoldButton
+            onClick={() => navigate("/gallery")}
+            className="w-full sm:w-auto hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background transition-all duration-300 ease-out"
+          >
             <span className="flex items-center">
               <Camera className="w-4 h-4 mr-2 text-neutral-900" />
-              View Gallery
+              {notFoundT.viewGallery}
+              <ArrowRight className="ml-2 w-4 h-4 text-neutral-800 stroke-[3px] group-hover:-rotate-45 transition-all duration-300 ease-out" />
             </span>
           </GoldButton>
-
-          <Button variant="secondary" onClick={() => navigate("/")}>
-            <ArrowLeft className="w-4 h-4 mr-2 text-neutral-100" />
-            Back Home
-          </Button>
         </motion.div>
       </div>
     </div>

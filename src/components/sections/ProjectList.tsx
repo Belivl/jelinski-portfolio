@@ -10,12 +10,12 @@ import {
   Calendar,
   MonitorSmartphone,
   Palette,
-  Zap,
+  BookType,
 } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
 import { SmartImage } from "@/components/ui/SmartImage";
 import { Button } from "@/components/ui/button";
-import { PROJECT_CATEGORY_IMAGES } from "@/data/projectTabs";
+import { PROJECT_CATEGORY_IMAGES } from "@/data/categoryCovers";
 
 export function ProjectList() {
   const [activeCategory, setActiveCategory] = useState("all");
@@ -31,7 +31,7 @@ export function ProjectList() {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <div className="w-full border-t dark:border-neutral-800 pt-6">
+    <div className="w-full  ">
       <FilterBar
         categories={categories}
         activeCategory={activeCategory}
@@ -76,7 +76,7 @@ const ProjectCard = ({ project }: { project: any }) => {
       case "branding":
         return {
           stampColor: "bg-yellow-700",
-          StampIcon: Zap,
+          StampIcon: BookType,
         };
       case "design":
         return {
@@ -154,12 +154,12 @@ const ProjectCard = ({ project }: { project: any }) => {
             <StampIcon className={`w-5 h-5 text-white`} />
           </div>
           {/* Cover Image Container */}
-          <div className="rounded-lg overflow-hidden relative aspect-video mb-6 block">
+          <div className="rounded-lg overflow-hidden relative aspect-video mb-6 block border dark:border-t-neutral-900 dark:border-b-neutral-600 dark:border-x-neutral-700">
             <SmartImage
               src={project.coverImage}
               alt={title}
               width={800}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-lg border dark:border-t-neutral-900 dark:border-b-neutral-600 dark:border-x-neutral-700  "
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 overflow-clip  rounded-lg   "
             />
             <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>

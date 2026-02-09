@@ -75,9 +75,10 @@ export function FeaturedGallery() {
           <Link to="/gallery">
             <Button
               variant="ghost"
-              className="hidden md:flex text-primary hover:text-primary/80 dark:hover:bg-neutral-800 dark:hover:border-neutral-600 hover:border"
+              className="group hidden md:flex text-primary hover:text-primary/80 hover:underline underline-offset-4 hover:bg-transparent"
             >
-              {t.featured.viewAll} <ArrowRight className="ml-2 w-4 h-4" />
+              {t.featured.viewAll}{" "}
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:-rotate-45 transition-transform duration-300" />
             </Button>
           </Link>
         </div>
@@ -104,6 +105,8 @@ export function FeaturedGallery() {
                 src={photo.url}
                 alt={photo.title || "Photo"}
                 width={300}
+                priority={index < 5}
+                showAltOnHover={false}
                 className="object-cover w-full h-auto transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
                 loading="lazy"
               />
@@ -114,7 +117,7 @@ export function FeaturedGallery() {
               >
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-50 group-hover:opacity-0 md:group-hover:opacity-100 md:opacity-0 transition-opacity duration-300 flex flex-col justify-end p-2 md:p-6">
                   <span className="text-primary text-[8px] md:text-sm font-medium mb-1 uppercase tracking-wider">
-                    {photo.category}
+                    {t.gallery.tagCategories[photo.category]}
                   </span>
                   <h3 className="text-white text-[10px] md:text-xl font-bold">
                     {photo.title}
@@ -139,7 +142,7 @@ export function FeaturedGallery() {
               className="w-full hover:underline underline-offset-12 decoration-[8px] group hover:bg-transparent text-xl md:text-9xl h-fit p-4 md:p-8 text-neutral-500 hover:text-neutral-400 transition-all duration-300 ease-out text-script1 font-black md:gap-8 gap-2 uppercase"
             >
               {t.featured.viewAll}{" "}
-              <ArrowRight className="ml-2 w-6 h-6 md:w-30 md:h-30 group-hover:translate-x-2 group-hover:rotate-90 transition-all duration-300 ease-out" />
+              <ArrowRight className="ml-2 w-6 h-6 md:w-30 md:h-30 group-hover:translate-x-2 group-hover:-rotate-45 transition-all duration-300 ease-out" />
             </Button>
           </Link>
         </motion.div>

@@ -125,6 +125,7 @@ export function CommentsSection({ photoId }: CommentsSectionProps) {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder={t.comments.share}
+            spellCheck="false"
             className="w-full bg-transparent text-sm text-white/90 placeholder:text-white/30 resize-none outline-none min-h-[80px]"
             maxLength={500}
             required

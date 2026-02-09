@@ -6,8 +6,10 @@ import { getPhotos } from "@/data/photos.ts";
 import { AdvancedFilterBar } from "@/components/gallery/AdvancedFilterBar";
 import { PhotoLightbox } from "@/components/gallery/PhotoLightboxNew";
 import { SmartImage } from "@/components/ui/SmartImage";
+import { useLanguage } from "@/lib/LanguageContext";
 
 export function GalleryGrid() {
+  const { t } = useLanguage();
   const [searchParams, setSearchParams] = useSearchParams();
   const [filters, setFilters] = useState({
     category: "all",
@@ -28,10 +30,10 @@ export function GalleryGrid() {
     "portrait",
     "session",
     "travel",
-    "street",  
+    "street",
     "black-and-white",
     "architecture",
-    "landscape", 
+    "landscape",
     "animal",
     "cars",
     "various",
@@ -48,12 +50,12 @@ export function GalleryGrid() {
   // Extract available options and sort by custom order
   const categories = useMemo(() => {
     const uniqueCategories = Array.from(new Set(photos.map((p) => p.category)));
-    
+
     // Sort categories according to custom order
     const sorted = uniqueCategories.sort((a, b) => {
       const indexA = CATEGORY_ORDER.indexOf(a);
       const indexB = CATEGORY_ORDER.indexOf(b);
-      
+
       // If both are in the order, sort by their position
       if (indexA !== -1 && indexB !== -1) {
         return indexA - indexB;
@@ -65,7 +67,7 @@ export function GalleryGrid() {
       // If neither is in the order, maintain alphabetical order
       return a.localeCompare(b);
     });
-    
+
     return sorted;
   }, [photos]);
   const cameras = useMemo(
@@ -121,10 +123,7 @@ export function GalleryGrid() {
             const blogId = photo.blogPostId || "";
 
             // 0 - Daldehog first
-            if (
-              title.includes("daldehog") ||
-              blogId === "daldehog"
-            ) {
+            if (title.includes("daldehog") || blogId === "daldehog") {
               return 0;
             }
 
@@ -201,49 +200,45 @@ export function GalleryGrid() {
           1100: 2,
           700: 2,
         }}
-        className="flex w-auto md:-ml-8 -ml-2"
+        className="flex w-auto md:-ml-8 -ml-2 z-0 overflow-hidden"
         columnClassName="pl-2 md:pl-8 bg-clip-padding"
       >
         {filteredPhotos.length > 0 ? (
           filteredPhotos.map((photo, index) => (
             <motion.div
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+              transition={{
+                duration: 0.4,
+                delay: Math.min(index * 0.05, 1), // Staggered entry
+              }}
               key={photo.id}
-              className="group relative cursor-pointer overflow-hidden rounded-lg bg-muted md:mb-8 mb-2 dark:border-neutral-800 border "
+              className="group relative cursor-pointer overflow-hidden rounded-lg bg-muted md:mb-8 mb-2 dark:border-neutral-800 border min-h-[200px]"
               onClick={() => setSelectedPhotoIndex(index)}
             >
               <SmartImage
                 src={photo.url}
                 alt={photo.title || "Photo"}
                 width={800}
+                priority={index < 9}
                 objectTop={photo.objectTop}
+                showAltOnHover={false}
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 shadow-lg shadow-black/10 border border-black/10 overflow-hidden"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center">
-                {/* {photo.title && (
-                  <h3 className="text-white font-bold text-xl mb-2 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    {photo.title}
-                  </h3>
-                )} */}
+                
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <span className="text-primary text-sm font-medium mb-1 uppercase tracking-wider">
-                    {photo.category}
+                    {t.gallery.tagCategories[
+                      photo.category.toLowerCase() as keyof typeof t.gallery.tagCategories
+                    ] || photo.category}
                   </span>
                   <h3 className="text-white text-xl font-bold">
                     {photo.title}
                   </h3>
                 </div>
-                {/* 
-                <Button
-                  variant="outline"
-                  className="text-white rounded-sm font-medium tracking-widest border border-white px-4 py-2 uppercase text-xs group-hover:bg-white group-hover:text-black transition-colors translate-y-4 group-hover:translate-y-0 duration-300 delay-100"
-                >
-                  {t.gallery.view}
-                </Button> */}
               </div>
             </motion.div>
           ))

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import type { BlogPost } from "@/data/blogData";
+import type { BlogPost } from "@/data/photos";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/lib/LanguageContext";
 import { PostCard } from "@/components/ui/PostCard";
@@ -61,6 +61,7 @@ export function BlogList({ posts }: BlogListProps) {
         setSortOrder={setSortOrder}
         viewMode={viewMode}
         setViewMode={setViewMode}
+        posts={posts}
       />
 
       <AnimatePresence mode="wait">

@@ -5,11 +5,11 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { useRef, useMemo } from "react";
 import {
-  Briefcase,
+  BriefcaseBusiness,
   Calendar,
   Camera,
   MapPin,
-  Music,
+  Tickets,
   Plane,
   User,
 } from "lucide-react";
@@ -46,12 +46,12 @@ export function PostCard({ post }: Props) {
       case "event":
         return {
           stampColor: "bg-rose-500",
-          StampIcon: Music,
+          StampIcon: Tickets,
         };
       case "client":
         return {
           stampColor: "bg-emerald-700",
-          StampIcon: Briefcase,
+          StampIcon: BriefcaseBusiness,
         };
       default:
         return {
@@ -105,11 +105,11 @@ export function PostCard({ post }: Props) {
             ev.currentTarget.style.setProperty("--x", `${xPercentage * 100}%`);
             ev.currentTarget.style.setProperty("--y", `${yPercentage * 100}%`);
           }}
-          className="group relative w-full flex flex-col rounded-md bg-neutral-100 dark:shadow-xl shadow-2xl  dark:bg-white p-1 pb-0 md:p-4 md:pb-0 text-neutral-700 transition-transform ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)]"
+          className="group relative w-full flex flex-col rounded-md  dark:shadow-xl shadow-2xl  dark:bg-neutral-100 bg-neutral-800 p-1 pb-0 md:p-4 md:pb-0 text-neutral-700 transition-transform ease-out hover:transform-[rotateX(var(--x-rotation))_rotateY(var(--y-rotation))_scale(1.05)]"
         >
           {/* <figure className="rounded-md mix-blend-multiply bg-[radial-gradient(at_70%_40%,transparent_30%,currentColor_40%),url(/noise.svg)]" /> */}
           <div
-            className="absolute w-10 h-10 translate-x-2 translate-y-4 -right-2 -top-6 bg-black/60 z-30 blur-sm "
+            className="absolute w-12 h-12  -right-2 -top-5 bg-black/40 z-30 blur-xs"
             style={{
               transform: `rotate(${stampRotation}deg)`,
               translate: `-${stampOffset[0]}px ${stampOffset[1]}px`,
@@ -124,28 +124,34 @@ export function PostCard({ post }: Props) {
           >
             <StampIcon className={`w-5 h-5 text-white`} />
           </div>
-          <div className=" rounded-sm overflow-hidden">
-            <div className="relative group-hover:scale-105 transition-all duration-700">
-              <h2 className="text-3xl md:text-6xl z-10 text-white text-shadow-[0_2px_10px_rgba(0,0,0,0.9)] group-hover:text-shadow-[0_8px_10px_#432100]  absolute w-full h-full flex items-center justify-center font-script1 group-hover:text-amber-700 dark:group-hover:text-amber-500  leading-tight group-hover:scale-105 transition-all duration-200">
+          <div className="rounded-sm overflow-hidden border border-t-neutral-600 border-b-neutral-200 border-x-neutral-400">
+            <div className="relative group-hover:scale-105 transition-all duration-700 ">
+              <h2
+                style={{
+                  WebkitTextStrokeWidth: "0.5px",
+                  WebkitTextStrokeColor: "rgba(0, 0, 0, 0.5)",
+                }}
+                className="text-3xl md:text-6xl z-10 text-white text-shadow-[0_2px_2px_rgba(0,0,0,0.5)] opacity-90 group-hover:text-shadow-[0_8px_10px_#432100]  absolute w-full h-full flex items-center justify-center font-script1 group-hover:text-amber-700 dark:group-hover:text-amber-400  leading-tight group-hover:scale-105 transition-all duration-200"
+              >
                 {title}
               </h2>
 
               <img
                 src="/noise.svg"
                 alt="noise"
-                className="absolute inset-0 z-10 opacity-25 rounded-md "
+                className="absolute inset-0 z-10 opacity-40 "
               />
-              <div className="absolute inset-0 bg-black/20 z-0 rounded-md " />
+              <div className="absolute inset-0 bg-black/10 z-10" />
               <SmartImage
                 src={`${post.coverImage}`}
                 alt={title}
                 width={800}
-                className={`object-cover w-full aspect-video rounded-md object-${post.coverImageCrop}  border border-t-neutral-600 border-b-neutral-200 border-x-neutral-400`}
+                className={`object-cover w-full aspect-video object-${post.coverImageCrop}  overflow-hidden saturate-80`}
               />
             </div>
           </div>
 
-          <div className="flex flex-row justify-between items-center w-full h-fit pl-2 ">
+          <div className="flex flex-row justify-between items-center w-full h-fit pl-2 dark:text-neutral-900 text-neutral-100">
             <div className="flex items-center gap-2 md:gap-4 ">
               <div className="flex items-center gap-2 text-xs md:text-base truncate">
                 <Calendar className="w-4 h-4" /> <span>{post.date}</span>
@@ -159,13 +165,13 @@ export function PostCard({ post }: Props) {
             </div>
             <Button
               variant="link"
-              className="text-neutral-700 cursor-pointer dark:text-neutral-500 font-semibold text-xs hover:no-underline group-hover:scale-105 transition-transform gap-1 items-center flex group-hover:text-amber-700 dark:group-hover:text-amber-500"
+              className="text-neutral-500 cursor-pointer dark:text-neutral-700 font-semibold text-xs hover:no-underline group-hover:scale-105 transition-transform gap-1 items-center flex group-hover:text-amber-700 dark:group-hover:text-amber-500"
             >
               <span className="md:block hidden">
                 {t.blog.viewPostcard || "View Postcard"}
               </span>
               <span className="block md:hidden">{t.gallery.view}</span>
-              <ArrowRight className="w-4 h-4  group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-4 h-4  group-hover:-rotate-45 transition-transform" />
             </Button>
           </div>
 

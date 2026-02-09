@@ -74,7 +74,7 @@ export function PhotoManager() {
         (p) =>
           (p.title && p.title.toLowerCase().includes(query)) ||
           p.camera.toLowerCase().includes(query) ||
-          p.tags.some((t) => t.toLowerCase().includes(query))
+          p.tags.some((t) => t.toLowerCase().includes(query)),
       );
     }
 
@@ -108,20 +108,20 @@ export function PhotoManager() {
   const totalPages = Math.ceil(filteredPhotos.length / ITEMS_PER_PAGE);
   const paginatedPhotos = filteredPhotos.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
+    currentPage * ITEMS_PER_PAGE,
   );
 
   const updatePhoto = (id: string, updates: Partial<Photo>) => {
     setPhotos((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, ...updates } : p))
+      prev.map((p) => (p.id === id ? { ...p, ...updates } : p)),
     );
   };
 
   const bulkUpdatePhotos = (updates: Partial<Photo>) => {
     setPhotos((prev) =>
       prev.map((p) =>
-        p.id && selectedPhotos.has(p.id) ? { ...p, ...updates } : p
-      )
+        p.id && selectedPhotos.has(p.id) ? { ...p, ...updates } : p,
+      ),
     );
   };
 
@@ -197,7 +197,7 @@ export function PhotoManager() {
     // Common Tags: present in EVERY selected photo
     const firstTags = selected[0].tags;
     const commonTags = firstTags.filter((tag) =>
-      selected.every((p) => p.tags.includes(tag))
+      selected.every((p) => p.tags.includes(tag)),
     );
 
     return {
@@ -234,7 +234,7 @@ export function PhotoManager() {
           }
         }
         return { ...p, tags: newTags };
-      })
+      }),
     );
   };
 
@@ -267,7 +267,7 @@ export function PhotoManager() {
     const dataString = `export const photoData: Photo[] = ${JSON.stringify(
       exportData,
       null,
-      2
+      2,
     )};`;
     navigator.clipboard.writeText(dataString);
     setShowCopyNotification(true);
@@ -316,7 +316,7 @@ export function PhotoManager() {
   const resetChanges = () => {
     if (
       confirm(
-        "Are you sure you want to reset? All unsaved changes will be lost."
+        "Are you sure you want to reset? All unsaved changes will be lost.",
       )
     ) {
       window.location.reload();
@@ -836,7 +836,7 @@ export function PhotoManager() {
                   {/* Place */}
                   <div>
                     <label className="block text-sm font-medium mb-2">
-                      Place
+                      Place (optional)
                     </label>
                     <input
                       type="text"
@@ -853,7 +853,7 @@ export function PhotoManager() {
                   {/* Date */}
                   <div>
                     <label className="block text-sm font-medium mb-2">
-                      Date
+                      Date (optional)
                     </label>
                     <input
                       type="date"

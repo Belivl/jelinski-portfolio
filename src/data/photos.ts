@@ -13,6 +13,24 @@ export interface Photo {
     objectTop?: boolean;
 }
 
+export interface BlogPost {
+    id: string;
+    title: string;
+    coverImage: string;
+    coverImageCrop?: string;
+    date: string;
+    place?: string;
+    category?: string;
+    images: string[];
+    location?: {
+        lat: number;
+        lng: number; 
+    };
+    city: string;
+    region: "tricity" | "outside";
+    country: "poland" | "outside";
+}
+
 export const photoData: Photo[] = [
     //2021
     {

@@ -56,10 +56,12 @@ function TestimonialNote({ item }: { item: TestimonialItem }) {
     y.set(0);
   };
 
+  const { language } = useLanguage();
+
   const displayContent = {
-    name: item.name || "",
-    role: item.role || "",
-    text: item.text || "",
+    name: (language === "pl" ? item.name_pl : item.name) || item.name || "",
+    role: (language === "pl" ? item.role_pl : item.role) || item.role || "",
+    text: (language === "pl" ? item.text_pl : item.text) || item.text || "",
   };
 
   const variants = {
@@ -128,7 +130,7 @@ function TestimonialNote({ item }: { item: TestimonialItem }) {
           boxShadow:
             "inset 0 0 100px rgba(0,0,0,0.05), 5px 5px 15px rgba(0,0,0,0.1)",
           clipPath:
-            "polygon(0 0, 100% 0, 100% calc(100% - 32px), calc(100% - 32px) 100%, 0 100%)",
+            "polygon(0 0, 100% 0, 100% calc(100% - 24px), calc(100% - 32px) 100%, 0 100%)",
         }}
         className={cn(
           "p-5 md:p-10 rounded-[2px] relative flex flex-col justify-between min-h-[180px] border-b-2 border-r border-black/5",
@@ -185,24 +187,21 @@ function TestimonialNote({ item }: { item: TestimonialItem }) {
           style={{ transform: "translateZ(31px)" }}
         >
           {/* Inner shadow for the fold */}
-          <div
-            className="absolute inset-0 bg-black/10 blur-[1px] translate-x-[0.5px] translate-y-[0.5px]"
-            style={{ clipPath: "polygon(0 0, 100% 100%, 0 100%)" }}
-          />
+          <div className="absolute bottom-0 right-0 w-full h-full bg-black/20  blur-xs translate-x-1 translate-y-1" />
           {/* The folded paper face */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 "
             style={{
               backgroundColor: item.noteColor,
               filter: "brightness(0.92)",
-              clipPath: "polygon(0 0, 100% 100%, 0 100%)",
+              clipPath: "polygon(25% 25%, 100% 25%, 0% 120%)",
             }}
           />
           {/* Fold edge highlight reflection */}
-          <div
+          {/* <div
             className="absolute inset-0 bg-linear-to-tl from-white/30 to-transparent "
             style={{ clipPath: "polygon(0 0, 100% 100%, 0.5px 0, 0 0.5px)" }}
-          />
+          /> */}
         </div>
       </div>
     </motion.div>

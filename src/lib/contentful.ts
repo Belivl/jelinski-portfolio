@@ -1,5 +1,5 @@
 import { createClient, type Entry } from "contentful";
-import type { BlogPost } from "@/data/blogData";
+import type { BlogPost } from "@/data/photos";
 
 export const contentfulClient = createClient({
   space: import.meta.env.VITE_CONTENTFUL_SPACE_ID || "",
@@ -114,41 +114,51 @@ export interface TestimonialItem {
   text_pl?: string;
 }
 
-// Contentful Testimonial Fields Interface
+// Contentful Testimonial Fields Interface (for withAllLocales structure)
 interface ContentfulTestimonialFields {
-  id: number;
-  name: string;
-  role: string;
-  text: string;
-  link?: string;
-  featured?: boolean;
-  noteColor?: string;
-  pinColor?: string;
+  id: { [key: string]: number };
+  name: { [key: string]: string };
+  role: { [key: string]: string };
+  text: { [key: string]: string };
+  link?: { [key: string]: string };
+  featured?: { [key: string]: boolean };
+  noteColor?: { [key: string]: string };
+  pinColor?: { [key: string]: string };
 }
 
 export const sanitizeTestimonial = (entry: Entry<any>): TestimonialItem => {
   const fields = entry.fields as unknown as ContentfulTestimonialFields;
+  
+  // Helper to extract value with locale fallback
+  const getVal = <T>(field: { [key: string]: T } | undefined, locale: string, fallbackLocale = "en-US"): T | undefined => {
+    if (!field) return undefined;
+    return field[locale] ?? field[fallbackLocale] ?? Object.values(field)[0];
+  };
 
   return {
-    id: fields.id,
-    name: fields.name,
-    role: fields.role,
-    text: fields.text,
-    link: fields.link,
-    featured: fields.featured !== false,
-    noteColor: fields.noteColor || "#F8E9F3",
-    pinColor: fields.pinColor || "#D95082",
+    id: getVal(fields.id, "en-US") || 0,
+    name: getVal(fields.name, "en-US"),
+    role: getVal(fields.role, "en-US"),
+    text: getVal(fields.text, "en-US"),
+    name_pl: getVal(fields.name, "pl") || getVal(fields.name, "pl-PL"),
+    role_pl: getVal(fields.role, "pl") || getVal(fields.role, "pl-PL"),
+    text_pl: getVal(fields.text, "pl") || getVal(fields.text, "pl-PL"),
+    link: getVal(fields.link, "en-US"),
+    featured: getVal(fields.featured, "en-US") !== false,
+    noteColor: getVal(fields.noteColor, "en-US") || "#F8E9F3",
+    pinColor: getVal(fields.pinColor, "en-US") || "#D95082",
   };
 };
 
 export const getTestimonials = async (): Promise<TestimonialItem[]> => {
   try {
-    const entries = await contentfulClient.getEntries({
+    const entries = await contentfulClient.withAllLocales.getEntries({
       content_type: "testimonial",
       order: ["fields.id"],
     });
 
-    return entries.items.map(sanitizeTestimonial);
+    const result = entries.items.map(sanitizeTestimonial);
+    return result;
   } catch (error) {
     console.error("Error fetching testimonials from Contentful:", error);
     return [];
