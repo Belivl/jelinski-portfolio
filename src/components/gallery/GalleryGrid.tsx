@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import Masonry from "react-masonry-css";
-import { getPhotos } from "@/data/photos.ts";
+import { useAllPhotos } from "@/hooks/usePhotos";
 import { AdvancedFilterBar } from "@/components/gallery/AdvancedFilterBar";
 import { PhotoLightbox } from "@/components/gallery/PhotoLightboxNew";
 import { SmartImage } from "@/components/ui/SmartImage";
@@ -21,7 +21,7 @@ export function GalleryGrid() {
   );
   const [sortOrder, setSortOrder] = useState<"desc" | "asc">("desc");
 
-  const photos = useMemo(() => getPhotos(), []);
+  const photos = useAllPhotos();
 
   // Custom category order for display
   const CATEGORY_ORDER = [
@@ -196,9 +196,9 @@ export function GalleryGrid() {
 
       <Masonry
         breakpointCols={{
-          default: 3,
-          1100: 2,
-          700: 2,
+          default: 4,
+          1100: 3,
+          700: 3,
         }}
         className="flex w-auto md:-ml-8 -ml-2 z-0 overflow-hidden"
         columnClassName="pl-2 md:pl-8 bg-clip-padding"
@@ -215,7 +215,7 @@ export function GalleryGrid() {
                 delay: Math.min(index * 0.05, 1), // Staggered entry
               }}
               key={photo.id}
-              className="group relative cursor-pointer overflow-hidden rounded-lg bg-muted md:mb-8 mb-2 dark:border-neutral-800 border min-h-[200px]"
+              className="group relative cursor-pointer overflow-hidden rounded-lg md:mb-8 mb-2 dark:border-neutral-800 border"
               onClick={() => setSelectedPhotoIndex(index)}
             >
               <SmartImage
@@ -228,7 +228,6 @@ export function GalleryGrid() {
                 className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100 shadow-lg shadow-black/10 border border-black/10 overflow-hidden"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center">
-                
                 <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                   <span className="text-primary text-sm font-medium mb-1 uppercase tracking-wider">
                     {t.gallery.tagCategories[

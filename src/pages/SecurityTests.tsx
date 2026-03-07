@@ -9,12 +9,14 @@ import {
   RefreshCw,
   ChevronLeft,
 } from "lucide-react";
-import { getPhotos } from "@/data/photos";
+import { useAllPhotos } from "@/hooks/usePhotos";
 import { Link } from "react-router-dom";
 
 import { CONVEX_ENABLED } from "@/lib/convex-status";
 
 export function SecurityTests() {
+  const allPhotos = useAllPhotos();
+
   if (!CONVEX_ENABLED) {
     return (
       <div className="min-h-screen pt-24 px-4 pb-20 max-w-4xl mx-auto text-white text-center">
@@ -46,16 +48,15 @@ export function SecurityTests() {
 
   useEffect(() => {
     // Pick a random photo on load
-    const photos = getPhotos();
-    if (photos.length > 0) {
-      const firstPhoto = photos[0];
+    if (allPhotos.length > 0 && !targetPhoto) {
+      const firstPhoto = allPhotos[0];
       setTargetPhoto({
         id: firstPhoto.id || "unknown",
         url: firstPhoto.url,
         title: firstPhoto.title,
       });
     }
-  }, []);
+  }, [allPhotos, targetPhoto]);
 
   const addLog = (msg: string) => {
     setLogs((prev) => [`[${new Date().toLocaleTimeString()}] ${msg}`, ...prev]);
@@ -211,14 +212,17 @@ export function SecurityTests() {
                   </p>
                   <button
                     onClick={() => {
-                      const photos = getPhotos();
-                      const random =
-                        photos[Math.floor(Math.random() * photos.length)];
-                      setTargetPhoto({
-                        id: random.id || "unknown",
-                        url: random.url,
-                        title: random.title,
-                      });
+                      if (allPhotos.length > 0) {
+                        const random =
+                          allPhotos[
+                            Math.floor(Math.random() * allPhotos.length)
+                          ];
+                        setTargetPhoto({
+                          id: random.id || "unknown",
+                          url: random.url,
+                          title: random.title || "",
+                        });
+                      }
                     }}
                     className="text-xs flex items-center gap-1 text-amber-400 hover:text-amber-300"
                   >

@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
-import { getPhotos, type Photo } from "@/data/photos.ts";
+import { type Photo } from "@/data/photos.ts";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
@@ -11,6 +11,7 @@ import { SEO } from "@/components/SEO";
 import { NotFound } from "@/pages/404";
 import { getBlogPost, getBlogPosts } from "@/lib/contentful";
 import type { BlogPost as BlogPostType } from "@/data/photos";
+import { useAllPhotos } from "@/hooks/usePhotos";
 
 export function BlogPost() {
   const { t } = useLanguage();
@@ -44,7 +45,7 @@ export function BlogPost() {
 
   // Handle deep linking - MOVED UP and made safe
   // We need to calculate postPhotos before this hook, or memoize it
-  const allPhotos = getPhotos();
+  const allPhotos = useAllPhotos();
 
   const postPhotos = useMemo(() => {
     if (!post) return [];
@@ -52,22 +53,37 @@ export function BlogPost() {
     const translated = (t.data.blog as any)[post.id] || {};
     const title = translated.title || post.title;
 
+    // Helper to normalize URLs for comparison (strip protocol and query params)
+    const normalizeUrl = (url: string) => {
+      if (!url) return "";
+      return url
+        .replace(/^https?:\/\//, "")
+        .split("?")[0]
+        .replace(/^\/\//, "");
+    };
+
     // Map post images to Photo objects
     const explicitPhotos: Photo[] = post.images.map(
       (imgUrl: string, index: number) => {
-        // Try to find existing photo object
-        const existingPhoto = allPhotos.find((p: Photo) => p.url === imgUrl);
+        const normalizedImgUrl = normalizeUrl(imgUrl);
+
+        // Try to find existing photo object in Convex data
+        const existingPhoto = allPhotos.find(
+          (p: Photo) => normalizeUrl(p.url) === normalizedImgUrl,
+        );
+
         if (existingPhoto) return existingPhoto;
 
-        // Fallback for images not in the main photos array
+        // Fallback for images not in the main photos array or failing match
         return {
           id: `post-${post.id}-img-${index}`,
           url: imgUrl,
           title: title,
-          category: "event", // Default category
-          camera: "Unknown",
+          category: (post.category as any) || "event",
+          camera: "Unknown", // Fallback camera
           tags: [],
           date: post.date,
+          place: post.city || post.place, // Use post metadata as fallback
         };
       },
     );
@@ -77,8 +93,9 @@ export function BlogPost() {
     const result: Photo[] = [];
 
     [...explicitPhotos].forEach((photo: Photo) => {
-      if (!uniqueUrls.has(photo.url)) {
-        uniqueUrls.add(photo.url);
+      const norm = normalizeUrl(photo.url);
+      if (!uniqueUrls.has(norm)) {
+        uniqueUrls.add(norm);
         result.push(photo);
       }
     });
@@ -164,13 +181,13 @@ export function BlogPost() {
           <h2 className="text-2xl font-bold text-foreground mb-8">
             {t.blog.gallery}
           </h2>
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-4 space-y-4">
+          <div className="columns-3 md:columns-3 lg:columns-3 gap-1 md:gap-4 space-y-1 md:space-y-4">
             {postPhotos.map((photo, index) => (
               <motion.div
                 key={photo.id}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="relative overflow-hidden rounded-lg cursor-pointer bg-gray-900 group break-inside-avoid mb-4"
+                className="relative overflow-hidden rounded-sm md:rounded-lg cursor-pointer bg-gray-900 group break-inside-avoid mb-1 md:mb-4"
                 onClick={() => {
                   setCurrentImageIndex(index);
                   setIsLightboxOpen(true);

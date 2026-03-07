@@ -2,11 +2,11 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { Link } from "react-router-dom";
 import { GoldButton } from "@/components/ui/GoldButton";
 import { motion } from "motion/react";
-import { HOME_FEATURED_PHOTOS } from "@/data/home";
+import { FEATURED_URLS } from "@/data/home";
 import { ArrowRight } from "lucide-react";
 import { SmartImage } from "@/components/ui/SmartImage";
 
-const featuredUrls = HOME_FEATURED_PHOTOS.map((photo) => photo.url);
+const featuredUrls = FEATURED_URLS;
 
 const ScrollingRow = ({
   photos,
@@ -36,6 +36,7 @@ const ScrollingRow = ({
             alt=""
             width={400}
             className="h-40 md:h-64 aspect-4/3 object-cover rounded-2xl grayscale hover:grayscale-0 transition-all duration-500"
+            loading="eager"
           />
         ))}
       </motion.div>

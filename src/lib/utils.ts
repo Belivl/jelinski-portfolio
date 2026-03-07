@@ -48,9 +48,12 @@ export function getDevImageUrl(url: string): string {
     // Strip query parameters (e.g., ?updatedAt=...)
     relPath = relPath.split("?")[0];
 
-    // Convert .avif extension to _avif.heif (matching downloaded file format)
-    if (relPath.endsWith(".avif")) {
-        relPath = relPath.replace(/\.avif$/, "_avif.heif");
+    // (Removed .avif to _avif.heif conversion since standard download is .avif)
+
+    // Prepend /photos if it's not already there and matches shared folders
+    // In dev, the script downloads them to public/photos/photography/...
+    if (!relPath.startsWith("/photos") && (relPath.startsWith("photography") || relPath.startsWith("gfx"))) {
+        relPath = "/photos/" + relPath;
     }
 
     // Ensure path starts with /

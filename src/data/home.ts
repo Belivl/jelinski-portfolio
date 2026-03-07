@@ -1,4 +1,4 @@
-import { type Photo, photoData } from "./photos";
+import { type Photo } from "./photos";
 
 const photographerImages = [
   "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif",
@@ -37,126 +37,120 @@ const featuredUrls = [
     "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-05/JEL07157-Edit_wTB4VdC0-Z.avif?updatedAt=1769013803803", //Tomek 
   ];
 
+export type LoadingPhoto = string | { 
+  url: string; 
+  objectTop?: boolean; 
+  objectPosition?: string; 
+};
 
-
-export type LoadingPhoto = string | { url: string; objectTop: boolean };
 
 export const loadingPhotos: LoadingPhoto[] = [
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05898-edit_J8VnnzZSL.avif?updatedAt=1769020020329", objectTop: true },
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702", objectTop: false },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08867_APRsUCgx-.avif?updatedAt=1769019321858",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08942-2_aAiH3wSrrd.avif?updatedAt=1769019321813",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02516_7BvmnOcPv.avif?updatedAt=1769018838363",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05112_xY2hM8Fiq.avif?updatedAt=1769018687893",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", objectTop: true },
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", objectTop: true },
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00291-Edit_rsRvCnmLX.avif?updatedAt=1769022051876",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05705-2_zHCdVRGXQ.avif?updatedAt=1769020788503",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09320_XFvnZg8Vn.avif?updatedAt=1769020623195", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08296_wUdcqtYCbx.avif?updatedAt=1769025614817",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL08950-Edit_RLRHU7k5t-.avif?updatedAt=1769025614519",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08489_Mpnd69CEuy.avif?updatedAt=1769025614802",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01162_LS3OltTydt.avif?updatedAt=1769024108645",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00667-2_7UT-vB49em.avif?updatedAt=1769024108692", objectTop: false} ,
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05007_FKTrSWsAk.avif?updatedAt=1769023301028",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6324-2_0NmdG4_M1i.avif?updatedAt=1769022715788", objectTop: true } ,
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06567_75BazDTic.avif?updatedAt=1769022716333",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9171_o-WVm0btCp.avif?updatedAt=1769027173624",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577",
-   "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-132_Bm3XW64RYT.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-109_TopCUrLy0.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02312_rs6mnSDWd.avif?updatedAt=1769026295022",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02460-2_8nBLL9r64.avif?updatedAt=1769026294952",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif", objectPosition: "50% 100%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", objectPosition: "50% 10%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084", objectPosition: "50% 68%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/02-25/JEL-05898-edit_J8VnnzZSL.avif?updatedAt=1769020020329", objectPosition: "50% 10%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702", objectPosition: "50% 60%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08867_APRsUCgx-.avif?updatedAt=1769019321858", objectPosition: "50% 70%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08942-2_aAiH3wSrrd.avif?updatedAt=1769019321813",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326", objectPosition: "50% 7%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL03987_9uv8pgCck.avif?updatedAt=1769018838546", objectPosition: "50% 24%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-27/JEL02516_7BvmnOcPv.avif?updatedAt=1769018838363", objectPosition: "50% 22%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05112_xY2hM8Fiq.avif?updatedAt=1769018687893", objectPosition: "50% 33%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", objectPosition: "50% 27%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", objectPosition: "50% 39%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", objectPosition: "50% 18%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00291-Edit_rsRvCnmLX.avif?updatedAt=1769022051876", objectPosition: "50% 39%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", objectPosition: "50% 23%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05705-2_zHCdVRGXQ.avif?updatedAt=1769020788503", objectPosition: "50% 43%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09320_XFvnZg8Vn.avif?updatedAt=1769020623195", objectPosition: "50% 37%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08296_wUdcqtYCbx.avif?updatedAt=1769025614817", objectPosition: "50% 29%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL08950-Edit_RLRHU7k5t-.avif?updatedAt=1769025614519",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08489_Mpnd69CEuy.avif?updatedAt=1769025614802",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446", objectPosition: "50% 57%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01162_LS3OltTydt.avif?updatedAt=1769024108645", objectPosition: "50% 0%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00667-2_7UT-vB49em.avif?updatedAt=1769024108692", objectPosition: "50% 73%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05007_FKTrSWsAk.avif?updatedAt=1769023301028", objectPosition: "50% 0%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6324-2_0NmdG4_M1i.avif?updatedAt=1769022715788", objectPosition: "50% 35%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06567_75BazDTic.avif?updatedAt=1769022716333", objectPosition: "50% 41%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9171_o-WVm0btCp.avif?updatedAt=1769027173624", objectPosition: "50% 51%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577", objectPosition: "50% 59%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-132_Bm3XW64RYT.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-109_TopCUrLy0.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02460-2_8nBLL9r64.avif?updatedAt=1769026294952",
     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02312_rs6mnSDWd.avif?updatedAt=1769026295022", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04773_jic46LWsV.avif?updatedAt=1769031147990",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/random/JEL02669_Asb2eSSYxz.avif?updatedAt=1769026542726",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-08010_U3OTEiHMF.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-05623-2_thVKP4HEhr.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04773_jic46LWsV.avif?updatedAt=1769031147990",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2023/random/JEL02669_Asb2eSSYxz.avif?updatedAt=1769026542726",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-08010_U3OTEiHMF.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-05623-2_thVKP4HEhr.avif"
 ];
 
 const heroPhotos = [
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif?updatedAt=1769015078109",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
-   "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08867_APRsUCgx-.avif?updatedAt=1769019321858",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326",
-     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", objectTop: true },
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", objectTop: false },
-     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05705-2_zHCdVRGXQ.avif?updatedAt=1769020788503",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09320_XFvnZg8Vn.avif?updatedAt=1769020623195", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08296_wUdcqtYCbx.avif?updatedAt=1769025614817",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL08950-Edit_RLRHU7k5t-.avif?updatedAt=1769025614519",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08489_Mpnd69CEuy.avif?updatedAt=1769025614802",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01162_LS3OltTydt.avif?updatedAt=1769024108645",
-    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00667-2_7UT-vB49em.avif?updatedAt=1769024108692", objectTop: false} ,
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05007_FKTrSWsAk.avif?updatedAt=1769023301028",
-     "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6324-2_0NmdG4_M1i.avif?updatedAt=1769022715788",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06567_75BazDTic.avif?updatedAt=1769022716333",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197-2_YyMIgEJ8H.avif?updatedAt=1769027173542",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-132_Bm3XW64RYT.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-109_TopCUrLy0.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02460-2_8nBLL9r64.avif?updatedAt=1769026294952",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/01-23/JEL-00303_M0ZwOW6VA.avif?updatedAt=1769015078109", objectPosition: "50% 100%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/04-24/JEL-01621_TcF_jjytB.avif?updatedAt=1769014578263", objectTop: true, objectPosition: "50% 10%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL07119_BjgCqE9dD.avif?updatedAt=1769014192475",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2025/06-28/JEL06668_AuiU0fTRj.avif?updatedAt=1769014191823",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2025/07-26/JEL07730_VdAjKDRHt.avif?updatedAt=1769013368084", objectPosition: "50% 68%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08554_x44Cbn05r.avif?updatedAt=1769019321702", objectPosition: "50% 60%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-08867_APRsUCgx-.avif?updatedAt=1769019321858", objectPosition: "50% 70%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09223-2_0Rfkmuesu.avif?updatedAt=1769019321817",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2024/04-15/JEL-09322-3_BaSHQkC7rI.avif?updatedAt=1769019321858",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/07-15/JEL01892_ozGSzPSL2.avif?updatedAt=1769019064326", objectPosition: "50% 7%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/08-11/JEL-05102_7UN4WQmN8.avif?updatedAt=1769018687969", objectTop: true, objectPosition: "50% 27%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2024/09-21/JEL-09169_adQgL1S4P.avif?updatedAt=1769018379505", objectTop: false, objectPosition: "50% 39%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/04-22/JEL00592-Edit_0LpjHoSlN.avif?updatedAt=1769022051888", objectTop: true, objectPosition: "50% 18%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-18/JEL01750_vbghwheYV.avif?updatedAt=1769021301069",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/05-21/JEL02394_wrU-VA-Mw.avif", objectTop: true, objectPosition: "50% 23%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/06-30/JEL05705-2_zHCdVRGXQ.avif?updatedAt=1769020788503", objectPosition: "50% 43%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2023/08-31/JEL09320_XFvnZg8Vn.avif?updatedAt=1769020623195", objectTop: true, objectPosition: "50% 37%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08296_wUdcqtYCbx.avif?updatedAt=1769025614817", objectPosition: "50% 29%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL08950-Edit_RLRHU7k5t-.avif?updatedAt=1769025614519",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/07-09/JEL-08489_Mpnd69CEuy.avif?updatedAt=1769025614802",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01244-2_WA5bRgyXEW.avif?updatedAt=1769024187446", objectPosition: "50% 57%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-01162_LS3OltTydt.avif?updatedAt=1769024108645", objectPosition: "50% 0%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL-00667-2_7UT-vB49em.avif?updatedAt=1769024108692", objectTop: false, objectPosition: "50% 73%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-08/JEL01053_8iX7Ta112c.avif?updatedAt=1769024108628",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-03957_gkwAxU--_E.avif?updatedAt=1769023301054",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/08-28/JEL-05007_FKTrSWsAk.avif?updatedAt=1769023301028", objectPosition: "50% 0%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-6324-2_0NmdG4_M1i.avif?updatedAt=1769022715788", objectPosition: "50% 35%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2022/09-24/JEL-06567_75BazDTic.avif?updatedAt=1769022716333", objectPosition: "50% 41%" },
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9197-2_YyMIgEJ8H.avif?updatedAt=1769027173542", objectPosition: "50% 66%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9183-3_mg-4Nf4UM.avif?updatedAt=1769027173604",
+    { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/05-01/IMG_9188-3__2V79b7A7.avif?updatedAt=1769027173577", objectPosition: "50% 59%" },
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-132_Bm3XW64RYT.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/07-04/20210704-109_TopCUrLy0.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02460-2_8nBLL9r64.avif?updatedAt=1769026294952",
     { url: "https://ik.imagekit.io/j3l1n5k1/photography/2021/08-13/JEL02312_rs6mnSDWd.avif?updatedAt=1769026295022", objectTop: true },
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04773_jic46LWsV.avif?updatedAt=1769031147990",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2023/random/JEL02669_Asb2eSSYxz.avif?updatedAt=1769026542726",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-08010_U3OTEiHMF.avif",
-    "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-05623-2_thVKP4HEhr.avif",
-]
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04883-2_0aJ4aKu1k.avif?updatedAt=1769031148018",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2021/12-18/JEL04773_jic46LWsV.avif?updatedAt=1769031147990",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2023/random/JEL02669_Asb2eSSYxz.avif?updatedAt=1769026542726",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-08010_U3OTEiHMF.avif",
+  "https://ik.imagekit.io/j3l1n5k1/photography/2022/random/JEL-05623-2_thVKP4HEhr.avif"
+];
+//     const photo = photoData.find((p) => p.url.split("?")[0] === searchUrl);
+//     if (photo) {
+//       return {
+//         ...photo,
+//         id: photo.id || `featured-${index}-${searchUrl.split("/").pop()?.split(".")[0] || "img"}`,
+//       };
+//     }
+//     return null;
+//   })
+//   .filter((photo): photo is Photo & { id: string } => !!photo);
 
-
+export const FEATURED_URLS = featuredUrls;
+export const HOME_FEATURED_PHOTOS: Photo[] = []; // Deprecated, use FEATURED_URLS and fetch from DB
 
 
 
 export const HOME_PHOTOGRAPHER_IMAGES = photographerImages;
 export const HERO_IMAGES = heroPhotos;
 export const HOME_DESIGNER_IMAGES = designerImages;
-
-
-// Match against raw photoData to ensure we find the right objects even if getPhotos() transforms them for dev
-export const HOME_FEATURED_PHOTOS = featuredUrls
-  .map((url, index) => {
-    // Strip query parameters for matching
-    const searchUrl = url.split("?")[0];
-    const photo = photoData.find((p) => p.url.split("?")[0] === searchUrl);
-    if (photo) {
-      return {
-        ...photo,
-        id: photo.id || `featured-${index}-${searchUrl.split("/").pop()?.split(".")[0] || "img"}`,
-      };
-    }
-    return null;
-  })
-  .filter((photo): photo is Photo & { id: string } => !!photo);
-
-

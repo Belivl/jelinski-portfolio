@@ -36,10 +36,18 @@ export const sanitizeEntry = (entry: Entry<any>): BlogPost => {
   const fields = entry.fields as unknown as ContentfulFields;
   
   // Extract images from 'imagePaths'
-  const images = fields.imagePaths?.map((img) => img.url || "").filter(Boolean) || [];
+  const images =
+    fields.imagePaths
+      ?.map((img) => {
+        let url = img.url || "";
+        if (url.startsWith("//")) url = `https:${url}`;
+        return url;
+      })
+      .filter(Boolean) || [];
 
   // Extract cover image (first item in array)
-  const coverImage = fields.coverImage?.[0]?.url || "";
+  let coverImage = fields.coverImage?.[0]?.url || "";
+  if (coverImage.startsWith("//")) coverImage = `https:${coverImage}`;
 
   const location = fields.location ? {
     lat: fields.location.lat,

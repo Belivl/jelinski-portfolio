@@ -84,6 +84,8 @@ export function Hero() {
     typeof currentPhoto === "string" ? currentPhoto : currentPhoto.url;
   const isObjectTop =
     typeof currentPhoto !== "string" && currentPhoto.objectTop;
+  const objectPosition =
+    typeof currentPhoto !== "string" ? currentPhoto.objectPosition : undefined;
 
   return (
     <section className="relative min-h-dvh md:min-h-screen flex items-center overflow-hidden bg-background pt-20 border-b border-neutral-400 dark:border-neutral-800">
@@ -100,10 +102,10 @@ export function Hero() {
               src={photoUrl}
               priority={true}
               alt=""
+              objectTop={isObjectTop}
+              objectPosition={objectPosition}
               transformation={!isDesktop ? [{ width: 400 }] : undefined}
-              className={`absolute inset-0 w-full h-full object-cover ${
-                isObjectTop ? "object-top" : "object-center"
-              }`}
+              className={`absolute inset-0 w-full h-full object-cover`}
             />
           </motion.div>
         </AnimatePresence>
@@ -128,12 +130,12 @@ export function Hero() {
           <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
             <Link
               to="/blog"
-              className="relative font-black tracking-normal z-50 hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
+              className="group relative font-black tracking-normal z-50 hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"
               onMouseEnter={() => setHovered("photographer")}
               onMouseLeave={() => setHovered(null)}
             >
               <div className="relative z-200 flex items-center gap-2 group">
-                <Camera className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all" />
+                <Camera className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all group-hover:drop-shadow-[0_8px_10px_#432100]" />
                 {t.hero.photographer}
               </div>
 
@@ -246,7 +248,7 @@ export function Hero() {
               <span className="relative z-200 flex items-center gap-4">
                 <span className="font-black lowercase">{t.hero.and}</span>{" "}
                 {t.hero.designer}{" "}
-                <Brush className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all" />
+                <Brush className="w-8 h-8 md:w-24 md:h-24 lg:w-16 lg:h-16 xl:w-20 xl:h-20 group-hover:-rotate-15 transition-all group-hover:drop-shadow-[0_8px_10px_#432100]" />
               </span>
               <AnimatePresence>
                 {hovered === "designer" && (

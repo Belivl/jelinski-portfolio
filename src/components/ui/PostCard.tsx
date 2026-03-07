@@ -1,4 +1,4 @@
-import { SmartImage } from "@/components/ui/SmartImage";
+import { StippledImage } from "@/components/ui/StippledImage";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -11,8 +11,10 @@ import {
   MapPin,
   Tickets,
   Plane,
+  Smartphone,
   User,
 } from "lucide-react";
+import { SmartImage } from "./SmartImage";
 
 type Props = {
   post: any;
@@ -52,6 +54,11 @@ export function PostCard({ post }: Props) {
         return {
           stampColor: "bg-emerald-700",
           StampIcon: BriefcaseBusiness,
+        };
+      case "mobile":
+        return {
+          stampColor: "bg-amber-500",
+          StampIcon: Smartphone,
         };
       default:
         return {
@@ -145,8 +152,9 @@ export function PostCard({ post }: Props) {
               <SmartImage
                 src={`${post.coverImage}`}
                 alt={title}
-                width={800}
-                className={`object-cover w-full aspect-video object-${post.coverImageCrop}  overflow-hidden saturate-80`}
+                className={`w-full aspect-video object-cover object-${post.coverImageCrop} overflow-hidden`}
+                priority={true}
+                loading="eager"
               />
             </div>
           </div>

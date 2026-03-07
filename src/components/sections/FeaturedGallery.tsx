@@ -4,17 +4,18 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useLanguage } from "@/lib/LanguageContext";
-import { useState, useEffect } from "react";
-import { HOME_FEATURED_PHOTOS } from "@/data/home";
+import { useState, useEffect, useMemo } from "react";
+import { FEATURED_URLS } from "@/data/home";
 import { SmartImage } from "@/components/ui/SmartImage";
-import { photoData, type Photo } from "@/data/photos";
+import { type Photo } from "@/data/photos";
 import { siteConfig } from "@/config/site";
 import { getExternalDataWithFallback } from "@/lib/googleSheets";
+import { useAllPhotos } from "@/hooks/usePhotos";
 
 export function FeaturedGallery() {
   const { t } = useLanguage();
-  const [featuredPhotos, setFeaturedPhotos] =
-    useState<Photo[]>(HOME_FEATURED_PHOTOS);
+  const allPhotos = useAllPhotos();
+  const [externalUrls, setExternalUrls] = useState<string[]>([]);
 
   useEffect(() => {
     const loadFeatured = async () => {
@@ -25,42 +26,43 @@ export function FeaturedGallery() {
         siteConfig.externalData.useExternal,
       );
 
-      if (external.length > 0) {
-        const mapped = external
-          .map((item, index) => {
-            const searchUrl = item.url?.split("?")[0];
-            if (!searchUrl) return null;
-
-            const photo = photoData.find(
-              (p) => p.url.split("?")[0] === searchUrl,
-            );
-            if (photo) {
-              return {
-                ...photo,
-                id:
-                  photo.id ||
-                  `featured-${index}-${searchUrl.split("/").pop()?.split(".")[0] || "img"}`,
-              };
-            }
-            // If not in photoData, create a minimal object
-            return {
-              url: item.url,
-              id: `external-${index}`,
-              category: "various" as any,
-              camera: "Unknown",
-              tags: [],
-            } as Photo;
-          })
-          .filter((p): p is Photo & { id: string } => !!p);
-
-        if (mapped.length > 0) {
-          setFeaturedPhotos(mapped);
-        }
+      if (external && external.length > 0) {
+        setExternalUrls(external.map((e) => e.url));
       }
     };
 
     loadFeatured();
   }, []);
+
+  const featuredPhotos = useMemo(() => {
+    if (allPhotos.length === 0) return [];
+
+    const urlsToUse = externalUrls.length > 0 ? externalUrls : FEATURED_URLS;
+
+    return urlsToUse
+      .map((url, index) => {
+        const searchUrl = url.split("?")[0];
+        const photo = allPhotos.find((p) => p.url.split("?")[0] === searchUrl);
+
+        if (photo) {
+          return {
+            ...photo,
+            id: photo.id || `featured-${index}`,
+          };
+        }
+
+        // Fallback object
+        return {
+          url: url,
+          id: `featured-fallback-${index}`,
+          category: "various",
+          camera: "Unknown",
+          tags: [],
+          title: "",
+        } as Photo;
+      })
+      .filter((p): p is Photo => !!p);
+  }, [allPhotos, externalUrls]);
 
   return (
     <section className="md:py-24 py-8 bg-background relative overflow-hidden">
@@ -108,7 +110,7 @@ export function FeaturedGallery() {
                 priority={index < 5}
                 showAltOnHover={false}
                 className="object-cover w-full h-auto transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
-                loading="lazy"
+                loading="eager"
               />
 
               <Link

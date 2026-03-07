@@ -22,12 +22,16 @@ export function SmartImage({
   height,
   priority = false,
   objectTop = false,
+  objectPosition,
   transformation,
   showAltOnHover = true,
   onLoad,
   onError,
   ...props
-}: SmartImageProps & { objectTop?: boolean }) {
+}: SmartImageProps & {
+  objectTop?: boolean;
+  objectPosition?: string;
+}) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   if (!src) return null;
@@ -37,15 +41,26 @@ export function SmartImage({
   const isAbsolute = className?.includes("absolute");
 
   // Common classes
+  const isPredefinedPosition =
+    objectPosition &&
+    ["top", "bottom", "center", "left", "right"].includes(objectPosition);
+
   const finalClass = cn(
     "block max-w-full transition-opacity duration-500",
     isLoaded ? "h-auto" : "h-full",
     isAbsolute && "absolute inset-0 w-full h-full",
-    objectTop && "object-top",
+    objectTop && !objectPosition && "object-top",
+    isPredefinedPosition && `object-${objectPosition}`,
     !isLoaded && "opacity-0",
     isLoaded && "opacity-100",
     className,
   );
+
+  // Apply custom percentages through inline style
+  const style =
+    objectPosition && !isPredefinedPosition ? { objectPosition } : undefined;
+
+  const [hasError, setHasError] = useState(false);
 
   const handleLoad = (e: any) => {
     setIsLoaded(true);
@@ -53,7 +68,9 @@ export function SmartImage({
   };
 
   const handleError = (e: any) => {
-    // Optional: could set an error state here
+    if (!isProd && !hasError) {
+      setHasError(true);
+    }
     if (onError) onError(e);
   };
 
@@ -62,9 +79,7 @@ export function SmartImage({
       className={cn(
         "group/smart-image relative transition-all duration-500",
         isAbsolute && "absolute inset-0 h-full",
-        !isLoaded &&
-          !isAbsolute &&
-          "bg-muted/30 min-h-[300px] md:min-h-[400px] aspect-square md:aspect-3/4",
+        !isLoaded && !isAbsolute && "bg-muted/10 aspect-video md:aspect-auto",
         !isLoaded && isAbsolute && "bg-muted/30",
         isLoaded && "bg-transparent",
         !isAbsolute && isLoaded && "h-auto",
@@ -98,12 +113,13 @@ export function SmartImage({
             transformation={transformation}
             onLoad={handleLoad}
             onError={handleError}
+            style={style}
             {...(props as any)}
           />
         </ImageKitProvider>
       ) : (
         <img
-          src={getDevImageUrl(src)}
+          src={hasError ? src : getDevImageUrl(src)}
           width={width}
           height={height}
           alt={alt}
@@ -112,6 +128,7 @@ export function SmartImage({
           fetchPriority={priority ? "high" : "auto"}
           onLoad={handleLoad}
           onError={handleError}
+          style={style}
           {...(props as any)}
         />
       )}

@@ -65,6 +65,11 @@ const DatabaseTools = lazy(() =>
     default: module.DatabaseTools,
   })),
 );
+const DebugImagePosition = lazy(() =>
+  import("@/pages/DebugImagePosition").then((module) => ({
+    default: module.DebugImagePosition,
+  })),
+);
 const NotFound = lazy(() =>
   import("@/pages/404").then((module) => ({ default: module.NotFound })),
 );
@@ -127,6 +132,14 @@ function AppContent() {
                 element={
                   <ProtectedRoute>
                     <DatabaseTools />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dev/image-position"
+                element={
+                  <ProtectedRoute>
+                    <DebugImagePosition />
                   </ProtectedRoute>
                 }
               />

@@ -45,7 +45,7 @@ export const SameHeightRow: React.FC<
 
   return (
     <div
-      className={`flex flex-col md:flex-row w-full ${
+      className={`flex flex-row w-full ${
         roundEvery ? "" : "overflow-hidden"
       } ${className}`}
       style={{ gap: `${gap}px` }}
@@ -61,7 +61,7 @@ export const SameHeightRow: React.FC<
         return (
           <div
             key={index}
-            className={`w-full md:w-(--width) ${onImageClick ? "cursor-pointer" : ""}`}
+            className={` w-(--width) ${onImageClick ? "cursor-pointer" : ""}`}
             style={
               {
                 "--width": widthPercentage,

@@ -35,4 +35,21 @@ export default defineSchema({
     key: v.string(), // e.g. "comments", "likes"
     lastInteraction: v.number(),
   }).index("by_visitorId_key", ["visitorId", "key"]),
+
+  photos: defineTable({
+    url: v.string(),
+    title: v.optional(v.string()),
+    category: v.string(),
+    camera: v.string(),
+    tags: v.array(v.string()),
+    date: v.optional(v.string()),
+    place: v.optional(v.string()),
+    titleKey: v.optional(v.string()),
+    placeKey: v.optional(v.string()),
+    blogPostId: v.optional(v.string()),
+    objectTop: v.optional(v.boolean()),
+    externalId: v.optional(v.string()),
+  })
+    .index("by_category", ["category"])
+    .index("by_date", ["date"]),
 });

@@ -25,6 +25,12 @@ export function PhotoLightbox({
   onIndexChange,
 }: PhotoLightboxProps) {
   const { t } = useLanguage();
+
+  // Safety guard for empty photos array
+  if (!photos || photos.length === 0 || !photos[currentIndex]) {
+    return null;
+  }
+
   const currentPhoto = photos[currentIndex];
 
   const [showComments, setShowComments] = useState(false);
@@ -39,12 +45,16 @@ export function PhotoLightbox({
   }, []);
 
   const handleNext = useCallback(() => {
-    onIndexChange((currentIndex + 1) % photos.length);
+    if (currentIndex < photos.length - 1) {
+      onIndexChange(currentIndex + 1);
+    }
   }, [currentIndex, photos.length, onIndexChange]);
 
   const handlePrev = useCallback(() => {
-    onIndexChange(currentIndex === 0 ? photos.length - 1 : currentIndex - 1);
-  }, [currentIndex, photos.length, onIndexChange]);
+    if (currentIndex > 0) {
+      onIndexChange(currentIndex - 1);
+    }
+  }, [currentIndex, onIndexChange]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -75,19 +85,24 @@ export function PhotoLightbox({
       .reduce((prev, curr) => (prev ? prev[curr] : undefined), obj);
   };
 
-  const translatedById = currentPhoto.id
-    ? (t.data.photos as any)[currentPhoto.id] || {}
-    : {};
+  const translatedById =
+    currentPhoto && currentPhoto.id
+      ? (t.data.photos as any)[currentPhoto.id] || {}
+      : {};
 
   const displayTitle =
-    (currentPhoto.titleKey && getNestedTranslation(t, currentPhoto.titleKey)) ||
-    translatedById.title ||
-    currentPhoto.title;
+    currentPhoto &&
+    ((currentPhoto.titleKey &&
+      getNestedTranslation(t, currentPhoto.titleKey)) ||
+      translatedById.title ||
+      currentPhoto.title);
 
   const displayPlace =
-    (currentPhoto.placeKey && getNestedTranslation(t, currentPhoto.placeKey)) ||
-    translatedById.place ||
-    currentPhoto.place;
+    currentPhoto &&
+    ((currentPhoto.placeKey &&
+      getNestedTranslation(t, currentPhoto.placeKey)) ||
+      translatedById.place ||
+      currentPhoto.place);
 
   /* --- FILMSTRIP LOGIC --- */
 
@@ -134,6 +149,8 @@ export function PhotoLightbox({
 
   // Helpers to get width of a photo
   const getPhotoWidth = (photo: Photo) => {
+    if (!photo) return dimensions.width * 0.8; // Fallback width
+
     // Subtract sprockets (36px * 2) from the strip height to get available image height
     const availableHeight = STRIP_HEIGHT_PX - 72;
 
@@ -155,19 +172,21 @@ export function PhotoLightbox({
 
   const GAP_PX = 36; // Gap between frames
 
-  // Calculate the offsets for the visible window
+  // Calculate the visible frame window (linear, no wrapping)
   const visibleIndices = useMemo(() => {
     const indices = [];
     for (let i = -BUFFER; i <= BUFFER; i++) {
-      let idx = (currentIndex + i) % photos.length;
-      if (idx < 0) idx += photos.length;
-      indices.push({ relativeIndex: i, photoIndex: idx, photo: photos[idx] });
+      const idx = currentIndex + i;
+      if (idx >= 0 && idx < photos.length) {
+        indices.push({ relativeIndex: i, photoIndex: idx, photo: photos[idx] });
+      }
     }
     return indices;
-  }, [currentIndex, photos]);
+  }, [currentIndex, photos, BUFFER]);
 
   // Calculate X position for each visible photo relative to the center of the screen
   const getXPosition = (relativeIndex: number) => {
+    if (!photos[currentIndex]) return 0;
     const centerPhotoWidth = getPhotoWidth(photos[currentIndex]);
 
     let x = 0;
@@ -177,24 +196,30 @@ export function PhotoLightbox({
     if (relativeIndex > 0) {
       x += centerPhotoWidth / 2 + GAP_PX;
       for (let i = 1; i < relativeIndex; i++) {
-        let idx = (currentIndex + i) % photos.length;
-        x += getPhotoWidth(photos[idx]) + GAP_PX;
+        const idx = currentIndex + i;
+        if (photos[idx]) {
+          x += getPhotoWidth(photos[idx]) + GAP_PX;
+        }
       }
-      let targetIdx = (currentIndex + relativeIndex) % photos.length;
-      x += getPhotoWidth(photos[targetIdx]) / 2;
+      const targetIdx = currentIndex + relativeIndex;
+      if (photos[targetIdx]) {
+        x += getPhotoWidth(photos[targetIdx]) / 2;
+      }
       return x;
     }
 
     if (relativeIndex < 0) {
       x -= centerPhotoWidth / 2 + GAP_PX;
       for (let i = -1; i > relativeIndex; i--) {
-        let idx = currentIndex + i;
-        if (idx < 0) idx += photos.length; // wrap
-        x -= getPhotoWidth(photos[idx]) + GAP_PX;
+        const idx = currentIndex + i;
+        if (photos[idx]) {
+          x -= getPhotoWidth(photos[idx]) + GAP_PX;
+        }
       }
-      let targetIdx = currentIndex + relativeIndex;
-      if (targetIdx < 0) targetIdx += photos.length;
-      x -= getPhotoWidth(photos[targetIdx]) / 2;
+      const targetIdx = currentIndex + relativeIndex;
+      if (photos[targetIdx]) {
+        x -= getPhotoWidth(photos[targetIdx]) / 2;
+      }
       return x;
     }
     return 0;
@@ -222,10 +247,7 @@ export function PhotoLightbox({
       {/* 1. TOP BAR (Mobile: Holder w/ Close | Desktop: Part of Scanner) */}
       {isMobile && (
         <div className="w-full max-w-sm mb-2 z-50 pointer-events-auto">
-          <FilmstripHolder
-            showCloseButton={true}
-            onClose={onClose}
-          />
+          <FilmstripHolder showCloseButton={true} onClose={onClose} />
         </div>
       )}
 
@@ -254,7 +276,7 @@ export function PhotoLightbox({
       {/* 2. MAIN PHOTO AREA */}
       <div
         className={cn(
-          "relative w-full overflow-visible transition-all duration-500 flex items-center justify-center perspective-[1000px]",
+          "relative w-full overflow-visible transition-all duration-500 flex items-center justify-center",
           isMobile ? "flex-1" : "h-[80vh] md:h-[90vh] -translate-y-[24px]",
         )}
       >
@@ -346,14 +368,14 @@ export function PhotoLightbox({
             }
           }}
         >
-          <AnimatePresence initial={false} mode="popLayout">
+          <AnimatePresence initial={false}>
             {visibleIndices.map(({ relativeIndex, photoIndex, photo }) => {
               const xPos = getXPosition(relativeIndex);
               const isCenter = relativeIndex === 0;
 
               return (
                 <motion.div
-                  key={`${photo.id || photoIndex}-${photoIndex}`}
+                  key={photoIndex} // Most stable key for linear strips
                   initial={
                     isIntroDone && !isMobile
                       ? {
@@ -368,6 +390,12 @@ export function PhotoLightbox({
                     opacity: 1,
                     filter: "blur(0px)",
                     zIndex: isCenter ? 20 : 10 - Math.abs(relativeIndex),
+                  }}
+                  exit={{
+                    x: xPos + (relativeIndex > 0 ? 800 : -800),
+                    opacity: 0,
+                    filter: "blur(20px)",
+                    scale: 0.8,
                   }}
                   transition={{
                     type: "spring",
@@ -399,15 +427,7 @@ export function PhotoLightbox({
                     className="relative flex-1 overflow-hidden border-b-2 border-white/20 inset-shadow-sm/50 flex items-center justify-center"
                     onClick={() => {
                       if (!isCenter) {
-                        if (relativeIndex > 0)
-                          onIndexChange(
-                            (currentIndex + relativeIndex) % photos.length,
-                          );
-                        else
-                          onIndexChange(
-                            (currentIndex + relativeIndex + photos.length) %
-                              photos.length,
-                          );
+                        onIndexChange(photoIndex);
                       }
                     }}
                   >

@@ -82,8 +82,7 @@ const getPhotoData = () => {
 };
 
 const getBlogImages = () => {
-    // In mockData.ts: const rawBlogPosts: Omit<BlogPost, 'id'>[] = [
-    // We try to match: const rawBlogPosts
+    if (!fs.existsSync(BLOG_DATA_PATH)) return [];
     const posts = parseArrayFromFile(BLOG_DATA_PATH, 'const rawBlogPosts: Omit<BlogPost, \'id\'>[] = [');
     
     // Extract strings
