@@ -1,4 +1,3 @@
-import { StippledImage } from "@/components/ui/StippledImage";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useLanguage } from "@/lib/LanguageContext";
