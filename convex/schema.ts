@@ -48,6 +48,7 @@ export default defineSchema({
     placeKey: v.optional(v.string()),
     blogPostId: v.optional(v.string()),
     objectTop: v.optional(v.boolean()),
+    objectPosition: v.optional(v.string()),
     externalId: v.optional(v.string()),
   })
     .index("by_category", ["category"])

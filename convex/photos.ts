@@ -98,6 +98,7 @@ export const addPhoto = mutation({
     placeKey: v.optional(v.string()),
     blogPostId: v.optional(v.string()),
     objectTop: v.optional(v.boolean()),
+    objectPosition: v.optional(v.string()),
     externalId: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -120,6 +121,7 @@ export const updatePhoto = mutation({
       placeKey: v.optional(v.string()),
       blogPostId: v.optional(v.string()),
       objectTop: v.optional(v.boolean()),
+      objectPosition: v.optional(v.string()),
       externalId: v.optional(v.string()),
     }),
   },
@@ -150,6 +152,7 @@ export const importPhotos = mutation({
             placeKey: v.optional(v.string()),
             blogPostId: v.optional(v.string()),
             objectTop: v.optional(v.boolean()),
+            objectPosition: v.optional(v.string()),
             externalId: v.optional(v.string()),
         }))
     },

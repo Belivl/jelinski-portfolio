@@ -62,6 +62,34 @@ export const SEO = ({
           }
         />
       )}
+
+      {/* Google Tag (gtag.js) - Placeholder */}
+      {!window.location.pathname.startsWith("/dev/") && (
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-VM5XFDRTBM"
+        ></script>
+      )}
+      {!window.location.pathname.startsWith("/dev/") && (
+        <script>
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            
+            // Default consent mode to denied
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'analytics_storage': 'denied',
+              'personalization_storage': 'denied',
+              'functionality_storage': 'granted',
+              'security_storage': 'granted'
+            });
+
+            gtag('js', new Date());
+            gtag('config', 'G-VM5XFDRTBM');
+          `}
+        </script>
+      )}
     </Helmet>
   );
 };

@@ -400,6 +400,12 @@ export const translations = {
             comment: "Comments",
             like: "I like it",
         },
+        cookieConsent: {
+            message: "We use cookies to improve your experience on our site. By continuing to browse, you agree to our use of cookies.",
+            accept: "Accept",
+            decline: "Decline",
+            title: "Cookie Policy",
+        },
         comments: {
             comments: "Comments",
             noComments: "No comments yet. Be the first to share your thoughts!",
@@ -909,6 +915,12 @@ export const translations = {
             share: "Udostępnij",
             comment: "Komentarze",
             like: "Lubię to",
+        },
+        cookieConsent: {
+            message: "Używamy plików cookie, aby poprawić komfort korzystania z naszej strony. Dalsze przeglądanie oznacza zgodę na ich użycie.",
+            accept: "Akceptuję",
+            decline: "Odrzuć",
+            title: "Polityka Cookies",
         },
         comments: {
             comments: "Komentarze",

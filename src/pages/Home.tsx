@@ -14,6 +14,7 @@ export function Home() {
     // Check if loading screen has been shown in this session
     const hasSeenLoading = sessionStorage.getItem("hasSeenLoadingScreen");
     return !hasSeenLoading;
+    //return true;
   });
 
   useEffect(() => {

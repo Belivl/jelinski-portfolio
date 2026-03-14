@@ -57,7 +57,7 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
     const timer3 = setTimeout(() => {
       if (onFinished) onFinished();
     }, 4000);
-    //
+    
 
     return () => {
       clearTimeout(timer1);
@@ -90,9 +90,14 @@ export function LoadingScreen({ onFinished }: { onFinished?: () => void }) {
           alt="Focus Background"
           width={1920}
           height={1080}
-          className="w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
           objectTop={
             typeof randomPhoto === "object" ? randomPhoto.objectTop : false
+          }
+          objectPosition={
+            typeof randomPhoto === "object"
+              ? randomPhoto.objectPosition
+              : undefined
           }
         />
         {/* Dark Vignette Overlay */}

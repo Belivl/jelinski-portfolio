@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import type { Photo } from "@/data/photos";
 import { useAllPhotos } from "@/hooks/usePhotos";
 import { useMutation } from "convex/react";
@@ -28,6 +28,7 @@ import {
   UploadCloud,
   LayoutGrid,
   List,
+  Database,
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { TAG_CATEGORIES } from "@/data/tags";
@@ -57,6 +58,18 @@ const CATEGORIES: Photo["category"][] = [
 // Pagination items per page default
 const DEFAULT_ITEMS_PER_PAGE = 20;
 
+// Helper to normalize URLs for reliable matching
+const normalizeUrl = (url: string) => {
+  try {
+    const u = new URL(url);
+    // Strip protocol and query params
+    return (u.hostname + u.pathname).replace(/\/$/, "");
+  } catch (e) {
+    // Fallback for relative or malformed URLs
+    return url.split("?")[0].replace(/\/$/, "");
+  }
+};
+
 export function PhotoManager() {
   const convexPhotos = useAllPhotos();
   const updatePhotoMutation = useMutation(api.photos.updatePhoto);
@@ -78,14 +91,27 @@ export function PhotoManager() {
   const [bulkCamera, setBulkCamera] = useState("");
   const [bulkPlace, setBulkPlace] = useState("");
   const [bulkDate, setBulkDate] = useState("");
+  const [bulkObjectTop, setBulkObjectTop] = useState<boolean | null>(null);
+  const [bulkObjectPosition, setBulkObjectPosition] = useState("");
+  const [bulkTitleKey, setBulkTitleKey] = useState("");
+  const [bulkPlaceKey, setBulkPlaceKey] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(DEFAULT_ITEMS_PER_PAGE);
   const [gridColumns, setGridColumns] = useState(1);
   const [filterIncomplete, setFilterIncomplete] = useState(false);
   const [missingPhotos, setMissingPhotos] = useState<
     { url: string; blogPostId: string; title: string }[]
   >([]);
+  const [missingArchivePhotos, setMissingArchivePhotos] = useState<Photo[]>([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const addPhotoMutation = useMutation(api.photos.addPhoto);
+  const importPhotosMutation = useMutation(api.photos.importPhotos);
+
+  // Explorer-style selection state
+  const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(
+    null,
+  );
+  const longPressTimer = useRef<NodeJS.Timeout | null>(null);
+  const isLongPressActive = useRef(false);
 
   // Populate local state from Convex once loaded
   useEffect(() => {
@@ -126,7 +152,179 @@ export function PhotoManager() {
     };
 
     checkMissingPhotos();
+
+    // Check for missing photos from the static archive
+    // const checkMissingArchive = () => {
+    //   if (photos.length === 0) return;
+    //   const existingUrls = new Set(photos.map((p) => normalizeUrl(p.url)));
+    //   const missing = photoData.filter(
+    //     (p) => !existingUrls.has(normalizeUrl(p.url)),
+    //   );
+    //   setMissingArchivePhotos(missing);
+    // };
+
+    // checkMissingArchive();
   }, [photos.length]);
+
+  const seedDatabase = async () => {
+    if (
+      !confirm(
+        `Import ${missingArchivePhotos.length} photos from archive to Convex?`,
+      )
+    )
+      return;
+
+    try {
+      setIsSyncing(true);
+      const count = await importPhotosMutation({
+        photos: missingArchivePhotos as any[],
+      });
+      alert(`Successfully imported ${count} photos!`);
+      setMissingArchivePhotos([]);
+      // The Convex query will automatically refetch and populate `convexPhotos`,
+      // which will then update the `photos` state via initial sync effect.
+    } catch (error) {
+      console.error("Failed to seed database:", error);
+      alert("Seeding failed. Check console.");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const mergeArchiveMetadata = async () => {
+    const existingMap = new Map<string, Photo>();
+    photos.forEach((p) => existingMap.set(normalizeUrl(p.url), p));
+
+    const toUpdate: { id: string; updates: Partial<Photo> }[] = [];
+
+    // photoData.forEach((archivePhoto) => {
+    //   const normalized = normalizeUrl(archivePhoto.url);
+    //   const existing = existingMap.get(normalized);
+
+    //   if (existing && existing.id) {
+    //     // Find fields that are missing or basic in DB but rich in archive
+    //     const updates: Partial<Photo> = {};
+    //     if (
+    //       (!existing.title || existing.title === "Untitled") &&
+    //       archivePhoto.title
+    //     )
+    //       updates.title = archivePhoto.title;
+    //     if (existing.tags.length === 0 && archivePhoto.tags.length > 0)
+    //       updates.tags = archivePhoto.tags;
+    //     if (
+    //       (!existing.camera || existing.camera === "Unknown") &&
+    //       archivePhoto.camera
+    //     )
+    //       updates.camera = archivePhoto.camera;
+    //     if (!existing.date && archivePhoto.date)
+    //       updates.date = archivePhoto.date;
+    //     if (!existing.place && archivePhoto.place)
+    //       updates.place = archivePhoto.place;
+    //     if (!existing.titleKey && archivePhoto.titleKey)
+    //       updates.titleKey = archivePhoto.titleKey;
+    //     if (!existing.placeKey && archivePhoto.placeKey)
+    //       updates.placeKey = archivePhoto.placeKey;
+    //     if (!existing.objectPosition && archivePhoto.objectPosition)
+    //       updates.objectPosition = archivePhoto.objectPosition;
+    //     if (
+    //       existing.objectTop === undefined &&
+    //       archivePhoto.objectTop !== undefined
+    //     )
+    //       updates.objectTop = archivePhoto.objectTop;
+
+    //     if (Object.keys(updates).length > 0) {
+    //       toUpdate.push({ id: existing.id, updates });
+    //     }
+    //   }
+    // });
+
+    if (toUpdate.length === 0) {
+      alert("No metadata gaps found. Database is in sync with archive.");
+      return;
+    }
+
+    if (
+      !confirm(
+        `Found ${toUpdate.length} photos with missing info. Transfer metadata to database?`,
+      )
+    )
+      return;
+
+    try {
+      setIsSyncing(true);
+      let count = 0;
+      for (const item of toUpdate) {
+        await updatePhotoMutation({
+          id: item.id as Id<"photos">,
+          updates: item.updates,
+        });
+        count++;
+      }
+      alert(`Successfully merged metadata for ${count} photos!`);
+      // Update local state
+      setPhotos((prev) =>
+        prev.map((p) => {
+          const update = toUpdate.find((u) => u.id === p.id);
+          return update ? { ...p, ...update.updates } : p;
+        }),
+      );
+    } catch (error) {
+      console.error("Failed to merge metadata:", error);
+      alert("Merge failed. Check console.");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
+  const deduplicateDatabase = async () => {
+    const normalizedMap = new Map<string, string[]>(); // url -> ids
+    photos.forEach((p) => {
+      if (!p.id) return;
+      const normalized = normalizeUrl(p.url);
+      const ids = normalizedMap.get(normalized) || [];
+      ids.push(p.id);
+      normalizedMap.set(normalized, ids);
+    });
+
+    const duplicateGroups = Array.from(normalizedMap.entries()).filter(
+      ([_, ids]) => ids.length > 1,
+    );
+
+    if (duplicateGroups.length === 0) {
+      alert("No duplicates found based on normalized URLs.");
+      return;
+    }
+
+    if (
+      !confirm(
+        `Found ${duplicateGroups.length} duplicate URL groups. Keep the first entry of each group and delete the rest?`,
+      )
+    )
+      return;
+
+    const deletePhotoMutation = useMutation(api.photos.deletePhoto);
+    // Note: deletePhoto might not exist yet, I might need to check convex/photos.ts
+
+    try {
+      setIsSyncing(true);
+      let deleteCount = 0;
+      for (const [_, ids] of duplicateGroups) {
+        // Keep the first one, delete the rest
+        const toDelete = ids.slice(1);
+        for (const id of toDelete) {
+          await deletePhotoMutation({ id: id as Id<"photos"> });
+          deleteCount++;
+        }
+      }
+      alert(`Successfully deleted ${deleteCount} duplicate entries!`);
+      // Update local state will happen via Convex refetch
+    } catch (error) {
+      console.error("Failed to deduplicate:", error);
+      alert("Deduplication failed. Check console.");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
 
   const addMissingPhoto = async (missing: (typeof missingPhotos)[0]) => {
     try {
@@ -274,6 +472,60 @@ export function PhotoManager() {
     setSelectedPhotos(newSelected);
   };
 
+  const handlePhotoClick = (
+    photoId: string,
+    index: number,
+    isShiftKey: boolean,
+  ) => {
+    if (isShiftKey && lastSelectedIndex !== null && bulkMode) {
+      // Range selection
+      const start = Math.min(lastSelectedIndex, index);
+      const end = Math.max(lastSelectedIndex, index);
+      const newSelected = new Set(selectedPhotos);
+
+      // We use paginatedPhotos for range mapping since that's what's visible
+      for (let i = start; i <= end; i++) {
+        const id = paginatedPhotos[i]?.id;
+        if (id) newSelected.add(id);
+      }
+      setSelectedPhotos(newSelected);
+    } else if (bulkMode) {
+      togglePhotoSelection(photoId);
+    } else {
+      setSelectedPhotoId(photoId);
+    }
+    setLastSelectedIndex(index);
+  };
+
+  const handleMouseDown = (photoId: string, index: number) => {
+    isLongPressActive.current = false;
+    longPressTimer.current = setTimeout(() => {
+      isLongPressActive.current = true;
+      // Trigger bulk mode if not already on
+      if (!bulkMode) {
+        setBulkMode(true);
+        setSelectedPhotos(new Set([photoId]));
+      } else {
+        togglePhotoSelection(photoId);
+      }
+      setLastSelectedIndex(index);
+    }, 500); // 500ms for long press
+  };
+
+  const handleMouseUp = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (longPressTimer.current) {
+      clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+  };
+
   const selectAll = () => {
     const ids = new Set<string>();
     paginatedPhotos.forEach((p) => {
@@ -294,21 +546,29 @@ export function PhotoManager() {
     commonCamera,
     commonPlace,
     commonDate,
+    commonObjectTop,
+    commonObjectPosition,
+    commonTitleKey,
+    commonPlaceKey,
   } = useMemo(() => {
     if (selectedPhotos.size === 0)
       return {
-        commonTags: [],
+        commonTags: [] as string[],
         commonCategory: null,
         commonTitle: null,
         commonCamera: null,
         commonPlace: null,
         commonDate: null,
+        commonObjectTop: null,
+        commonObjectPosition: null,
+        commonTitleKey: null,
+        commonPlaceKey: null,
       };
 
     const selected = photos.filter((p) => p.id && selectedPhotos.has(p.id));
     if (selected.length === 0)
       return {
-        commonTags: [],
+        commonTags: [] as string[],
         commonCategory: null,
         commonTitle: null,
         commonCamera: null,
@@ -335,6 +595,10 @@ export function PhotoManager() {
       commonCamera: getCommonValue("camera"),
       commonPlace: getCommonValue("place"),
       commonDate: getCommonValue("date"),
+      commonObjectTop: getCommonValue("objectTop"),
+      commonObjectPosition: getCommonValue("objectPosition"),
+      commonTitleKey: getCommonValue("titleKey"),
+      commonPlaceKey: getCommonValue("placeKey"),
     };
   }, [selectedPhotos, photos]);
 
@@ -344,7 +608,25 @@ export function PhotoManager() {
     setBulkCamera(typeof commonCamera === "string" ? commonCamera : "");
     setBulkPlace(typeof commonPlace === "string" ? commonPlace : "");
     setBulkDate(typeof commonDate === "string" ? commonDate : "");
-  }, [commonTitle, commonCamera, commonPlace, commonDate, selectedPhotos]);
+    setBulkObjectTop(
+      typeof commonObjectTop === "boolean" ? commonObjectTop : null,
+    );
+    setBulkObjectPosition(
+      typeof commonObjectPosition === "string" ? commonObjectPosition : "",
+    );
+    setBulkTitleKey(typeof commonTitleKey === "string" ? commonTitleKey : "");
+    setBulkPlaceKey(typeof commonPlaceKey === "string" ? commonPlaceKey : "");
+  }, [
+    commonTitle,
+    commonCamera,
+    commonPlace,
+    commonDate,
+    commonObjectTop,
+    commonObjectPosition,
+    commonTitleKey,
+    commonPlaceKey,
+    selectedPhotos,
+  ]);
 
   const toggleBulkTag = (tag: string) => {
     const isCommon = commonTags.includes(tag);
@@ -395,6 +677,27 @@ export function PhotoManager() {
   const applyBulkDate = () => {
     bulkUpdatePhotos({ date: bulkDate });
     setBulkDate("");
+  };
+
+  const applyBulkObjectTop = () => {
+    if (bulkObjectTop !== null) {
+      bulkUpdatePhotos({ objectTop: bulkObjectTop });
+    }
+  };
+
+  const applyBulkObjectPosition = () => {
+    bulkUpdatePhotos({ objectPosition: bulkObjectPosition });
+    setBulkObjectPosition("");
+  };
+
+  const applyBulkTitleKey = () => {
+    bulkUpdatePhotos({ titleKey: bulkTitleKey });
+    setBulkTitleKey("");
+  };
+
+  const applyBulkPlaceKey = () => {
+    bulkUpdatePhotos({ placeKey: bulkPlaceKey });
+    setBulkPlaceKey("");
   };
 
   const copyToClipboard = () => {
@@ -684,6 +987,61 @@ export function PhotoManager() {
           </div>
         )}
 
+        {missingArchivePhotos.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-8 bg-blue-500/10 border border-blue-500/30 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-[0_0_30px_rgba(59,130,246,0.1)]"
+          >
+            <div className="flex items-center gap-5">
+              <div className="p-4 rounded-xl bg-blue-500/20 text-blue-400 shrink-0 border border-blue-500/30">
+                <Database className="w-8 h-8 fill-current animate-pulse" />
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-blue-400 flex items-center gap-3">
+                  Archive Reconciliation
+                  <div className="px-2 py-0.5 rounded text-[10px] bg-blue-500 text-black font-mono">
+                    {missingArchivePhotos.length} MISSING
+                  </div>
+                </h3>
+                <p className="text-sm text-blue-200/60 leading-relaxed mt-1">
+                  These photos are in your static `photos.ts` but missing from
+                  the database. Importing them will make the database the
+                  authoritative source.
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+              <Button
+                variant="outline"
+                onClick={mergeArchiveMetadata}
+                className="px-6 border-blue-500/30 hover:bg-blue-500/20 text-blue-400 font-mono text-xs uppercase tracking-widest"
+              >
+                Merge Metadata
+              </Button>
+              <Button
+                variant="gold"
+                onClick={seedDatabase}
+                className="px-8 shadow-[0_0_20px_rgba(59,130,246,0.2)] font-mono text-xs uppercase tracking-widest"
+              >
+                Seed Missing
+              </Button>
+            </div>
+          </motion.div>
+        )}
+
+        <div className="mb-8 flex flex-wrap gap-4">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={deduplicateDatabase}
+            className="rounded-full px-5 border-neutral-800 hover:bg-red-500/10 hover:border-red-500/50 hover:text-red-400 transition-all text-[10px] font-mono uppercase tracking-widest"
+          >
+            <RefreshCcw className="w-3.5 h-3.5 mr-2 opacity-50" />
+            Deduplicate DB
+          </Button>
+        </div>
+
         {missingPhotos.length > 0 && (
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -778,7 +1136,7 @@ export function PhotoManager() {
                 className={`flex-1 overflow-y-auto custom-scrollbar p-2 ${gridColumns === 1 ? "space-y-2" : "grid grid-cols-2 gap-2 content-start"}`}
               >
                 <AnimatePresence mode="popLayout">
-                  {paginatedPhotos.map((photo) => (
+                  {paginatedPhotos.map((photo, index) => (
                     <motion.div
                       key={photo.id}
                       layout
@@ -792,11 +1150,19 @@ export function PhotoManager() {
                             ? "bg-amber-500/10 border border-amber-500/30"
                             : "bg-neutral-800/40 hover:bg-neutral-800 border border-transparent hover:border-neutral-700"
                       } ${gridColumns === 1 ? "p-2" : "p-1.5"}`}
-                      onClick={() => {
-                        if (bulkMode && photo.id) {
-                          togglePhotoSelection(photo.id);
-                        } else if (photo.id) {
-                          setSelectedPhotoId(photo.id);
+                      onMouseDown={() =>
+                        photo.id && handleMouseDown(photo.id, index)
+                      }
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={(e) => {
+                        // If it was a long press, the selection already happened
+                        if (isLongPressActive.current) {
+                          isLongPressActive.current = false;
+                          return;
+                        }
+                        if (photo.id) {
+                          handlePhotoClick(photo.id, index, e.shiftKey);
                         }
                       }}
                     >
@@ -1080,6 +1446,145 @@ export function PhotoManager() {
                               </div>
                             </div>
                           </div>
+
+                          <div className="flex items-center gap-2 pt-4 border-t border-neutral-800">
+                            <span className="w-1 h-3 bg-neutral-700 rounded-full" />
+                            <h4 className="text-[10px] font-bold uppercase tracking-widest text-neutral-500">
+                              Advanced Attributes
+                            </h4>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Object Top */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Object Top{" "}
+                                {commonObjectTop === null && (
+                                  <span className="text-amber-500/50 italic ml-1">
+                                    (Mixed)
+                                  </span>
+                                )}
+                              </label>
+                              <div className="flex gap-2 items-center h-10 bg-neutral-800 border-neutral-700 border rounded-xl px-4">
+                                <div className="flex-1 flex gap-2">
+                                  <button
+                                    onClick={() => setBulkObjectTop(true)}
+                                    className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${bulkObjectTop === true ? "bg-amber-500 text-black" : "text-neutral-500 hover:text-white"}`}
+                                  >
+                                    TRUE
+                                  </button>
+                                  <button
+                                    onClick={() => setBulkObjectTop(false)}
+                                    className={`px-3 py-1 rounded-lg text-xs font-mono transition-all ${bulkObjectTop === false ? "bg-amber-500 text-black" : "text-neutral-500 hover:text-white"}`}
+                                  >
+                                    FALSE
+                                  </button>
+                                </div>
+                                <Button
+                                  size="sm"
+                                  variant="gold"
+                                  onClick={applyBulkObjectTop}
+                                  disabled={bulkObjectTop === null}
+                                  className="h-7 px-3"
+                                >
+                                  Set
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Object Position */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Object Position{" "}
+                                {commonObjectPosition === null && (
+                                  <span className="text-amber-500/50 italic ml-1">
+                                    (Mixed)
+                                  </span>
+                                )}
+                              </label>
+                              <div className="flex gap-2">
+                                <input
+                                  type="text"
+                                  placeholder="e.g. 50% 20%"
+                                  value={bulkObjectPosition}
+                                  onChange={(e) =>
+                                    setBulkObjectPosition(e.target.value)
+                                  }
+                                  className="flex-1 bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                                />
+                                <Button
+                                  size="sm"
+                                  variant="gold"
+                                  onClick={applyBulkObjectPosition}
+                                  disabled={!bulkObjectPosition}
+                                >
+                                  Set
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Title Key */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Translation Key (Title){" "}
+                                {commonTitleKey === null && (
+                                  <span className="text-amber-500/50 italic ml-1">
+                                    (Mixed)
+                                  </span>
+                                )}
+                              </label>
+                              <div className="flex gap-2">
+                                <input
+                                  type="text"
+                                  placeholder="key.title"
+                                  value={bulkTitleKey}
+                                  onChange={(e) =>
+                                    setBulkTitleKey(e.target.value)
+                                  }
+                                  className="flex-1 bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                                />
+                                <Button
+                                  size="sm"
+                                  variant="gold"
+                                  onClick={applyBulkTitleKey}
+                                  disabled={!bulkTitleKey}
+                                >
+                                  Set
+                                </Button>
+                              </div>
+                            </div>
+
+                            {/* Place Key */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Translation Key (Place){" "}
+                                {commonPlaceKey === null && (
+                                  <span className="text-amber-500/50 italic ml-1">
+                                    (Mixed)
+                                  </span>
+                                )}
+                              </label>
+                              <div className="flex gap-2">
+                                <input
+                                  type="text"
+                                  placeholder="key.place"
+                                  value={bulkPlaceKey}
+                                  onChange={(e) =>
+                                    setBulkPlaceKey(e.target.value)
+                                  }
+                                  className="flex-1 bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                                />
+                                <Button
+                                  size="sm"
+                                  variant="gold"
+                                  onClick={applyBulkPlaceKey}
+                                  disabled={!bulkPlaceKey}
+                                >
+                                  Set
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
 
                         {/* Bulk Category Card */}
@@ -1346,6 +1851,99 @@ export function PhotoManager() {
                                 {cat.replace("-", " ")}
                               </Button>
                             ))}
+                          </div>
+                        </div>
+
+                        <div className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 space-y-6">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="w-1 h-4 bg-neutral-700 rounded-full" />
+                            <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-500">
+                              Advanced Configuration
+                            </h3>
+                          </div>
+
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            {/* Title Key */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Translation Key (Title)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="key.title"
+                                value={selectedPhoto.titleKey || ""}
+                                onChange={(e) =>
+                                  selectedPhoto.id &&
+                                  updatePhoto(selectedPhoto.id, {
+                                    titleKey: e.target.value,
+                                  })
+                                }
+                                className="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                              />
+                            </div>
+
+                            {/* Place Key */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Translation Key (Place)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="key.place"
+                                value={selectedPhoto.placeKey || ""}
+                                onChange={(e) =>
+                                  selectedPhoto.id &&
+                                  updatePhoto(selectedPhoto.id, {
+                                    placeKey: e.target.value,
+                                  })
+                                }
+                                className="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                              />
+                            </div>
+
+                            {/* Object Top */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Object Top (Centered Hero)
+                              </label>
+                              <div className="flex items-center h-10 bg-neutral-800 border-neutral-700 border rounded-xl px-4">
+                                <label className="flex items-center gap-2 cursor-pointer w-full">
+                                  <input
+                                    type="checkbox"
+                                    checked={selectedPhoto.objectTop || false}
+                                    onChange={(e) =>
+                                      selectedPhoto.id &&
+                                      updatePhoto(selectedPhoto.id, {
+                                        objectTop: e.target.checked,
+                                      })
+                                    }
+                                    className="w-4 h-4 accent-amber-500"
+                                  />
+                                  <span className="text-xs font-mono text-neutral-400">
+                                    ENABLE HERO CENTERING
+                                  </span>
+                                </label>
+                              </div>
+                            </div>
+
+                            {/* Object Position */}
+                            <div className="space-y-2">
+                              <label className="block text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+                                Object Position (%)
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="e.g. 50% 20%"
+                                value={selectedPhoto.objectPosition || ""}
+                                onChange={(e) =>
+                                  selectedPhoto.id &&
+                                  updatePhoto(selectedPhoto.id, {
+                                    objectPosition: e.target.value,
+                                  })
+                                }
+                                className="w-full bg-neutral-800 border border-neutral-700 rounded-xl px-4 py-2 focus:border-amber-500 focus:outline-none text-xs font-mono"
+                              />
+                            </div>
                           </div>
                         </div>
 

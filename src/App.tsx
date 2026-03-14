@@ -11,6 +11,7 @@ import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { SEO } from "@/components/SEO";
 import { AuthProvider } from "@/context/AuthContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { AnimatePresence } from "motion/react";
 
 // Lazy-loaded components
@@ -166,6 +167,7 @@ function App() {
           image="logo.png"
         />
         <AppContent />
+        <CookieConsent />
       </Router>
     </AuthProvider>
   );

@@ -11,6 +11,7 @@ export interface Photo {
     placeKey?: string;
     blogPostId?: string;
     objectTop?: boolean;
+    objectPosition?: string;
 }
 
 export interface BlogPost {
