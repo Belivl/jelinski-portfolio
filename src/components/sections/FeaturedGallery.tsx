@@ -11,6 +11,7 @@ import { type Photo } from "@/data/photos";
 import { siteConfig } from "@/config/site";
 import { getExternalDataWithFallback } from "@/lib/googleSheets";
 import { useAllPhotos } from "@/hooks/usePhotos";
+import { normalizeUrl } from "@/lib/utils";
 
 export function FeaturedGallery() {
   const { t } = useLanguage();
@@ -41,8 +42,8 @@ export function FeaturedGallery() {
 
     return urlsToUse
       .map((url, index) => {
-        const searchUrl = url.split("?")[0];
-        const photo = allPhotos.find((p) => p.url.split("?")[0] === searchUrl);
+        const searchUrl = normalizeUrl(url);
+        const photo = allPhotos.find((p) => normalizeUrl(p.url) === searchUrl);
 
         if (photo) {
           return {

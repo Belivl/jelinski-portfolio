@@ -85,23 +85,30 @@ export function PhotoLightbox({
       .reduce((prev, curr) => (prev ? prev[curr] : undefined), obj);
   };
 
-  const translatedById =
-    currentPhoto && currentPhoto.id
-      ? (t.data.photos as any)[currentPhoto.id] || {}
-      : {};
+  const getTranslationKey = () => {
+    if (!currentPhoto) return "";
+    // If we have a hardcoded titleKey in the database, use it
+    if (currentPhoto.titleKey) return currentPhoto.titleKey;
+    // Otherwise, try to extract a key from the blogPostId or url
+    if (currentPhoto.blogPostId) return currentPhoto.blogPostId;
+    return "";
+  };
+
+  const tKey = getTranslationKey();
+  const translatedData = tKey ? (t.data.photos as any)[tKey] || {} : {};
 
   const displayTitle =
     currentPhoto &&
     ((currentPhoto.titleKey &&
       getNestedTranslation(t, currentPhoto.titleKey)) ||
-      translatedById.title ||
+      translatedData.title ||
       currentPhoto.title);
 
   const displayPlace =
     currentPhoto &&
     ((currentPhoto.placeKey &&
       getNestedTranslation(t, currentPhoto.placeKey)) ||
-      translatedById.place ||
+      translatedData.place ||
       currentPhoto.place);
 
   /* --- FILMSTRIP LOGIC --- */

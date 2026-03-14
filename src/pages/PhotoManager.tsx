@@ -4,6 +4,7 @@ import { useAllPhotos } from "@/hooks/usePhotos";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
+import { normalizeUrl } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -57,18 +58,6 @@ const CATEGORIES: Photo["category"][] = [
 
 // Pagination items per page default
 const DEFAULT_ITEMS_PER_PAGE = 20;
-
-// Helper to normalize URLs for reliable matching
-const normalizeUrl = (url: string) => {
-  try {
-    const u = new URL(url);
-    // Strip protocol and query params
-    return (u.hostname + u.pathname).replace(/\/$/, "");
-  } catch (e) {
-    // Fallback for relative or malformed URLs
-    return url.split("?")[0].replace(/\/$/, "");
-  }
-};
 
 export function PhotoManager() {
   const convexPhotos = useAllPhotos();

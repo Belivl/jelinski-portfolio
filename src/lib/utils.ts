@@ -13,6 +13,31 @@ export function cleanIKUrl(url: string | undefined): string {
   return cleaned.split("?")[0];
 }
 
+// Helper to normalize URLs for reliable matching
+export const normalizeUrl = (url: string) => {
+  if (!url) return "";
+  
+  let path = url;
+  try {
+    const u = new URL(url);
+    path = u.pathname;
+  } catch (e) {
+    path = url.split("?")[0];
+  }
+
+  // Remove ImageKit bucket/ID prefix if present in the path
+  const ikPrefix = "/j3l1n5k1/";
+  if (path.startsWith(ikPrefix)) {
+    path = path.substring(ikPrefix.length);
+  }
+
+  // Standardize: no leading slash, no trailing slash, no query params
+  return path
+    .replace(/^\//, "")
+    .split("?")[0]
+    .replace(/\/$/, "");
+};
+
 export function getDevImageUrl(url: string): string {
     if (!import.meta.env.DEV) return url;
     if (!url) return url;
