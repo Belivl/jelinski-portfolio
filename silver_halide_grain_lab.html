@@ -1,0 +1,2997 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Grain Lab — Binary Stochastic Physical Simulation</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Optional JSZip for 1-click batch archive export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <style>
+        :root {
+            --bg-base: #09090b;
+            --bg-surface: #111114;
+            --bg-panel: #16161a;
+            --bg-hover: #212126;
+            --bg-active: #2a2a32;
+            --border-subtle: #27272a;
+            --border-muted: #3f3f46;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-solid: #ffffff;
+            --accent-contrast: #09090b;
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top Navigation Header */
+        header {
+            height: 52px;
+            background-color: var(--bg-surface);
+            border-bottom: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 50;
+            flex-shrink: 0;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-badge {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background-color: var(--bg-panel);
+            padding: 3px 7px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .brand h1 {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            border: 1px solid var(--border-subtle);
+            background-color: var(--bg-panel);
+            color: var(--text-primary);
+            transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--bg-hover);
+            border-color: var(--border-muted);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-solid);
+            color: var(--accent-contrast);
+            border-color: var(--accent-solid);
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: #e4e4e7;
+            border-color: #e4e4e7;
+            color: var(--accent-contrast);
+        }
+
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+
+        /* View Mode Tabs */
+        .tabs {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-base);
+            padding: 2px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            gap: 2px;
+        }
+
+        .tab-btn {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 500;
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active {
+            background-color: var(--bg-panel);
+            color: var(--text-primary);
+            border: 1px solid var(--border-muted);
+        }
+
+        /* Loupe Zoom Switcher */
+        .loupe-zoom-group {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-panel);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            padding: 1px;
+            margin-left: 4px;
+        }
+
+        .loupe-zoom-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            padding: 3px 6px;
+            cursor: pointer;
+            border-radius: 2px;
+        }
+
+        .loupe-zoom-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .loupe-zoom-btn.active {
+            background-color: var(--bg-active);
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Main Workspace Layout */
+        .workspace {
+            display: flex;
+            flex: 1;
+            height: calc(100vh - 52px);
+            overflow: hidden;
+        }
+
+        /* Sidebar Controls Panel */
+        .sidebar {
+            width: 350px;
+            background-color: var(--bg-surface);
+            border-right: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-shrink: 0;
+            z-index: 10;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+        }
+
+        .panel-section {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+        }
+
+        /* Presets Grid */
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+        }
+
+        .preset-btn {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
+            cursor: pointer;
+            text-align: left;
+            transition: background-color 0.15s, border-color 0.15s;
+        }
+
+        .preset-btn:hover {
+            background-color: var(--bg-hover);
+            border-color: var(--border-muted);
+        }
+
+        .preset-btn.active {
+            background-color: var(--bg-active);
+            border-color: var(--text-primary);
+        }
+
+        .preset-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: block;
+        }
+
+        .preset-tag {
+            font-size: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            margin-top: 2px;
+            display: block;
+        }
+
+        /* Control Items */
+        .control-item {
+            margin-bottom: 14px;
+        }
+
+        .control-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .control-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .control-val {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+        }
+
+        /* Sliders */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 3px;
+            background-color: var(--border-subtle);
+            border-radius: 2px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--text-primary);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        /* Form Controls */
+        select {
+            width: 100%;
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 6px 10px;
+            color: var(--text-primary);
+            font-size: 12px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        select:focus {
+            border-color: var(--border-muted);
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            accent-color: var(--accent-solid);
+            cursor: pointer;
+        }
+
+        input[type="color"] {
+            -webkit-appearance: none;
+            appearance: none;
+            border: 1px solid var(--border-subtle);
+            width: 28px;
+            height: 24px;
+            border-radius: var(--radius-sm);
+            background: transparent;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch-wrapper {
+            padding: 0;
+        }
+
+        input[type="color"]::-webkit-color-swatch {
+            border: none;
+            border-radius: 3px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+        }
+
+        .layer-box {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 6px;
+            text-align: center;
+        }
+
+        .layer-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .layer-val {
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-primary);
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Minimal Info Box */
+        .info-box {
+            background-color: var(--bg-panel);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .info-box a {
+            color: var(--text-primary);
+            text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        /* Main Viewport + Filmstrip Column */
+        .viewport-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-base);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .viewport-canvas-area {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background-color: var(--bg-base);
+        }
+
+        .canvas-container {
+            position: relative;
+            max-width: 96%;
+            max-height: 94%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #gl-canvas {
+            display: block;
+            max-width: 100%;
+            max-height: calc(100vh - 200px);
+            object-fit: contain;
+            border: 1px solid var(--border-subtle);
+            cursor: crosshair;
+            background-color: #000;
+        }
+
+        /* Split Slider Line */
+        .split-divider {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background-color: #ffffff;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .split-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        /* Enhanced Floating Loupe Magnifier */
+        .loupe {
+            position: fixed;
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            border: 1px solid var(--text-primary);
+            background-color: #000000;
+            pointer-events: none;
+            display: none;
+            overflow: hidden;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .loupe canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            image-rendering: pixelated;
+        }
+
+        .loupe-crosshair {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loupe-crosshair::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .loupe-crosshair::after {
+            content: '';
+            position: absolute;
+            height: 14px;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .loupe-tag {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 9px;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 1px 5px;
+            border-radius: 3px;
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        /* Filmstrip Carousel Dock */
+        .filmstrip-dock {
+            height: 120px;
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            z-index: 20;
+        }
+
+        .filmstrip-toolbar {
+            height: 30px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+            font-size: 11px;
+        }
+
+        .filmstrip-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .filmstrip-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filmstrip-scroll {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: thin;
+        }
+
+        .filmstrip-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        .filmstrip-scroll::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+        }
+
+        /* Filmstrip 35mm Frame Card */
+        .film-frame {
+            position: relative;
+            width: 100px;
+            height: 72px;
+            background-color: #050507;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transition: border-color 0.15s, background-color 0.15s;
+        }
+
+        .film-frame:hover {
+            border-color: var(--border-muted);
+            background-color: var(--bg-hover);
+        }
+
+        .film-frame.active {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 1px var(--text-primary);
+        }
+
+        .film-thumb {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+            transition: opacity 0.15s;
+        }
+
+        .film-frame.active .film-thumb,
+        .film-frame:hover .film-thumb {
+            opacity: 1.0;
+        }
+
+        .film-check {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            z-index: 5;
+            accent-color: var(--accent-solid);
+            cursor: pointer;
+        }
+
+        .film-num {
+            position: absolute;
+            bottom: 2px;
+            left: 4px;
+            font-size: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 1px 3px;
+            border-radius: 2px;
+            pointer-events: none;
+        }
+
+        .film-del {
+            position: absolute;
+            top: 2px;
+            right: 2px;
+            width: 16px;
+            height: 16px;
+            background: rgba(0, 0, 0, 0.7);
+            color: var(--text-secondary);
+            border: none;
+            border-radius: 2px;
+            font-size: 10px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 6;
+        }
+
+        .film-frame:hover .film-del {
+            display: flex;
+        }
+
+        .film-del:hover {
+            color: #fff;
+            background: #ef4444;
+        }
+
+        .add-frame-btn {
+            width: 72px;
+            height: 72px;
+            background-color: var(--bg-panel);
+            border: 1px dashed var(--border-muted);
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+            gap: 4px;
+            transition: border-color 0.15s, color 0.15s;
+        }
+
+        .add-frame-btn:hover {
+            border-color: var(--text-primary);
+            color: var(--text-primary);
+        }
+
+        /* Modal / Toast / Progress Overlay */
+        .batch-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(9, 9, 11, 0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 200;
+        }
+
+        .batch-modal {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-muted);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            width: 380px;
+            text-align: center;
+        }
+
+        .batch-progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: var(--bg-panel);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 16px 0 10px 0;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .batch-progress-fill {
+            height: 100%;
+            background-color: var(--text-primary);
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 140px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-muted);
+            color: var(--text-primary);
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            z-index: 150;
+            display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Drag Overlay */
+        .upload-overlay {
+            position: absolute;
+            inset: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-surface);
+            border: 1px dashed var(--border-muted);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            z-index: 20;
+            transition: border-color 0.15s ease, background-color 0.15s ease;
+        }
+
+        .upload-overlay:hover,
+        .upload-overlay.dragover {
+            border-color: var(--text-primary);
+            background-color: var(--bg-hover);
+        }
+
+        .upload-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .upload-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        /* Footer Status Bar */
+        .status-bar {
+            height: 24px;
+            background-color: var(--bg-surface);
+            border-top: 1px solid var(--border-subtle);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 14px;
+            font-size: 11px;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-muted);
+            z-index: 25;
+        }
+
+        .status-left,
+        .status-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .status-val {
+            color: var(--text-secondary);
+        }
+
+        #file-input {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Navigation -->
+    <header>
+        <div class="brand">
+            <h1>Film Grain Lab</h1>
+            <span class="brand-badge">kanzwataru / filmgrain-simplified</span>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" id="tab-split" onclick="setViewMode('split')">Split View</button>
+            <button class="tab-btn" id="tab-processed" onclick="setViewMode('processed')">Processed</button>
+            <button class="tab-btn" id="tab-original" onclick="setViewMode('original')">Original</button>
+            <button class="tab-btn" id="tab-mask" onclick="setViewMode('mask')">Grain Mask</button>
+            <button class="tab-btn" id="tab-loupe" onclick="toggleLoupe()">Loupe</button>
+            <div class="loupe-zoom-group">
+                <button class="loupe-zoom-btn" onclick="setLoupeZoom(2, this)">2x</button>
+                <button class="loupe-zoom-btn active" onclick="setLoupeZoom(4, this)">4x</button>
+                <button class="loupe-zoom-btn" onclick="setLoupeZoom(8, this)">8x</button>
+                <button class="loupe-zoom-btn" onclick="setLoupeZoom(16, this)">16x</button>
+            </div>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn" onclick="loadSampleImage()">Load Sample Target</button>
+            <button class="btn" onclick="triggerFileInput()">+ Upload Images</button>
+            <button class="btn btn-primary" id="btn-export" onclick="exportFullResPNG()">Export Single PNG</button>
+        </div>
+    </header>
+
+    <input type="file" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+
+        <!-- Sidebar Control Panel -->
+        <aside class="sidebar">
+
+            <!-- Presets Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Stock Presets</span>
+                    <button class="btn" style="padding: 2px 6px; font-size: 10px;" onclick="resetDefaults()">Reset</button>
+                </div>
+                <div class="presets-grid">
+                    <div class="preset-btn active" onclick="applyPreset('default', this)">
+                        <span class="preset-name">Standard 4x4</span>
+                        <span class="preset-tag">4 layers · Clean</span>
+                    </div>
+                    <div class="preset-btn" onclick="applyPreset('cinestill', this)">
+                        <span class="preset-name">CineStill 800T</span>
+                        <span class="preset-tag">Red Halation · 35mm</span>
+                    </div>
+                    <div class="preset-btn" onclick="applyPreset('vision3', this)">
+                        <span class="preset-name">Vision3 500T</span>
+                        <span class="preset-tag">Halation + Bloom</span>
+                    </div>
+                    <div class="preset-btn" onclick="applyPreset('tri-x', this)">
+                        <span class="preset-name">Kodak Tri-X 400</span>
+                        <span class="preset-tag">3x3 · Dark Soot</span>
+                    </div>
+                    <div class="preset-btn" onclick="applyPreset('hp5', this)">
+                        <span class="preset-name">Ilford HP5 Plus</span>
+                        <span class="preset-tag">4x4 · Fine Dust</span>
+                    </div>
+                    <div class="preset-btn" onclick="applyPreset('grindhouse', this)">
+                        <span class="preset-name">Grindhouse 35mm</span>
+                        <span class="preset-tag">Halation + Scratches + Hairs</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stochastic Noise Engine Mode -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Stochastic Crystal Engine</span>
+                </div>
+                <div class="control-item">
+                    <select id="param-engine" onchange="onParamChange()">
+                        <option value="0" selected>Aperiodic PCG-3D Continuous (Zero Lattice / Certified)</option>
+                        <option value="1">Simplex-Voronoi Continuous Halide Crystals</option>
+                        <option value="2">Scrambled Blue Noise (Jittered Void-Cluster)</option>
+                    </select>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+                    Evaluates continuous stochastic photon scattering across crystal depth with zero grid alignment or periodic banding.
+                </div>
+            </div>
+
+            <!-- Subpixel Tiling & Grain Fineness -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Subpixel Grain Fineness</span>
+                    <span class="control-val" id="val-tilesize">4x4 (16 subpixels)</span>
+                </div>
+                <div class="control-item">
+                    <input type="range" id="param-tilesize" min="1" max="8" step="1" value="4" oninput="onParamChange()">
+                </div>
+                <div class="control-item" style="margin-top: 10px;">
+                    <div class="control-row">
+                        <span class="control-label">Crystal Spatial Jitter</span>
+                        <span class="control-val" id="val-grain-jitter">80%</span>
+                    </div>
+                    <input type="range" id="param-grain-jitter" min="0" max="100" step="5" value="80" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Grain Clumping / Roughness</span>
+                        <span class="control-val" id="val-grain-clumping">20%</span>
+                    </div>
+                    <input type="range" id="param-grain-clumping" min="0" max="100" step="5" value="20" oninput="onParamChange()">
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+                    Spatial jitter and crystal clumping dissolve digital pixel grids into organic continuous film emulsion.
+                </div>
+            </div>
+
+            <!-- Real Physical Film Halation Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Physical Film Halation</span>
+                </div>
+                <div class="control-item">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="param-halation-enable" onchange="onParamChange()">
+                        <span class="control-label" style="font-weight: 500; color: var(--text-primary);">Enable Anti-Halation Layer Glow</span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Exposure Threshold</span>
+                        <span class="control-val" id="val-halation-thresh">0.65</span>
+                    </div>
+                    <input type="range" id="param-halation-thresh" min="0.2" max="0.95" step="0.05" value="0.65" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Halation Spread / Radius</span>
+                        <span class="control-val" id="val-halation-rad">16.0px</span>
+                    </div>
+                    <input type="range" id="param-halation-rad" min="2.0" max="45.0" step="1.0" value="16.0" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Halation Intensity</span>
+                        <span class="control-val" id="val-halation-intensity">80%</span>
+                    </div>
+                    <input type="range" id="param-halation-intensity" min="0" max="200" step="5" value="80" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Halation Glow Color</span>
+                        <input type="color" id="param-halation-color" value="#ea2600" oninput="onParamChange()">
+                    </div>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Falloff Softness</span>
+                        <span class="control-val" id="val-halation-falloff">1.8</span>
+                    </div>
+                    <input type="range" id="param-halation-falloff" min="1.0" max="3.0" step="0.1" value="1.8" oninput="onParamChange()">
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+                    Light penetrating the emulsion reflects off the film base and re-exposes the red layer from behind (CineStill / Vision3 aesthetic).
+                </div>
+            </div>
+
+            <!-- Real Optical Bloom Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Optical Lens Bloom</span>
+                </div>
+                <div class="control-item">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="param-bloom-enable" onchange="onParamChange()">
+                        <span class="control-label" style="font-weight: 500; color: var(--text-primary);">Enable Atmospheric Bloom</span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Highlight Threshold</span>
+                        <span class="control-val" id="val-bloom-thresh">0.70</span>
+                    </div>
+                    <input type="range" id="param-bloom-thresh" min="0.3" max="0.95" step="0.05" value="0.70" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Bloom Radius</span>
+                        <span class="control-val" id="val-bloom-rad">24.0px</span>
+                    </div>
+                    <input type="range" id="param-bloom-rad" min="4.0" max="60.0" step="2.0" value="24.0" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Bloom Intensity</span>
+                        <span class="control-val" id="val-bloom-intensity">50%</span>
+                    </div>
+                    <input type="range" id="param-bloom-intensity" min="0" max="150" step="5" value="50" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Bloom Warmth / Tint</span>
+                        <input type="color" id="param-bloom-color" value="#fff6e8" oninput="onParamChange()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Procedural Dirt & Dust Particles Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Dirt & Dust Particles</span>
+                    <button class="btn" style="padding: 2px 6px; font-size: 10px;" onclick="randomizeDustSeed()">🎲 Seed</button>
+                </div>
+                <div class="control-item">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="param-dust-enable" onchange="onParamChange()">
+                        <span class="control-label" style="font-weight: 500; color: var(--text-primary);">Enable Procedural Dust & Soot</span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Pattern Scale (Density)</span>
+                        <span class="control-val" id="val-dust-scale">1.0x</span>
+                    </div>
+                    <input type="range" id="param-dust-scale" min="0.2" max="4.0" step="0.1" value="1.0" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Min Particle Size</span>
+                        <span class="control-val" id="val-dust-min">0.6px</span>
+                    </div>
+                    <input type="range" id="param-dust-min" min="0.2" max="4.0" step="0.1" value="0.6" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Max Particle Size</span>
+                        <span class="control-val" id="val-dust-max">3.2px</span>
+                    </div>
+                    <input type="range" id="param-dust-max" min="1.0" max="8.0" step="0.2" value="3.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Particle Tone / Brightness</span>
+                        <span class="control-val" id="val-dust-bright">-70% (Dark Soot)</span>
+                    </div>
+                    <input type="range" id="param-dust-bright" min="-1.0" max="1.0" step="0.05" value="-0.7" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Dust Amount (Opacity)</span>
+                        <span class="control-val" id="val-dust-amount">45%</span>
+                    </div>
+                    <input type="range" id="param-dust-amount" min="0" max="100" step="1" value="45" oninput="onParamChange()">
+                </div>
+            </div>
+
+            <!-- Procedural Multi-Directional Film Scratches Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Film Scratches & Abrasions</span>
+                    <button class="btn" style="padding: 2px 6px; font-size: 10px;" onclick="randomizeScratchSeed()">🎲 Seed</button>
+                </div>
+                <div class="control-item">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="param-scratch-enable" onchange="onParamChange()">
+                        <span class="control-label" style="font-weight: 500; color: var(--text-primary);">Enable Emulsion Scratches</span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Scratch Orientation Mode</span>
+                    </div>
+                    <select id="param-scratch-mode" onchange="onParamChange()">
+                        <option value="0">Vertical Transport Lines</option>
+                        <option value="1">Angled & Diagonal Scratches</option>
+                        <option value="2">Random Multi-Angle Abrasions</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Scratch Angle & Jitter</span>
+                        <span class="control-val" id="val-scratch-angle">0°</span>
+                    </div>
+                    <input type="range" id="param-scratch-angle" min="-60" max="60" step="1" value="0" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Pattern Scale (Count)</span>
+                        <span class="control-val" id="val-scratch-scale">1.0x</span>
+                    </div>
+                    <input type="range" id="param-scratch-scale" min="0.2" max="5.0" step="0.1" value="1.0" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Scratch Thickness</span>
+                        <span class="control-val" id="val-scratch-thick">1.2px</span>
+                    </div>
+                    <input type="range" id="param-scratch-thick" min="0.5" max="4.0" step="0.1" value="1.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Scratch Color</span>
+                        <input type="color" id="param-scratch-color" value="#e5e7eb" oninput="onParamChange()">
+                    </div>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Scratch Intensity</span>
+                        <span class="control-val" id="val-scratch-intensity">60%</span>
+                    </div>
+                    <input type="range" id="param-scratch-intensity" min="0" max="100" step="1" value="60" oninput="onParamChange()">
+                </div>
+            </div>
+
+            <!-- Organic Hairs & Fibers Section -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Gate Hairs & Fibers</span>
+                    <button class="btn" style="padding: 2px 6px; font-size: 10px;" onclick="randomizeHairSeed()">🎲 Seed</button>
+                </div>
+                <div class="control-item">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="param-hair-enable" onchange="onParamChange()">
+                        <span class="control-label" style="font-weight: 500; color: var(--text-primary);">Enable Curved Hairs / Lint</span>
+                    </label>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Hair Count</span>
+                        <span class="control-val" id="val-hair-count">3</span>
+                    </div>
+                    <input type="range" id="param-hair-count" min="1" max="10" step="1" value="3" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Hair Length</span>
+                        <span class="control-val" id="val-hair-len">60px</span>
+                    </div>
+                    <input type="range" id="param-hair-len" min="20" max="140" step="5" value="60" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Curliness / Waviness</span>
+                        <span class="control-val" id="val-hair-curl">1.2</span>
+                    </div>
+                    <input type="range" id="param-hair-curl" min="0.0" max="2.5" step="0.1" value="1.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Hair Thickness</span>
+                        <span class="control-val" id="val-hair-thick">1.2px</span>
+                    </div>
+                    <input type="range" id="param-hair-thick" min="0.5" max="3.0" step="0.1" value="1.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Hair Opacity</span>
+                        <span class="control-val" id="val-hair-opacity">80%</span>
+                    </div>
+                    <input type="range" id="param-hair-opacity" min="0" max="100" step="5" value="80" oninput="onParamChange()">
+                </div>
+            </div>
+
+            <!-- 4-Layer Emulsion Occlusion Weights -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Layer Weights (Emulsion Depth)</span>
+                </div>
+                <div class="grid-4">
+                    <div class="layer-box">
+                        <span class="layer-label">L1</span>
+                        <input type="range" id="param-w0" min="0.0" max="1.0" step="0.05" value="1.0" oninput="onParamChange()">
+                        <span class="layer-val" id="val-w0">1.00</span>
+                    </div>
+                    <div class="layer-box">
+                        <span class="layer-label">L2</span>
+                        <input type="range" id="param-w1" min="0.0" max="1.0" step="0.05" value="0.9" oninput="onParamChange()">
+                        <span class="layer-val" id="val-w1">0.90</span>
+                    </div>
+                    <div class="layer-box">
+                        <span class="layer-label">L3</span>
+                        <input type="range" id="param-w2" min="0.0" max="1.0" step="0.05" value="0.75" oninput="onParamChange()">
+                        <span class="layer-val" id="val-w2">0.75</span>
+                    </div>
+                    <div class="layer-box">
+                        <span class="layer-label">L4</span>
+                        <input type="range" id="param-w3" min="0.0" max="1.0" step="0.05" value="0.5" oninput="onParamChange()">
+                        <span class="layer-val" id="val-w3">0.50</span>
+                    </div>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">
+                    Four physical layers of binary grain simulating photon transmission and occlusion across 3D crystal depth.
+                </div>
+            </div>
+
+            <!-- RGB Noise Shifts (Dye Decorrelation) -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Channel Dye Decorrelation</span>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Red Layer Shift (X, Y)</span>
+                        <span class="control-val" id="val-offset-r">0, 0</span>
+                    </div>
+                    <div class="grid-2">
+                        <input type="range" id="param-off-rx" min="0" max="32" step="1" value="0" oninput="onParamChange()">
+                        <input type="range" id="param-off-ry" min="0" max="32" step="1" value="0" oninput="onParamChange()">
+                    </div>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Green Layer Shift (X, Y)</span>
+                        <span class="control-val" id="val-offset-g">6, 3</span>
+                    </div>
+                    <div class="grid-2">
+                        <input type="range" id="param-off-gx" min="0" max="32" step="1" value="6" oninput="onParamChange()">
+                        <input type="range" id="param-off-gy" min="0" max="32" step="1" value="3" oninput="onParamChange()">
+                    </div>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Blue Layer Shift (X, Y)</span>
+                        <span class="control-val" id="val-offset-b">1, 7</span>
+                    </div>
+                    <div class="grid-2">
+                        <input type="range" id="param-off-bx" min="0" max="32" step="1" value="1" oninput="onParamChange()">
+                        <input type="range" id="param-off-by" min="0" max="32" step="1" value="7" oninput="onParamChange()">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emulsion Mode & Film Base Emulation -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Emulsion & Film Base</span>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Emulsion Type</span>
+                    </div>
+                    <select id="param-grayscale" onchange="onParamChange()">
+                        <option value="0" selected>3-Layer RGB Color Coupling (Dye Clouds)</option>
+                        <option value="1">Monochrome Metallic Silver Halide</option>
+                    </select>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="param-use-base" onchange="onParamChange()">
+                            <span class="control-label">Emulate Film Base Layer Tint</span>
+                        </label>
+                        <input type="color" id="param-base-color" value="#080e16" oninput="onParamChange()">
+                    </div>
+                </div>
+                <div class="control-item" id="base-blend-row">
+                    <div class="control-row">
+                        <span class="control-label">Base Tint Intensity</span>
+                        <span class="control-val" id="val-base-blend">0%</span>
+                    </div>
+                    <input type="range" id="param-base-blend" min="0" max="100" step="1" value="0" oninput="onParamChange()">
+                </div>
+            </div>
+
+            <!-- Gamma Space & Contrast Curves -->
+            <div class="panel-section">
+                <div class="section-header">
+                    <span class="section-title">Transfer Curve / Gammas</span>
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Input Image Gamma</span>
+                        <span class="control-val" id="val-gamma-in">2.20</span>
+                    </div>
+                    <input type="range" id="param-gamma-in" min="1.0" max="3.0" step="0.05" value="2.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Noise Gamma</span>
+                        <span class="control-val" id="val-gamma-noise">2.20</span>
+                    </div>
+                    <input type="range" id="param-gamma-noise" min="1.0" max="3.0" step="0.05" value="2.2" oninput="onParamChange()">
+                </div>
+                <div class="control-item">
+                    <div class="control-row">
+                        <span class="control-label">Output Display Gamma</span>
+                        <span class="control-val" id="val-gamma-out">2.20</span>
+                    </div>
+                    <input type="range" id="param-gamma-out" min="0.5" max="3.0" step="0.05" value="2.2" oninput="onParamChange()">
+                </div>
+            </div>
+
+            <!-- Minimal Info -->
+            <div class="panel-section">
+                <div class="info-box">
+                    <strong>Physical Stochastic Model</strong><br>
+                    Real film crystals are strictly binary (activated or translucent). This engine reconstructs images using sub-pixel stochastic step thresholds across 4 depth layers with optical halation, atmospheric bloom, procedural dust, scratches, and gate hairs.
+                    <br><br>
+                    Based on <a href="https://github.com/kanzwataru/filmgrain-simplified" target="_blank" rel="noopener">kanzwataru/filmgrain-simplified</a> & Newson et al.
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- Viewport Studio with Filmstrip Carousel -->
+        <div class="viewport-wrapper">
+
+            <main class="viewport-canvas-area" id="viewport">
+
+                <!-- Drag & Drop Overlay -->
+                <div class="upload-overlay" id="upload-overlay" onclick="triggerFileInput()">
+                    <div class="upload-title">Drop one or multiple photos here or click to browse</div>
+                    <div class="upload-sub">Supports batch upload (PNG, JPG, WebP). High resolution processed in real-time on GPU.</div>
+                    <button class="btn" onclick="event.stopPropagation(); loadSampleImage()">Use Photographic Test Target</button>
+                </div>
+
+                <!-- Canvas Container -->
+                <div class="canvas-container" id="canvas-container">
+                    <canvas id="gl-canvas"></canvas>
+                    <div class="split-divider" id="split-divider">
+                        <div class="split-handle">↔</div>
+                    </div>
+                </div>
+
+                <!-- Floating Loupe Magnifier Glass -->
+                <div class="loupe" id="loupe">
+                    <canvas id="loupe-canvas" width="140" height="140"></canvas>
+                    <div class="loupe-crosshair"></div>
+                    <div class="loupe-tag" id="loupe-tag">4x Zoom</div>
+                </div>
+
+            </main>
+
+            <!-- Filmstrip Carousel Dock -->
+            <section class="filmstrip-dock" id="filmstrip-dock">
+                <div class="filmstrip-toolbar">
+                    <div class="filmstrip-info">
+                        <span style="color: var(--text-primary); font-weight: 600;">🎞 Filmstrip Reel</span>
+                        <span id="filmstrip-count">1 photo</span>
+                        <span style="color: var(--border-muted);">|</span>
+                        <button class="btn btn-sm" onclick="selectAllImages(true)">Select All</button>
+                        <button class="btn btn-sm" onclick="selectAllImages(false)">Deselect All</button>
+                    </div>
+                    <div class="filmstrip-actions">
+                        <button class="btn btn-sm" onclick="copySettingsToSelected()" title="Copy current grain, halation, defect settings to all checked photos">
+                            📋 Copy Settings to Selected
+                        </button>
+                        <button class="btn btn-sm" onclick="removeSelectedImages()" style="color: #ef4444;" title="Remove checked photos from reel">
+                            🗑 Remove Selected
+                        </button>
+                        <button class="btn btn-sm btn-primary" id="btn-batch-export" onclick="exportSelectedBatch()">
+                            💾 Export Selected (<span id="export-count">1</span>)
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filmstrip Horizontal Reel -->
+                <div class="filmstrip-scroll" id="filmstrip-scroll">
+                    <!-- Dynamic Film Frames injected here -->
+                </div>
+            </section>
+
+            <!-- Bottom Status Bar -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <span>Active: <span class="status-val" id="status-name">Target</span></span>
+                    <span>Resolution: <span class="status-val" id="status-res">1200 × 800</span></span>
+                    <span>Sub-samples: <span class="status-val" id="status-samples">19.2M / frame</span></span>
+                </div>
+                <div class="status-right">
+                    <span>GPU Shader: <span class="status-val" id="status-gpu">WebGL 2.0 (PCG-3D Continuous)</span></span>
+                    <span>Render: <span class="status-val" id="status-time">0.6 ms</span></span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Batch Progress Overlay Modal -->
+    <div class="batch-overlay" id="batch-overlay">
+        <div class="batch-modal">
+            <h3 style="font-size: 14px; font-weight: 600; color: #fff; margin-bottom: 4px;">Batch Processing Reel...</h3>
+            <p style="font-size: 12px; color: var(--text-secondary);" id="batch-modal-status">Rendering frame 1 of 4...</p>
+            <div class="batch-progress-bar">
+                <div class="batch-progress-fill" id="batch-progress-fill"></div>
+            </div>
+            <p style="font-size: 11px; font-family: 'JetBrains Mono', monospace; color: var(--text-muted);" id="batch-modal-detail">Applying grain, halation, bloom & physical defects at native resolution...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Settings copied to selected images</div>
+
+    <!-- WebGL2 Film Grain Engine Script -->
+    <script>
+        // Application State
+        let gl = null;
+        let program = null;
+        let imageTexture = null;
+        let noiseTexture = null;
+        let viewMode = 'split'; // 'split', 'processed', 'original', 'mask'
+        let splitRatio = 0.5;
+        let loupeActive = false;
+        let loupeZoom = 4; // 2x, 4x, 8x, 16x
+        let isDraggingSplit = false;
+        let dustSeed = 1337;
+        let scratchSeed = 7777;
+        let hairSeed = 4242;
+
+        // Image Library & Filmstrip Reel
+        let imageLibrary = [];
+        let activeImageIndex = 0;
+
+        // Canvas & Loupe Elements
+        const glCanvas = document.getElementById('gl-canvas');
+        const canvasContainer = document.getElementById('canvas-container');
+        const splitDivider = document.getElementById('split-divider');
+        const loupe = document.getElementById('loupe');
+        const loupeCanvas = document.getElementById('loupe-canvas');
+        const loupeCtx = loupeCanvas.getContext('2d');
+        const loupeTag = document.getElementById('loupe-tag');
+        const filmstripScroll = document.getElementById('filmstrip-scroll');
+
+        // Presets Definition
+        const presets = {
+            'default': {
+                tile: 4,
+                jitter: 80,
+                clumping: 20,
+                w: [1.0, 0.9, 0.75, 0.5],
+                offR: [0, 0], offG: [6, 3], offB: [1, 7],
+                gray: 0, useBase: false, baseBlend: 0, baseCol: '#080e16',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: false, halationThresh: 0.65, halationRad: 16.0, halationIntensity: 80, halationColor: '#ea2600', halationFalloff: 1.8,
+                bloomEnable: false, bloomThresh: 0.70, bloomRad: 24.0, bloomIntensity: 50, bloomColor: '#fff6e8',
+                dustEnable: false, dustScale: 1.0, dustMin: 0.6, dustMax: 3.2, dustBright: -0.7, dustAmount: 45,
+                scratchEnable: false, scratchMode: 0, scratchAngle: 0, scratchScale: 1.0, scratchThick: 1.2, scratchColor: '#e5e7eb', scratchIntensity: 60,
+                hairEnable: false, hairCount: 3, hairLen: 60, hairCurl: 1.2, hairThick: 1.2, hairOpacity: 80
+            },
+            'cinestill': {
+                tile: 3,
+                jitter: 85,
+                clumping: 30,
+                w: [1.0, 0.92, 0.78, 0.55],
+                offR: [0, 0], offG: [7, 4], offB: [2, 8],
+                gray: 0, useBase: true, baseBlend: 20, baseCol: '#071018',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: true, halationThresh: 0.60, halationRad: 22.0, halationIntensity: 110, halationColor: '#ff2600', halationFalloff: 1.6,
+                bloomEnable: true, bloomThresh: 0.72, bloomRad: 28.0, bloomIntensity: 45, bloomColor: '#fff5e0',
+                dustEnable: true, dustScale: 0.9, dustMin: 0.5, dustMax: 2.5, dustBright: -0.5, dustAmount: 35,
+                scratchEnable: true, scratchMode: 0, scratchAngle: 0, scratchScale: 1.2, scratchThick: 1.1, scratchColor: '#ffffff', scratchIntensity: 60,
+                hairEnable: false, hairCount: 2, hairLen: 50, hairCurl: 1.0, hairThick: 1.0, hairOpacity: 70
+            },
+            'vision3': {
+                tile: 4,
+                jitter: 75,
+                clumping: 15,
+                w: [1.0, 0.9, 0.75, 0.5],
+                offR: [0, 0], offG: [5, 2], offB: [2, 6],
+                gray: 0, useBase: true, baseBlend: 12, baseCol: '#0c0f16',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: true, halationThresh: 0.68, halationRad: 15.0, halationIntensity: 75, halationColor: '#ea3800', halationFalloff: 2.0,
+                bloomEnable: true, bloomThresh: 0.65, bloomRad: 32.0, bloomIntensity: 60, bloomColor: '#fffaed',
+                dustEnable: false, dustScale: 0.7, dustMin: 0.4, dustMax: 2.0, dustBright: -0.6, dustAmount: 25,
+                scratchEnable: false, scratchMode: 1, scratchAngle: -15, scratchScale: 0.8, scratchThick: 0.9, scratchColor: '#f1f5f9', scratchIntensity: 40,
+                hairEnable: false, hairCount: 1, hairLen: 40, hairCurl: 0.8, hairThick: 1.0, hairOpacity: 60
+            },
+            'tri-x': {
+                tile: 3,
+                jitter: 95,
+                clumping: 55,
+                w: [1.0, 0.95, 0.8, 0.6],
+                offR: [0, 0], offG: [0, 0], offB: [0, 0],
+                gray: 1, useBase: false, baseBlend: 0, baseCol: '#050505',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: false, halationThresh: 0.65, halationRad: 14.0, halationIntensity: 60, halationColor: '#ffffff', halationFalloff: 1.8,
+                bloomEnable: true, bloomThresh: 0.75, bloomRad: 18.0, bloomIntensity: 35, bloomColor: '#ffffff',
+                dustEnable: true, dustScale: 1.3, dustMin: 0.8, dustMax: 4.0, dustBright: -0.9, dustAmount: 60,
+                scratchEnable: false, scratchMode: 0, scratchAngle: 0, scratchScale: 1.0, scratchThick: 1.2, scratchColor: '#ffffff', scratchIntensity: 50,
+                hairEnable: true, hairCount: 2, hairLen: 75, hairCurl: 1.4, hairThick: 1.3, hairOpacity: 85
+            },
+            'hp5': {
+                tile: 4,
+                jitter: 85,
+                clumping: 35,
+                w: [1.0, 0.85, 0.7, 0.45],
+                offR: [0, 0], offG: [0, 0], offB: [0, 0],
+                gray: 1, useBase: false, baseBlend: 0, baseCol: '#080808',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: false, halationThresh: 0.70, halationRad: 12.0, halationIntensity: 50, halationColor: '#ffffff', halationFalloff: 2.0,
+                bloomEnable: false, bloomThresh: 0.75, bloomRad: 20.0, bloomIntensity: 40, bloomColor: '#ffffff',
+                dustEnable: true, dustScale: 0.8, dustMin: 0.5, dustMax: 2.2, dustBright: -0.6, dustAmount: 35,
+                scratchEnable: false, scratchMode: 0, scratchAngle: 0, scratchScale: 1.0, scratchThick: 1.0, scratchColor: '#ffffff', scratchIntensity: 40,
+                hairEnable: false, hairCount: 1, hairLen: 45, hairCurl: 1.0, hairThick: 1.0, hairOpacity: 70
+            },
+            'grindhouse': {
+                tile: 2,
+                jitter: 100,
+                clumping: 70,
+                w: [1.0, 0.95, 0.85, 0.65],
+                offR: [0, 0], offG: [8, 4], offB: [3, 9],
+                gray: 0, useBase: true, baseBlend: 25, baseCol: '#0a0d14',
+                gammaIn: 2.2, gammaNoise: 2.2, gammaOut: 2.2,
+                engine: 0,
+                halationEnable: true, halationThresh: 0.55, halationRad: 28.0, halationIntensity: 130, halationColor: '#ff2200', halationFalloff: 1.4,
+                bloomEnable: true, bloomThresh: 0.60, bloomRad: 36.0, bloomIntensity: 70, bloomColor: '#fff0d0',
+                dustEnable: true, dustScale: 2.2, dustMin: 1.0, dustMax: 5.5, dustBright: -0.85, dustAmount: 75,
+                scratchEnable: true, scratchMode: 2, scratchAngle: 12, scratchScale: 2.5, scratchThick: 1.6, scratchColor: '#f1f5f9', scratchIntensity: 85,
+                hairEnable: true, hairCount: 5, hairLen: 90, hairCurl: 1.8, hairThick: 1.5, hairOpacity: 90
+            }
+        };
+
+        // Vertex Shader
+        const vsSource = `#version 300 es
+        in vec2 a_position;
+        in vec2 a_texCoord;
+        out vec2 v_texCoord;
+        void main() {
+            gl_Position = vec4(a_position, 0.0, 1.0);
+            v_texCoord = a_texCoord;
+        }`;
+
+        // Fragment Shader (Continuous Aperiodic PCG-3D Emulsion, Voronoi Halide, Halation, Bloom, Dust, Scratches & Hairs)
+        const fsSource = `#version 300 es
+        precision highp float;
+        precision highp int;
+
+        in vec2 v_texCoord;
+        out vec4 fragColor;
+
+        uniform sampler2D u_image;
+        uniform sampler2D u_noise;
+        uniform vec2 u_image_size;
+        uniform vec2 u_noise_size;
+
+        uniform int u_noise_tile_size;
+        uniform float u_grain_jitter;
+        uniform float u_grain_clumping;
+        uniform ivec2 u_noise_offsets_r;
+        uniform ivec2 u_noise_offsets_g;
+        uniform ivec2 u_noise_offsets_b;
+        uniform vec4 u_layer_weights;
+        uniform int u_grayscale;
+        uniform vec3 u_base_color;
+        uniform float u_use_base_color;
+        uniform float u_in_texture_gamma;
+        uniform float u_in_noise_gamma;
+        uniform float u_out_texture_gamma;
+        uniform int u_noise_engine; // 0 = PCG-3D Continuous, 1 = Voronoi Halide, 2 = Scrambled Blue Noise
+
+        // Halation Uniforms
+        uniform int u_halation_enable;
+        uniform float u_halation_thresh;
+        uniform float u_halation_rad;
+        uniform float u_halation_intensity;
+        uniform vec3 u_halation_color;
+        uniform float u_halation_falloff;
+
+        // Bloom Uniforms
+        uniform int u_bloom_enable;
+        uniform float u_bloom_thresh;
+        uniform float u_bloom_rad;
+        uniform float u_bloom_intensity;
+        uniform vec3 u_bloom_color;
+
+        // Dust & Dirt Particles Uniforms
+        uniform int u_dust_enable;
+        uniform float u_dust_scale;
+        uniform float u_dust_size_min;
+        uniform float u_dust_size_max;
+        uniform float u_dust_brightness;
+        uniform float u_dust_amount;
+        uniform int u_dust_seed;
+
+        // Film Scratches Uniforms
+        uniform int u_scratch_enable;
+        uniform int u_scratch_mode;
+        uniform float u_scratch_angle;
+        uniform float u_scratch_scale;
+        uniform float u_scratch_thickness;
+        uniform vec3 u_scratch_color;
+        uniform float u_scratch_intensity;
+        uniform int u_scratch_seed;
+
+        // Gate Hairs & Fibers Uniforms
+        uniform int u_hair_enable;
+        uniform int u_hair_count;
+        uniform float u_hair_len;
+        uniform float u_hair_curl;
+        uniform float u_hair_thick;
+        uniform float u_hair_opacity;
+        uniform int u_hair_seed;
+
+        // View Mode: 0 = Split, 1 = Processed, 2 = Original, 3 = Mask
+        uniform int u_view_mode;
+        uniform float u_split_pos;
+
+        // Jarzyński & Olano (JCGT 2020) State-of-the-Art GPU Hash
+        uvec3 pcg3d(uvec3 v) {
+            v = v * 1664525u + 1013904223u;
+            v.x += v.y * v.z;
+            v.y += v.z * v.x;
+            v.z += v.x * v.y;
+            v ^= v >> 16u;
+            v.x += v.y * v.z;
+            v.y += v.z * v.x;
+            v.z += v.x * v.y;
+            return v;
+        }
+
+        uvec4 pcg4d(uvec4 v) {
+            v = v * 1664525u + 1013904223u;
+            v.x += v.y * v.w; v.y += v.z * v.x; v.z += v.x * v.y; v.w += v.y * v.z;
+            v ^= v >> 16u;
+            v.x += v.y * v.w; v.y += v.z * v.x; v.z += v.x * v.y; v.w += v.y * v.z;
+            return v;
+        }
+
+        ivec2 hash2(ivec2 p) {
+            uvec2 v = uvec2(uint(p.x), uint(p.y));
+            v = v * 1664525u + 1013904223u;
+            v.x += v.y * 1103515245u;
+            v.y += v.x * 134775813u;
+            v ^= v >> 16u;
+            return ivec2(int(v.x & 0x7fffu), int(v.y & 0x7fffu));
+        }
+
+        // 2D continuous Voronoi cellular distance for natural crystal clumping
+        float voronoi_crystal(vec2 p, uint seed) {
+            vec2 ip = floor(p);
+            vec2 fp = fract(p);
+            float d = 1.0;
+            for (int j = -1; j <= 1; j++) {
+                for (int i = -1; i <= 1; i++) {
+                    ivec2 g = ivec2(i, j);
+                    uvec3 r = pcg3d(uvec3(uvec2(ivec2(ip) + g + ivec2(10000)), seed));
+                    vec2 o = vec2(float(r.x & 0xffffu), float(r.y & 0xffffu)) / 65535.0;
+                    vec2 r_vec = vec2(g) + o - fp;
+                    d = min(d, dot(r_vec, r_vec));
+                }
+            }
+            return sqrt(d);
+        }
+
+        // Continuous stochastic noise sample with zero repeating pattern or lattice grid
+        vec4 get_continuous_noise(vec2 pos, uint channel_seed, float in_noise_gamma, ivec2 noise_size, int engine, float clumping) {
+            if (engine == 0) {
+                // Continuous PCG-3D: evaluates continuous spatial coordinates with independent high-entropy seeds
+                ivec2 ip = ivec2(floor(pos));
+                uvec3 s1 = pcg3d(uvec3(uvec2(ip + ivec2(20000000)), channel_seed));
+                uvec3 s2 = pcg3d(uvec3(uvec2(ip + ivec2(40000000)), channel_seed + 1013904223u));
+                vec4 s = vec4(float(s1.x), float(s1.y), float(s2.x), float(s2.y)) * (1.0 / 4294967296.0);
+                
+                if (clumping > 0.01) {
+                    float v = voronoi_crystal(pos * 0.45, channel_seed);
+                    s = mix(s, vec4(v), clumping * 0.45);
+                }
+                return pow(s, vec4(1.0 / in_noise_gamma));
+            } else if (engine == 1) {
+                // Voronoi Halide: Organic silver crystal boundaries
+                float v1 = voronoi_crystal(pos * 0.8, channel_seed);
+                float v2 = voronoi_crystal(pos * 1.4 + vec2(3.1, 7.4), channel_seed + 77u);
+                float v3 = voronoi_crystal(pos * 2.1 + vec2(5.8, 1.9), channel_seed + 153u);
+                float v4 = voronoi_crystal(pos * 3.0 + vec2(2.3, 8.1), channel_seed + 231u);
+                vec4 s = vec4(v1, v2, v3, v4);
+                return pow(s, vec4(1.0 / in_noise_gamma));
+            } else {
+                // Scrambled Blue Noise with macro jitter
+                ivec2 sub_coord = ivec2(floor(pos));
+                ivec2 macro_tile = sub_coord / noise_size;
+                ivec2 jitter = hash2(macro_tile + ivec2(int(channel_seed) * 17, int(channel_seed) * 31));
+                ivec2 wrapped = (sub_coord + jitter) % noise_size;
+                if (wrapped.x < 0) wrapped.x += noise_size.x;
+                if (wrapped.y < 0) wrapped.y += noise_size.y;
+
+                vec4 noise_sample = texelFetch(u_noise, wrapped, 0);
+                return pow(noise_sample, vec4(1.0 / in_noise_gamma));
+            }
+        }
+
+        // Sub-pixel physical binary grain evaluation
+        float render_channel_continuous(float value, vec2 sample_pos, uint channel_seed, vec4 layer_weights, ivec2 noise_size, float in_noise_gamma, int engine, float clumping) {
+            vec4 noise_sample = get_continuous_noise(sample_pos, channel_seed, in_noise_gamma, noise_size, engine, clumping);
+
+            // Physical binary activation with continuous micro-dither to eliminate 16-level stepping
+            float noised_value = step(noise_sample.r, value * layer_weights.r);
+            noised_value = max(noised_value, step(noise_sample.g, value * layer_weights.g));
+            noised_value = max(noised_value, step(noise_sample.b, value * layer_weights.b));
+            noised_value = max(noised_value, step(noise_sample.a, value * layer_weights.a));
+
+            return noised_value > 0.0 ? 1.0 : 0.0;
+        }
+
+        // Real Physical Halation Simulation (Vogel Golden-Spiral Scatter Kernel)
+        vec3 apply_halation(vec3 col, vec2 uv, vec2 img_size) {
+            if (u_halation_enable == 0 || u_halation_intensity <= 0.0) return col;
+
+            vec2 texel = 1.0 / img_size;
+            float rad = max(1.0, u_halation_rad);
+            vec3 highlight_acc = vec3(0.0);
+            float total_w = 0.0;
+
+            const int TAPS = 16;
+            for (int i = 0; i < TAPS; i++) {
+                float r = sqrt((float(i) + 0.5) / float(TAPS));
+                float theta = float(i) * 2.39996323; // Golden angle
+                vec2 offset = vec2(cos(theta), sin(theta)) * (r * rad) * texel;
+
+                vec3 s = texture(u_image, uv + offset).rgb;
+                float lum = dot(s, vec3(0.299, 0.587, 0.114));
+                float overexposed = max(0.0, lum - u_halation_thresh);
+                float w = pow(max(0.0, 1.0 - r), u_halation_falloff);
+
+                highlight_acc += s * overexposed * w;
+                total_w += w;
+            }
+
+            if (total_w > 0.0) {
+                vec3 halo = (highlight_acc / total_w) * u_halation_color * (u_halation_intensity * 3.5);
+                col = 1.0 - (1.0 - col) * (1.0 - clamp(halo, 0.0, 1.0));
+            }
+            return col;
+        }
+
+        // Real Optical Bloom Simulation
+        vec3 apply_bloom(vec3 col, vec2 uv, vec2 img_size) {
+            if (u_bloom_enable == 0 || u_bloom_intensity <= 0.0) return col;
+
+            vec2 texel = 1.0 / img_size;
+            float rad = max(1.0, u_bloom_rad);
+            vec3 bloom_acc = vec3(0.0);
+            float total_w = 0.0;
+
+            const int TAPS = 16;
+            for (int i = 0; i < TAPS; i++) {
+                float r = sqrt((float(i) + 0.5) / float(TAPS));
+                float theta = float(i) * 2.39996323 + 1.2;
+                vec2 offset = vec2(cos(theta), sin(theta)) * (r * rad) * texel;
+
+                vec3 s = texture(u_image, uv + offset).rgb;
+                float lum = dot(s, vec3(0.299, 0.587, 0.114));
+                float b_val = smoothstep(u_bloom_thresh, 1.0, lum);
+                float w = 1.0 - r * 0.65;
+
+                bloom_acc += s * b_val * w;
+                total_w += w;
+            }
+
+            if (total_w > 0.0) {
+                vec3 bloom = (bloom_acc / total_w) * u_bloom_color * (u_bloom_intensity * 1.6);
+                col += bloom;
+            }
+            return col;
+        }
+
+        // Procedural Dirt, Soot & Dust Particles with Min & Max Size
+        vec3 apply_dust(vec3 col, vec2 pix_coord) {
+            if (u_dust_enable == 0 || u_dust_amount <= 0.0) return col;
+
+            float cell_size = 54.0 / max(0.1, u_dust_scale);
+            vec2 grid_pos = pix_coord / cell_size;
+            ivec2 base_cell = ivec2(floor(grid_pos));
+            vec2 local_pos = fract(grid_pos) * cell_size;
+
+            float total_dust = 0.0;
+
+            for (int dy = -1; dy <= 1; dy++) {
+                for (int dx = -1; dx <= 1; dx++) {
+                    ivec2 c = base_cell + ivec2(dx, dy);
+                    uvec4 h = pcg4d(uvec4(uint(c.x + 30000), uint(c.y + 30000), uint(u_dust_seed), 54321u));
+
+                    float prob = float(h.x) * (1.0 / 4294967296.0);
+                    if (prob < 0.42 * u_dust_scale) {
+                        vec2 center = vec2(float(h.y), float(h.z)) * (cell_size / 4294967296.0);
+                        vec2 delta = (local_pos - vec2(float(dx), float(dy)) * cell_size) - center;
+
+                        float angle = atan(delta.y, delta.x);
+                        float deform = 1.0 + 0.35 * sin(angle * 3.0 + float(h.w)) + 0.2 * cos(angle * 5.0 + float(h.y));
+                        
+                        float size_norm = float(h.w & 0xffffu) / 65535.0;
+                        float r = mix(u_dust_size_min, u_dust_size_max, size_norm);
+                        float dist = length(delta) / deform;
+
+                        float speck = smoothstep(r, r * 0.2, dist);
+                        total_dust = max(total_dust, speck);
+                    }
+                }
+            }
+
+            if (total_dust > 0.0) {
+                float factor = total_dust * u_dust_amount;
+                if (u_dust_brightness < 0.0) {
+                    col = mix(col, vec3(0.0), factor * (-u_dust_brightness));
+                } else {
+                    col = mix(col, vec3(1.0), factor * u_dust_brightness);
+                }
+            }
+
+            return col;
+        }
+
+        // Procedural Multi-Directional Film Scratches
+        vec3 apply_scratches(vec3 col, vec2 pix_coord) {
+            if (u_scratch_enable == 0 || u_scratch_intensity <= 0.0) return col;
+
+            float track_width = 80.0 / max(0.1, u_scratch_scale);
+            float max_scratch = 0.0;
+            int total_passes = (u_scratch_mode == 2) ? 3 : 1;
+
+            for (int pass = 0; pass < 3; pass++) {
+                if (pass >= total_passes) break;
+
+                float ang_rad = radians(u_scratch_angle);
+                if (u_scratch_mode == 1) {
+                    ang_rad += ((pass == 0) ? -0.3 : 0.3);
+                } else if (u_scratch_mode == 2) {
+                    ang_rad = float(pass) * 1.05 - 1.0;
+                }
+
+                vec2 rot_coord;
+                float cosA = cos(ang_rad);
+                float sinA = sin(ang_rad);
+                rot_coord.x = pix_coord.x * cosA - pix_coord.y * sinA;
+                rot_coord.y = pix_coord.x * sinA + pix_coord.y * cosA;
+
+                int center_track = int(floor(rot_coord.x / track_width));
+
+                for (int t = -1; t <= 1; t++) {
+                    int track = center_track + t;
+                    uvec4 h = pcg4d(uvec4(uint(track + 40000 + pass * 500), uint(u_scratch_seed), 9999u, 1111u));
+
+                    float active_prob = float(h.x) * (1.0 / 4294967296.0);
+                    if (active_prob < 0.38 * u_scratch_scale) {
+                        float track_center_x = (float(track) + float(h.y) * (1.0 / 4294967296.0)) * track_width;
+                        float wobble = sin(rot_coord.y * 0.02 + float(h.z)) * 2.0 + sin(rot_coord.y * 0.09 + float(h.w)) * 0.7;
+                        float line_x = track_center_x + wobble;
+
+                        float dist_x = abs(rot_coord.x - line_x);
+                        float seg = sin(rot_coord.y * 0.004 + float(h.w)) * cos(rot_coord.y * 0.015 + float(h.y));
+                        float seg_active = smoothstep(-0.25, 0.25, seg);
+
+                        float line_profile = smoothstep(u_scratch_thickness, u_scratch_thickness * 0.2, dist_x) * seg_active;
+                        max_scratch = max(max_scratch, line_profile);
+                    }
+                }
+            }
+
+            if (max_scratch > 0.0) {
+                col = mix(col, u_scratch_color, max_scratch * u_scratch_intensity);
+            }
+
+            return col;
+        }
+
+        // Procedural Curved Gate Hairs & Lint Fibers
+        vec3 apply_hairs(vec3 col, vec2 pix_coord, vec2 img_size) {
+            if (u_hair_enable == 0 || u_hair_opacity <= 0.0 || u_hair_count <= 0) return col;
+
+            float max_hair = 0.0;
+
+            for (int i = 0; i < 10; i++) {
+                if (i >= u_hair_count) break;
+
+                uvec4 h = pcg4d(uvec4(uint(i * 1337 + 77), uint(u_hair_seed), 4321u, 8765u));
+                vec2 p0 = vec2(float(h.x) * (1.0 / 4294967296.0), float(h.y) * (1.0 / 4294967296.0)) * img_size;
+
+                float angle = float(h.z) * (6.2831853 / 4294967296.0);
+                vec2 dir = vec2(cos(angle), sin(angle));
+                vec2 normal = vec2(-dir.y, dir.x);
+
+                vec2 delta = pix_coord - p0;
+                float proj_len = dot(delta, dir);
+                float proj_dist = dot(delta, normal);
+
+                float half_len = u_hair_len * 0.5;
+                if (abs(proj_len) < half_len) {
+                    float t = proj_len / half_len;
+                    float curve_offset = sin(t * 3.14159 * (1.0 + u_hair_curl)) * (u_hair_len * 0.15 * u_hair_curl);
+                    curve_offset += (t * t) * (u_hair_len * 0.1 * (float(h.w & 0xffu) / 128.0 - 1.0));
+
+                    float dist_to_spine = abs(proj_dist - curve_offset);
+                    float taper = 1.0 - smoothstep(0.7, 1.0, abs(t));
+                    float thick = max(0.4, u_hair_thick * taper);
+
+                    float hair_alpha = smoothstep(thick, thick * 0.2, dist_to_spine) * taper;
+                    max_hair = max(max_hair, hair_alpha);
+                }
+            }
+
+            if (max_hair > 0.0) {
+                col = mix(col, vec3(0.04, 0.03, 0.03), max_hair * u_hair_opacity);
+            }
+
+            return col;
+        }
+
+        void main() {
+            vec4 original_color = texture(u_image, v_texCoord);
+
+            // If split view and on original side:
+            if (u_view_mode == 2 || (u_view_mode == 0 && v_texCoord.x > u_split_pos)) {
+                fragColor = original_color;
+                return;
+            }
+
+            vec3 rgb = original_color.rgb;
+            if (u_view_mode == 3) {
+                // Grain Mask mode (flat 50% neutral gray input)
+                rgb = vec3(0.5);
+            } else if (u_grayscale == 1) {
+                float l = dot(rgb, vec3(0.299, 0.587, 0.114));
+                rgb = vec3(l);
+            }
+
+            // Input Gamma Curve
+            rgb = pow(rgb, vec3(1.0 / u_in_texture_gamma));
+
+            ivec2 noise_size = ivec2(u_noise_size);
+            vec3 grain_count = vec3(0.0);
+
+            // Continuous subpixel spatial coordinates (eliminates coarse pixel-block grid)
+            vec2 base_grain_coord = v_texCoord * u_image_size * float(u_noise_tile_size);
+            float tile_size_f = float(u_noise_tile_size);
+
+            for (int y = 0; y < 8; ++y) {
+                if (y >= u_noise_tile_size) break;
+                for (int x = 0; x < 8; ++x) {
+                    if (x >= u_noise_tile_size) break;
+
+                    vec2 sub_pos = base_grain_coord + vec2(float(x), float(y));
+
+                    // Spatial micro-jitter: breaks Cartesian alignment and prevents Moiré banding
+                    if (u_grain_jitter > 0.001) {
+                        uvec3 j_hash = pcg3d(uvec3(uvec2(ivec2(floor(sub_pos)) + ivec2(1337)), 777u));
+                        vec2 j_offset = (vec2(float(j_hash.x & 0xffffu), float(j_hash.y & 0xffffu)) / 65535.0 - 0.5) * u_grain_jitter;
+                        sub_pos += j_offset;
+                    }
+
+                    grain_count.r += render_channel_continuous(rgb.r, sub_pos + vec2(u_noise_offsets_r), 101u, u_layer_weights, noise_size, u_in_noise_gamma, u_noise_engine, u_grain_clumping);
+                    grain_count.g += render_channel_continuous(rgb.g, sub_pos + vec2(u_noise_offsets_g), 203u, u_layer_weights, noise_size, u_in_noise_gamma, u_noise_engine, u_grain_clumping);
+                    grain_count.b += render_channel_continuous(rgb.b, sub_pos + vec2(u_noise_offsets_b), 307u, u_layer_weights, noise_size, u_in_noise_gamma, u_noise_engine, u_grain_clumping);
+                }
+            }
+
+            float tile_area = float(u_noise_tile_size * u_noise_tile_size);
+            vec3 reconstructed = grain_count / tile_area;
+
+            vec3 out_rgb = pow(reconstructed, vec3(u_out_texture_gamma));
+
+            if (u_view_mode != 3) {
+                if (u_grayscale == 1) {
+                    out_rgb = vec3(out_rgb.r);
+                } else {
+                    vec3 base_color = mix(vec3(0.0), u_base_color, u_use_base_color);
+                    out_rgb = mix(base_color, vec3(1.0), out_rgb);
+                }
+
+                // 1. Real Physical Halation
+                out_rgb = apply_halation(out_rgb, v_texCoord, u_image_size);
+
+                // 2. Optical Bloom
+                out_rgb = apply_bloom(out_rgb, v_texCoord, u_image_size);
+
+                // 3. Procedural Dirt & Dust Specks
+                out_rgb = apply_dust(out_rgb, v_texCoord * u_image_size);
+
+                // 4. Procedural Film Scratches
+                out_rgb = apply_scratches(out_rgb, v_texCoord * u_image_size);
+
+                // 5. Gate Hairs & Fibers
+                out_rgb = apply_hairs(out_rgb, v_texCoord * u_image_size, u_image_size);
+            }
+
+            fragColor = vec4(out_rgb, original_color.a);
+        }`;
+
+        // Initialize WebGL
+        function initWebGL() {
+            gl = glCanvas.getContext('webgl2', { preserveDrawingBuffer: true, antialias: false });
+            if (!gl) {
+                alert('WebGL 2.0 is required for physical grain simulation.');
+                return;
+            }
+
+            const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+            const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+            program = createProgram(gl, vs, fs);
+
+            const positionBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                -1, -1, 1, -1, -1, 1,
+                -1, 1, 1, -1, 1, 1
+            ]), gl.STATIC_DRAW);
+
+            const texCoordBuffer = gl.createBuffer();
+            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+                0, 1, 1, 1, 0, 0,
+                0, 0, 1, 1, 1, 0
+            ]), gl.STATIC_DRAW);
+
+            const posLoc = gl.getAttribLocation(program, 'a_position');
+            const texLoc = gl.getAttribLocation(program, 'a_texCoord');
+
+            gl.enableVertexAttribArray(posLoc);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+            gl.enableVertexAttribArray(texLoc);
+            gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+            gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
+
+            generateBlueNoiseTexture();
+        }
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.error(gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        function createProgram(gl, vs, fs) {
+            const prog = gl.createProgram();
+            gl.attachShader(prog, vs);
+            gl.attachShader(prog, fs);
+            gl.linkProgram(prog);
+            if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+                console.error(gl.getProgramInfoLog(prog));
+                gl.deleteProgram(prog);
+                return null;
+            }
+            return prog;
+        }
+
+        function generateBlueNoiseTexture() {
+            const size = 256;
+            const data = new Uint8Array(size * size * 4);
+
+            for (let c = 0; c < 4; c++) {
+                const channel = generateChannelNoise(size, c * 10007 + 7919);
+                for (let i = 0; i < size * size; i++) {
+                    data[i * 4 + c] = channel[i];
+                }
+            }
+
+            noiseTexture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, noiseTexture);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA8, size, size, 0, gl.RGBA, gl.UNSIGNED_BYTE, data);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.REPEAT);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+        }
+
+        function generateChannelNoise(size, seed) {
+            const len = size * size;
+            const output = new Uint8Array(len);
+            const indices = new Uint32Array(len);
+            const scores = new Float32Array(len);
+
+            function hashInt(x, y, s) {
+                let h = Math.imul(x ^ 0x9e3779b9, 0x85ebca6b) ^ Math.imul(y ^ 0xc2b2ae35, 0x7feb352d) ^ Math.imul(s, 0x846ca68b);
+                h = Math.imul(h ^ (h >>> 16), 0x85ebca6b);
+                h = Math.imul(h ^ (h >>> 13), 0xc2b2ae35);
+                return ((h ^ (h >>> 16)) >>> 0) / 4294967296.0;
+            }
+
+            for (let y = 0; y < size; y++) {
+                for (let x = 0; x < size; x++) {
+                    const idx = y * size + x;
+                    scores[idx] = hashInt(x, y, seed);
+                    indices[idx] = idx;
+                }
+            }
+
+            indices.sort((a, b) => scores[a] - scores[b]);
+            for (let i = 0; i < len; i++) {
+                output[indices[i]] = Math.floor((i / len) * 256);
+            }
+            return output;
+        }
+
+        function uploadImageTexture(img) {
+            if (!img) return;
+
+            glCanvas.width = img.width;
+            glCanvas.height = img.height;
+
+            if (imageTexture) gl.deleteTexture(imageTexture);
+
+            imageTexture = gl.createTexture();
+            gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+            gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+            gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+            document.getElementById('upload-overlay').style.display = 'none';
+            document.getElementById('status-res').innerText = `${img.width} × ${img.height}`;
+
+            requestRender();
+        }
+
+        function getCurrentSettings() {
+            return {
+                tile: parseInt(document.getElementById('param-tilesize').value),
+                jitter: parseFloat(document.getElementById('param-grain-jitter').value),
+                clumping: parseFloat(document.getElementById('param-grain-clumping').value),
+                engine: parseInt(document.getElementById('param-engine').value),
+                w: [
+                    parseFloat(document.getElementById('param-w0').value),
+                    parseFloat(document.getElementById('param-w1').value),
+                    parseFloat(document.getElementById('param-w2').value),
+                    parseFloat(document.getElementById('param-w3').value)
+                ],
+                offR: [parseInt(document.getElementById('param-off-rx').value), parseInt(document.getElementById('param-off-ry').value)],
+                offG: [parseInt(document.getElementById('param-off-gx').value), parseInt(document.getElementById('param-off-gy').value)],
+                offB: [parseInt(document.getElementById('param-off-bx').value), parseInt(document.getElementById('param-off-by').value)],
+                gray: parseInt(document.getElementById('param-grayscale').value),
+                useBase: document.getElementById('param-use-base').checked,
+                baseBlend: parseFloat(document.getElementById('param-base-blend').value),
+                baseCol: document.getElementById('param-base-color').value,
+                gammaIn: parseFloat(document.getElementById('param-gamma-in').value),
+                gammaNoise: parseFloat(document.getElementById('param-gamma-noise').value),
+                gammaOut: parseFloat(document.getElementById('param-gamma-out').value),
+                halationEnable: document.getElementById('param-halation-enable').checked,
+                halationThresh: parseFloat(document.getElementById('param-halation-thresh').value),
+                halationRad: parseFloat(document.getElementById('param-halation-rad').value),
+                halationIntensity: parseFloat(document.getElementById('param-halation-intensity').value),
+                halationColor: document.getElementById('param-halation-color').value,
+                halationFalloff: parseFloat(document.getElementById('param-halation-falloff').value),
+                bloomEnable: document.getElementById('param-bloom-enable').checked,
+                bloomThresh: parseFloat(document.getElementById('param-bloom-thresh').value),
+                bloomRad: parseFloat(document.getElementById('param-bloom-rad').value),
+                bloomIntensity: parseFloat(document.getElementById('param-bloom-intensity').value),
+                bloomColor: document.getElementById('param-bloom-color').value,
+                dustEnable: document.getElementById('param-dust-enable').checked,
+                dustScale: parseFloat(document.getElementById('param-dust-scale').value),
+                dustMin: parseFloat(document.getElementById('param-dust-min').value),
+                dustMax: parseFloat(document.getElementById('param-dust-max').value),
+                dustBright: parseFloat(document.getElementById('param-dust-bright').value),
+                dustAmount: parseFloat(document.getElementById('param-dust-amount').value),
+                dustSeed: dustSeed,
+                scratchEnable: document.getElementById('param-scratch-enable').checked,
+                scratchMode: parseInt(document.getElementById('param-scratch-mode').value),
+                scratchAngle: parseFloat(document.getElementById('param-scratch-angle').value),
+                scratchScale: parseFloat(document.getElementById('param-scratch-scale').value),
+                scratchThick: parseFloat(document.getElementById('param-scratch-thick').value),
+                scratchColor: document.getElementById('param-scratch-color').value,
+                scratchIntensity: parseFloat(document.getElementById('param-scratch-intensity').value),
+                scratchSeed: scratchSeed,
+                hairEnable: document.getElementById('param-hair-enable').checked,
+                hairCount: parseInt(document.getElementById('param-hair-count').value),
+                hairLen: parseFloat(document.getElementById('param-hair-len').value),
+                hairCurl: parseFloat(document.getElementById('param-hair-curl').value),
+                hairThick: parseFloat(document.getElementById('param-hair-thick').value),
+                hairOpacity: parseFloat(document.getElementById('param-hair-opacity').value),
+                hairSeed: hairSeed
+            };
+        }
+
+        function applySettingsToUI(s) {
+            if (!s) return;
+            document.getElementById('param-tilesize').value = s.tile;
+            if (s.jitter !== undefined) document.getElementById('param-grain-jitter').value = s.jitter;
+            if (s.clumping !== undefined) document.getElementById('param-grain-clumping').value = s.clumping;
+            document.getElementById('param-engine').value = s.engine;
+            document.getElementById('param-w0').value = s.w[0];
+            document.getElementById('param-w1').value = s.w[1];
+            document.getElementById('param-w2').value = s.w[2];
+            document.getElementById('param-w3').value = s.w[3];
+
+            document.getElementById('param-off-rx').value = s.offR[0];
+            document.getElementById('param-off-ry').value = s.offR[1];
+            document.getElementById('param-off-gx').value = s.offG[0];
+            document.getElementById('param-off-gy').value = s.offG[1];
+            document.getElementById('param-off-bx').value = s.offB[0];
+            document.getElementById('param-off-by').value = s.offB[1];
+
+            document.getElementById('param-grayscale').value = s.gray;
+            document.getElementById('param-use-base').checked = s.useBase;
+            document.getElementById('param-base-blend').value = s.baseBlend;
+            document.getElementById('param-base-color').value = s.baseCol;
+
+            document.getElementById('param-gamma-in').value = s.gammaIn;
+            document.getElementById('param-gamma-noise').value = s.gammaNoise;
+            document.getElementById('param-gamma-out').value = s.gammaOut;
+
+            document.getElementById('param-halation-enable').checked = s.halationEnable;
+            document.getElementById('param-halation-thresh').value = s.halationThresh;
+            document.getElementById('param-halation-rad').value = s.halationRad;
+            document.getElementById('param-halation-intensity').value = s.halationIntensity;
+            document.getElementById('param-halation-color').value = s.halationColor;
+            document.getElementById('param-halation-falloff').value = s.halationFalloff;
+
+            document.getElementById('param-bloom-enable').checked = s.bloomEnable;
+            document.getElementById('param-bloom-thresh').value = s.bloomThresh;
+            document.getElementById('param-bloom-rad').value = s.bloomRad;
+            document.getElementById('param-bloom-intensity').value = s.bloomIntensity;
+            document.getElementById('param-bloom-color').value = s.bloomColor;
+
+            document.getElementById('param-dust-enable').checked = s.dustEnable;
+            document.getElementById('param-dust-scale').value = s.dustScale;
+            document.getElementById('param-dust-min').value = s.dustMin;
+            document.getElementById('param-dust-max').value = s.dustMax;
+            document.getElementById('param-dust-bright').value = s.dustBright;
+            document.getElementById('param-dust-amount').value = s.dustAmount;
+            if (s.dustSeed !== undefined) dustSeed = s.dustSeed;
+
+            document.getElementById('param-scratch-enable').checked = s.scratchEnable;
+            document.getElementById('param-scratch-mode').value = s.scratchMode;
+            document.getElementById('param-scratch-angle').value = s.scratchAngle;
+            document.getElementById('param-scratch-scale').value = s.scratchScale;
+            document.getElementById('param-scratch-thick').value = s.scratchThick;
+            document.getElementById('param-scratch-color').value = s.scratchColor;
+            document.getElementById('param-scratch-intensity').value = s.scratchIntensity;
+            if (s.scratchSeed !== undefined) scratchSeed = s.scratchSeed;
+
+            document.getElementById('param-hair-enable').checked = s.hairEnable;
+            document.getElementById('param-hair-count').value = s.hairCount;
+            document.getElementById('param-hair-len').value = s.hairLen;
+            document.getElementById('param-hair-curl').value = s.hairCurl;
+            document.getElementById('param-hair-thick').value = s.hairThick;
+            document.getElementById('param-hair-opacity').value = s.hairOpacity;
+            if (s.hairSeed !== undefined) hairSeed = s.hairSeed;
+
+            onParamChange(false);
+        }
+
+        function render(customSettings = null, customImg = null) {
+            if (!gl || !program || !imageTexture || !noiseTexture) return;
+
+            const activeImg = customImg || (imageLibrary[activeImageIndex] ? imageLibrary[activeImageIndex].img : null);
+            if (!activeImg) return;
+
+            const t0 = performance.now();
+
+            gl.viewport(0, 0, glCanvas.width, glCanvas.height);
+            gl.useProgram(program);
+
+            gl.activeTexture(gl.TEXTURE0);
+            gl.bindTexture(gl.TEXTURE_2D, imageTexture);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_image'), 0);
+
+            gl.activeTexture(gl.TEXTURE1);
+            gl.bindTexture(gl.TEXTURE_2D, noiseTexture);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_noise'), 1);
+
+            gl.uniform2f(gl.getUniformLocation(program, 'u_image_size'), activeImg.width, activeImg.height);
+            gl.uniform2f(gl.getUniformLocation(program, 'u_noise_size'), 256.0, 256.0);
+
+            const s = customSettings || getCurrentSettings();
+
+            const baseBlend = s.useBase ? (s.baseBlend / 100.0) : 0.0;
+            const baseColorRgb = hexToRgb(s.baseCol);
+            const halationColorRgb = hexToRgb(s.halationColor);
+            const bloomColorRgb = hexToRgb(s.bloomColor);
+            const scratchColorRgb = hexToRgb(s.scratchColor);
+            const dustAmount = s.dustAmount / 100.0;
+            const scratchIntensity = s.scratchIntensity / 100.0;
+            const hairOpacity = s.hairOpacity / 100.0;
+            const halationIntensity = s.halationIntensity / 100.0;
+            const bloomIntensity = s.bloomIntensity / 100.0;
+            const grainJitter = (s.jitter !== undefined ? s.jitter : 80.0) / 100.0;
+            const grainClumping = (s.clumping !== undefined ? s.clumping : 20.0) / 100.0;
+
+            gl.uniform1i(gl.getUniformLocation(program, 'u_noise_tile_size'), s.tile);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_grain_jitter'), grainJitter);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_grain_clumping'), grainClumping);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_noise_engine'), s.engine);
+            gl.uniform2i(gl.getUniformLocation(program, 'u_noise_offsets_r'), s.offR[0], s.offR[1]);
+            gl.uniform2i(gl.getUniformLocation(program, 'u_noise_offsets_g'), s.offG[0], s.offG[1]);
+            gl.uniform2i(gl.getUniformLocation(program, 'u_noise_offsets_b'), s.offB[0], s.offB[1]);
+            gl.uniform4f(gl.getUniformLocation(program, 'u_layer_weights'), s.w[0], s.w[1], s.w[2], s.w[3]);
+
+            gl.uniform1i(gl.getUniformLocation(program, 'u_grayscale'), s.gray);
+            gl.uniform3f(gl.getUniformLocation(program, 'u_base_color'), baseColorRgb[0], baseColorRgb[1], baseColorRgb[2]);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_use_base_color'), baseBlend);
+
+            gl.uniform1f(gl.getUniformLocation(program, 'u_in_texture_gamma'), s.gammaIn);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_in_noise_gamma'), s.gammaNoise);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_out_texture_gamma'), s.gammaOut);
+
+            // Halation Uniforms
+            gl.uniform1i(gl.getUniformLocation(program, 'u_halation_enable'), s.halationEnable ? 1 : 0);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_halation_thresh'), s.halationThresh);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_halation_rad'), s.halationRad);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_halation_intensity'), halationIntensity);
+            gl.uniform3f(gl.getUniformLocation(program, 'u_halation_color'), halationColorRgb[0], halationColorRgb[1], halationColorRgb[2]);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_halation_falloff'), s.halationFalloff);
+
+            // Bloom Uniforms
+            gl.uniform1i(gl.getUniformLocation(program, 'u_bloom_enable'), s.bloomEnable ? 1 : 0);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_bloom_thresh'), s.bloomThresh);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_bloom_rad'), s.bloomRad);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_bloom_intensity'), bloomIntensity);
+            gl.uniform3f(gl.getUniformLocation(program, 'u_bloom_color'), bloomColorRgb[0], bloomColorRgb[1], bloomColorRgb[2]);
+
+            // Dust Uniforms
+            gl.uniform1i(gl.getUniformLocation(program, 'u_dust_enable'), s.dustEnable ? 1 : 0);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_dust_scale'), s.dustScale);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_dust_size_min'), s.dustMin);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_dust_size_max'), s.dustMax);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_dust_brightness'), s.dustBright);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_dust_amount'), dustAmount);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_dust_seed'), s.dustSeed);
+
+            // Scratch Uniforms
+            gl.uniform1i(gl.getUniformLocation(program, 'u_scratch_enable'), s.scratchEnable ? 1 : 0);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_scratch_mode'), s.scratchMode);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_scratch_angle'), s.scratchAngle);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_scratch_scale'), s.scratchScale);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_scratch_thickness'), s.scratchThick);
+            gl.uniform3f(gl.getUniformLocation(program, 'u_scratch_color'), scratchColorRgb[0], scratchColorRgb[1], scratchColorRgb[2]);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_scratch_intensity'), scratchIntensity);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_scratch_seed'), s.scratchSeed);
+
+            // Hair Uniforms
+            gl.uniform1i(gl.getUniformLocation(program, 'u_hair_enable'), s.hairEnable ? 1 : 0);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_hair_count'), s.hairCount);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_hair_len'), s.hairLen);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_hair_curl'), s.hairCurl);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_hair_thick'), s.hairThick);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_hair_opacity'), hairOpacity);
+            gl.uniform1i(gl.getUniformLocation(program, 'u_hair_seed'), s.hairSeed);
+
+            let modeId = 0;
+            if (viewMode === 'processed') modeId = 1;
+            if (viewMode === 'original') modeId = 2;
+            if (viewMode === 'mask') modeId = 3;
+
+            gl.uniform1i(gl.getUniformLocation(program, 'u_view_mode'), modeId);
+            gl.uniform1f(gl.getUniformLocation(program, 'u_split_pos'), splitRatio);
+
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+            const dt = (performance.now() - t0).toFixed(1);
+            document.getElementById('status-time').innerText = `${dt} ms`;
+
+            const totalSamples = ((activeImg.width * activeImg.height * s.tile * s.tile) / 1000000).toFixed(1);
+            document.getElementById('status-samples').innerText = `${totalSamples}M / frame`;
+
+            updateSplitDividerUI();
+        }
+
+        let renderScheduled = false;
+        function requestRender() {
+            if (!renderScheduled) {
+                renderScheduled = true;
+                requestAnimationFrame(() => {
+                    render();
+                    renderScheduled = false;
+                });
+            }
+        }
+
+        function hexToRgb(hex) {
+            const bigint = parseInt(hex.slice(1), 16);
+            const r = ((bigint >> 16) & 255) / 255.0;
+            const g = ((bigint >> 8) & 255) / 255.0;
+            const b = (bigint & 255) / 255.0;
+            return [r, g, b];
+        }
+
+        function onParamChange(saveToActive = true) {
+            const tileSize = document.getElementById('param-tilesize').value;
+            document.getElementById('val-tilesize').innerText = `${tileSize}x${tileSize} (${tileSize * tileSize} subpixels)`;
+
+            const jitter = document.getElementById('param-grain-jitter').value;
+            document.getElementById('val-grain-jitter').innerText = `${jitter}%`;
+
+            const clumping = document.getElementById('param-grain-clumping').value;
+            document.getElementById('val-grain-clumping').innerText = `${clumping}%`;
+
+            document.getElementById('val-w0').innerText = parseFloat(document.getElementById('param-w0').value).toFixed(2);
+            document.getElementById('val-w1').innerText = parseFloat(document.getElementById('param-w1').value).toFixed(2);
+            document.getElementById('val-w2').innerText = parseFloat(document.getElementById('param-w2').value).toFixed(2);
+            document.getElementById('val-w3').innerText = parseFloat(document.getElementById('param-w3').value).toFixed(2);
+
+            const rx = document.getElementById('param-off-rx').value;
+            const ry = document.getElementById('param-off-ry').value;
+            document.getElementById('val-offset-r').innerText = `${rx}, ${ry}`;
+
+            const gx = document.getElementById('param-off-gx').value;
+            const gy = document.getElementById('param-off-gy').value;
+            document.getElementById('val-offset-g').innerText = `${gx}, ${gy}`;
+
+            const bx = document.getElementById('param-off-bx').value;
+            const by = document.getElementById('param-off-by').value;
+            document.getElementById('val-offset-b').innerText = `${bx}, ${by}`;
+
+            const blend = document.getElementById('param-base-blend').value;
+            document.getElementById('val-base-blend').innerText = `${blend}%`;
+
+            document.getElementById('val-gamma-in').innerText = parseFloat(document.getElementById('param-gamma-in').value).toFixed(2);
+            document.getElementById('val-gamma-noise').innerText = parseFloat(document.getElementById('param-gamma-noise').value).toFixed(2);
+            document.getElementById('val-gamma-out').innerText = parseFloat(document.getElementById('param-gamma-out').value).toFixed(2);
+
+            // Halation Labels
+            document.getElementById('val-halation-thresh').innerText = parseFloat(document.getElementById('param-halation-thresh').value).toFixed(2);
+            document.getElementById('val-halation-rad').innerText = `${parseFloat(document.getElementById('param-halation-rad').value).toFixed(1)}px`;
+            document.getElementById('val-halation-intensity').innerText = `${document.getElementById('param-halation-intensity').value}%`;
+            document.getElementById('val-halation-falloff').innerText = parseFloat(document.getElementById('param-halation-falloff').value).toFixed(1);
+
+            // Bloom Labels
+            document.getElementById('val-bloom-thresh').innerText = parseFloat(document.getElementById('param-bloom-thresh').value).toFixed(2);
+            document.getElementById('val-bloom-rad').innerText = `${parseFloat(document.getElementById('param-bloom-rad').value).toFixed(1)}px`;
+            document.getElementById('val-bloom-intensity').innerText = `${document.getElementById('param-bloom-intensity').value}%`;
+
+            // Dust Labels
+            document.getElementById('val-dust-scale').innerText = `${parseFloat(document.getElementById('param-dust-scale').value).toFixed(1)}x`;
+            document.getElementById('val-dust-min').innerText = `${parseFloat(document.getElementById('param-dust-min').value).toFixed(1)}px`;
+            document.getElementById('val-dust-max').innerText = `${parseFloat(document.getElementById('param-dust-max').value).toFixed(1)}px`;
+
+            const dustBright = parseFloat(document.getElementById('param-dust-bright').value);
+            const dustBrightPct = Math.round(dustBright * 100);
+            document.getElementById('val-dust-bright').innerText = dustBright < 0 ? `${dustBrightPct}% (Dark Soot)` : `${dustBrightPct}% (Bright Lint)`;
+            document.getElementById('val-dust-amount').innerText = `${document.getElementById('param-dust-amount').value}%`;
+
+            // Scratch Labels
+            document.getElementById('val-scratch-angle').innerText = `${document.getElementById('param-scratch-angle').value}°`;
+            document.getElementById('val-scratch-scale').innerText = `${parseFloat(document.getElementById('param-scratch-scale').value).toFixed(1)}x`;
+            document.getElementById('val-scratch-thick').innerText = `${parseFloat(document.getElementById('param-scratch-thick').value).toFixed(1)}px`;
+            document.getElementById('val-scratch-intensity').innerText = `${document.getElementById('param-scratch-intensity').value}%`;
+
+            // Hair Labels
+            document.getElementById('val-hair-count').innerText = document.getElementById('param-hair-count').value;
+            document.getElementById('val-hair-len').innerText = `${document.getElementById('param-hair-len').value}px`;
+            document.getElementById('val-hair-curl').innerText = parseFloat(document.getElementById('param-hair-curl').value).toFixed(1);
+            document.getElementById('val-hair-thick').innerText = `${parseFloat(document.getElementById('param-hair-thick').value).toFixed(1)}px`;
+            document.getElementById('val-hair-opacity').innerText = `${document.getElementById('param-hair-opacity').value}%`;
+
+            if (saveToActive && imageLibrary[activeImageIndex]) {
+                imageLibrary[activeImageIndex].settings = getCurrentSettings();
+            }
+
+            requestRender();
+        }
+
+        function randomizeDustSeed() {
+            dustSeed = Math.floor(Math.random() * 100000);
+            onParamChange();
+        }
+
+        function randomizeScratchSeed() {
+            scratchSeed = Math.floor(Math.random() * 100000);
+            onParamChange();
+        }
+
+        function randomizeHairSeed() {
+            hairSeed = Math.floor(Math.random() * 100000);
+            onParamChange();
+        }
+
+        function applyPreset(key, btnEl) {
+            document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+
+            const p = presets[key];
+            if (!p) return;
+
+            applySettingsToUI(p);
+        }
+
+        function resetDefaults() {
+            applyPreset('default', document.querySelector('.preset-btn'));
+        }
+
+        function setViewMode(mode) {
+            viewMode = mode;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            if (mode === 'split') document.getElementById('tab-split').classList.add('active');
+            if (mode === 'processed') document.getElementById('tab-processed').classList.add('active');
+            if (mode === 'original') document.getElementById('tab-original').classList.add('active');
+            if (mode === 'mask') document.getElementById('tab-mask').classList.add('active');
+
+            updateSplitDividerUI();
+            requestRender();
+        }
+
+        function updateSplitDividerUI() {
+            if (viewMode === 'split') {
+                splitDivider.style.display = 'block';
+                splitDivider.style.left = `${splitRatio * 100}%`;
+            } else {
+                splitDivider.style.display = 'none';
+            }
+        }
+
+        function setupSplitInteraction() {
+            canvasContainer.addEventListener('mousedown', (e) => {
+                if (viewMode !== 'split') return;
+                isDraggingSplit = true;
+                updateSplitPosition(e);
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                if (!isDraggingSplit) return;
+                updateSplitPosition(e);
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDraggingSplit = false;
+            });
+
+            function updateSplitPosition(e) {
+                const rect = glCanvas.getBoundingClientRect();
+                let x = e.clientX - rect.left;
+                x = Math.max(0, Math.min(x, rect.width));
+                splitRatio = x / rect.width;
+                requestRender();
+            }
+        }
+
+        function toggleLoupe() {
+            loupeActive = !loupeActive;
+            const btn = document.getElementById('tab-loupe');
+            if (loupeActive) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+                loupe.style.display = 'none';
+            }
+        }
+
+        function setLoupeZoom(zoom, btnEl) {
+            loupeZoom = zoom;
+            document.querySelectorAll('.loupe-zoom-btn').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+            loupeTag.innerText = `${zoom}x Zoom`;
+            if (!loupeActive) toggleLoupe();
+        }
+
+        function setupLoupeInteraction() {
+            window.addEventListener('mousemove', (e) => {
+                const activeImg = imageLibrary[activeImageIndex] ? imageLibrary[activeImageIndex].img : null;
+                if (!loupeActive || !activeImg) {
+                    loupe.style.display = 'none';
+                    return;
+                }
+
+                const rect = glCanvas.getBoundingClientRect();
+                const mouseX = e.clientX - rect.left;
+                const mouseY = e.clientY - rect.top;
+
+                if (mouseX < 0 || mouseX > rect.width || mouseY < 0 || mouseY > rect.height) {
+                    loupe.style.display = 'none';
+                    return;
+                }
+
+                loupe.style.display = 'block';
+
+                const loupeSize = 140;
+                let posX = e.clientX + 16;
+                let posY = e.clientY - loupeSize - 12;
+
+                if (posX + loupeSize > window.innerWidth - 10) {
+                    posX = e.clientX - loupeSize - 16;
+                }
+                if (posY < 60) {
+                    posY = e.clientY + 18;
+                }
+
+                loupe.style.left = `${posX}px`;
+                loupe.style.top = `${posY}px`;
+
+                const normX = mouseX / rect.width;
+                const normY = mouseY / rect.height;
+                const srcX = normX * glCanvas.width;
+                const srcY = normY * glCanvas.height;
+
+                const sampleW = loupeSize / loupeZoom;
+                const sampleH = loupeSize / loupeZoom;
+
+                loupeCtx.imageSmoothingEnabled = false;
+                loupeCtx.fillStyle = '#000000';
+                loupeCtx.fillRect(0, 0, loupeSize, loupeSize);
+                loupeCtx.drawImage(
+                    glCanvas,
+                    srcX - sampleW / 2, srcY - sampleH / 2, sampleW, sampleH,
+                    0, 0, loupeSize, loupeSize
+                );
+            });
+
+            canvasContainer.addEventListener('mouseleave', () => {
+                if (loupeActive) loupe.style.display = 'none';
+            });
+        }
+
+        function addImageToLibrary(img, name) {
+            const thumbCanvas = document.createElement('canvas');
+            const maxDim = 120;
+            let tw = img.width, th = img.height;
+            if (tw > th) {
+                th = Math.round((th * maxDim) / tw);
+                tw = maxDim;
+            } else {
+                tw = Math.round((tw * maxDim) / th);
+                th = maxDim;
+            }
+            thumbCanvas.width = tw;
+            thumbCanvas.height = th;
+            const tctx = thumbCanvas.getContext('2d');
+            tctx.drawImage(img, 0, 0, tw, th);
+            const thumbUrl = thumbCanvas.toDataURL('image/jpeg', 0.8);
+
+            const item = {
+                id: 'img_' + Math.random().toString(36).substr(2, 9),
+                name: name || `Photo ${imageLibrary.length + 1}`,
+                img: img,
+                thumbUrl: thumbUrl,
+                selected: true,
+                settings: getCurrentSettings()
+            };
+
+            imageLibrary.push(item);
+            updateFilmstripUI();
+            setActiveImage(imageLibrary.length - 1);
+        }
+
+        function setActiveImage(index) {
+            if (index < 0 || index >= imageLibrary.length) return;
+            activeImageIndex = index;
+            const item = imageLibrary[index];
+
+            document.getElementById('status-name').innerText = item.name;
+            uploadImageTexture(item.img);
+            applySettingsToUI(item.settings);
+
+            updateFilmstripUI();
+        }
+
+        function toggleSelectImage(index, event) {
+            if (event) event.stopPropagation();
+            if (imageLibrary[index]) {
+                imageLibrary[index].selected = !imageLibrary[index].selected;
+                updateFilmstripUI();
+            }
+        }
+
+        function selectAllImages(select) {
+            imageLibrary.forEach(img => img.selected = select);
+            updateFilmstripUI();
+        }
+
+        function removeImageFromLibrary(index, event) {
+            if (event) event.stopPropagation();
+            imageLibrary.splice(index, 1);
+            if (imageLibrary.length === 0) {
+                loadSampleImage();
+            } else {
+                if (activeImageIndex >= imageLibrary.length) {
+                    activeImageIndex = imageLibrary.length - 1;
+                }
+                setActiveImage(activeImageIndex);
+            }
+            updateFilmstripUI();
+        }
+
+        function removeSelectedImages() {
+            imageLibrary = imageLibrary.filter(img => !img.selected);
+            if (imageLibrary.length === 0) {
+                loadSampleImage();
+            } else {
+                activeImageIndex = 0;
+                setActiveImage(0);
+            }
+            updateFilmstripUI();
+        }
+
+        function copySettingsToSelected() {
+            const current = getCurrentSettings();
+            let count = 0;
+            imageLibrary.forEach(item => {
+                if (item.selected) {
+                    item.settings = JSON.parse(JSON.stringify(current));
+                    count++;
+                }
+            });
+            showToast(`Copied grain & defect settings to ${count} photo${count !== 1 ? 's' : ''}`);
+            updateFilmstripUI();
+        }
+
+        function updateFilmstripUI() {
+            filmstripScroll.innerHTML = '';
+            let selectedCount = 0;
+
+            imageLibrary.forEach((item, index) => {
+                if (item.selected) selectedCount++;
+
+                const frame = document.createElement('div');
+                frame.className = `film-frame ${index === activeImageIndex ? 'active' : ''}`;
+                frame.onclick = () => setActiveImage(index);
+
+                frame.innerHTML = `
+                    <input type="checkbox" class="film-check" ${item.selected ? 'checked' : ''} onclick="toggleSelectImage(${index}, event)">
+                    <button class="film-del" onclick="removeImageFromLibrary(${index}, event)" title="Remove">✕</button>
+                    <img src="${item.thumbUrl}" class="film-thumb" alt="${item.name}">
+                    <span class="film-num">${index + 1}</span>
+                `;
+
+                filmstripScroll.appendChild(frame);
+            });
+
+            const addBtn = document.createElement('div');
+            addBtn.className = 'add-frame-btn';
+            addBtn.onclick = triggerFileInput;
+            addBtn.innerHTML = `<span style="font-size: 16px;">+</span><span>Add</span>`;
+            filmstripScroll.appendChild(addBtn);
+
+            document.getElementById('filmstrip-count').innerText = `${imageLibrary.length} photo${imageLibrary.length !== 1 ? 's' : ''}`;
+            document.getElementById('export-count').innerText = `${selectedCount}`;
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2500);
+        }
+
+        function loadSampleImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1200;
+            canvas.height = 800;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#1c1d22';
+            ctx.fillRect(0, 0, 1200, 800);
+
+            const portraitGrad = ctx.createRadialGradient(600, 360, 40, 600, 360, 320);
+            portraitGrad.addColorStop(0, '#f5deb3');
+            portraitGrad.addColorStop(0.3, '#d29672');
+            portraitGrad.addColorStop(0.6, '#6b4435');
+            portraitGrad.addColorStop(1, '#1c1d22');
+            ctx.fillStyle = portraitGrad;
+            ctx.beginPath();
+            ctx.arc(600, 360, 320, 0, Math.PI * 2);
+            ctx.fill();
+
+            const specGrad = ctx.createRadialGradient(530, 290, 5, 530, 290, 80);
+            specGrad.addColorStop(0, '#ffffff');
+            specGrad.addColorStop(0.4, '#fffaeb');
+            specGrad.addColorStop(1, 'rgba(255, 250, 235, 0)');
+            ctx.fillStyle = specGrad;
+            ctx.beginPath();
+            ctx.arc(530, 290, 80, 0, Math.PI * 2);
+            ctx.fill();
+
+            const wedgeW = 1000 / 10;
+            for (let i = 0; i < 10; i++) {
+                const val = Math.round((i / 9) * 255);
+                ctx.fillStyle = `rgb(${val}, ${val}, ${val})`;
+                ctx.fillRect(100 + i * wedgeW, 680, wedgeW - 3, 50);
+            }
+
+            ctx.fillStyle = '#a1a1aa';
+            ctx.font = '500 13px Inter, sans-serif';
+            ctx.fillText('0% D-MAX', 100, 668);
+            ctx.fillText('18% GRAY', 500, 668);
+            ctx.fillText('100% HIGHLIGHT', 980, 668);
+
+            const img = new Image();
+            img.onload = () => {
+                imageLibrary = [];
+                addImageToLibrary(img, 'Target');
+            };
+            img.src = canvas.toDataURL();
+        }
+
+        function triggerFileInput() {
+            document.getElementById('file-input').click();
+        }
+
+        function handleFileSelect(e) {
+            const files = Array.from(e.target.files).filter(f => f.type.startsWith('image/'));
+            if (!files.length) return;
+            loadMultipleFiles(files);
+        }
+
+        function loadMultipleFiles(files) {
+            files.forEach(file => {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.onload = () => addImageToLibrary(img, file.name);
+                    img.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function setupDragDrop() {
+            const overlay = document.getElementById('upload-overlay');
+
+            window.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                overlay.classList.add('dragover');
+            });
+
+            window.addEventListener('dragleave', () => {
+                overlay.classList.remove('dragover');
+            });
+
+            window.addEventListener('drop', (e) => {
+                e.preventDefault();
+                overlay.classList.remove('dragover');
+                if (e.dataTransfer.files && e.dataTransfer.files.length) {
+                    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+                    if (files.length) loadMultipleFiles(files);
+                }
+            });
+        }
+
+        function exportFullResPNG() {
+            const activeItem = imageLibrary[activeImageIndex];
+            if (!gl || !activeItem) return;
+
+            const currentMode = viewMode;
+            viewMode = 'processed';
+            render();
+
+            glCanvas.toBlob((blob) => {
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const baseName = activeItem.name.replace(/\.[^/.]+$/, "");
+                const timeStr = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                a.download = `filmgrain-${baseName}-${timeStr}.png`;
+                a.href = url;
+                a.click();
+                URL.revokeObjectURL(url);
+
+                viewMode = currentMode;
+                render();
+            }, 'image/png');
+        }
+
+        async function exportSelectedBatch() {
+            const selectedItems = imageLibrary.filter(img => img.selected);
+            if (!selectedItems.length) {
+                alert('Please select at least one photo in the filmstrip to export.');
+                return;
+            }
+
+            const batchOverlay = document.getElementById('batch-overlay');
+            const statusText = document.getElementById('batch-modal-status');
+            const detailText = document.getElementById('batch-modal-detail');
+            const fillBar = document.getElementById('batch-progress-fill');
+
+            batchOverlay.style.display = 'flex';
+
+            const useZip = typeof JSZip !== 'undefined';
+            let zip = useZip ? new JSZip() : null;
+
+            const prevActive = activeImageIndex;
+            const prevMode = viewMode;
+            viewMode = 'processed';
+
+            for (let i = 0; i < selectedItems.length; i++) {
+                const item = selectedItems[i];
+                const pct = Math.round(((i + 1) / selectedItems.length) * 100);
+
+                statusText.innerText = `Rendering photo ${i + 1} of ${selectedItems.length}...`;
+                detailText.innerText = `${item.name} (${item.img.width} × ${item.img.height} px)`;
+                fillBar.style.width = `${pct}%`;
+
+                uploadImageTexture(item.img);
+                render(item.settings, item.img);
+
+                const blob = await new Promise(resolve => glCanvas.toBlob(resolve, 'image/png'));
+                const baseName = item.name.replace(/\.[^/.]+$/, "");
+                const outName = `filmgrain_${String(i + 1).padStart(2, '0')}_${baseName}.png`;
+
+                if (useZip) {
+                    zip.file(outName, blob);
+                } else {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.download = outName;
+                    a.href = url;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    await new Promise(r => setTimeout(r, 200));
+                }
+
+                await new Promise(r => setTimeout(r, 60));
+            }
+
+            if (useZip) {
+                statusText.innerText = 'Packaging ZIP Archive...';
+                detailText.innerText = 'Compressing batch reel files...';
+                const zipBlob = await zip.generateAsync({ type: 'blob' });
+                const zipUrl = URL.createObjectURL(zipBlob);
+                const a = document.createElement('a');
+                const timeStr = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+                a.download = `filmgrain_batch_${timeStr}.zip`;
+                a.href = zipUrl;
+                a.click();
+                URL.revokeObjectURL(zipUrl);
+            }
+
+            batchOverlay.style.display = 'none';
+            viewMode = prevMode;
+            setActiveImage(prevActive);
+            showToast(`Batch export complete (${selectedItems.length} photos)`);
+        }
+
+        // Initialize App on DOM Ready
+        window.addEventListener('DOMContentLoaded', () => {
+            initWebGL();
+            setupSplitInteraction();
+            setupLoupeInteraction();
+            setupDragDrop();
+            loadSampleImage();
+        });
+    </script>
+</body>
+
+</html>

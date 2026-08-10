@@ -127,7 +127,7 @@ export function Hero() {
               {t.hero.name}
             </span>
           </div>
-          <div className="flex flex-col items-start gap-2 w-fit my-4 text-truncate ">
+          <div className="flex flex-col items-start gap-2 w-fit my-2 text-truncate ">
             <Link
               to="/blog"
               className="group relative font-black tracking-normal z-50 hover:text-amber-500 hover:scale-110 transition-transform hover:text-shadow-[0_8px_10px_#432100]"

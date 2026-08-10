@@ -74,6 +74,10 @@ const DebugImagePosition = lazy(() =>
 const NotFound = lazy(() =>
   import("@/pages/404").then((module) => ({ default: module.NotFound })),
 );
+const FilmGrainLab = lazy(() =>
+  import("@/pages/FilmGrainLab").then((module) => ({ default: module.FilmGrainLab })),
+);
+
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -84,10 +88,12 @@ const PageLoader = () => (
 
 function AppContent() {
   const location = useLocation();
+  const isGrainLab =
+    location.pathname === "/film-grain" || location.pathname === "/grain-lab";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col font-sans antialiased">
-      <Navbar />
+      {!isGrainLab && <Navbar />}
       <main className="grow">
         <Suspense fallback={<PageLoader />}>
           <AnimatePresence mode="wait">
@@ -144,6 +150,10 @@ function AppContent() {
                   </ProtectedRoute>
                 }
               />
+              {/* Film Grain Lab Studio */}
+              <Route path="/film-grain" element={<FilmGrainLab />} />
+              <Route path="/grain-lab" element={<FilmGrainLab />} />
+
               {/* 404 */}
               <Route path="/404" element={<NotFound />} />
               <Route path="*" element={<NotFound />} />
@@ -151,10 +161,11 @@ function AppContent() {
           </AnimatePresence>
         </Suspense>
       </main>
-      <Footer />
+      {!isGrainLab && <Footer />}
     </div>
   );
 }
+
 
 function App() {
   return (

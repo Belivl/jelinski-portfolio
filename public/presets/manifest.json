@@ -1,0 +1,15 @@
+{
+  "presets": [
+    { "id": "default", "file": "standard_4x4.json" },
+    { "id": "kodak_gold_200", "file": "kodak_gold_200.json" },
+    { "id": "kodak_ultramax_400", "file": "kodak_ultramax_400.json" },
+    { "id": "kodak_ektar_100", "file": "kodak_ektar_100.json" },
+    { "id": "kodak_portra_400", "file": "kodak_portra_400.json" },
+    { "id": "kodak_ektachrome_e100", "file": "kodak_ektachrome_e100.json" },
+    { "id": "kodak_trix_400", "file": "kodak_trix_400.json" },
+    { "id": "cinestill", "file": "cinestill_800t.json" },
+    { "id": "vision3", "file": "kodak_vision3_500t.json" },
+    { "id": "hp5", "file": "ilford_hp5_plus.json" },
+    { "id": "grindhouse", "file": "grindhouse_35mm.json" }
+  ]
+}

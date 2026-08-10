@@ -200,8 +200,8 @@ export function GalleryGrid() {
           1100: 3,
           700: 3,
         }}
-        className="flex w-auto md:-ml-8 -ml-2 z-0 overflow-hidden"
-        columnClassName="pl-2 md:pl-8 bg-clip-padding"
+        className="flex w-auto md:-ml-3 -ml-2 z-0 overflow-hidden"
+        columnClassName="pl-2 md:pl-3 bg-clip-padding"
       >
         {filteredPhotos.length > 0 ? (
           filteredPhotos.map((photo, index) => (
@@ -215,7 +215,7 @@ export function GalleryGrid() {
                 delay: Math.min(index * 0.05, 1), // Staggered entry
               }}
               key={photo.id}
-              className="group relative cursor-pointer overflow-hidden rounded-lg md:mb-8 mb-2 dark:border-neutral-800 border"
+              className="group relative cursor-pointer overflow-hidden rounded-lg md:mb-3 mb-2 dark:border-neutral-800 border"
               onClick={() => setSelectedPhotoIndex(index)}
             >
               <SmartImage
